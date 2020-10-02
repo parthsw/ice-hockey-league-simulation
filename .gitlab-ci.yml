@@ -1,6 +1,5 @@
-image: docker:latest
-services:
-  - docker:dind
+image: java:8-jdk
+
 variables:
   # This is a place for you to define variables you can use
   # later in the script by referring to the variable like so:
@@ -8,6 +7,13 @@ variables:
   EXAMPLE_VARIABLE: "Example"
 
 before_script:
+  - export GRADLE_USER_HOME='pwd'/.gradle
+  - chmod +x ./gradlew
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
   # Do anything you have to do before your stages below here.
   # For example, do you need to change permissions on a build folder
   # or modify a file to insert a variable from your CI config here?
@@ -24,15 +30,12 @@ stages:
   - deploy
 
 build:
-  image: gradle:5.0-jdk8-alpine
+  image: gradle:alpine
   stage: build
   script: 
-    - gradle build
+    - ./gradlew assemble
   tags:
     - ugrad
-  artifacts:
-    paths:
-      - build/libs/*.jar
 
 #deployStep:
  # stage: deploy
