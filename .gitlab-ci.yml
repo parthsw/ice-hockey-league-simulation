@@ -34,6 +34,13 @@ build:
   tags:
     - ugrad
 
+test:
+  stage: test
+  script:
+    - ./gradle check
+  tags:
+    - ugrad
+
 #deployStep:
  # stage: deploy
   #tags:
