@@ -28,6 +28,8 @@ build:
   stage: build
   script: 
     - gradle build
+  tags:
+    - ugrad
   artifacts:
     paths:
       - build/libs/*.jar
