@@ -9,7 +9,7 @@ before_script:
 
 cache:
   paths:
-    - .gradle/wrapper
+    - .gradle/wrapper --gradle-version=6.6.1 --distribution-type=bin
     - .gradle/caches
   # Do anything you have to do before your stages below here.
   # For example, do you need to change permissions on a build folder
