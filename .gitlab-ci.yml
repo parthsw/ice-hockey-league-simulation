@@ -33,6 +33,10 @@ build:
     - ./gradlew assemble
   tags:
     - ugrad
+test:
+  stage: test
+  script:
+    - ./gradlew check
 
 
 #deployStep:
