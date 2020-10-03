@@ -2,10 +2,6 @@ image: java:8-jdk
 
 variables:
   GIT_STRATEGY: clone
-  DEPLOY_DIR: 'CSCI5308builds'
-  DEPLOY_HOST: 'timberlea.cs.dal.ca'
-  DEPLOY_SSH_KEY: 'command="if [[ \"$SSH_ORIGINAL_COMMAND\" =~ ^scp.? ]]; then $SSH_ORIGINAL_COMMAND ; else echo Access Denied to run $SSH_ORIGINAL_COMMAND; fi",no-pty,no-port-forwarding,no-agent-forwarding,no-X11-forwarding ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBH/2lNqT/pxu4khkoCiWbDAPui4/hKFR5oCYoZWBiIWAd255Nh+ZiUKU05G/NDIcKomhf6OiZt+JvUBTuyIo5v8= vig@timberlea.CS.Dal.Ca'
-  DEPLOY_USER: 'vig'
 
 before_script:
   - export GRADLE_USER_HOME='pwd'/.gradle
