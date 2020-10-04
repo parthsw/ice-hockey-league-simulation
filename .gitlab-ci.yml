@@ -24,7 +24,7 @@ build:
     - ./gradlew assemble
   artifacts:
     paths:
-      - build/libs/*.jar
+      - target
   tags:
     - ugrad
 
@@ -32,11 +32,17 @@ test:
   stage: test
   script:
     - ./gradlew check
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
   tags:
     - ugrad
 
 deploy:
   stage: deploy
+  image: gradle:alpine
   before_script:
     - 'command -v ssh-gent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
