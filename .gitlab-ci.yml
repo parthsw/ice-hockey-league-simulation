@@ -24,7 +24,7 @@ build:
     - ./gradlew assemble
   artifacts:
     paths:
-      - /build/libs/*.jar
+      - dist
   tags:
     - ugrad
 
