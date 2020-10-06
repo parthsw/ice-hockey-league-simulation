@@ -35,7 +35,7 @@ build:
   #artifacts:
    # when: always
     #reports:
-      junit:
+     # junit:
      #   - target/surefire-reports/TEST-*.xml
   #tags:
    # - ugrad
