@@ -14,8 +14,10 @@ cache:
 
 stages:
   - build
+  - build_prod
   - test
   - deploy
+  - deploy_prod
 
 build:
   image: gradle:alpine
