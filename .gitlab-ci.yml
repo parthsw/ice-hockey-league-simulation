@@ -28,27 +28,27 @@ build:
   tags:
     - ugrad
 
-#test:
- # stage: test
-  #script:
-   # - ./gradlew check
-  #artifacts:
-   # when: always
-    #reports:
-     # junit:
-     #   - target/surefire-reports/TEST-*.xml
-  #tags:
-   # - ugrad
+test:
+  stage: test
+  script:
+    - ./gradlew check
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-*.xml
+  tags:
+    - ugrad
 
-#deploy:
- # stage: deploy
-  #image: gradle:alpine
-  #before_script:
-   # - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    #- eval $(ssh-agent -s)
-    #- echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
-  #script:
-   # - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip /build/libs/*.jar
-    #- scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
-  #tags:
-   # - ugrad
+deploy:
+  stage: deploy
+  image: gradle:alpine
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
+  script:
+    - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip /build/libs/*.jar
+    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
+  tags:
+    - ugrad
