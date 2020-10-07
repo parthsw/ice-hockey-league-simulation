@@ -17,3 +17,10 @@ dependencies {
     implementation 'com.github.everit-org.json-schema:org.everit.json.schema:1.12.1'
 }
 
+jar {
+    manifest {
+        attributes (
+            'Main-Class': 'asdc.hl.HelloWorld'
+        )
+    }
+}
