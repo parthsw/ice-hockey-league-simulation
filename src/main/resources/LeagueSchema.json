@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "description": "Representation of a Hockey League",
+  "type": "object",
+  "required": ["leagueName", "conferences", "freeAgents"],
+  "properties": {
+    "leagueName": { "$ref": "#/definitions/nonEmptyString" },
+    "conferences": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/conference" }
+    },
+    "freeAgents": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/player" }
+    }
+  },
+  "definitions": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "conference": {
+      "type": "object",
+      "required": ["conferenceName", "divisions"],
+      "properties": {
+        "conferenceName": { "$ref": "#/definitions/nonEmptyString" },
+        "divisions": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/division" }
+        }
+      }
+    },
+    "division": {
+      "type": "object",
+      "required": ["divisionName", "teams"],
+      "properties": {
+        "divisionName": { "$ref": "#/definitions/nonEmptyString" },
+        "teams": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/team" }
+        }
+      }
+    },
+    "team": {
+      "type": "object",
+      "required": ["teamName", "generalManager", "headCoach", "players"],
+      "properties": {
+        "teamName": { "$ref": "#/definitions/nonEmptyString" },
+        "generalManager": { "$ref": "#/definitions/nonEmptyString" },
+        "headCoach": { "$ref": "#/definitions/nonEmptyString" },
+        "players": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/player" }
+        }
+      }
+    },
+    "player": {
+      "type": "object",
+      "required": ["playerName", "position", "captain"],
+      "properties": {
+        "playerName": { "$ref": "#/definitions/nonEmptyString" },
+        "position": {
+          "type": "string",
+          "enum": ["forward", "defense", "goalie"]
+        },
+        "captain": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
