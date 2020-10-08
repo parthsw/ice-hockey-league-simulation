@@ -63,9 +63,10 @@ deploy:
     - eval $(ssh-agent -s)
     - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
   script:
+    - rm -rf *
     - file="application.properties"
-    - echo "Driver=$DATABASE_DRIVER"
-    - echo "Password=$DATABASE_PASSWORD_TEST" > $file
+    - echo "Driver=$DATABASE_DRIVER" > $file
+    - echo "Password=$DATABASE_PASSWORD_TEST" >> $file
     - echo "Url=$DATABASE_URL_TEST" >> $file
     - echo "Username=$DATABASE_USERNAME_TEST" >> $file
     - cat $file
@@ -74,7 +75,7 @@ deploy:
     - scp -r -o StrictHostKeyChecking=no $file "${DEPLOY_USER_TEST}@${DEPLOY_HOST}:${DEPLOY_DIR}/${file}"
   tags:
     - ugrad
-  
+
 
 deploy_prod:
   stage: deploy
