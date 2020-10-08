@@ -9,8 +9,8 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.*;
 
 public class DummyStateTest {
     private static State dummyState;
@@ -29,10 +29,10 @@ public class DummyStateTest {
     public void printSeasonSimulationTest() {
         ByteArrayOutputStream welcomeMessage = new ByteArrayOutputStream();
         System.setOut(new PrintStream(welcomeMessage));
-        String expectedOutput = "Simulating the season number: 2\r\n";
+        String expectedOutput = "Simulating the season number: 2";
 
         dummyState.onRun();
 
-        assertEquals(expectedOutput, welcomeMessage.toString());
+        assertThat(welcomeMessage.toString(), containsString(expectedOutput));
     }
 }
