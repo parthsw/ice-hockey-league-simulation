@@ -74,8 +74,7 @@ deploy:
     - scp -r -o StrictHostKeyChecking=no $file "${DEPLOY_USER_TEST}@${DEPLOY_HOST}:${DEPLOY_DIR}/${file}"
   tags:
     - ugrad
-  only:
-    - develop
+  
 
 deploy_prod:
   stage: deploy
