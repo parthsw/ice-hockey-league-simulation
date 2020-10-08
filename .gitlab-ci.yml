@@ -64,15 +64,18 @@ deploy:
     - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
   script:
     - file="application.properties"
+    - echo "Driver=$DATABASE_DRIVER"
     - echo "Password=$DATABASE_PASSWORD_TEST" > $file
     - echo "Url=$DATABASE_URL_TEST" >> $file
     - echo "Username=$DATABASE_USERNAME_TEST" >> $file
     - cat $file
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip . -i /build/libs/*.jar
-    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
-    - scp -r -o StrictHostKeyChecking=no $file "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${file}"
+    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER_TEST}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
+    - scp -r -o StrictHostKeyChecking=no $file "${DEPLOY_USER_TEST}@${DEPLOY_HOST}:${DEPLOY_DIR}/${file}"
   tags:
     - ugrad
+  only:
+    - develop
 
 deploy_prod:
   stage: deploy
@@ -82,8 +85,15 @@ deploy_prod:
     - eval $(ssh-agent -s)
     - echo "$DEPLOY_SSH_KEY_PROD" | tr -d '\r' | ssh-add -
   script:
+    - file="application.properties"
+    - echo "Driver=$DATABASE_DRIVER"
+    - echo "Password=$DATABASE_PASSWORD_PROD"
+    - echo "Url=$DATABASE_URL_PROD"
+    - echo "Username=$DATABASE_USERNAME_PROD"
+    - cat $file
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip . -i /build/libs/*.jar
-    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
+    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER_PROD}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
+    - scp -r -o StrictHostKeyChecking=no $file "${DEPLOY_USER_PROD}@${DEPLOY_HOST}:${DEPLOY_DIR}/${file}"
   tags:
     - ugrad
   only:
