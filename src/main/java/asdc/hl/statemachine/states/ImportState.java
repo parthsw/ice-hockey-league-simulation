@@ -20,6 +20,7 @@ public class ImportState extends State {
 
     @Override
     public State onRun() {
+        this.importWelcomeMessage();
         StateUtils.printMessage("Please provide full filepath to the JSON file:");
         filePath = StateUtils.promptForUserInput();
         boolean isFilePathValid = this.isFileExist(new File(filePath));
@@ -93,5 +94,9 @@ public class ImportState extends State {
         for(String structuralError: structuralErrors) {
             System.out.println(structuralError);
         }
+    }
+
+    private void importWelcomeMessage() {
+        StateUtils.printMessage("***Import State***");
     }
 }

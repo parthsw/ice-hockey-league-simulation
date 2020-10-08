@@ -11,6 +11,7 @@ public class CreateTeamState extends State {
 
     @Override
     public State onRun() {
+        this.importWelcomeMessage();
         this.promptForNewTeam();
         // this.initializeNewTeam();
         // this.addTeamToLeague();
@@ -100,5 +101,9 @@ public class CreateTeamState extends State {
     private boolean isDivisionNameExist() {
         // TODO: Check in the league object model whether a conference with same name exist + Put check for empty string
         return true;
+    }
+
+    private void importWelcomeMessage() {
+        StateUtils.printMessage("***Create Team State***");
     }
 }

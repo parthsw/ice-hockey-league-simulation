@@ -10,6 +10,7 @@ public class PlayerChoiceState extends State {
 
     @Override
     public State onRun() {
+        this.importWelcomeMessage();
         stateMachine.setNoOfSeasons(this.promptForNumberOfSeasons());
         return new SimulateState(stateMachine);
     }
@@ -26,6 +27,10 @@ public class PlayerChoiceState extends State {
             return seasons;
         }
         return noOfSeasons;
+    }
+
+    private void importWelcomeMessage() {
+        StateUtils.printMessage("***Player Choice State***");
     }
 
 }

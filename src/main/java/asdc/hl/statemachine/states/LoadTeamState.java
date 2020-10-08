@@ -12,6 +12,7 @@ public class LoadTeamState extends State {
 
     @Override
     public State onRun() {
+        this.importWelcomeMessage();
         this.promptForTeamName();
         return new PlayerChoiceState(stateMachine);
     }
@@ -28,5 +29,9 @@ public class LoadTeamState extends State {
                 StateUtils.printErrorMessage("Please enter a valid team name to load.");
             }
         }
+    }
+
+    private void importWelcomeMessage() {
+        StateUtils.printMessage("***Load Team State***");
     }
 }

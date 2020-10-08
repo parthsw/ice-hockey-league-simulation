@@ -14,6 +14,7 @@ public class SimulateState extends State {
     public State onRun() {
         // TODO: Spawn off a nested state machine in milestone 2 by creating a new instance of StateMachine context class
         // TODO: and setting an initial state to a particular state
+        this.importWelcomeMessage();
         this.runNestedLeagueSimulationStateMachine(this.noOfSeasons);
         return null;
     }
@@ -24,4 +25,7 @@ public class SimulateState extends State {
         }
     }
 
+    private void importWelcomeMessage() {
+        StateUtils.printMessage("***Simulation State***");
+    }
 }
