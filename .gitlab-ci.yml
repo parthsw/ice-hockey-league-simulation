@@ -63,8 +63,6 @@ deploy:
     - eval $(ssh-agent -s)
     - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
   script:
-    - ssh "${DEPLOY_USER_TEST}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/*.zip"
-    - ssh "${DEPLOY_USER_TEST}@${DEPLOY_HOST}" "rm ~/$DEPLOY_DIR/application.properties"
     - file="application.properties"
     - echo "Driver=$DATABASE_DRIVER" > $file
     - echo "Password=$DATABASE_PASSWORD_TEST" >> $file
