@@ -32,6 +32,7 @@ public class LeagueTest {
         Assert.assertEquals(conference, league.getConferenceByName("Eastern Conference"));
     }
 
+    @Test
     public void getConferencesTest(){
         League league = new League();
         List<IConference> conferences = new ArrayList<>();
@@ -48,6 +49,7 @@ public class LeagueTest {
         Assert.assertEquals(conferences, league.getConferences());
     }
 
+    @Test
     public void getFreeAgentsTest(){
         League league = new League();
         List<IPlayer> freeAgents = new ArrayList<>();
