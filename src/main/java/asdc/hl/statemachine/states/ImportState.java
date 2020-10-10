@@ -1,6 +1,7 @@
 package asdc.hl.statemachine.states;
 
 import asdc.hl.database.Persistence;
+import asdc.hl.leaguemodel.IPersistence;
 import asdc.hl.leaguemodel.models.*;
 import asdc.hl.statemachine.StateMachine;
 import org.everit.json.schema.Schema;
@@ -18,9 +19,11 @@ public class ImportState extends State {
 
     private String filePath;
     private final String VALID = "VALID";
+    private IPersistence dbPersistence;
 
     public ImportState(StateMachine stateMachine) {
         super(stateMachine);
+        this.dbPersistence = new Persistence();
     }
 
     @Override
@@ -72,11 +75,7 @@ public class ImportState extends State {
 
     private List<String> isLeagueValid(ILeague league) {
         List<String> errors = new ArrayList<>();
-
         try {
-            // String leagueNameValidation = league.validateNameDuringImport();
-            // this.addDataValidationErrors(errors, leagueNameValidation);
-
             String leagueRulesValidation = league.validateBusinessRules();
             this.addDataValidationErrors(errors, leagueRulesValidation);
 
@@ -115,7 +114,7 @@ public class ImportState extends State {
 
     // TODO: Key should be part of a configuration file
     private ILeague constructLeague(JSONObject leagueJSON) {
-        ILeague league = new League(new Persistence());
+        ILeague league = new League(dbPersistence);
         league.setLeagueName(leagueJSON.getString("leagueName"));
 
         // conferences could be empty and that will create an empty ArrayList<IConference>
@@ -135,7 +134,7 @@ public class ImportState extends State {
         ArrayList<IPlayer> freeAgents = new ArrayList<>();
 
         for(Object playerJSON: playersJSON) {
-            IPlayer freeAgent = new Player(new Persistence());
+            IPlayer freeAgent = new Player(dbPersistence);
             freeAgent.setPlayerName(((JSONObject) playerJSON).getString("playerName"));
             freeAgent.setPlayerPosition(((JSONObject) playerJSON).getString("position"));
             freeAgent.setIsCaptain(((JSONObject) playerJSON).getBoolean("captain"));
@@ -146,7 +145,6 @@ public class ImportState extends State {
 
             freeAgents.add(freeAgent); // No need to set teamID or playerID
         }
-
         return freeAgents;
     }
 
@@ -154,7 +152,7 @@ public class ImportState extends State {
         ArrayList<IConference> conferences = new ArrayList<>();
 
         for(Object conferenceJSON: conferencesJSON) {
-            IConference conference = new Conference(new Persistence());
+            IConference conference = new Conference(dbPersistence);
 
             conference.setConferenceName(((JSONObject) conferenceJSON).getString("conferenceName"));
 
@@ -173,7 +171,7 @@ public class ImportState extends State {
         ArrayList<IDivision> divisions = new ArrayList<>();
 
         for(Object divisionJSON: divisionsJSON) {
-            IDivision division = new Division(new Persistence());
+            IDivision division = new Division(dbPersistence);
 
             division.setDivisionName(((JSONObject) divisionJSON).getString("divisionName"));
 
@@ -192,15 +190,15 @@ public class ImportState extends State {
         ArrayList<ITeam> teams = new ArrayList<>();
 
         for(Object teamJSON: teamsJSON) {
-            IManager manager = new Manager(new Persistence());
+            IManager manager = new Manager(dbPersistence);
             manager.setManagerName(((JSONObject) teamJSON).getString("generalManager"));
 
-            ICoach coach = new Coach(new Persistence());
+            ICoach coach = new Coach(dbPersistence);
             coach.setCoachName(((JSONObject) teamJSON).getString("headCoach"));
 
             ArrayList<IPlayer> players = this.constructPlayers(((JSONObject) teamJSON).getJSONArray("players"), PLAYER_TYPE.PLAYER);
 
-            ITeam team = new Team(new Persistence());
+            ITeam team = new Team(dbPersistence);
             team.setTeamName(((JSONObject) teamJSON).getString("teamName"));
             team.addManager(manager);
             team.addCoach(coach);
