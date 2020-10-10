@@ -20,17 +20,17 @@ public class CreateTeamStateTest {
     @Rule
     public final TextFromStandardInputStream inputMock = emptyStandardInputStream();
 
-    @BeforeClass
-    public static void setup() {
-        stateMachine = new StateMachine();
-        createTeamState = new CreateTeamState(stateMachine);
-    }
-
-    @Test
-    public void onRunTest() {
-        inputMock.provideLines("conferenceName", "divisionName", "teamName", "generalManager", "headCoach");
-        assertNull(createTeamState.onRun());
-        // assertTrue(createTeamState.onRun() instanceof PlayerChoiceState);
-    }
+//    @BeforeClass
+//    public static void setup() {
+//        stateMachine = new StateMachine();
+//        createTeamState = new CreateTeamState(stateMachine);
+//    }
+//
+//    @Test
+//    public void onRunTest() {
+//        inputMock.provideLines("conferenceName", "divisionName", "teamName", "generalManager", "headCoach");
+//        assertNull(createTeamState.onRun());
+//        // assertTrue(createTeamState.onRun() instanceof PlayerChoiceState);
+//    }
 
 }

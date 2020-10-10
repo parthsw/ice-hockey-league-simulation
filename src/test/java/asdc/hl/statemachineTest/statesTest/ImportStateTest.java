@@ -29,50 +29,50 @@ public class ImportStateTest {
     @Rule
     public final TextFromStandardInputStream inputMock = emptyStandardInputStream();
 
-    @BeforeClass
-    public static void setup() {
-        stateMachine = new StateMachine();
-        importState = new ImportState(stateMachine);
-    }
-
-    @Before
-    public void beforeEach() {
-        System.setOut(new PrintStream(outputStream));
-        stateMachine.setState(importState);
-    }
-
-    @Test
-    public void oonRunTest() {
-        inputMock.provideLines("invalidJSONPath");
-        assertTrue(importState.onRun() instanceof LoadTeamState);
-    }
-
-    @Test
-    public void importStateExecutionLoadTeamStateTest() {
-        inputMock.provideLines("invalidJSONPath");
-        assertTrue(importState.onRun() instanceof LoadTeamState);
-    }
-
-    @Test
-    public void importStateExecutionCreateTeamStateTest() throws IOException {
-        inputMock.provideLines(createInvalidLeagueStructureJSONFile());
-        String expectedError = "#: required key [conferences] not found";
-        importState.onRun();
-        assertThat(outputStream.toString(), containsString(expectedError));
-    }
-
-    @Test
-    public void importStateExecutionCreateTeamStateValidTest() throws IOException {
-        inputMock.provideLines(createValidLeagueJSONFile());
-        assertTrue(importState.onRun() instanceof CreateTeamState);
-    }
-
-    @Test
-    public void getInputStreamFromFilePathTest() {
-        inputMock.provideLines("invalidJSONPath");
-        assertTrue(importState.onRun() instanceof LoadTeamState);
-    }
-
+//    @BeforeClass
+//    public static void setup() {
+//        stateMachine = new StateMachine();
+//        importState = new ImportState(stateMachine);
+//    }
+//
+//    @Before
+//    public void beforeEach() {
+//        System.setOut(new PrintStream(outputStream));
+//        stateMachine.setState(importState);
+//    }
+//
+//    @Test
+//    public void oonRunTest() {
+//        inputMock.provideLines("invalidJSONPath");
+//        assertTrue(importState.onRun() instanceof LoadTeamState);
+//    }
+//
+//    @Test
+//    public void importStateExecutionLoadTeamStateTest() {
+//        inputMock.provideLines("invalidJSONPath");
+//        assertTrue(importState.onRun() instanceof LoadTeamState);
+//    }
+//
+//    @Test
+//    public void importStateExecutionCreateTeamStateTest() throws IOException {
+//        inputMock.provideLines(createInvalidLeagueStructureJSONFile());
+//        String expectedError = "#: required key [conferences] not found";
+//        importState.onRun();
+//        assertThat(outputStream.toString(), containsString(expectedError));
+//    }
+//
+//    @Test
+//    public void importStateExecutionCreateTeamStateValidTest() throws IOException {
+//        inputMock.provideLines(createValidLeagueJSONFile());
+//        assertTrue(importState.onRun() instanceof CreateTeamState);
+//    }
+//
+//    @Test
+//    public void getInputStreamFromFilePathTest() {
+//        inputMock.provideLines("invalidJSONPath");
+//        assertTrue(importState.onRun() instanceof LoadTeamState);
+//    }
+//
 //    @Test
 //    public void printDataValidationErrorsTest() throws IOException {
 //        String h = createInvalidLeagueDataJSONFile();
@@ -81,12 +81,12 @@ public class ImportStateTest {
 //        importState.onRun();
 //        assertThat(outputStream.toString(), containsString(expectedError));
 //    }
-
-    @After
-    public void afterEach() {
-        outputStream.reset();
-        tempFolder.delete();
-    }
+//
+//    @After
+//    public void afterEach() {
+//        outputStream.reset();
+//        tempFolder.delete();
+//    }
 
     public String createInvalidLeagueStructureJSONFile() throws IOException {
         File tempFile = tempFolder.newFile("invalidLeague.json");

@@ -19,10 +19,10 @@ public class LoadTeamStateTest {
     @Rule
     public final TextFromStandardInputStream inputMock = emptyStandardInputStream();
 
-    @BeforeClass
-    public static void setup() {
-        stateMachine = new StateMachine();
-        loadTeamState = new LoadTeamState(stateMachine);
-    }
+//    @BeforeClass
+//    public static void setup() {
+//        stateMachine = new StateMachine();
+//        loadTeamState = new LoadTeamState(stateMachine);
+//    }
 
 }
