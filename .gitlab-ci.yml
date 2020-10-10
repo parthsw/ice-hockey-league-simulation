@@ -55,7 +55,7 @@ test:
       junit:
         - build/surefire-reports/TEST-*.xml
   tags:
-    - ugrad
+    - docker.cs.dal.ca
 
 deploy:
   stage: deploy
