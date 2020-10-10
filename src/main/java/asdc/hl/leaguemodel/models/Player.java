@@ -77,6 +77,12 @@ public class Player implements IPlayer {
         return s == null || s.equals("");
     }
 
+    private boolean isPositionNotValid() {
+        return !(playerPosition.equalsIgnoreCase("goalie") ||
+                playerPosition.equalsIgnoreCase("forward") ||
+                playerPosition.equalsIgnoreCase("defense"));
+    }
+
     @Override
     public String validateNameDuringImport() {
         String validity = "Valid";
@@ -103,6 +109,9 @@ public class Player implements IPlayer {
     @Override
     public String validateBusinessRules() {
         String validity = "Valid";
+        if (isPositionNotValid()) {
+            validity = playerName + " has an invalid position.";
+        }
         return validity;
     }
 

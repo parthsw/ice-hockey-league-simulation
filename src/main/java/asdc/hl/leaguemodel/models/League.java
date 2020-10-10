@@ -127,9 +127,7 @@ public class League implements ILeague{
     @Override
     public String validateBusinessRules() {
         String validity = "Valid";
-        if (IsOddNumberOfConferences()) {
-            validity = leagueName + " - Number of conferences should be an even number";
-        }
+
         return validity;
     }
 

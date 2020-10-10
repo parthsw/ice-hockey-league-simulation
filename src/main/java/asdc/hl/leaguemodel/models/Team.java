@@ -212,12 +212,7 @@ public class Team implements ITeam {
     @Override
     public String validateBusinessRules() {
         String validity = "Valid";
-        if (isNumberOfPlayerNot20()) {
-            validity = teamName + " - The number of Players in this team are not equal to 20";
-        }
-        else if(isCaptainNot1()) {
-            validity = teamName + " - There can be only a single captain in the team";
-        }
+
         return validity;
     }
 

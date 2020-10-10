@@ -145,9 +145,7 @@ public class Conference implements IConference {
     @Override
     public String validateBusinessRules() {
         String validity = "Valid";
-        if (IsOddNumberOfDivisions()) {
-            validity = conferenceName + " - Number of divisions should be an even number";
-        }
+
         return validity;
     }
 
