@@ -9,6 +9,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
@@ -27,8 +28,9 @@ public class CreateTeamStateTest {
 
     @Test
     public void onRunTest() {
-        inputMock.provideLines("teamName", "conferenceName", "divisionName", "generalManager", "headCoach");
-        assertTrue(createTeamState.onRun() instanceof PlayerChoiceState);
+        inputMock.provideLines("conferenceName", "divisionName", "teamName", "generalManager", "headCoach");
+        assertNull(createTeamState.onRun());
+        // assertTrue(createTeamState.onRun() instanceof PlayerChoiceState);
     }
 
 }

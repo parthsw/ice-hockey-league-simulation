@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.sql.SQLException;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -27,13 +28,7 @@ public class MainTest {
     }
 
     @Test
-    public void mainTest() {
-        Main.main(null);
-        assertThat(outputStream.toString().trim(), containsString("Simulating the season number: 1"));
-    }
-
-    @Test
-    public void printWelcomeMessageTest() {
+    public void printWelcomeMessageTest() throws SQLException {
         Main.main(null);
         assertThat(outputStream.toString().trim(), containsString("*********************************************\n"));
         assertThat(outputStream.toString().trim(), containsString("***Welcome to the Hockey league Simulation***\n"));

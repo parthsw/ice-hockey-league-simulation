@@ -25,9 +25,4 @@ public class LoadTeamStateTest {
         loadTeamState = new LoadTeamState(stateMachine);
     }
 
-    @Test
-    public void onRunTest() {
-        inputMock.provideLines("existingTeamName");
-        assertTrue(loadTeamState.onRun() instanceof PlayerChoiceState);
-    }
 }

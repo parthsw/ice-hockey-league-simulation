@@ -1,9 +1,15 @@
 package asdc.hl.statemachine.states;
 
+import asdc.hl.leaguemodel.models.*;
 import asdc.hl.statemachine.StateMachine;
 
 public class CreateTeamState extends State {
-    // TODO: private Team newTeam = new Team();
+    private ITeam newTeam = new Team();
+    private ILeague inMemoryLeague;
+    private IConference newTeamConference;
+    private IDivision newTeamDivision;
+
+    private final String VALID = "VALID";
 
     public CreateTeamState(StateMachine stateMachine) {
         super(stateMachine);
@@ -11,96 +17,188 @@ public class CreateTeamState extends State {
 
     @Override
     public State onRun() {
-        this.importWelcomeMessage();
-        this.promptForNewTeam();
-        // this.initializeNewTeam();
-        // this.addTeamToLeague();
-        // this.persistImportedLeague();
-        return new PlayerChoiceState(stateMachine);
+        try {
+            this.initializeInMemoryLeague();
+            this.importWelcomeMessage();
+            newTeam = this.constructNewTeam();
+            this.addTeamToInMemoryLeague(newTeamConference, newTeamDivision, newTeam);
+            persistLeagueToDatabase(inMemoryLeague);
+
+            return new PlayerChoiceState(stateMachine);
+        }
+        catch(Exception exception) {
+            StateUtils.printErrorMessage(exception.getMessage());
+            return null;
+        }
     }
 
-    // TODO: Refactor these ugly repetitive prompts for creating a new team
-    // How do I dynamically pass the validation method?
-    private void promptForNewTeam() {
-        //1. Team Name
-        String teamName;
-        while(true) {
-            StateUtils.printMessage("Please provide name of the team you want to create:");
-            teamName = StateUtils.promptForUserInput();
-            boolean isTeamNameExist = isTeamNameExist();
-            if(isTeamNameExist) {
-                StateUtils.printErrorMessage("Please provide a valid team name that does not exist.");
-            } else {
-                break;
+    private void initializeInMemoryLeague() {
+        this.inMemoryLeague = stateMachine.getLeague();
+    }
+
+    private ITeam constructNewTeam() {
+        ITeam team;
+        this.newTeamConference = this.processConferenceName();
+        this.newTeamDivision = this.processDivisionName(this.newTeamConference);
+        team = this.processTeamName(this.newTeamDivision);
+        IManager manager = this.processManager();
+        ICoach coach = this.processCoach();
+        team.addManager(manager);
+        team.addCoach(coach);
+        return team;
+    }
+
+    private void addTeamToInMemoryLeague(IConference conference, IDivision division, ITeam team) {
+        for(IConference matchedConference: inMemoryLeague.getConferences()) {
+            if(matchedConference.getConferenceName().equalsIgnoreCase(conference.getConferenceName())) {
+                for(IDivision matchedDivision: conference.getDivisions()) {
+                    if(matchedDivision.getDivisionName().equalsIgnoreCase(division.getDivisionName())) {
+                        matchedDivision.addTeam(team);
+                        break;
+                    }
+                }
             }
         }
+    }
 
-        //2. Conference Name
+    private void persistLeagueToDatabase(ILeague league) {
+        league.save(); // Should return leagueID
+//        for(IPlayer freeAgent: league.getFreeAgents()) {
+//            // freeAgent.setLeagueID();
+//            freeAgent.save();
+//        }
+        for(IConference conference: league.getConferences()) {
+            conference.setLeagueID(league.getLeagueID());
+            conference.save(); // should return conferenceId
+
+            for(IDivision division: conference.getDivisions()) {
+                division.setConferenceID(conference.getConferenceID());
+                division.save(); // should return divisionId
+                division.setDivisionID(division.getDivisionID());
+
+                for(ITeam team: division.getTeams()) {
+                    team.setDivisionID(division.getDivisionID());
+                    team.save(); // should return teamId
+
+                    for(IPlayer player: team.getPlayers()) {
+                        player.setTeamID(team.getTeamID());
+                        player.save(); // should return playerId
+                    }
+                    for(IManager manager: team.getManagers()) {
+                        manager.setTeamID(team.getTeamID());
+                        manager.save(); // should return managerId
+                    }
+                    for(ICoach coach: team.getCoaches()) {
+                        coach.setTeamID(team.getTeamID());
+                        coach.save(); // should return coachId
+                    }
+                }
+            }
+        }
+    }
+
+    private IConference processConferenceName() {
+        IConference conference = new Conference();
         String conferenceName;
         while(true) {
             StateUtils.printMessage("Please provide name of the conference where the team belongs to:");
             conferenceName = StateUtils.promptForUserInput();
-            boolean isConferenceNameExist = isConferenceNameExist();
-            if(isConferenceNameExist) {
+            conference.setConferenceName(conferenceName.trim());
+            String conferenceNameValidation = conference.validateNameDuringCreate(inMemoryLeague.getConferences());
+            if(conferenceNameValidation.equalsIgnoreCase(VALID)) {
                 break;
             } else {
-                StateUtils.printErrorMessage("The provided conference name does not exist in the imported Hockey league.");
+                StateUtils.printErrorMessage(conferenceNameValidation);
             }
         }
 
-        //3. Division Name
+        for (IConference matchedConference : inMemoryLeague.getConferences()) {
+            if (matchedConference.getConferenceName().equalsIgnoreCase(conference.getConferenceName())) {
+                conference = matchedConference;
+                break;
+            }
+        }
+
+        return conference;
+    }
+
+    private IDivision processDivisionName(IConference matchedConference) {
+        IDivision division = new Division();
         String divisionName;
         while(true) {
             StateUtils.printMessage("Please provide name of the division where the team belongs to:");
             divisionName = StateUtils.promptForUserInput();
-            boolean isDivisionNameExist = isDivisionNameExist();
-            if(isDivisionNameExist) {
+            division.setDivisionName(divisionName.trim());
+
+            String divisionNameValidation = division.validateNameDuringCreate(matchedConference.getDivisions());
+            if(divisionNameValidation.equalsIgnoreCase(VALID)) {
                 break;
             } else {
-                StateUtils.printErrorMessage("The provided division name does not exist in the imported Hockey league.");
+                StateUtils.printErrorMessage(divisionNameValidation);
             }
         }
 
-        //4. General Manager Name
+        for (IDivision matchedDivision : matchedConference.getDivisions()) {
+            if (matchedDivision.getDivisionName().equalsIgnoreCase(division.getDivisionName())) {
+                division = matchedDivision;
+                break;
+            }
+        }
+
+        return division;
+    }
+
+    private ITeam processTeamName(IDivision matchedDivision) {
+        ITeam team = new Team();
+        String teamName;
+        while(true) {
+            StateUtils.printMessage("Please provide name of the team you want to create:");
+            teamName = StateUtils.promptForUserInput();
+            team.setTeamName(teamName);
+            String teamNameValidation = team.validateNameDuringCreate(matchedDivision.getTeams());
+            if(teamNameValidation.equalsIgnoreCase(VALID)) {
+                break;
+            } else {
+                StateUtils.printErrorMessage(teamNameValidation);
+            }
+        }
+        return team;
+    }
+
+    private IManager processManager() {
+        IManager manager = new Manager();
         String generalManagerName;
         while(true) {
             StateUtils.printMessage("Please provide name of team's general manager:");
             generalManagerName = StateUtils.promptForUserInput();
-            boolean isGeneralManagerNameValid = isConferenceNameExist();
-            if(isGeneralManagerNameValid) {
+            manager.setManagerName(generalManagerName.trim());
+
+            String generalManagerNameValidation = manager.validateName();
+            if(generalManagerNameValidation.equalsIgnoreCase(VALID)) {
                 break;
             } else {
-                StateUtils.printErrorMessage("Please provide valid name for team's general manager.");
+                StateUtils.printErrorMessage(generalManagerNameValidation);
             }
         }
+        return manager;
+    }
 
-        //5. Head Coach Name
+    private ICoach processCoach() {
+        ICoach coach = new Coach();
         String headCoachName;
         while(true) {
             StateUtils.printMessage("Please provide name of team's head coach:");
             headCoachName = StateUtils.promptForUserInput();
-            boolean isHeadCoachNameValid = isConferenceNameExist();
-            if(isHeadCoachNameValid) {
+            coach.setCoachName(headCoachName.trim());
+
+            String headCoachNameValidation = coach.validateName();
+            if(headCoachNameValidation.equalsIgnoreCase(VALID)) {
                 break;
             } else {
-                StateUtils.printErrorMessage("Please provide valid name for team's head coach.");
+                StateUtils.printErrorMessage(headCoachNameValidation);
             }
         }
-    }
-
-    private boolean isTeamNameExist() {
-        // TODO: Check in the league object model whether a team with same name exist + Put check for empty string
-        return false;
-    }
-
-    private boolean isConferenceNameExist() {
-        // TODO: Check in the league object model whether a conference with same name exist + Put check for empty string
-        return true;
-    }
-
-    private boolean isDivisionNameExist() {
-        // TODO: Check in the league object model whether a conference with same name exist + Put check for empty string
-        return true;
+        return coach;
     }
 
     private void importWelcomeMessage() {

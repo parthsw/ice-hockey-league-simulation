@@ -1,10 +1,13 @@
 package asdc.hl.statemachine;
 
+import asdc.hl.leaguemodel.models.ILeague;
+import asdc.hl.leaguemodel.models.League;
 import asdc.hl.statemachine.states.ImportState;
 import asdc.hl.statemachine.states.State;
 
 public class StateMachine {
     private State state;
+    private ILeague league;
     private int noOfSeasons;
 
     public StateMachine() {
@@ -31,5 +34,13 @@ public class StateMachine {
 
     public int getNoOfSeasons() {
         return this.noOfSeasons;
+    }
+
+    public void setLeague(ILeague league) {
+        this.league = league;
+    }
+
+    public ILeague getLeague() {
+        return league;
     }
 }

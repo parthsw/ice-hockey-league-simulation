@@ -38,6 +38,7 @@ public class ImportStateTest {
     @Before
     public void beforeEach() {
         System.setOut(new PrintStream(outputStream));
+        stateMachine.setState(importState);
     }
 
     @Test
@@ -54,7 +55,7 @@ public class ImportStateTest {
 
     @Test
     public void importStateExecutionCreateTeamStateTest() throws IOException {
-        inputMock.provideLines(createInvalidLeagueJSONFile());
+        inputMock.provideLines(createInvalidLeagueStructureJSONFile());
         String expectedError = "#: required key [conferences] not found";
         importState.onRun();
         assertThat(outputStream.toString(), containsString(expectedError));
@@ -72,12 +73,22 @@ public class ImportStateTest {
         assertTrue(importState.onRun() instanceof LoadTeamState);
     }
 
+//    @Test
+//    public void printDataValidationErrorsTest() throws IOException {
+//        String h = createInvalidLeagueDataJSONFile();
+//        inputMock.provideLines(h);
+//        String expectedError = "#: required key [conferences] not found";
+//        importState.onRun();
+//        assertThat(outputStream.toString(), containsString(expectedError));
+//    }
+
     @After
     public void afterEach() {
         outputStream.reset();
+        tempFolder.delete();
     }
 
-    public String createInvalidLeagueJSONFile() throws IOException {
+    public String createInvalidLeagueStructureJSONFile() throws IOException {
         File tempFile = tempFolder.newFile("invalidLeague.json");
         FileWriter file = new FileWriter(tempFile.getPath());
 
@@ -86,6 +97,26 @@ public class ImportStateTest {
 
         JSONObject leagueJSONObject = createLeague("Dalhousie Hockey League", new JSONArray(), freeAgents);
         leagueJSONObject.remove("conferences");
+
+        file.write(leagueJSONObject.toJSONString());
+        file.flush();
+        return tempFile.getPath();
+    }
+
+    public String createInvalidLeagueDataJSONFile() throws IOException {
+        File tempFile = tempFolder.newFile("invalidLeagueData.json");
+        FileWriter file = new FileWriter(tempFile.getPath());
+
+        JSONArray freeAgents = new JSONArray();
+        freeAgents.add(createPlayer("Agent One", "forward", false));
+
+        JSONObject leagueJSONObject = createLeague("Dalhousie Hockey League", new JSONArray(), freeAgents);
+
+        JSONArray divisions = new JSONArray();
+        divisions.add(createDivision("Atlantic", new JSONArray()));
+
+        JSONArray conferences = new JSONArray();
+        conferences.add(createConference("Eastern Conference", divisions));
 
         file.write(leagueJSONObject.toJSONString());
         file.flush();
