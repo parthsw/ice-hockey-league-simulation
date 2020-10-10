@@ -55,7 +55,7 @@ test:
       junit:
         - build/surefire-reports/TEST-*.xml
   tags:
-    - docker.cs.dal.ca
+    - dalfcs_gitlab_docker_ci
 
 deploy:
   stage: deploy
