@@ -1,10 +1,14 @@
 package asdc.hl.statemachine.states;
 
+import asdc.hl.database.Persistence;
+import asdc.hl.leaguemodel.IPersistence;
 import asdc.hl.leaguemodel.models.*;
 import asdc.hl.statemachine.StateMachine;
 
 public class CreateTeamState extends State {
-    private ITeam newTeam = new Team();
+    // TODO: to create a singleton persistence object
+    IPersistence dbPersistence = new Persistence();
+    private ITeam newTeam;
     private ILeague inMemoryLeague;
     private IConference newTeamConference;
     private IDivision newTeamDivision;
@@ -67,6 +71,7 @@ public class CreateTeamState extends State {
 //            // freeAgent.setLeagueID();
 //            freeAgent.save();
 //        }
+        // persistConferenceToDatabase()
         for(IConference conference: league.getConferences()) {
             conference.setLeagueID(league.getLeagueID());
             conference.save(); // should return conferenceId
@@ -98,7 +103,7 @@ public class CreateTeamState extends State {
     }
 
     private IConference processConferenceName() {
-        IConference conference = new Conference();
+        IConference conference = new Conference(dbPersistence);
         String conferenceName;
         while(true) {
             StateUtils.printMessage("Please provide name of the conference where the team belongs to:");
@@ -123,7 +128,7 @@ public class CreateTeamState extends State {
     }
 
     private IDivision processDivisionName(IConference matchedConference) {
-        IDivision division = new Division();
+        IDivision division = new Division(dbPersistence);
         String divisionName;
         while(true) {
             StateUtils.printMessage("Please provide name of the division where the team belongs to:");
@@ -149,7 +154,7 @@ public class CreateTeamState extends State {
     }
 
     private ITeam processTeamName(IDivision matchedDivision) {
-        ITeam team = new Team();
+        ITeam team = new Team(dbPersistence);
         String teamName;
         while(true) {
             StateUtils.printMessage("Please provide name of the team you want to create:");
@@ -166,7 +171,7 @@ public class CreateTeamState extends State {
     }
 
     private IManager processManager() {
-        IManager manager = new Manager();
+        IManager manager = new Manager(dbPersistence);
         String generalManagerName;
         while(true) {
             StateUtils.printMessage("Please provide name of team's general manager:");
@@ -184,7 +189,7 @@ public class CreateTeamState extends State {
     }
 
     private ICoach processCoach() {
-        ICoach coach = new Coach();
+        ICoach coach = new Coach(dbPersistence);
         String headCoachName;
         while(true) {
             StateUtils.printMessage("Please provide name of team's head coach:");

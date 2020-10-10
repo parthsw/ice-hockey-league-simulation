@@ -2,15 +2,18 @@ package asdc.hl.database;
 
 import java.sql.*;
 
-
 public class test {
 
-    DatabaseInitialize di = new DatabaseInitialize();
-    Connection conn = di.getConnection();
+    private DBConnection dbConnectionUtil = new DatabaseInitialize();
+    private Connection connection;
 
     public boolean insertIntoSaveState() {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoSaveState()}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoSaveState()}");
             myCall.execute();
             myCall.close();
             return true;
@@ -18,22 +21,20 @@ public class test {
             System.out.println("error in insert SaveState");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            // dbConnectionUtil.terminateStatement(myCall);
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public String insertIntoLeague(int saveID, String leagueName) {
         String leagueID = null;
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoLeague(?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+            myCall = connection.prepareCall("{call insertIntoLeague(?,?,?)}");
 
             myCall.setInt(1, saveID);
             myCall.setString(2, leagueName);
@@ -50,22 +51,20 @@ public class test {
             System.out.println("error in insert League");
             return null;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public String insertIntoConference(int saveID, int leagueID, String conferenceName) {
         String conferenceID = null;
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoConference(?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoConference(?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, leagueID);
             myCall.setString(3, conferenceName);
@@ -83,22 +82,20 @@ public class test {
             System.out.println("error in insert Conference");
             return null;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public String insertIntoDivision(int saveID, int conferenceID, String divisionName) {
         String divisionID = null;
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoDivision(?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoDivision(?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, conferenceID);
             myCall.setString(3, divisionName);
@@ -115,22 +112,20 @@ public class test {
             System.out.println("error in insert Division");
             return null;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public String insertIntoTeam(int saveID, int divisionID, String teamName) {
         String teamID = null;
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoTeam(?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoTeam(?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, divisionID);
             myCall.setString(3, teamName);
@@ -147,22 +142,20 @@ public class test {
             System.out.println("error in insert Team");
             return null;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public String insertIntoCoach(int saveID, int teamID, String coachName) {
         String coachID = null;
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoCoach(?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, teamID);
             myCall.setString(3, coachName);
@@ -179,22 +172,20 @@ public class test {
             System.out.println("error in insert Coach");
             return null;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public String insertIntoManager(int saveID, int teamID, String managerName) {
         String managerID = null;
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoManager(?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoManager(?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, teamID);
             myCall.setString(3, managerName);
@@ -211,23 +202,20 @@ public class test {
             System.out.println("error in insert Manager");
             return null;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public String insertIntoPlayer(int saveID, int teamID, String playerName, boolean captain, String playerPosition) {
         String playerID = null;
-
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoPlayer(?,?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoPlayer(?,?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, teamID);
             myCall.setString(3, playerName);
@@ -246,23 +234,20 @@ public class test {
             e.printStackTrace();
             return null;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public String insertIntoFreeAgent(int saveID, String playerName, boolean captain, String playerPosition) {
         String playerID = null;
-
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call insertIntoFreeAgent(?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoFreeAgent(?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setString(2, playerName);
             myCall.setBoolean(3, captain);
@@ -281,23 +266,19 @@ public class test {
             e.printStackTrace();
             return null;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
-
-
     public boolean removeFromCoach(int coachID, int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromCoach(?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromCoach(?,?)}");
             myCall.setInt(1, coachID);
             myCall.setInt(2, saveID);
             myCall.execute();
@@ -307,21 +288,19 @@ public class test {
             System.out.println("error in remove Coach");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public boolean removeFromConference(int conferenceID, int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromConference(?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromConference(?,?)}");
             myCall.setInt(1, conferenceID);
             myCall.setInt(2, saveID);
             myCall.execute();
@@ -331,21 +310,19 @@ public class test {
             System.out.println("error in remove conference");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public boolean removeFromDivision(int divisionID, int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromDivision(?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromDivision(?,?)}");
             myCall.setInt(1, divisionID);
             myCall.setInt(2, saveID);
             myCall.execute();
@@ -355,21 +332,19 @@ public class test {
             System.out.println("error in remove Division");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public boolean removeFromLeague(int leagueID, int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromLeague(?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromLeague(?,?)}");
 
             myCall.setInt(2, saveID);
             myCall.setInt(1, leagueID);
@@ -381,21 +356,19 @@ public class test {
             System.out.println("error in remove League");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public boolean removeFromManager(int managerID, int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromManager(?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromManager(?,?)}");
             myCall.setInt(1, managerID);
             myCall.setInt(2, saveID);
             myCall.execute();
@@ -405,21 +378,19 @@ public class test {
             System.out.println("error in remove Manager");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public boolean removeFromPlayer(int playerID, int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromPlayer(?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromPlayer(?,?)}");
             myCall.setInt(1, playerID);
             myCall.setInt(2, saveID);
             myCall.execute();
@@ -429,21 +400,19 @@ public class test {
             System.out.println("error in remove Player");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public boolean removeFromSaveState(int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromSaveState(?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromSaveState(?)}");
 
             myCall.setInt(1, saveID);
 
@@ -455,21 +424,19 @@ public class test {
             System.out.println("error in remove SaveState");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public boolean removeFromTeam(int teamID, int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromTeam(?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromTeam(?,?)}");
             myCall.setInt(1, teamID);
             myCall.setInt(2, saveID);
             myCall.execute();
@@ -479,21 +446,19 @@ public class test {
             System.out.println("error in remove Team");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
     public boolean removeFromFreeAgent(int freeAgentID, int saveID) {
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call removeFromFreeAgent(?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call removeFromFreeAgent(?,?)}");
             myCall.setInt(1, freeAgentID);
             myCall.setInt(2, saveID);
             myCall.execute();
@@ -503,24 +468,22 @@ public class test {
             System.out.println("error in remove Free Agent");
             return false;
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
     }
 
 
 
     public Object[] readCoach(int saveID, int coachID) {
+        CallableStatement myCall;
         Object[] obj = new Object[4];
         try {
-            CallableStatement myCall = conn.prepareCall("{call readCoach(?,?,?,?,?,?)}");
+            myCall = connection.prepareCall("{call readCoach(?,?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
             myCall.setInt(1, saveID);
             myCall.setInt(2, coachID);
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -543,23 +506,20 @@ public class test {
             return null;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 
     public Object[] readConference(int saveID, int conferenceID) {
         Object[] obj = new Object[4];
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call readConference(?,?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call readConference(?,?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, conferenceID);
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -582,23 +542,20 @@ public class test {
             return null;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 
     public Object[] readDivision(int saveID, int divisionID) {
         Object[] obj = new Object[4];
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call readDivision(?,?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call readDivision(?,?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, divisionID);
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -621,23 +578,20 @@ public class test {
             return null;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 
     public Object[] readLeague(int saveID, int leagueID) {
         Object[] obj = new Object[3];
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call readLeague(?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call readLeague(?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, leagueID);
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -658,23 +612,20 @@ public class test {
             return null;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 
     public Object[] readManager(int saveID, int managerID) {
         Object[] obj = new Object[4];
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call readManager(?,?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call readManager(?,?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, managerID);
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -691,29 +642,25 @@ public class test {
             myCall.close();
             return obj;
 
-
         } catch (SQLException e) {
             System.out.println("error in readManager");
             return null;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 
     public Object[] readPlayer(int saveID, int playerID) {
         Object[] obj = new Object[6];
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call readPlayer(?,?,?,?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call readPlayer(?,?,?,?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, playerID);
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -740,23 +687,20 @@ public class test {
             return null;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 
     public Object[] readTeam(int saveID, int teamID) {
         Object[] obj = new Object[4];
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call readTeam(?,?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call readTeam(?,?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, teamID);
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -779,23 +723,20 @@ public class test {
             return null;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 
     public Object[] readFreeAgent(int saveID, int freeAgentID) {
         Object[] obj = new Object[5];
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call readPlayer(?,?,?,?,?,?,?)}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call readPlayer(?,?,?,?,?,?,?)}");
             myCall.setInt(1, saveID);
             myCall.setInt(2, freeAgentID);
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -822,23 +763,20 @@ public class test {
             return null;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 
     public int readSaveState() {
         int count = 0;
+        CallableStatement myCall;
         try {
-            CallableStatement myCall = conn.prepareCall("{call readCoach()}");
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+
+            myCall = connection.prepareCall("{call readCoach()}");
             ResultSet result = myCall.executeQuery();
             while(result.next()){
                count++;
@@ -852,16 +790,9 @@ public class test {
             return 0;
 
         } finally {
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException ignored) {
-
-                }
-
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
             }
-
         }
-
     }
 }

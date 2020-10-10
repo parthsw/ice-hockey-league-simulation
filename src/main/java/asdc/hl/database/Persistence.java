@@ -3,20 +3,11 @@ package asdc.hl.database;
 import asdc.hl.leaguemodel.models.*;
 import asdc.hl.leaguemodel.IPersistence;
 
-
-import java.sql.SQLException;
-
 public class Persistence implements IPersistence {
     test obj = null;
     public Persistence(){
-        this.obj = new test();
-
+            this.obj = new test();
     }
-
-//    @Override
-//    public void saveFreeAgent(IFreeAgent player) {
-//        String result = this.obj.insertIntoFreeAgent(1, player.getPlayerName(), player.getIsCaptain(), player.getPlayerPosition());
-//    }
 
     @Override
     public void saveLeague(ILeague league) {
@@ -37,7 +28,7 @@ public class Persistence implements IPersistence {
 
     @Override
     public void loadConferenceWithName(String conferenceName, IConference conference) {
-//
+
     }
 
     @Override
