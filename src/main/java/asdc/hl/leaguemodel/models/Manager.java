@@ -9,10 +9,10 @@ public class Manager implements IManager{
 
     private IPersistence db;
 
-    public Manager(IPersistence p, int teamId) {
+    public Manager(IPersistence p) {
         this();
         db = p;
-        teamID = teamId;
+        // teamID = teamId;
     }
 
     public Manager() {

@@ -14,9 +14,9 @@ public class Conference implements IConference {
 
     private IPersistence db;
 
-    public Conference(IPersistence p, int leagueId) {
+    public Conference(IPersistence p) {
         this();
-        leagueID = leagueId;
+        // leagueID = leagueId;
         db = p;
     }
 

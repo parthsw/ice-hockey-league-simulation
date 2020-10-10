@@ -10,9 +10,9 @@ public class Coach implements ICoach{
 
     private IPersistence db;
 
-    public Coach(IPersistence p, int teamId) {
+    public Coach(IPersistence p) {
         this();
-        teamID = teamId;
+        // teamID = teamId;
         db = p;
     }
 

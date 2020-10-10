@@ -13,10 +13,10 @@ public class Division implements IDivision{
 
     private IPersistence db;
 
-    public Division(IPersistence p, int conferenceId) {
+    public Division(IPersistence p) {
         this();
         db = p;
-        conferenceID = conferenceId;
+        // conferenceID = conferenceId;
     }
 
     public Division() {

@@ -9,21 +9,14 @@ import java.sql.SQLException;
 public class Persistence implements IPersistence {
     test obj = null;
     public Persistence(){
-        try{
-            this.obj = new test();
-
-        }catch (SQLException ex){
-            System.out.println("object fail");
-            System.out.println(ex.getMessage());
-            return;
-        }
-    }
-
-    @Override
-    public void saveFreeAgent(IFreeAgent player) {
-        String result = this.obj.insertIntoFreeAgent(1, player.getPlayerName(), player.getIsCaptain(), player.getPlayerPosition());
+        this.obj = new test();
 
     }
+
+//    @Override
+//    public void saveFreeAgent(IFreeAgent player) {
+//        String result = this.obj.insertIntoFreeAgent(1, player.getPlayerName(), player.getIsCaptain(), player.getPlayerPosition());
+//    }
 
     @Override
     public void saveLeague(ILeague league) {

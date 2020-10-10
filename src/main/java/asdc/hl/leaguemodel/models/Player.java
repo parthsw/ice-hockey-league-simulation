@@ -11,10 +11,10 @@ public class Player implements IPlayer {
 
     private IPersistence db;
 
-    public Player(IPersistence p, int teamId) {
+    public Player(IPersistence p) {
         this();
         db = p;
-        teamID = teamId;
+        // teamID = teamId;
     }
 
     public Player() {

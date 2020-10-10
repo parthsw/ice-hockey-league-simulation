@@ -15,10 +15,10 @@ public class Team implements ITeam {
 
     private IPersistence db;
 
-    public Team(IPersistence p, int divisionId) {
+    public Team(IPersistence p) {
         this();
         db = p;
-        divisionID = divisionId;
+        // divisionID = divisionId;
     }
 
     public Team() {

@@ -2,7 +2,7 @@ package asdc.hl.leaguemodel.models;
 
 import asdc.hl.leaguemodel.IPersistence;
 
-public class FreeAgent implements IPlayer{
+public class FreeAgent implements IFreeAgent {
     private int playerID;
     private String playerName;
     private boolean isCaptain;
@@ -63,15 +63,6 @@ public class FreeAgent implements IPlayer{
         playerPosition = name;
     }
 
-    @Override
-    public int getTeamID() {
-        return teamID;
-    }
-
-    @Override
-    public void setTeamID(int id) {
-        teamID = id;
-    }
 
     private boolean isNullOrEmpty(String s) {
         return !(s == null || s.equals(""));
@@ -114,13 +105,13 @@ public class FreeAgent implements IPlayer{
         return validity;
     }
 
-    @Override
-    public void save() {
-        db.savePlayer(this);
-    }
-
-    @Override
-    public void load() {
-        db.loadPlayerWithName(playerName, this);
-    }
+//    @Override
+//    public void save() {
+//        db.savePlayer(this);
+//    }
+//
+//    @Override
+//    public void load() {
+//        db.loadPlayerWithName(playerName, this);
+//    }
 }
