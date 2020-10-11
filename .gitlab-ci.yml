@@ -43,7 +43,7 @@ build_prod:
   tags:
     - ugrad
   only:
-    - master
+    - release
 
 test:
   stage: test
@@ -100,4 +100,4 @@ deploy_prod:
   tags:
     - ugrad
   only:
-    - master
+    - release
