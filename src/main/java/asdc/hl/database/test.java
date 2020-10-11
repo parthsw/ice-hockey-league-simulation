@@ -44,7 +44,7 @@ public class test {
                 leagueID = result.getString("leagueID");
             }
             myCall.close();
-            System.out.println(leagueID);
+            //System.out.println(leagueID);
             return leagueID;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,7 +74,7 @@ public class test {
                 conferenceID = result.getString("conferenceID");
             }
             myCall.close();
-            System.out.println(conferenceID);
+           // System.out.println(conferenceID);
 
             return conferenceID;
         } catch (SQLException e) {
@@ -105,7 +105,7 @@ public class test {
                 divisionID = result.getString("divisionID");
             }
             myCall.close();
-            System.out.println(divisionID);
+           // System.out.println(divisionID);
             return divisionID;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,7 +135,7 @@ public class test {
                 teamID = result.getString("teamID");
             }
             myCall.close();
-            System.out.println(teamID);
+            //System.out.println(teamID);
             return teamID;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,7 +165,7 @@ public class test {
                 coachID = result.getString("coachID");
             }
             myCall.close();
-            System.out.println(coachID);
+          //  System.out.println(coachID);
             return coachID;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -195,7 +195,7 @@ public class test {
                 managerID = result.getString("managerID");
             }
             myCall.close();
-            System.out.println(managerID);
+        //    System.out.println(managerID);
             return managerID;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -227,7 +227,7 @@ public class test {
                 playerID = result.getString("playerID");
             }
             myCall.close();
-            System.out.println(playerID);
+        //    System.out.println(playerID);
             return playerID;
         } catch (SQLException e) {
             System.out.println("error in insert player");
@@ -258,7 +258,7 @@ public class test {
                 playerID = result.getString("freeAgentID");
             }
             myCall.close();
-            System.out.println(playerID);
+       //     System.out.println(playerID);
             return playerID;
         } catch (SQLException e) {
             e.printStackTrace();
