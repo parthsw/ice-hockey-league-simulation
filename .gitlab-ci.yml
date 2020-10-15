@@ -43,7 +43,7 @@ build_prod:
   tags:
     - ugrad
   only:
-    - master
+    - release
 
 test:
   stage: test
@@ -88,11 +88,11 @@ deploy_prod:
     - eval $(ssh-agent -s)
     - echo "$DEPLOY_SSH_KEY_PROD" | tr -d '\r' | ssh-add -
   script:
-    - file="application.properties"
-    - echo "Driver=$DATABASE_DRIVER"
-    - echo "Password=$DATABASE_PASSWORD_PROD"
-    - echo "Url=$DATABASE_URL_PROD"
-    - echo "Username=$DATABASE_USERNAME_PROD"
+    - file="application.properties" 
+    - echo "Driver=$DATABASE_DRIVER" > $file
+    - echo "Password=$DATABASE_PASSWORD_PROD" >> $file
+    - echo "Url=$DATABASE_URL_PROD" >> $file
+    - echo "Username=$DATABASE_USERNAME_PROD" >> $file
     - cat $file
     - zip -r ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip . -i /build/libs/*.jar
     - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER_PROD}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_REF_NAME}_${CI_COMMIT_SHORT_SHA}.zip"
@@ -100,4 +100,4 @@ deploy_prod:
   tags:
     - ugrad
   only:
-    - master
+    - release
