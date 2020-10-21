@@ -18,7 +18,7 @@ public class storedProcedures {
             myCall.registerOutParameter(2, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                leagueID = result.getString("leagueID");
+                leagueID = result.getString("lastID");
             }
             myCall.close();
             return leagueID;
@@ -46,7 +46,7 @@ public class storedProcedures {
             myCall.registerOutParameter(3, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                conferenceID = result.getString("conferenceID");
+                conferenceID = result.getString("lastID");
             }
             myCall.close();
             return conferenceID;
@@ -74,7 +74,7 @@ public class storedProcedures {
             myCall.registerOutParameter(3, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                divisionID = result.getString("divisionID");
+                divisionID = result.getString("lastID");
             }
             myCall.close();
             return divisionID;
@@ -103,7 +103,7 @@ public class storedProcedures {
             myCall.registerOutParameter(4, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                teamID = result.getString("teamID");
+                teamID = result.getString("lastID");
             }
             myCall.close();
             return teamID;
@@ -136,7 +136,7 @@ public class storedProcedures {
             myCall.registerOutParameter(8, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                coachID = result.getString("coachID");
+                coachID = result.getString("lastID");
             }
             myCall.close();
             return coachID;
@@ -165,7 +165,7 @@ public class storedProcedures {
             myCall.registerOutParameter(4, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                managerID = result.getString("managerID");
+                managerID = result.getString("lastID");
             }
             myCall.close();
             return managerID;
@@ -203,7 +203,7 @@ public class storedProcedures {
             myCall.registerOutParameter(12, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                playerID = result.getString("playerID");
+                playerID = result.getString("lastID");
             }
             myCall.close();
             return playerID;
@@ -239,7 +239,7 @@ public class storedProcedures {
             myCall.registerOutParameter(11, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                playerID = result.getString("freeAgentID");
+                playerID = result.getString("lastID");
             }
             myCall.close();
             //    System.out.println(playerID);
@@ -248,6 +248,97 @@ public class storedProcedures {
             e.printStackTrace();
             System.out.println("error in insert player");
             e.printStackTrace();
+            return null;
+        } finally {
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
+            }
+        }
+    }
+
+    public void interTeamTrade(int toTeamID, int playerID){
+        CallableStatement myCall;
+        String status="interTeamTrade failed";
+        try {
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+            myCall = connection.prepareCall("{call interTeamTrade(?,?,?)}");
+            myCall.setInt(1, toTeamID);
+            myCall.setInt(2, playerID);
+            myCall.registerOutParameter(3, Types.VARCHAR);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                status = result.getString("status");
+            }
+            System.out.println(status);
+            myCall.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in interTeamTrade");
+        } finally {
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
+            }
+        }
+
+    }
+
+    public String freeToTeamTrade(int freeID, int teamID, boolean isCaptain) {
+        String playerID = null;
+        String status = "Trade failed";
+        CallableStatement myCall;
+        try {
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+            myCall = connection.prepareCall("{call freeToTeamTrade(?,?,?,?,?)}");
+
+            myCall.setInt(1, freeID);
+            myCall.setInt(2, teamID);
+            myCall.setBoolean(3, isCaptain);
+            myCall.registerOutParameter(4, Types.VARCHAR);
+            myCall.registerOutParameter(5, Types.INTEGER);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                playerID = result.getString("lastID");
+                status = result.getString("status");
+            }
+            myCall.close();
+            System.out.println(status);
+            return playerID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in freeToTeamTrade");
+            return null;
+        } finally {
+            if (connection != null) {
+                dbConnectionUtil.terminateConnection();
+            }
+        }
+    }
+
+    public String teamToFreeTrade(int playerID, int leagueID) {
+        String freeID = null;
+        String status = "Trade failed";
+        CallableStatement myCall;
+        try {
+            dbConnectionUtil = new DatabaseInitialize();
+            connection = dbConnectionUtil.getConnection();
+            myCall = connection.prepareCall("{call teamToFreeTrade(?,?,?,?)}");
+
+            myCall.setInt(1, playerID);
+            myCall.setInt(2, leagueID);
+            myCall.registerOutParameter(3, Types.INTEGER);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                freeID = result.getString("lastID");
+                status = result.getString("status");
+            }
+            myCall.close();
+            System.out.println(status);
+            return freeID;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in freeToTeamTrade");
             return null;
         } finally {
             if (connection != null) {
