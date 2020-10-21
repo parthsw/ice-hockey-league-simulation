@@ -1,4 +1,4 @@
 package com.IceHockeyLeague.LeagueManager.FreeAgent;
 
-public class FreeAgentPersistence {
+public class FreeAgentPersistence implements IFreeAgentPersistence {
 }
