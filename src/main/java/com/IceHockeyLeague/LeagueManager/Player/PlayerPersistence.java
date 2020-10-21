@@ -1,4 +1,4 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
-public class PlayerPersistence {
+public class PlayerPersistence implements IPlayerPersistence {
 }

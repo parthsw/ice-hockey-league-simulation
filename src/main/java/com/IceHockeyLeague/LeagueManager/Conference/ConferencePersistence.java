@@ -1,4 +1,4 @@
 package com.IceHockeyLeague.LeagueManager.Conference;
 
-public class ConferencePersistence {
+public class ConferencePersistence implements IConferencePersistence {
 }

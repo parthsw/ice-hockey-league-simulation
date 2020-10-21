@@ -1,4 +1,4 @@
 package com.IceHockeyLeague.LeagueManager.Division;
 
-public class DivisionPersistence {
+public class DivisionPersistence implements IDivisionPersistence {
 }

@@ -1,4 +1,4 @@
-package asdc.hl.io;
+package com.IO;
 
 import java.util.Scanner;
 

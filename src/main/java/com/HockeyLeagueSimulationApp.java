@@ -1,22 +1,30 @@
 package com;
 
-import com.statemachine.StateMachine;
-import com.statemachine.states.StateUtils;
-
-import java.sql.SQLException;
-
+import com.IO.AbstractIOFactory;
+import com.IO.IOFactory;
+import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
+import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
+import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.IceHockeyLeague.StateMachine.States.AbstractState;
 
 public class HockeyLeagueSimulationApp {
-    public static void main(String[] args) throws SQLException {
-        HockeyLeagueSimulationApp.printWelcomeMessage();
-        StateMachine leagueStateMachine = new StateMachine();
-        leagueStateMachine.run();
+    public static void main(String[] args) {
+        initializeFactories();
+        runApp();
     }
 
-    private static void printWelcomeMessage() {
-        String welcomeMessage = "*********************************************\n" +
-                "***Welcome to the Hockey league Simulation***\n" +
-                "*********************************************\n";
-        StateUtils.printMessage(welcomeMessage);
+    private static void initializeFactories() {
+        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
+        AbstractIOFactory.setFactory(new IOFactory());
+        AbstractLeagueManagerFactory.setFactory(new LeagueManagerFactory());
+        AbstractStateMachineFactory.setFactory(new StateMachineFactory());
+    }
+
+    private static void runApp() {
+        AbstractState importState = AbstractStateMachineFactory.getFactory().getImportState();
+        AbstractStateMachineFactory.getFactory().getStateMachine(importState).onExecution();
     }
 }

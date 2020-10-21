@@ -1,4 +1,4 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
-public class TeamPersistence {
+public class TeamPersistence implements ITeamPersistence {
 }

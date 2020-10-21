@@ -1,4 +1,4 @@
-package asdc.hl.io;
+package com.IO;
 
 public interface IAppOutput {
     public void display(String message);
