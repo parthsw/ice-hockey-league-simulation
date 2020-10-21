@@ -6,12 +6,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.*;
 
-import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+// import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
 
-import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
+// import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
 public class ImportStateTest {
     private static State importState;
@@ -20,9 +20,9 @@ public class ImportStateTest {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
-
-    @Rule
-    public final TextFromStandardInputStream inputMock = emptyStandardInputStream();
+//
+//    @Rule
+//    public final TextFromStandardInputStream inputMock = emptyStandardInputStream();
 
 //    @BeforeClass
 //    public static void setup() {

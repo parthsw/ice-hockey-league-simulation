@@ -3,17 +3,17 @@ package com.statemachineTest;
 import com.statemachine.StateMachine;
 import com.statemachine.states.State;
 import org.junit.*;
-
-import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
-import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
+//
+//import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+//import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream;
 
 public class StateMachineTest {
     private static StateMachine stateMachine;
     private static State createTeamState;
     private static State importState;
-
-    @Rule
-    public final TextFromStandardInputStream inputMock = emptyStandardInputStream();
+//
+//    @Rule
+//    public final TextFromStandardInputStream inputMock = emptyStandardInputStream();
 
 //    @BeforeClass
 //    public static void setup() {
