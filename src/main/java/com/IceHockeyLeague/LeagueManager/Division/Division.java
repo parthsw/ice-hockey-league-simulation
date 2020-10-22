@@ -12,32 +12,32 @@ public class Division implements IDivision {
 
     @Override
     public int getDivisionID() {
-        return 0;
+        return divisionID;
     }
 
     @Override
     public void setDivisionID(int id) {
-
+        divisionID = id;
     }
 
     @Override
     public String getDivisionName() {
-        return null;
+        return divisionName;
     }
 
     @Override
     public void setDivisionName(String name) {
-
+        divisionName = name;
     }
 
     @Override
     public int getConferenceID() {
-        return 0;
+        return conferenceID;
     }
 
     @Override
     public void setConferenceID(int id) {
-
+        conferenceID = id;
     }
 
     @Override
@@ -47,17 +47,17 @@ public class Division implements IDivision {
 
     @Override
     public void addTeam(ITeam team) {
-
+        teams.add(team);
     }
 
     @Override
     public List<ITeam> getTeams() {
-        return null;
+        return teams;
     }
 
     @Override
     public void setTeams(List<ITeam> teams) {
-
+        this.teams = teams;
     }
 
     @Override

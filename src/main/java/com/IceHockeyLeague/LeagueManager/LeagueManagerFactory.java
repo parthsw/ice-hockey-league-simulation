@@ -3,7 +3,6 @@ package com.IceHockeyLeague.LeagueManager;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
-import com.IceHockeyLeague.LeagueManager.FreeAgent.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.Manager.*;
 import com.IceHockeyLeague.LeagueManager.Player.*;
@@ -16,6 +15,7 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     private IDivisionPersistence divisionDB = null;
     private ITeamPersistence teamDB = null;
     private IPlayerPersistence playerDB = null;
+    private ITeamPlayerPersistence teamPlayerDB = null;
     private IFreeAgentPersistence freeAgentDB = null;
     private ICoachPersistence coachDB = null;
     private IManagerPersistence managerDB = null;
@@ -91,6 +91,24 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     }
 
     @Override
+    public IPlayerStats getPlayerStats() {
+        return new PlayerStats();
+    }
+
+    @Override
+    public ITeamPlayer getTeamPlayer() {
+        return new TeamPlayer();
+    }
+
+    @Override
+    public ITeamPlayerPersistence getTeamPlayerDB() {
+        if(teamPlayerDB == null) {
+            teamPlayerDB = new TeamPlayerPersistence();
+        }
+        return teamPlayerDB;
+    }
+
+    @Override
     public IFreeAgent getFreeAgent() {
         return new FreeAgent();
     }
@@ -106,6 +124,11 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public ICoach getCoach() {
         return new Coach();
+    }
+
+    @Override
+    public ICoachStats getCoachStats() {
+        return new CoachStats();
     }
 
     @Override

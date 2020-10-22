@@ -72,14 +72,8 @@ public class ImportState extends AbstractState {
                 ILeagueCreator leagueCreator = AbstractLeagueManagerFactory.getFactory().getLeagueCreator();
                 ILeague league = leagueCreator.createLeague(leagueJson);
 
-                boolean isValidLeague = league.isValid();
-
-                if(isValidLeague) {
-                    return AbstractStateMachineFactory.getFactory().getCreateTeamState();
-                } else {
-                    return null;
-                }
-
+                this.setLeague(league);
+                return AbstractStateMachineFactory.getFactory().getCreateTeamState();
             } else {
                 return null;
             }

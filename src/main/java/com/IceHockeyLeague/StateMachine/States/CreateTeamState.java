@@ -6,7 +6,7 @@ import com.IO.IAppOutput;
 public class CreateTeamState extends AbstractState {
 
     public CreateTeamState(IAppInput appInput, IAppOutput appOutput) {
-
+this.getLeague();
     }
 
     @Override
