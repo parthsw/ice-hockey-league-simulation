@@ -131,6 +131,8 @@ public class LeagueCreator implements ILeagueCreator {
         playerStats.setShooting(((JSONObject) playerJson).getInt(SHOOTING));
         playerStats.setChecking(((JSONObject) playerJson).getInt(CHECKING));
         playerStats.setSaving(((JSONObject) playerJson).getInt(SAVING));
+        playerStats.setStrength(playerStats.calculateStrength());
+
         player.setPlayerStats(playerStats);
 
         return player;
