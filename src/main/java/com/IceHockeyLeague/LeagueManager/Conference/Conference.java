@@ -12,32 +12,32 @@ public class Conference implements IConference {
 
     @Override
     public int getConferenceID() {
-        return 0;
+        return conferenceID;
     }
 
     @Override
     public void setConferenceID(int id) {
-
+        conferenceID = id;
     }
 
     @Override
     public String getConferenceName() {
-        return null;
+        return conferenceName;
     }
 
     @Override
     public void setConferenceName(String name) {
-
+        conferenceName = name;
     }
 
     @Override
     public int getLeagueID() {
-        return 0;
+        return leagueID;
     }
 
     @Override
     public void setLeagueID(int id) {
-
+        leagueID = id;
     }
 
     @Override
@@ -47,17 +47,17 @@ public class Conference implements IConference {
 
     @Override
     public void addDivision(IDivision division) {
-
+        divisions.add(division);
     }
 
     @Override
     public List<IDivision> getDivisions() {
-        return null;
+        return divisions;
     }
 
     @Override
     public void setDivisions(List<IDivision> divisions) {
-
+        this.divisions = divisions;
     }
 
     @Override

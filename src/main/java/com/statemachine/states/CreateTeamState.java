@@ -49,7 +49,7 @@ public class CreateTeamState extends State {
         ICoach coach = this.processCoach();
         team.addManager(manager);
         team.addCoach(coach);
-        return team;    
+        return team;
     }
 
     private void addTeamToInMemoryLeague(IConference conference, IDivision division, ITeam team) {

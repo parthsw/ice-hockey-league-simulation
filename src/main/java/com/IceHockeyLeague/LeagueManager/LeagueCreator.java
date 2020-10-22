@@ -1,8 +1,13 @@
 package com.IceHockeyLeague.LeagueManager;
 
+import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
@@ -53,7 +58,7 @@ public class LeagueCreator implements ILeagueCreator {
         league.setLeagueName(leagueJson.getString(LEAGUE_NAME));
 
         league.setConferences(createConferenceList(leagueJson.getJSONArray(CONFERENCES)));
-        league.setFreeAgents(null);
+        league.setFreeAgents(createFreeAgentList(leagueJson.getJSONArray(FREE_AGENTS)));
         // TODO: set gamePlayConfig
         league.setCoaches(createCoachList(leagueJson.getJSONArray(COACHES)));
         league.setManagers(createManagerList(leagueJson.getJSONArray(GENERAL_MANAGERS)));
@@ -101,7 +106,7 @@ public class LeagueCreator implements ILeagueCreator {
         team.setTeamName(((JSONObject) teamJson).getString(TEAM_NAME));
         team.setManager(createManager(((JSONObject) teamJson).getString(GENERAL_MANAGER)));
         team.setCoach(createCoach(((JSONObject) teamJson).getJSONObject(HEAD_COACH)));
-        team.setPlayers(null); // TODO;
+        team.setPlayers(createTeamPlayerList(((JSONObject) teamJson).getJSONArray(PLAYERS)));
 
         return team;
     }
@@ -112,6 +117,64 @@ public class LeagueCreator implements ILeagueCreator {
             teams.add(createTeam(team));
         }
         return teams;
+    }
+
+    private IPlayer createPlayer(Object playerJson) {
+        IPlayer player = AbstractLeagueManagerFactory.getFactory().getPlayer();
+
+        player.setPlayerName(((JSONObject) playerJson).getString(PLAYER_NAME));
+        player.setPlayerAge(((JSONObject) playerJson).getInt(AGE));
+
+        IPlayerStats playerStats = AbstractLeagueManagerFactory.getFactory().getPlayerStats();
+        playerStats.setPosition(((JSONObject) playerJson).getString(POSITION));
+        playerStats.setSkating(((JSONObject) playerJson).getInt(SKATING));
+        playerStats.setShooting(((JSONObject) playerJson).getInt(SHOOTING));
+        playerStats.setChecking(((JSONObject) playerJson).getInt(CHECKING));
+        playerStats.setSaving(((JSONObject) playerJson).getInt(SAVING));
+        playerStats.setStrength(playerStats.calculateStrength());
+
+        player.setPlayerStats(playerStats);
+
+        return player;
+    }
+
+    private ITeamPlayer createTeamPlayer(Object playerJson) {
+        ITeamPlayer teamPlayer = AbstractLeagueManagerFactory.getFactory().getTeamPlayer();
+        teamPlayer.setIsCaptain(((JSONObject) playerJson).getBoolean(CAPTAIN));
+
+        IPlayer player = createPlayer(playerJson);
+        teamPlayer.setPlayerAge(player.getPlayerAge());
+        teamPlayer.setPlayerName(player.getPlayerName());
+        teamPlayer.setPlayerStats(player.getPlayerStats());
+
+        return teamPlayer;
+    }
+
+    private List<ITeamPlayer> createTeamPlayerList(JSONArray teamPlayerJson) {
+        List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        for (Object teamPlayer : teamPlayerJson) {
+            teamPlayers.add(createTeamPlayer(teamPlayer));
+        }
+        return teamPlayers;
+    }
+
+    private IFreeAgent createFreeAgent(Object playerJson) {
+        IFreeAgent freeAgent = AbstractLeagueManagerFactory.getFactory().getFreeAgent();
+
+        IPlayer player = createPlayer(playerJson);
+        freeAgent.setPlayerAge(player.getPlayerAge());
+        freeAgent.setPlayerName(player.getPlayerName());
+        freeAgent.setPlayerStats(player.getPlayerStats());
+
+        return freeAgent;
+    }
+
+    private List<IFreeAgent> createFreeAgentList(JSONArray freeAgentJson) {
+        List<IFreeAgent> freeAgents = new ArrayList<>();
+        for (Object freeAgent : freeAgentJson) {
+            freeAgents.add(createFreeAgent(freeAgent));
+        }
+        return freeAgents;
     }
 
     private IManager createManager(String generalManager) {
@@ -132,12 +195,20 @@ public class LeagueCreator implements ILeagueCreator {
         ICoach coach = AbstractLeagueManagerFactory.getFactory().getCoach();
 
         coach.setCoachName(((JSONObject) coachJson).getString(COACH_NAME));
-        coach.setSkating(((JSONObject) coach).getFloat(SKATING));
-        coach.setShooting(((JSONObject) coach).getFloat(SHOOTING));
-        coach.setChecking(((JSONObject) coach).getFloat(CHECKING));
-        coach.setSaving(((JSONObject) coach).getFloat(SAVING));
+        coach.setCoachStats(createCoachStats(coachJson));
 
         return coach;
+    }
+
+    private ICoachStats createCoachStats(Object coachJson) {
+        ICoachStats coachStats = AbstractLeagueManagerFactory.getFactory().getCoachStats();
+
+        coachStats.setSkating(((JSONObject) coachJson).getFloat(SKATING));
+        coachStats.setShooting(((JSONObject) coachJson).getFloat(SHOOTING));
+        coachStats.setChecking(((JSONObject) coachJson).getFloat(CHECKING));
+        coachStats.setSaving(((JSONObject) coachJson).getFloat(SAVING));
+
+        return coachStats;
     }
 
     private List<ICoach> createCoachList(JSONArray coachesJson) {

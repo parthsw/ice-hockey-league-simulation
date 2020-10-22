@@ -5,10 +5,7 @@ public class Coach implements ICoach {
     private String coachName;
     private int teamID;
     private int leagueID;
-    private float skating;
-    private float shooting;
-    private float checking;
-    private float saving;
+    private ICoachStats coachStats;
 
     @Override
     public int getCoachID() {
@@ -51,43 +48,13 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public float getSkating() {
-        return skating;
+    public ICoachStats getCoachStats() {
+        return coachStats;
     }
 
     @Override
-    public void setSkating(float value) {
-        skating = value;
-    }
-
-    @Override
-    public float getShooting() {
-        return shooting;
-    }
-
-    @Override
-    public void setShooting(float value) {
-        shooting = value;
-    }
-
-    @Override
-    public float getChecking() {
-        return checking;
-    }
-
-    @Override
-    public void setChecking(float value) {
-        checking = value;
-    }
-
-    @Override
-    public float getSaving() {
-        return saving;
-    }
-
-    @Override
-    public void setSaving(float value) {
-        saving = value;
+    public void setCoachStats(ICoachStats stats) {
+        coachStats = stats;
     }
 
     @Override
