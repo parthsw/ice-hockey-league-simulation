@@ -13,17 +13,8 @@ public interface ICoach {
     int getLeagueID();
     void setLeagueID(int id);
 
-    float getSkating();
-    void setSkating(float value);
-
-    float getShooting();
-    void setShooting(float value);
-
-    float getChecking();
-    void setChecking(float value);
-
-    float getSaving();
-    void setSaving(float value);
+    ICoachStats getCoachStats();
+    void setCoachStats(ICoachStats coachStats);
 
     boolean isValid();
 
