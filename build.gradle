@@ -19,7 +19,7 @@ dependencies {
 jar {
     manifest {
         attributes (
-            'Main-Class': 'asdc.hl.Main'
+            'Main-Class': 'com.HockeyLeagueSimulationApp'
         )
     }
     from {

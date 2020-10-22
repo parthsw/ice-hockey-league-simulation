@@ -9,10 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class CommandLineOutputTest {
-    //private final InputStream systemIn = System.in;
     private final PrintStream systemOut = System.out;
 
-    // private ByteArrayInputStream testIn;
     private ByteArrayOutputStream testOutput;
 
     @BeforeClass
@@ -39,7 +37,8 @@ public class CommandLineOutputTest {
     public void displayTest() {
         IAppOutput appOutput = AbstractIOFactory.getFactory().getCommandLineOutput();
         appOutput.display("Hockey Simulation League");
-        Assert.assertEquals("Hockey Simulation League\r\n", getOutput());
+
+        Assert.assertTrue(getOutput().contains("Hockey Simulation League"));
     }
 
     @Test
@@ -47,6 +46,7 @@ public class CommandLineOutputTest {
         IAppOutput appOutput = AbstractIOFactory.getFactory().getCommandLineOutput();
         appOutput.displayError("Error in hockey league simulation");
         String expectedErrorOutput = "\033[0;31m" + "Error in hockey league simulation" + "\033[0m" + "\r\n";
-        Assert.assertEquals(expectedErrorOutput, getOutput());
+
+        Assert.assertTrue(getOutput().contains(expectedErrorOutput));
     }
 }
