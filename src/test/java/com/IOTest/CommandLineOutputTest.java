@@ -45,7 +45,7 @@ public class CommandLineOutputTest {
     public void displayErrorTest() {
         IAppOutput appOutput = AbstractIOFactory.getFactory().getCommandLineOutput();
         appOutput.displayError("Error in hockey league simulation");
-        String expectedErrorOutput = "\033[0;31m" + "Error in hockey league simulation" + "\033[0m" + "\r\n";
+        String expectedErrorOutput = "\033[0;31m" + "Error in hockey league simulation" + "\033[0m";
 
         Assert.assertTrue(getOutput().contains(expectedErrorOutput));
     }
