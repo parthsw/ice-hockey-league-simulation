@@ -8,8 +8,16 @@ public interface IPlayer {
     int getPlayerAge();
     void setPlayerAge(int age);
 
+    boolean getIsInjured();
+    void setIsInjured(boolean isInjured);
+
+    boolean getIsRetired();
+    void setIsRetired(boolean isRetired);
+
     IPlayerStats getPlayerStats();
     void setPlayerStats(IPlayerStats playerStats);
+
+    int calculateStrength(IPlayerStats stats);
 
     boolean isValid();
 }
