@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Division;
 
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 
@@ -22,4 +23,9 @@ public interface IDivision {
 
     boolean saveDivision(IDivisionPersistence divisionDB);
     boolean loadTeams(ITeamPersistence teamDB, List<ITeam> teams);
+
+    boolean isNullOrEmpty(String divsionName);
+
+    boolean isDivisionNameExist(List<IDivision> divisions);
+
 }
