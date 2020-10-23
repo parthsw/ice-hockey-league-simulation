@@ -1,9 +1,13 @@
 package com.IceHockeyLeague.LeagueManager.League;
 
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
+import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
+import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
+import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 
 import java.util.List;
@@ -35,5 +39,12 @@ public interface ILeague {
     List<IManager> getManagers();
     void setManagers(List<IManager> managers);
 
-    boolean isValid();
+    boolean saveCompleteLeague();
+    boolean loadCompleteLeague(int leagueId);
+    boolean saveLeague(ILeaguePersistence leagueDB);
+    boolean loadLeague(ILeaguePersistence leagueDB);
+    boolean loadConferences(IConferencePersistence conferenceDB, List<IConference> conferences);
+    boolean loadLeagueManagers(IManagerPersistence managerDB, List<IManager> managers);
+    boolean loadLeagueCoaches(ICoachPersistence coachDB, List<ICoach> coaches);
+    boolean loadLeagueFreeAgents(IFreeAgentPersistence freeAgentDB, List<IFreeAgent> freeAgents);
 }

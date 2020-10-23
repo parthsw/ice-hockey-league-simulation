@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Division;
 
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 
 import java.util.List;
 
@@ -61,7 +62,12 @@ public class Division implements IDivision {
     }
 
     @Override
-    public boolean isValid() {
-        return false;
+    public boolean saveDivision(IDivisionPersistence divisionDB) {
+        return divisionDB.saveDivision(this);
+    }
+
+    @Override
+    public boolean loadTeams(ITeamPersistence teamDB, List<ITeam> teams) {
+        return teamDB.loadTeams(divisionID, teams);
     }
 }

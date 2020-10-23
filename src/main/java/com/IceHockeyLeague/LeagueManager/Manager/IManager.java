@@ -13,5 +13,6 @@ public interface IManager {
     int getLeagueID();
     void setLeagueID(int id);
 
-    boolean isValid();
+    boolean saveManager(IManagerPersistence managerDB);
+    boolean loadTeamManager(IManagerPersistence managerDB, IManager manager);
 }

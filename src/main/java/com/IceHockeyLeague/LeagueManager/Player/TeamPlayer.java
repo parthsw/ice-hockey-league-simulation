@@ -39,13 +39,13 @@ public class TeamPlayer extends Player implements ITeamPlayer {
         this.teamID = teamID;
     }
 
-    @Override
-    public boolean isValid() {
-        return false;
-    }
-
     private void setDefaults() {
         teamPlayerID = -1;
         teamID = -1;
+    }
+
+    @Override
+    public boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB) {
+        return teamPlayerDB.saveTeamPlayer(this);
     }
 }

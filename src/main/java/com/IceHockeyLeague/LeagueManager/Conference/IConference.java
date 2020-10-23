@@ -1,6 +1,8 @@
 package com.IceHockeyLeague.LeagueManager.Conference;
 
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 
 import java.util.List;
 
@@ -19,5 +21,6 @@ public interface IConference {
     List<IDivision> getDivisions();
     void setDivisions(List<IDivision> divisions);
 
-    boolean isValid();
+    boolean saveConference(IConferencePersistence conferenceDB);
+    boolean loadDivisions(IDivisionPersistence divisionDB, List<IDivision> divisions);
 }
