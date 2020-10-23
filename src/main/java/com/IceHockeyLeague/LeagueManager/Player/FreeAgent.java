@@ -28,14 +28,13 @@ public class FreeAgent extends Player implements IFreeAgent {
         this.leagueID = leagueID;
     }
 
-    @Override
-    public boolean isValid() {
-        return false;
-    }
-
     private void setDefaults() {
         freeAgentID = -1;
         leagueID = -1;
     }
 
+    @Override
+    public boolean saveFreeAgent(IFreeAgentPersistence freeAgentDB) {
+        return freeAgentDB.saveFreeAgent(this);
+    }
 }

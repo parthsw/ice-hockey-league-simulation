@@ -7,6 +7,10 @@ public class Coach implements ICoach {
     private int leagueID;
     private ICoachStats coachStats;
 
+    public Coach() {
+        setDefaults();
+    }
+
     @Override
     public int getCoachID() {
         return coachID;
@@ -70,8 +74,19 @@ public class Coach implements ICoach {
         return s == null || s.equals("");
     }
 
+    private void setDefaults() {
+        coachID = -1;
+        teamID = -1;
+        leagueID = -1;
+    }
+
     @Override
     public boolean saveCoach(ICoachPersistence coachDB) {
         return coachDB.saveCoach(this);
+    }
+
+    @Override
+    public boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach) {
+        return coachDB.loadTeamCoach(leagueID, teamID, this);
     }
 }

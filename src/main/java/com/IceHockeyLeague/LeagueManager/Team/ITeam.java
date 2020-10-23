@@ -4,6 +4,7 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 
 import java.util.List;
 
@@ -31,5 +32,6 @@ public interface ITeam {
     IManager getManager();
     void setManager(IManager manager);
 
-    boolean isValid();
+    boolean saveTeam(ITeamPersistence teamDB);
+    boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
 }

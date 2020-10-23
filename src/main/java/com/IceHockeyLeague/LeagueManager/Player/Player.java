@@ -34,10 +34,4 @@ public class Player implements IPlayer {
     public void setPlayerStats(IPlayerStats playerStats) {
         this.playerStats = playerStats;
     }
-
-    @Override
-    public boolean isValid() {
-        return false;
-    }
-
 }

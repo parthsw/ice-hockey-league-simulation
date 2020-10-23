@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Division;
 
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 
 import java.util.List;
 
@@ -19,5 +20,6 @@ public interface IDivision {
     List<ITeam> getTeams();
     void setTeams(List<ITeam> teams);
 
-    boolean isValid();
+    boolean saveDivision(IDivisionPersistence divisionDB);
+    boolean loadTeams(ITeamPersistence teamDB, List<ITeam> teams);
 }

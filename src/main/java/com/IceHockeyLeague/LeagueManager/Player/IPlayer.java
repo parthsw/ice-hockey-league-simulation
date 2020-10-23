@@ -10,6 +10,4 @@ public interface IPlayer {
 
     IPlayerStats getPlayerStats();
     void setPlayerStats(IPlayerStats playerStats);
-
-    boolean isValid();
 }
