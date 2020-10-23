@@ -11,8 +11,9 @@ public class Persistence implements IPersistence {
 
     @Override
     public void saveLeague(ILeague league) {
-        String result = this.obj.insertIntoLeague(1, league.getLeagueName());
-        league.setLeagueID(Integer.parseInt(result));
+
+//        String result = this.obj.insertIntoLeague(1, league.getLeagueName());
+//        league.setLeagueID(Integer.parseInt(result));
     }
 
     @Override

@@ -27,6 +27,15 @@ public class League implements ILeague {
     private List<ICoach> coaches;
     private List<IManager> managers;
 
+    public League(){
+        setDefaults();
+    }
+
+    private void setDefaults() {
+        conferences = new ArrayList<IConference>();
+    }
+
+
     @Override
     public int getLeagueID() {
         return leagueID;
