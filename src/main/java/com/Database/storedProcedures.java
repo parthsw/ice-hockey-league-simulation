@@ -3,14 +3,14 @@ package com.Database;
 import java.sql.*;
 
 public class storedProcedures {
-    private DBConnection dbConnectionUtil = new DatabaseInitialize();
+    private IDBConnection dbConnectionUtil = new DBConnection();
     private Connection connection;
 
     public String insertIntoLeague(String leagueName) {
         String leagueID = null;
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
             myCall = connection.prepareCall("{call insertIntoLeague(?,?)}");
 
@@ -37,7 +37,7 @@ public class storedProcedures {
         String conferenceID = null;
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
 
             myCall = connection.prepareCall("{call insertIntoConference(?,?,?)}");
@@ -65,7 +65,7 @@ public class storedProcedures {
         String divisionID = null;
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
 
             myCall = connection.prepareCall("{call insertIntoDivision(?,?,?)}");
@@ -93,7 +93,7 @@ public class storedProcedures {
         String teamID = null;
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
 
             myCall = connection.prepareCall("{call insertIntoTeam(?,?,?,?)}");
@@ -122,7 +122,7 @@ public class storedProcedures {
         String coachID = null;
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
 
             myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?)}");
@@ -155,7 +155,7 @@ public class storedProcedures {
         String managerID = null;
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
 
             myCall = connection.prepareCall("{call insertIntoManager(?,?,?,?)}");
@@ -184,7 +184,7 @@ public class storedProcedures {
         String playerID = null;
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
 
             myCall = connection.prepareCall("{call insertIntoPlayer(?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -222,7 +222,7 @@ public class storedProcedures {
         String playerID = null;
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
 
             myCall = connection.prepareCall("{call insertIntoFreeAgent(?,?,?,?,?,?,?,?,?,?,?)}");
@@ -260,7 +260,7 @@ public class storedProcedures {
         CallableStatement myCall;
         String status="interTeamTrade failed";
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
             myCall = connection.prepareCall("{call interTeamTrade(?,?,?)}");
             myCall.setInt(1, toTeamID);
@@ -288,7 +288,7 @@ public class storedProcedures {
         String status = "Trade failed";
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
             myCall = connection.prepareCall("{call freeToTeamTrade(?,?,?,?,?)}");
 
@@ -321,7 +321,7 @@ public class storedProcedures {
         String status = "Trade failed";
         CallableStatement myCall;
         try {
-            dbConnectionUtil = new DatabaseInitialize();
+            dbConnectionUtil = new DBConnection();
             connection = dbConnectionUtil.getConnection();
             myCall = connection.prepareCall("{call teamToFreeTrade(?,?,?,?)}");
 

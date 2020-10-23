@@ -7,6 +7,8 @@ import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
+import com.IceHockeyLeague.LeagueManager.Manager.*;
+import com.IceHockeyLeague.LeagueManager.Coach.*;
 
 public class CreateTeamState extends AbstractState {
 
@@ -29,6 +31,8 @@ public class CreateTeamState extends AbstractState {
             this.initializeInMemoryLeague();
             welcomeMessage();
             newTeam = this.constructNewTeam();
+            this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
+            //persistLeagueToDatabase(inMemoryLeague);
             return null;
         } catch (Exception exception) {
             appOutput.displayError("");
@@ -55,6 +59,10 @@ public class CreateTeamState extends AbstractState {
         this.newConference = this.processConferenceName();
         this.newDivision = this.processDivisionName(this.newConference);
         team = this.processTeamName(this.newDivision);
+        IManager manager = this.processManager();
+        ICoach coach = this.processCoach();
+        team.setManager(manager);
+        team.setCoach(coach);
         return team;
     }
 
@@ -123,5 +131,29 @@ public class CreateTeamState extends AbstractState {
         }
         return team;
     }
+
+    private IManager processManager(){
+        IManager manager = new Manager();
+        return manager;
+    }
+
+    private ICoach processCoach(){
+        ICoach coach = new Coach();
+        return coach;
+    }
+
+    private void addTeamToMemoryLeague(IConference conference,IDivision division, ITeam team){
+        for(IConference matchedConference: inMemoryLeague.getConferences()){
+            if(matchedConference.getConferenceName().equalsIgnoreCase(conference.getConferenceName())){
+                for(IDivision matchedDivision : conference.getDivisions()){
+                    if(matchedDivision.getDivisionName().equalsIgnoreCase(division.getDivisionName())){
+                        matchedDivision.addTeam(team);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
 }
 
