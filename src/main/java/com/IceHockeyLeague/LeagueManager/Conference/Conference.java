@@ -66,7 +66,7 @@ public class Conference implements IConference {
     }
 
     @Override
-    public String validateNameDuringCreate(List<Conference> conferences) {
+    public String validateNameDuringCreate(List<IConference> conferences) {
         String validity = "VALID";
         if(isNullOrEmpty(conferenceName)){
             validity = "Conference name is blank";
@@ -81,9 +81,9 @@ public class Conference implements IConference {
         return s == null || s.equals("");
     }
 
-    private boolean isConferenceNameExist(List<Conference> conferences){
+    private boolean isConferenceNameExist(List<IConference> conferences){
         boolean isExist = false;
-        for(Conference c : conferences){
+        for(IConference c : conferences){
             if(c.getConferenceName().equalsIgnoreCase(conferenceName)){
                 isExist = true;
                 break;

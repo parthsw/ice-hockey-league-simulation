@@ -20,5 +20,6 @@ public interface IConference {
     void setDivisions(List<IDivision> divisions);
 
     boolean isValid();
-    String validateNameDuringCreate(List<Conference> conferences);
+    String validateNameDuringCreate(List<IConference> conferences);
+
 }

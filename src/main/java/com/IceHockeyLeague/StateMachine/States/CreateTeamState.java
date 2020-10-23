@@ -7,8 +7,6 @@ import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
-//import com.IceHockeyLeague.LeagueManager.League.*;
-import com.IceHockeyLeague.StateMachine.IStateMachine;
 
 public class CreateTeamState extends AbstractState {
 
@@ -61,21 +59,23 @@ public class CreateTeamState extends AbstractState {
     }
 
     private Conference processConferenceName() {
-        Conference conference = new Conference();
+        IConference conference = new Conference();
         String conferenceName;
         while (true) {
             StateUtils.printMessage("Please provide the name of the conference");
             conferenceName = StateUtils.promptForUserInput();
             conference.setConferenceName(conferenceName.trim());
             String conferenceNameValidation = conference.validateNameDuringCreate(inMemoryLeague.getConferences());
-            if (conferenceNameValidation.equalsIgnoreCase(VALID)) {
+            //if (conferenceNameValidation.equalsIgnoreCase(VALID)) {
                 break;
             } else {
                 StateUtils.promptForUserInput();
             }
         }
 
-        for(Conference matchedConference : inMemoryLeague.getConferences()) {
+
+
+        for(IConference matchedConference : inMemoryLeague.getConferences()) {
 
         }
 
