@@ -12,12 +12,12 @@ public class CoachDBMock implements ICoachPersistence {
     }
 
     @Override
-    public boolean loadCoach(int teamId, ICoach coach) {
+    public boolean loadTeamCoach(int leagueId, int teamId, ICoach coach) {
         return false;
     }
 
     @Override
-    public List<ICoach> loadUnassignedCoaches(int leagueId) {
-        return null;
+    public boolean loadLeagueCoaches(int leagueId, List<ICoach> coaches) {
+        return false;
     }
 }
