@@ -30,7 +30,7 @@ build:
   tags:
     - ugrad
   only:
-    - league-simulation
+    - develop
 
 build_prod:
   image: gradle:alpine
