@@ -4,6 +4,7 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 
 import java.util.List;
 
@@ -100,13 +101,18 @@ public class Team implements ITeam {
         this.manager = manager;
     }
 
-    @Override
-    public boolean isValid() {
-        return false;
-    }
-
     private void setDefaults() {
         teamID = -1;
         isUserCreated = false;
+    }
+
+    @Override
+    public boolean saveTeam(ITeamPersistence teamDB) {
+        return teamDB.saveTeam(this);
+    }
+
+    @Override
+    public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
+        return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
     }
 }

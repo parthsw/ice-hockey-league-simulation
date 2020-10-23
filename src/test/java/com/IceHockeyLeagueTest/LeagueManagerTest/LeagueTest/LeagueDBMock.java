@@ -10,8 +10,8 @@ public class LeagueDBMock implements ILeaguePersistence {
     }
 
     @Override
-    public ILeague loadLeague(int leagueId) {
-        return null;
+    public boolean loadLeague(int leagueId, ILeague league) {
+        return false;
     }
 
     @Override

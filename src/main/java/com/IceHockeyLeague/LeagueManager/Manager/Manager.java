@@ -50,14 +50,19 @@ public class Manager implements IManager {
         leagueID = id;
     }
 
-    @Override
-    public boolean isValid() {
-        return false;
-    }
-
     private void setDefaults() {
         managerID = -1;
         teamID = -1;
         leagueID = -1;
+    }
+
+    @Override
+    public boolean saveManager(IManagerPersistence managerDB) {
+        return managerDB.saveManager(this);
+    }
+
+    @Override
+    public boolean loadTeamManager(IManagerPersistence managerDB, IManager manager) {
+        return managerDB.loadTeamManager(leagueID, teamID,this);
     }
 }

@@ -9,4 +9,6 @@ public interface ITeamPlayer extends IPlayer {
 
     int getTeamID();
     void setTeamID(int teamID);
+
+    boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB);
 }

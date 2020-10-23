@@ -19,5 +19,5 @@ public interface ICoach {
     boolean isValid();
 
     boolean saveCoach(ICoachPersistence coachDB);
-
+    boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach);
 }

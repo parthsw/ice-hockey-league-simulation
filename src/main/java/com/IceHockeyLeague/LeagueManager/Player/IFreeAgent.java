@@ -7,4 +7,6 @@ public interface IFreeAgent extends IPlayer {
 
     int getLeagueID();
     void setLeagueID(int leagueID);
+
+    boolean saveFreeAgent(IFreeAgentPersistence freeAgentDB);
 }
