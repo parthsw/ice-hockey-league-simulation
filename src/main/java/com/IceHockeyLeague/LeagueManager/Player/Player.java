@@ -3,6 +3,8 @@ package com.IceHockeyLeague.LeagueManager.Player;
 public class Player implements IPlayer {
     private String name;
     private int age;
+    private boolean isInjured;
+    private boolean isRetired;
     private IPlayerStats playerStats;
 
     @Override
@@ -26,6 +28,26 @@ public class Player implements IPlayer {
     }
 
     @Override
+    public boolean getIsInjured() {
+        return isInjured;
+    }
+
+    @Override
+    public void setIsInjured(boolean isInjured) {
+        this.isInjured = isInjured;
+    }
+
+    @Override
+    public boolean getIsRetired() {
+        return isRetired;
+    }
+
+    @Override
+    public void setIsRetired(boolean isRetired) {
+        this.isRetired = isRetired;
+    }
+
+    @Override
     public IPlayerStats getPlayerStats() {
         return playerStats;
     }
@@ -34,4 +56,15 @@ public class Player implements IPlayer {
     public void setPlayerStats(IPlayerStats playerStats) {
         this.playerStats = playerStats;
     }
+
+    @Override
+    public int calculateStrength(IPlayerStats stats) {
+        return stats.calculateStrength();
+    }
+
+    @Override
+    public boolean isValid() {
+        return false;
+    }
+
 }

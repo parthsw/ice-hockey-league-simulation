@@ -16,5 +16,7 @@ public interface IPlayerStats {
     int getSaving();
     void setSaving(int saving);
 
-    int getPlayerStrength();
+    void setStrength(int strength);
+    int getStrength();
+    int calculateStrength();
 }
