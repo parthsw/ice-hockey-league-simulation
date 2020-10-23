@@ -7,6 +7,8 @@ import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
+//import com.IceHockeyLeague.LeagueManager.League.*;
+import com.IceHockeyLeague.StateMachine.IStateMachine;
 
 public class CreateTeamState extends AbstractState {
 
@@ -26,6 +28,7 @@ public class CreateTeamState extends AbstractState {
     @Override
     public AbstractState onRun() {
         try{
+            this.initializeInMemoryLeague();
             welcomeMessage();
             newTeam = this.constructNewTeam();
             return null;
@@ -34,6 +37,10 @@ public class CreateTeamState extends AbstractState {
             StateUtils.printErrorMessage(exception.getMessage());
             return null;
         }
+    }
+
+    private void initializeInMemoryLeague(){
+         inMemoryLeague = this.getLeague();
     }
 
     private void configureDefaults(IAppInput appInput, IAppOutput appOutput){
@@ -75,7 +82,7 @@ public class CreateTeamState extends AbstractState {
         return conference;
     }
 
-    private void processDivisionName(){
+    private Division processDivisionName(){
         Division division = new Division();
         String divisionName;
         while(true){
@@ -86,8 +93,4 @@ public class CreateTeamState extends AbstractState {
         }
     }
 }
-    private Division processDivisionName(){
-        Division division = new Division();
-        return division;
-    }
-}
+
