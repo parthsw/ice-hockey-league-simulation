@@ -10,6 +10,8 @@ import java.util.Properties;
 
 public class DBConnection implements IDBConnection {
 
+    private static DBConnection dbConnectionInstance = null;
+
     String[] properties;
     public static String Url;
     public static String Username;
@@ -17,13 +19,20 @@ public class DBConnection implements IDBConnection {
     public static String Driver;
     public Connection connection;
 
-    DBConnection() {
+     DBConnection() {
         PropertiesLoader pl = new PropertiesLoader();
         properties = pl.getProperties();
         Url = properties[0];
         Username = properties[1];
         Password = properties[2];
         Driver = properties[3];
+    }
+
+    public static DBConnection instance() {
+         if (dbConnectionInstance == null) {
+             dbConnectionInstance = new DBConnection();
+         }
+         return dbConnectionInstance;
     }
 
 
