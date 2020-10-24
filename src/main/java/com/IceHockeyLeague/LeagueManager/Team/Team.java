@@ -115,4 +115,14 @@ public class Team implements ITeam {
     public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
         return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
     }
+
+    @Override
+    public int getLossPointValue() {
+        return 0;
+    }
+
+    @Override
+    public void resetLossPointValue() {
+
+    }
 }
