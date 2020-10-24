@@ -14,6 +14,7 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
+import com.IceHockeyLeague.LeagueManager.Team.ITeamStrength;
 
 
 public abstract class AbstractLeagueManagerFactory {
@@ -39,10 +40,10 @@ public abstract class AbstractLeagueManagerFactory {
     public abstract IDivisionPersistence getDivisionDB();
 
     public abstract ITeam getTeam();
+    public abstract ITeamStrength getTeamStrength();
     public abstract ITeamPersistence getTeamDB();
 
     public abstract IPlayer getPlayer();
-    public abstract IPlayerPersistence getPlayerDB();
 
     public abstract IPlayerStats getPlayerStats();
 

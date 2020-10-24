@@ -16,7 +16,6 @@ import com.IceHockeyLeagueTest.LeagueManagerTest.DivisionTest.DivisionDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.LeagueTest.LeagueDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.ManagerTest.ManagerDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest.FreeAgentDBMock;
-import com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest.PlayerDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest.TeamPlayerDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TeamTest.TeamDBMock;
 
@@ -26,7 +25,6 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     private IConferencePersistence conferenceDB = null;
     private IDivisionPersistence divisionDB = null;
     private ITeamPersistence teamDB = null;
-    private IPlayerPersistence playerDB = null;
     private ITeamPlayerPersistence teamPlayerDB = null;
     private IFreeAgentPersistence freeAgentDB = null;
     private ICoachPersistence coachDB = null;
@@ -82,6 +80,11 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     }
 
     @Override
+    public ITeamStrength getTeamStrength() {
+        return new TeamStrength();
+    }
+
+    @Override
     public ITeamPersistence getTeamDB() {
         if(teamDB == null) {
             teamDB = new TeamDBMock();
@@ -92,14 +95,6 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public IPlayer getPlayer() {
         return new Player();
-    }
-
-    @Override
-    public IPlayerPersistence getPlayerDB() {
-        if(playerDB == null) {
-            playerDB = new PlayerDBMock();
-        }
-        return playerDB;
     }
 
     @Override
