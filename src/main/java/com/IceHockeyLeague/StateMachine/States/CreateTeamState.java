@@ -3,6 +3,7 @@ package com.IceHockeyLeague.StateMachine.States;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
+import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
@@ -25,6 +26,8 @@ public class CreateTeamState extends AbstractState {
     private IConference newConference;
     private IDivision newDivision;
     private List<ITeamPlayer> players;
+    private ITeamPlayer player;
+    private List<IFreeAgent> freeAgents;
 
     public CreateTeamState(IAppInput appInput, IAppOutput appOutput) {
         configureDefaults(appInput, appOutput);
@@ -66,9 +69,9 @@ public class CreateTeamState extends AbstractState {
         team = this.processTeamName(this.newDivision);
         IManager manager = this.processManager();
         ICoach coach = this.processCoach();
+        this.players = this.processPlayers();
         team.setManager(manager);
         team.setCoach(coach);
-        this.players = this.processPlayers();
         return team;
     }
 
@@ -175,6 +178,15 @@ public class CreateTeamState extends AbstractState {
     private List<ITeamPlayer> processPlayers(){
         List<ITeamPlayer> players = null;
         appOutput.display("Please select the players from the list of free agents");
+        freeAgents = inMemoryLeague.getFreeAgents();
+        for(IFreeAgent f : freeAgents){
+            appOutput.display(f.getPlayerName());
+            appOutput.display(f.getPlayerStats().getPosition());
+            appOutput.display(Float.toString(f.getPlayerStats().getChecking()));
+            appOutput.display(Float.toString(f.getPlayerStats().getSaving()));
+            appOutput.display(Float.toString(f.getPlayerStats().getShooting()));
+            appOutput.display(Float.toString(f.getPlayerStats().getSkating()));
+        }
         return players;
     }
 
