@@ -9,6 +9,9 @@ import com.IceHockeyLeague.LeagueManager.Division.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.Manager.*;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
+import java.util.*;
+
+import java.util.ArrayList;
 
 public class CreateTeamState extends AbstractState {
 
@@ -76,9 +79,9 @@ public class CreateTeamState extends AbstractState {
             if (conference.isNullOrEmpty(conferenceName)) {
                 appOutput.displayError("The conference name cannot be blank");
             } else if (conference.isConferenceNameExist(inMemoryLeague.getConferences())) {
-                appOutput.displayError("The conference name already exists");
-            } else {
                 break;
+            } else {
+                appOutput.displayError("The conference name already exists");
             }
         }
         for (IConference matchedConference : inMemoryLeague.getConferences()) {
@@ -100,9 +103,10 @@ public class CreateTeamState extends AbstractState {
             if (division.isNullOrEmpty(divisionName)) {
                 appOutput.displayError("The division name cannot be blank");
             } else if (division.isDivisionNameExist(matchedConference.getDivisions())) {
-                appOutput.displayError("The division name is already exists");
-            } else {
                 break;
+            } else {
+                appOutput.displayError("The division name is already exists");
+
             }
         }
         for (IDivision matchedDivision : matchedConference.getDivisions()) {
@@ -122,7 +126,7 @@ public class CreateTeamState extends AbstractState {
             teamName = appInput.getInput();
             team.setTeamName(teamName.trim());
             if (team.isNullOrEmpty(teamName)) {
-
+                appOutput.displayError("The team name canot be empty");
             } else if (team.isTeamNameExist(matchedDivision.getTeams())) {
                 appOutput.displayError("The team name already exists");
             } else {
@@ -134,11 +138,34 @@ public class CreateTeamState extends AbstractState {
 
     private IManager processManager(){
         IManager manager = new Manager();
+        String managerName;
+        List<IManager> managers = inMemoryLeague.getManagers();
+        appOutput.display("Showing you the list of managers");
+        for(IManager m : managers){
+            appOutput.display(m.getManagerName());
+        }
+        appOutput.display("Please enter the name of the manager form the list of managers");
+        managerName = appInput.getInput();
+        appOutput.display(managerName);
+        manager.setManagerName(managerName.trim());
         return manager;
     }
 
     private ICoach processCoach(){
         ICoach coach = new Coach();
+        String coachName;
+        List<ICoach> coaches = inMemoryLeague.getCoaches();
+        appOutput.display("Showing you the list of coaches along with their stats");
+        for(ICoach c : coaches){
+            appOutput.display(c.getCoachName());
+            appOutput.display(Float.toString(c.getCoachStats().getChecking()));
+            appOutput.display(Float.toString(c.getCoachStats().getSaving()));
+            appOutput.display(Float.toString(c.getCoachStats().getShooting()));
+            appOutput.display(Float.toString(c.getCoachStats().getSkating()));
+        }
+        coachName = appInput.getInput();
+        appOutput.display(coachName);
+        coach.setCoachName(coachName.trim());
         return coach;
     }
 

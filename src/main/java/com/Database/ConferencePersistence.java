@@ -28,6 +28,7 @@ public class ConferencePersistence implements IConferencePersistence {
             }
             myCall.close();
             conference.setConferenceID(Integer.parseInt(conferenceID));
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in insert Conference");
@@ -37,7 +38,6 @@ public class ConferencePersistence implements IConferencePersistence {
                 connectionManager.terminateConnection();
             }
         }
-        return false;
     }
 
     @Override

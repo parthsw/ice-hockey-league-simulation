@@ -86,7 +86,7 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public IPlayerPersistence getPlayerDB() {
         if(playerDB == null) {
-            playerDB = new PlayerPersistence();
+         //  playerDB = new PlayerPersistence();
         }
         return playerDB;
     }
