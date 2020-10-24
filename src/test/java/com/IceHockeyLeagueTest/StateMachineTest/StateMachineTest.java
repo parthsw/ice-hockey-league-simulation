@@ -15,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class StateMachineTest {
+    private static AbstractStateMachineFactory stateMachineFactory;
 
     @BeforeClass
     public static void setup() {
@@ -29,20 +30,21 @@ public class StateMachineTest {
                         LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
                 )
         );
+        stateMachineFactory = AbstractStateMachineFactory.getFactory();
     }
 
     @Test
     public void ConstructorTest() {
-        AbstractState importState = AbstractStateMachineFactory.getFactory().getImportState();
-        IStateMachine stateMachine = AbstractStateMachineFactory.getFactory().getStateMachine(importState);
+        AbstractState importState = stateMachineFactory.getImportState();
+        IStateMachine stateMachine = stateMachineFactory.getStateMachine(importState);
 
         Assert.assertTrue(stateMachine.getCurrentState() instanceof ImportState);
     }
 
     @Test
     public void setCurrentStateTest() {
-        AbstractState createTeamState = AbstractStateMachineFactory.getFactory().getCreateTeamState();
-        IStateMachine stateMachine = AbstractStateMachineFactory.getFactory().getStateMachine(createTeamState);
+        AbstractState createTeamState = stateMachineFactory.getCreateTeamState();
+        IStateMachine stateMachine = stateMachineFactory.getStateMachine(createTeamState);
 
         stateMachine.setCurrentState(createTeamState);
         Assert.assertTrue(stateMachine.getCurrentState() instanceof CreateTeamState);
@@ -50,10 +52,17 @@ public class StateMachineTest {
 
     @Test
     public void getCurrentStateTest() {
-        AbstractState importState = AbstractStateMachineFactory.getFactory().getImportState();
-        IStateMachine stateMachine = AbstractStateMachineFactory.getFactory().getStateMachine(importState);
+        AbstractState importState = stateMachineFactory.getImportState();
+        IStateMachine stateMachine = stateMachineFactory.getStateMachine(importState);
 
         stateMachine.setCurrentState(importState);
         Assert.assertTrue(stateMachine.getCurrentState() instanceof ImportState);
+    }
+
+    @Test
+    public void onExecutionTest() {
+        IStateMachine stateMachine = stateMachineFactory.getStateMachine(null);
+        stateMachine.onExecution();
+        Assert.assertNull(stateMachine.getCurrentState());
     }
 }

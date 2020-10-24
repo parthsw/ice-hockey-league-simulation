@@ -24,7 +24,7 @@ public class LeagueFileValidatorTest {
         ILeagueFileValidator leagueFileValidator = AbstractLeagueFileHandlerFactory.getFactory().getLeagueFileValidator();
         JSONObject leagueSchema = LeagueJsonMock.getInstance().leagueSchema();
 
-        JSONObject leagueJson = LeagueJsonMock.getInstance().sampleLeagueJson();
+        JSONObject leagueJson = LeagueJsonMock.getInstance().validLeagueJson();
         Assert.assertNull(leagueFileValidator.validateJsonSchema(leagueJson, leagueSchema));
 
         JSONObject invalidLeagueJson = LeagueJsonMock.getInstance().invalidLeagueJson();
