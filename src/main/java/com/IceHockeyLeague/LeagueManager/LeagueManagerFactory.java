@@ -14,7 +14,6 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     private IConferencePersistence conferenceDB = null;
     private IDivisionPersistence divisionDB = null;
     private ITeamPersistence teamDB = null;
-    private IPlayerPersistence playerDB = null;
     private ITeamPlayerPersistence teamPlayerDB = null;
     private IFreeAgentPersistence freeAgentDB = null;
     private ICoachPersistence coachDB = null;
@@ -70,6 +69,11 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     }
 
     @Override
+    public ITeamStrength getTeamStrength() {
+        return new TeamStrength();
+    }
+
+    @Override
     public ITeamPersistence getTeamDB() {
         if(teamDB == null) {
             teamDB = new TeamPersistence();
@@ -80,14 +84,6 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public IPlayer getPlayer() {
         return new Player();
-    }
-
-    @Override
-    public IPlayerPersistence getPlayerDB() {
-        if(playerDB == null) {
-            playerDB = new PlayerPersistence();
-        }
-        return playerDB;
     }
 
     @Override

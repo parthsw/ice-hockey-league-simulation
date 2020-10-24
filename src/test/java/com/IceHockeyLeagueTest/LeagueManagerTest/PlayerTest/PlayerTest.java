@@ -1,14 +1,16 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
 import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class PlayerTest {
+
+    private static final String FORWARD = "forward";
 
     @Before
     public void setup() {
@@ -51,8 +53,63 @@ public class PlayerTest {
     }
 
     @Test
+    public void getIsInjuredTest() {
+        IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
+        player.setIsInjured(true);
+        Assert.assertTrue(player.getIsInjured());
+    }
+
+    @Test
+    public void setIsInjuredTest() {
+        IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
+        player.setIsInjured(false);
+        Assert.assertFalse(player.getIsInjured());
+    }
+
+    @Test
+    public void getIsRetiredTest() {
+        IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
+        player.setIsRetired(true);
+        Assert.assertTrue(player.getIsRetired());
+    }
+
+    @Test
+    public void setIsRetiredTest() {
+        IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
+        player.setIsRetired(false);
+        Assert.assertFalse(player.getIsRetired());
+    }
+
+    @Test
+    public void getPlayerStatsTest() {
+        IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
+        IPlayerStats stats = createPlayerStats();
+
+        player.setPlayerStats(stats);
+
+    }
+
+    @Test
+    public void calculateStrength() {
+        IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
+        IPlayerStats forwardStats = createPlayerStats();
+
+        Assert.assertEquals(21.5, player.calculateStrength(forwardStats), 0.0);
+    }
+
+    @Test
     public void isValidTest() {
         IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
         Assert.assertFalse(player.isValid());
+    }
+
+    private IPlayerStats createPlayerStats() {
+        IPlayerStats stats = LeagueManagerFactory.getFactory().getPlayerStats();
+        stats.setSaving(9);
+        stats.setChecking(11);
+        stats.setShooting(8);
+        stats.setSkating(8);
+        stats.setPosition(FORWARD);
+        return stats;
     }
 }

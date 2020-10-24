@@ -1,18 +1,31 @@
 package com.IceHockeyLeague.StateMachine;
 
-import com.IO.AbstractIOFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
+import com.IceHockeyLeague.LeagueFileHandler.IJsonParser;
+import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileReader;
+import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
 import com.IceHockeyLeague.StateMachine.States.*;
 
 public class StateMachineFactory extends AbstractStateMachineFactory {
-    private IAppInput appInput;
-    private IAppOutput appOutput;
+    private final IAppInput appInput;
+    private final IAppOutput appOutput;
+    private final ILeagueFileReader leagueFileReader;
+    private final IJsonParser jsonParser;
+    private final ILeagueFileValidator leagueFileValidator;
 
-    public StateMachineFactory() {
-        appInput = AbstractIOFactory.getFactory().getCommandLineInput();
-        appOutput = AbstractIOFactory.getFactory().getCommandLineOutput();
+    public StateMachineFactory(
+            IAppInput appInput,
+            IAppOutput appOutput,
+            ILeagueFileReader leagueFileReader,
+            IJsonParser jsonParser,
+            ILeagueFileValidator leagueFileValidator) {
+        this.appInput = appInput;
+        this.appOutput = appOutput;
+        this.leagueFileReader = leagueFileReader;
+        this.jsonParser = jsonParser;
+        this.leagueFileValidator = leagueFileValidator;
     }
 
     @Override
@@ -22,7 +35,7 @@ public class StateMachineFactory extends AbstractStateMachineFactory {
 
     @Override
     public AbstractState getImportState() {
-        return new ImportState(appInput, appOutput);
+        return new ImportState(appInput, appOutput, leagueFileReader, jsonParser, leagueFileValidator);
     }
 
     @Override

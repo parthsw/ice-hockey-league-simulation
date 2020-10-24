@@ -25,8 +25,4 @@ public class StateMachine implements IStateMachine {
             currentState = currentState.onRun();
         } while(currentState != null); // Is this negative condition?
     }
-
-    public void setDefaultState() {
-        this.currentState = AbstractStateMachineFactory.getFactory().getImportState();
-    }
 }

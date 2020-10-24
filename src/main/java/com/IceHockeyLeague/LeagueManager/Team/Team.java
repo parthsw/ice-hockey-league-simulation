@@ -6,6 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team implements ITeam {
@@ -19,6 +20,13 @@ public class Team implements ITeam {
 
     public Team() {
         setDefaults();
+    }
+
+    private void setDefaults() {
+        teamID = -1;
+        divisionID = -1;
+        isUserCreated = false;
+        players = new ArrayList<>();
     }
 
     @Override
@@ -101,11 +109,6 @@ public class Team implements ITeam {
         this.manager = manager;
     }
 
-    private void setDefaults() {
-        teamID = -1;
-        isUserCreated = false;
-    }
-
     @Override
     public boolean saveTeam(ITeamPersistence teamDB) {
         return teamDB.saveTeam(this);
@@ -114,5 +117,9 @@ public class Team implements ITeam {
     @Override
     public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
         return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
+    }
+
+    public double calculateTeamStrength(ITeamStrength teamStrength) {
+        return teamStrength.calculate(players);
     }
 }
