@@ -3,6 +3,7 @@ package com.IceHockeyLeague.StateMachine.States;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
@@ -23,6 +24,7 @@ public class CreateTeamState extends AbstractState {
     private ILeague inMemoryLeague;
     private IConference newConference;
     private IDivision newDivision;
+    private List<ITeamPlayer> players;
 
     public CreateTeamState(IAppInput appInput, IAppOutput appOutput) {
         configureDefaults(appInput, appOutput);
@@ -66,6 +68,7 @@ public class CreateTeamState extends AbstractState {
         ICoach coach = this.processCoach();
         team.setManager(manager);
         team.setCoach(coach);
+        this.players = this.processPlayers();
         return team;
     }
 
@@ -167,6 +170,12 @@ public class CreateTeamState extends AbstractState {
         appOutput.display(coachName);
         coach.setCoachName(coachName.trim());
         return coach;
+    }
+
+    private List<ITeamPlayer> processPlayers(){
+        List<ITeamPlayer> players = null;
+        appOutput.display("Please select the players from the list of free agents");
+        return players;
     }
 
     private void addTeamToMemoryLeague(IConference conference,IDivision division, ITeam team){
