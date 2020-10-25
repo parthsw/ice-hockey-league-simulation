@@ -7,6 +7,15 @@ public class Player implements IPlayer {
     private boolean isRetired;
     private IPlayerStats playerStats;
 
+    public Player() {
+        configureDefaults();
+    }
+
+    private void configureDefaults() {
+        isInjured = false;
+        isRetired = false;
+    }
+
     @Override
     public String getPlayerName() {
         return name;
@@ -58,7 +67,7 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public int calculateStrength(IPlayerStats stats) {
+    public double calculateStrength(IPlayerStats stats) {
         return stats.calculateStrength();
     }
 

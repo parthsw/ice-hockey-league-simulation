@@ -1,48 +1,74 @@
 package com.IceHockeyLeague.LeagueManager.Coach;
 
 public class CoachStats implements ICoachStats {
-    private float skating;
-    private float shooting;
-    private float checking;
-    private float saving;
+    private static final double STATS_LOWER_VALUE = 0.0;
+    private static final double STATS_HIGHER_VALUE = 1.0;
+
+    private double skating;
+    private double shooting;
+    private double checking;
+    private double saving;
+
+    public CoachStats() {
+        setDefaults();
+    }
+
+    private void setDefaults() {
+        skating = 0.0;
+        shooting = 0.0;
+        checking = 0.0;
+        saving = 0.0;
+    }
 
     @Override
-    public float getSkating() {
+    public double getSkating() {
         return skating;
     }
 
     @Override
-    public void setSkating(float value) {
-        skating = value;
+    public void setSkating(double value) {
+        if(isStatValid(value)) {
+            skating = value;
+        }
     }
 
     @Override
-    public float getShooting() {
+    public double getShooting() {
         return shooting;
     }
 
     @Override
-    public void setShooting(float value) {
-        shooting = value;
+    public void setShooting(double value) {
+        if(isStatValid(value)) {
+            shooting = value;
+        }
     }
 
     @Override
-    public float getChecking() {
+    public double getChecking() {
         return checking;
     }
 
     @Override
-    public void setChecking(float value) {
-        checking = value;
+    public void setChecking(double value) {
+        if(isStatValid(value)) {
+            checking = value;
+        }
     }
 
     @Override
-    public float getSaving() {
+    public double getSaving() {
         return saving;
     }
 
     @Override
-    public void setSaving(float value) {
-        saving = value;
+    public void setSaving(double value) {
+        if(isStatValid(value)) {
+            saving = value;
+        }
+    }
+
+    private boolean isStatValid(double statValue) {
+        return (statValue >= STATS_LOWER_VALUE && statValue <= STATS_HIGHER_VALUE);
     }
 }

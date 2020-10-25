@@ -9,7 +9,7 @@ public class PlayerStats implements IPlayerStats {
     private int shooting;
     private int checking;
     private int saving;
-    private int strength;
+    private double strength;
 
     public PlayerStats() {
         setDefaults();
@@ -83,18 +83,18 @@ public class PlayerStats implements IPlayerStats {
     }
 
     @Override
-    public void setStrength(int strength) {
+    public void setStrength(double strength) {
         this.strength = strength;
     }
 
     @Override
-    public int getStrength() {
+    public double getStrength() {
         return strength;
     }
 
     @Override
-    public int calculateStrength() {
-        int strength = 0;
+    public double calculateStrength() {
+        double strength = 0;
         if(position.equalsIgnoreCase(PlayerPosition.FORWARD.toString())) {
             return forwardStrength();
         }
@@ -107,24 +107,24 @@ public class PlayerStats implements IPlayerStats {
         return strength;
     }
 
-    private int forwardStrength() {
-        int strength = 0;
+    private double forwardStrength() {
+        double strength = 0;
         if(isStatValid(skating) && isStatValid(shooting) && isStatValid(checking)) {
-            strength = skating + shooting + (checking/2);
+            strength = skating + shooting + ((double)checking/2);
         }
         return strength;
     }
 
-    private int defenseStrength() {
-        int strength = 0;
+    private double defenseStrength() {
+        double strength = 0;
         if(isStatValid(skating) && isStatValid(shooting) && isStatValid(checking)) {
-            strength = skating + checking + (shooting/2);
+            strength = skating + checking + ((double)shooting/2);
         }
         return strength;
     }
 
-    private int goalieStrength() {
-        int strength = 0;
+    private double goalieStrength() {
+        double strength = 0;
         if(isStatValid(skating) && isStatValid(saving)) {
             strength = skating + saving;
         }

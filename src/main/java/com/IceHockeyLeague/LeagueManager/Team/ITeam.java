@@ -1,7 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
@@ -39,4 +38,6 @@ public interface ITeam {
     boolean isNullOrEmpty(String teamName);
 
     boolean isTeamNameExist(List<ITeam> teams);
+
+    double calculateTeamStrength(ITeamStrength teamStrength);
 }
