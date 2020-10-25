@@ -5,6 +5,8 @@ import com.IO.IAppOutput;
 
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.Player;
+import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
@@ -72,6 +74,7 @@ public class CreateTeamState extends AbstractState {
         this.players = this.processPlayers();
         team.setManager(manager);
         team.setCoach(coach);
+        team.setPlayers(players);
         return team;
     }
 
@@ -164,10 +167,10 @@ public class CreateTeamState extends AbstractState {
         appOutput.display("Showing you the list of coaches along with their stats");
         for(ICoach c : coaches){
             appOutput.display(c.getCoachName());
-            appOutput.display(Float.toString(c.getCoachStats().getChecking()));
-            appOutput.display(Float.toString(c.getCoachStats().getSaving()));
-            appOutput.display(Float.toString(c.getCoachStats().getShooting()));
-            appOutput.display(Float.toString(c.getCoachStats().getSkating()));
+            appOutput.display("Checking stat for coach "+c.getCoachName()+" is "+Float.toString(c.getCoachStats().getChecking()));
+            appOutput.display("Saving stat for coach "+c.getCoachName()+" is "+Float.toString(c.getCoachStats().getSaving()));
+            appOutput.display("Shooting stat for coach "+c.getCoachName()+" is "+Float.toString(c.getCoachStats().getShooting()));
+            appOutput.display("Skating stat for coach "+c.getCoachName()+" is "+Float.toString(c.getCoachStats().getSkating()));
         }
         coachName = appInput.getInput();
         appOutput.display(coachName);
@@ -176,16 +179,27 @@ public class CreateTeamState extends AbstractState {
     }
 
     private List<ITeamPlayer> processPlayers(){
-        List<ITeamPlayer> players = null;
+        List<ITeamPlayer> players = new ArrayList<>();
         appOutput.display("Please select the players from the list of free agents");
         freeAgents = inMemoryLeague.getFreeAgents();
         for(IFreeAgent f : freeAgents){
             appOutput.display(f.getPlayerName());
-            appOutput.display(f.getPlayerStats().getPosition());
-            appOutput.display(Float.toString(f.getPlayerStats().getChecking()));
-            appOutput.display(Float.toString(f.getPlayerStats().getSaving()));
-            appOutput.display(Float.toString(f.getPlayerStats().getShooting()));
-            appOutput.display(Float.toString(f.getPlayerStats().getSkating()));
+            appOutput.display("Position for free agent/player "+f.getPlayerName()+" is "+f.getPlayerStats().getPosition());
+            appOutput.display("Checking stat for free agent/player "+f.getPlayerName()+" is "+Float.toString(f.getPlayerStats().getChecking()));
+            appOutput.display("Saving stat for free agent/player "+f.getPlayerName()+" is "+Float.toString(f.getPlayerStats().getSaving()));
+            appOutput.display("Shooting stat for free agent/player "+f.getPlayerName()+" is "+Float.toString(f.getPlayerStats().getShooting()));
+            appOutput.display("Skating stat for free agent/player "+f.getPlayerName()+" is "+Float.toString(f.getPlayerStats().getSkating()));
+        }
+        appOutput.display("select the players for your team from the list of free agents shown above");
+        for(int count = 0; count < 2; count++){
+            ITeamPlayer player = new TeamPlayer();
+            String playerName = appInput.getInput();
+            appOutput.display(playerName);
+            player.setPlayerName(playerName);
+            players.add(player);
+        }
+        for(ITeamPlayer p : players){
+            appOutput.display(p.getPlayerName());
         }
         return players;
     }
