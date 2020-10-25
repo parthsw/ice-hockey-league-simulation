@@ -134,14 +134,14 @@ public class CreateTeamState extends AbstractState {
             appOutput.display("Please provide the team name");
             teamName = appInput.getInput();
             team.setTeamName(teamName.trim());
-            if (team.isNullOrEmpty(teamName)) {
+           if (team.isNullOrEmpty(teamName)) {
                 appOutput.displayError("The team name canot be empty");
             } else if (team.isTeamNameExist(matchedDivision.getTeams())) {
                 appOutput.displayError("The team name already exists");
             } else {
                 break;
             }
-        }
+       }
         return team;
     }
 
@@ -167,10 +167,10 @@ public class CreateTeamState extends AbstractState {
         appOutput.display("Showing you the list of coaches along with their stats");
         for(ICoach c : coaches){
             appOutput.display(c.getCoachName());
-            appOutput.display("Checking stat for coach "+c.getCoachName()+" is "+Float.toString(c.getCoachStats().getChecking()));
-            appOutput.display("Saving stat for coach "+c.getCoachName()+" is "+Float.toString(c.getCoachStats().getSaving()));
-            appOutput.display("Shooting stat for coach "+c.getCoachName()+" is "+Float.toString(c.getCoachStats().getShooting()));
-            appOutput.display("Skating stat for coach "+c.getCoachName()+" is "+Float.toString(c.getCoachStats().getSkating()));
+            appOutput.display("Checking stat for coach "+c.getCoachName()+" is "+c.getCoachStats().getChecking());
+            appOutput.display("Saving stat for coach "+c.getCoachName()+" is "+c.getCoachStats().getSaving());
+            appOutput.display("Shooting stat for coach "+c.getCoachName()+" is "+c.getCoachStats().getShooting());
+            appOutput.display("Skating stat for coach "+c.getCoachName()+" is "+c.getCoachStats().getSkating());
         }
         coachName = appInput.getInput();
         appOutput.display(coachName);

@@ -35,9 +35,9 @@ public interface ITeam {
     boolean saveTeam(ITeamPersistence teamDB);
     boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
 
-    boolean isNullOrEmpty(String teamName);
+    //boolean isNullOrEmpty(String teamName);
 
-    boolean isTeamNameExist(List<ITeam> teams);
+    //boolean isTeamNameExist(List<ITeam> teams);
 
     double calculateTeamStrength(ITeamStrength teamStrength);
 }

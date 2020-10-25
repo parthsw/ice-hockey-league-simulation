@@ -25,10 +25,10 @@ public class CoachPersistence implements ICoachPersistence {
             myCall.setInt(1, coach.getTeamID());
             myCall.setInt(2, coach.getLeagueID());
             myCall.setString(3, coach.getCoachName());
-            myCall.setFloat(4,coach.getCoachStats().getSkating());
-            myCall.setFloat(5,coach.getCoachStats().getShooting());
-            myCall.setFloat(6,coach.getCoachStats().getChecking());
-            myCall.setFloat(7,coach.getCoachStats().getSaving());
+            myCall.setDouble(4,coach.getCoachStats().getSkating());
+            myCall.setDouble(5,coach.getCoachStats().getShooting());
+            myCall.setDouble(6,coach.getCoachStats().getChecking());
+            myCall.setDouble(7,coach.getCoachStats().getSaving());
             myCall.registerOutParameter(8, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
