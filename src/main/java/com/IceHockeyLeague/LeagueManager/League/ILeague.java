@@ -4,6 +4,7 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
@@ -18,6 +19,9 @@ public interface ILeague {
 
     String getLeagueName();
     void setLeagueName(String name);
+
+    IGamePlayConfig getGamePlayConfig();
+    void setGamePlayConfig(IGamePlayConfig gamePlayConfig);
 
     IConference getConferenceById(int id);
     void addConference(IConference conference);

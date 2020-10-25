@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager;
 
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
@@ -60,4 +61,11 @@ public abstract class AbstractLeagueManagerFactory {
 
     public abstract IManager getManager();
     public abstract IManagerPersistence getManagerDB();
+
+    public abstract IGamePlayConfig getGamePlayConfig();
+    public abstract IAgingConfig getAgingConfig();
+    public abstract IGameResolverConfig getGameResolverConfig();
+    public abstract IInjuryConfig getInjuryConfig();
+    public abstract ITrainingConfig getTrainingConfig();
+    public abstract ITradingConfig getTradingConfig();
 }
