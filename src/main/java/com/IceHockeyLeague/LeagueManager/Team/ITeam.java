@@ -37,4 +37,6 @@ public interface ITeam {
 
     int getLossPointValue();
     void resetLossPointValue();
+
+    float getTeamStrength();
 }

@@ -1,16 +1,12 @@
 package com.tradingTest;
 
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
-import com.Trading.getAllTeamsFromLeague;
+import com.Trading.GetAllTeamsFromLeague;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -84,7 +80,7 @@ public class getAllTeamsFromLeagueTest {
         teams.add(team7);
         teams.add(team8);
 
-        getAllTeamsFromLeague testObj = new getAllTeamsFromLeague(league);
+        GetAllTeamsFromLeague testObj = new GetAllTeamsFromLeague(league);
         List<ITeam> result = testObj.getTeams();
 
         Assert.assertEquals(result.get(0).getTeamName(),"team1");

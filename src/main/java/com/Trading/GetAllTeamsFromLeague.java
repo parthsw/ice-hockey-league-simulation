@@ -7,9 +7,9 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 import java.util.*;
 
-public class getAllTeamsFromLeague {
+public class GetAllTeamsFromLeague {
 
-    public getAllTeamsFromLeague(ILeague league) {
+    public GetAllTeamsFromLeague(ILeague league) {
        this.gatherTeams(league);
     }
 

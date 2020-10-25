@@ -5,12 +5,12 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import java.util.ArrayList;
 import java.util.List;
 
-public class getTradableTeams {
+public class GetTradableTeams {
     private List<ITeam> allTeams;
     private List<ITeam> reducedTeams;
     int lossPointValue;
 
-    public getTradableTeams(List<ITeam> teams, int lossPoint){
+    public GetTradableTeams(List<ITeam> teams, int lossPoint){
         setDefaults(teams,lossPoint);
     }
 

@@ -125,4 +125,9 @@ public class Team implements ITeam {
     public void resetLossPointValue() {
 
     }
+
+    @Override
+    public float getTeamStrength() {
+        return 0;
+    }
 }

@@ -3,7 +3,7 @@ package com.tradingTest;
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
-import com.Trading.getTradableTeams;
+import com.Trading.GetTradableTeams;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class getTradableTeamsTest {
         teams.add(team7);
         teams.add(team8);
 
-        getTradableTeams testObj = new getTradableTeams(teams,0);
+        GetTradableTeams testObj = new GetTradableTeams(teams,0);
         List<ITeam> result = testObj.getTeams();
         Assert.assertEquals(result.get(0).getTeamName(),"team1");
         Assert.assertEquals(result.get(1).getTeamName(),"team2");
