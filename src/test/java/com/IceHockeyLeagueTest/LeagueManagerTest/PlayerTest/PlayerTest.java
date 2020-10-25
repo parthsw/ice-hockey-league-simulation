@@ -83,10 +83,12 @@ public class PlayerTest {
     @Test
     public void getPlayerStatsTest() {
         IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
-        IPlayerStats stats = createPlayerStats();
+        IPlayerStats expectedStats = createPlayerStats();
 
-        player.setPlayerStats(stats);
+        player.setPlayerStats(expectedStats);
+        IPlayerStats actualStats = player.getPlayerStats();
 
+        Assert.assertEquals(expectedStats.getChecking(), actualStats.getChecking());
     }
 
     @Test

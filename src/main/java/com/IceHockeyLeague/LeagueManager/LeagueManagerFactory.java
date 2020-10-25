@@ -3,6 +3,7 @@ package com.IceHockeyLeague.LeagueManager;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.Manager.*;
 import com.IceHockeyLeague.LeagueManager.Player.*;
@@ -146,5 +147,35 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
             managerDB = new ManagerPersistence();
         }
         return managerDB;
+    }
+
+    @Override
+    public IGamePlayConfig getGamePlayConfig() {
+        return new GamePlayConfig();
+    }
+
+    @Override
+    public IAgingConfig getAgingConfig() {
+        return new AgingConfig();
+    }
+
+    @Override
+    public IGameResolverConfig getGameResolverConfig() {
+        return new GameResolverConfig();
+    }
+
+    @Override
+    public IInjuryConfig getInjuryConfig() {
+        return new InjuryConfig();
+    }
+
+    @Override
+    public ITrainingConfig getTrainingConfig() {
+        return new TrainingConfig();
+    }
+
+    @Override
+    public ITradingConfig getTradingConfig() {
+        return new TradingConfig();
     }
 }

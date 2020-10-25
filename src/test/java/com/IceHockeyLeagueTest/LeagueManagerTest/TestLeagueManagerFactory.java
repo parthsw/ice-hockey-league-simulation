@@ -4,6 +4,7 @@ import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
 import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.LeagueCreator;
@@ -157,5 +158,35 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
             managerDB = new ManagerDBMock();
         }
         return managerDB;
+    }
+
+    @Override
+    public IGamePlayConfig getGamePlayConfig() {
+        return new GamePlayConfig();
+    }
+
+    @Override
+    public IAgingConfig getAgingConfig() {
+        return new AgingConfig();
+    }
+
+    @Override
+    public IGameResolverConfig getGameResolverConfig() {
+        return new GameResolverConfig();
+    }
+
+    @Override
+    public IInjuryConfig getInjuryConfig() {
+        return new InjuryConfig();
+    }
+
+    @Override
+    public ITrainingConfig getTrainingConfig() {
+        return new TrainingConfig();
+    }
+
+    @Override
+    public ITradingConfig getTradingConfig() {
+        return new TradingConfig();
     }
 }
