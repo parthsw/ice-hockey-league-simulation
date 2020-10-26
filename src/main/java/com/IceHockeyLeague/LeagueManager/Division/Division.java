@@ -73,7 +73,7 @@ public class Division implements IDivision {
     }
 
     @Override
-    public boolean isNullOrEmpty(String divsionName) {
+    public boolean isNullOrEmpty(String divisionName) {
         if(divisionName == null || divisionName.equals("")){
             return true;
         }
@@ -83,7 +83,7 @@ public class Division implements IDivision {
     }
 
     @Override
-    public boolean isDivisionNameExist(List<IDivision> divisions) {
+    public boolean isDivisionNameExist(List<IDivision> divisions,String divisionName) {
         boolean isExist = false;
         for(IDivision d : divisions){
             if(d.getDivisionName().equalsIgnoreCase(divisionName)){

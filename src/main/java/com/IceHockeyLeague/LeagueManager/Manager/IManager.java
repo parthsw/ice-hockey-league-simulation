@@ -1,5 +1,9 @@
 package com.IceHockeyLeague.LeagueManager.Manager;
 
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
+
+import java.util.List;
+
 public interface IManager {
     int getManagerID();
     void setManagerID(int id);
@@ -15,4 +19,9 @@ public interface IManager {
 
     boolean saveManager(IManagerPersistence managerDB);
     boolean loadTeamManager(IManagerPersistence managerDB, IManager manager);
+
+    boolean isNullOrEmpty(String managerName);
+
+    boolean isManagerNameExist(List<IManager> managers, String managerName);
+
 }

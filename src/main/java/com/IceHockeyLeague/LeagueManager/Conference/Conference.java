@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Conference implements IConference {
     private int conferenceID;
-    private String conferenceName;
+        private String conferenceName;
     private int leagueID;
     private List<IDivision> divisions;
 
@@ -82,7 +82,7 @@ public class Conference implements IConference {
     }
 
     @Override
-    public boolean isConferenceNameExist(List<IConference> conferences) {
+    public boolean isConferenceNameExist(List<IConference> conferences,String conferenceName) {
         boolean isExist = false;
         for(IConference c : conferences){
             if(c.getConferenceName().equalsIgnoreCase(conferenceName)){

@@ -26,6 +26,6 @@ public interface IDivision {
 
     boolean isNullOrEmpty(String divsionName);
 
-    boolean isDivisionNameExist(List<IDivision> divisions);
+    boolean isDivisionNameExist(List<IDivision> divisions,String divisionName);
 
 }

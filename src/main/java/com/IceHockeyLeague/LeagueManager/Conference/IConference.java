@@ -26,6 +26,6 @@ public interface IConference {
 
     boolean isNullOrEmpty(String conferenceName);
 
-    boolean isConferenceNameExist(List<IConference> conferneces);
+    boolean isConferenceNameExist(List<IConference> conferences,String conferenceName);
 
 }
