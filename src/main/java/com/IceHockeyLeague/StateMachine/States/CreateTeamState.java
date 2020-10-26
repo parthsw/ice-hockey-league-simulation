@@ -42,7 +42,7 @@ public class CreateTeamState extends AbstractState {
             welcomeMessage();
             newTeam = this.constructNewTeam();
             this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
-            //persistLeagueToDatabase(inMemoryLeague);
+            persistLeagueToDatabase(inMemoryLeague);
             return null;
         } catch (Exception exception) {
             appOutput.displayError("");
@@ -198,9 +198,8 @@ public class CreateTeamState extends AbstractState {
     }
 
     private List<ITeamPlayer> processPlayers(){
+        boolean flagCheck = false;
         List<ITeamPlayer> players = new ArrayList<>();
-        int skaterCounter = 0;
-        int goalieCounter = 0;
         appOutput.display("Please select 18 skaters and 2 goalies from the list of free agents");
         freeAgents = inMemoryLeague.getFreeAgents();
         ITeamPlayer player = new TeamPlayer();
@@ -213,25 +212,18 @@ public class CreateTeamState extends AbstractState {
             appOutput.display("Shooting stat for free agent/player "+f.getPlayerName()+" is "+Float.toString(f.getPlayerStats().getShooting()));
             appOutput.display("Skating stat for free agent/player "+f.getPlayerName()+" is "+Float.toString(f.getPlayerStats().getSkating()));
         }
-        appOutput.display("select the players for your team from the list of free agents shown above");
-        for(int count = 0; count < 2; count++){
-            String playerName = appInput.getInput();
-            player.setPlayerName(playerName);
-            players.add(player);
-            player = null;
-        }
-        for(ITeamPlayer p : players){
-            appOutput.display("Displaying players");
-            appOutput.display(p.getPlayerName());
-            if(player.getPlayerStats().getPosition() == "defense" || player.getPlayerStats().getPosition() == "goalie"){
-                skaterCounter++;
+        while(true) {
+            appOutput.display("select the players for your team from the list of free agents shown above");
+            for (int count = 0; count < 2; count++) {
+                String playerName = appInput.getInput();
+                player.setPlayerName(playerName);
+                players.add(player);
+                player = null;
             }
-            if(player.getPlayerStats().getPosition() == "goalie"){
-                goalieCounter++;
+            flagCheck = player.checkTeamPlayers(players);
+            if(flagCheck){
+                break;
             }
-        }
-        if(skaterCounter == 18 && goalieCounter == 2){
-            
         }
         return players;
     }
@@ -249,5 +241,8 @@ public class CreateTeamState extends AbstractState {
         }
     }
 
+    private void persistLeagueToDatabase(ILeague league){
+        league.saveCompleteLeague();
+    }
 }
 

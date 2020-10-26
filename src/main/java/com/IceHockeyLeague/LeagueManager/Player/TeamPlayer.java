@@ -1,5 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import java.util.List;
+
 public class TeamPlayer extends Player implements ITeamPlayer {
     private int teamPlayerID;
     private boolean isCaptain;
@@ -47,5 +49,24 @@ public class TeamPlayer extends Player implements ITeamPlayer {
     @Override
     public boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB) {
         return teamPlayerDB.saveTeamPlayer(this);
+    }
+
+    @Override
+    public boolean checkTeamPlayers(List<ITeamPlayer> players) {
+        int skaterCounter = 0;
+        int goalieCounter = 0;
+        boolean listIsPerfect = false;
+        for(ITeamPlayer p : players){
+            if(p.getPlayerStats().getPosition() == "goalie"){
+                goalieCounter++;
+            }
+            else{
+                skaterCounter++;
+            }
+        }
+        if(skaterCounter == 18 && goalieCounter == 2){
+            listIsPerfect = true;
+        }
+        return listIsPerfect;
     }
 }
