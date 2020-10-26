@@ -346,4 +346,38 @@ public class storedProcedures {
             }
         }
     }
+
+    public void loadLeague(){
+
+    }
+
+    public void loadConferences(){
+
+    }
+
+    public void loadDivisions(){
+
+    }
+
+    public void loadTeams(){
+
+    }
+
+    public void loadCoaches(){
+
+    }
+
+    public void loadManager(){
+
+    }
+
+    public void loadPlayers(){
+
+    }
+
+    public void loadFreeAgents(){
+
+    }
+
+
 }

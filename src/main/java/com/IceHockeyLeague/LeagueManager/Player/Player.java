@@ -74,4 +74,9 @@ public class Player implements IPlayer {
         return false;
     }
 
+    @Override
+    public int getStrength() {
+        return 0;
+    }
+
 }

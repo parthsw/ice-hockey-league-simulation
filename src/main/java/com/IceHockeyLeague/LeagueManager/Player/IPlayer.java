@@ -23,4 +23,6 @@ public interface IPlayer {
     void setPlayerPosition(String playerPosition);
 
     boolean isValid();
+
+    int getStrength();
 }
