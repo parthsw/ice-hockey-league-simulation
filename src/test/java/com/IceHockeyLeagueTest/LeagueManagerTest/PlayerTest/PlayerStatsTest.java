@@ -22,7 +22,7 @@ public class PlayerStatsTest {
         Assert.assertEquals(0, playerStats.getSaving());
         Assert.assertEquals(0, playerStats.getShooting());
         Assert.assertEquals(0, playerStats.getSkating());
-        Assert.assertEquals(0, playerStats.getStrength());
+        Assert.assertEquals(0, playerStats.getStrength(), 0.0);
     }
 
     @Test
@@ -111,14 +111,14 @@ public class PlayerStatsTest {
     public void setStrengthTest() {
         IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
         playerStats.setStrength(80);
-        Assert.assertEquals(playerStats.getStrength(), 80);
+        Assert.assertEquals(playerStats.getStrength(), 80, 0.0);
     }
 
     @Test
     public void getStrengthTest() {
         IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
         playerStats.setStrength(230);
-        Assert.assertEquals(playerStats.getStrength(), 230);
+        Assert.assertEquals(playerStats.getStrength(), 230, 0.0);
     }
 
     @Test
@@ -130,15 +130,15 @@ public class PlayerStatsTest {
         playerStats.setSaving(18);
 
         playerStats.setPosition("goalie");
-        Assert.assertEquals(playerStats.calculateStrength(), 28);
+        Assert.assertEquals(playerStats.calculateStrength(), 28.0, 0.0);
 
         playerStats.setPosition("defense");
-        Assert.assertEquals(playerStats.calculateStrength(), 22);
+        Assert.assertEquals(playerStats.calculateStrength(), 22.0, 0.0);
 
         playerStats.setPosition("forward");
-        Assert.assertEquals(playerStats.calculateStrength(), 19);
+        Assert.assertEquals(playerStats.calculateStrength(), 19.0, 0.0);
 
         playerStats.setPosition("invalidPosition");
-        Assert.assertEquals(playerStats.calculateStrength(), 0);
+        Assert.assertEquals(playerStats.calculateStrength(), 0.0, 0.0);
     }
 }

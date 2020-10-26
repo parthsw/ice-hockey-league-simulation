@@ -20,7 +20,16 @@ public class HockeyLeagueSimulationApp {
         AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
         AbstractIOFactory.setFactory(new IOFactory());
         AbstractLeagueManagerFactory.setFactory(new LeagueManagerFactory());
-        AbstractStateMachineFactory.setFactory(new StateMachineFactory());
+
+        AbstractStateMachineFactory.setFactory(
+                new StateMachineFactory(
+                        AbstractIOFactory.getFactory().getCommandLineInput(),
+                        AbstractIOFactory.getFactory().getCommandLineOutput(),
+                        LeagueFileHandlerFactory.getFactory().getLeagueFileReader(),
+                        LeagueFileHandlerFactory.getFactory().getJsonParser(),
+                        LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
+                )
+        );
     }
 
     private static void runApp() {

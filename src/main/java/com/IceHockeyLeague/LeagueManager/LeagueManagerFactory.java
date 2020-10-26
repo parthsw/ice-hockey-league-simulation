@@ -3,6 +3,7 @@ package com.IceHockeyLeague.LeagueManager;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.Manager.*;
 import com.IceHockeyLeague.LeagueManager.Player.*;
@@ -14,7 +15,6 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     private IConferencePersistence conferenceDB = null;
     private IDivisionPersistence divisionDB = null;
     private ITeamPersistence teamDB = null;
-    private IPlayerPersistence playerDB = null;
     private ITeamPlayerPersistence teamPlayerDB = null;
     private IFreeAgentPersistence freeAgentDB = null;
     private ICoachPersistence coachDB = null;
@@ -70,6 +70,11 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     }
 
     @Override
+    public ITeamStrength getTeamStrength() {
+        return new TeamStrength();
+    }
+
+    @Override
     public ITeamPersistence getTeamDB() {
         if(teamDB == null) {
             teamDB = new TeamPersistence();
@@ -80,14 +85,6 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public IPlayer getPlayer() {
         return new Player();
-    }
-
-    @Override
-    public IPlayerPersistence getPlayerDB() {
-        if(playerDB == null) {
-            playerDB = new PlayerPersistence();
-        }
-        return playerDB;
     }
 
     @Override
@@ -150,5 +147,35 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
             managerDB = new ManagerPersistence();
         }
         return managerDB;
+    }
+
+    @Override
+    public IGamePlayConfig getGamePlayConfig() {
+        return new GamePlayConfig();
+    }
+
+    @Override
+    public IAgingConfig getAgingConfig() {
+        return new AgingConfig();
+    }
+
+    @Override
+    public IGameResolverConfig getGameResolverConfig() {
+        return new GameResolverConfig();
+    }
+
+    @Override
+    public IInjuryConfig getInjuryConfig() {
+        return new InjuryConfig();
+    }
+
+    @Override
+    public ITrainingConfig getTrainingConfig() {
+        return new TrainingConfig();
+    }
+
+    @Override
+    public ITradingConfig getTradingConfig() {
+        return new TradingConfig();
     }
 }

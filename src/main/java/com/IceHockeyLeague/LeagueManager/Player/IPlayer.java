@@ -17,7 +17,7 @@ public interface IPlayer {
     IPlayerStats getPlayerStats();
     void setPlayerStats(IPlayerStats playerStats);
 
-    int calculateStrength(IPlayerStats stats);
+    double calculateStrength(IPlayerStats stats);
 
     boolean isValid();
 }

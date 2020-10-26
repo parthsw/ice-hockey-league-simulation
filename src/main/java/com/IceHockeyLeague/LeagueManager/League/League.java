@@ -6,13 +6,13 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
-import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -22,6 +22,7 @@ import java.util.List;
 public class League implements ILeague {
     private int leagueID;
     private String leagueName;
+    private IGamePlayConfig gamePlayConfig;
     private List<IConference> conferences;
     private List<IFreeAgent> freeAgents;
     private List<ICoach> coaches;
@@ -45,6 +46,16 @@ public class League implements ILeague {
     @Override
     public void setLeagueName(String name) {
         leagueName = name;
+    }
+
+    @Override
+    public IGamePlayConfig getGamePlayConfig() {
+        return gamePlayConfig;
+    }
+
+    @Override
+    public void setGamePlayConfig(IGamePlayConfig gamePlayConfig) {
+        this.gamePlayConfig = gamePlayConfig;
     }
 
     @Override

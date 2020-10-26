@@ -11,15 +11,13 @@ import java.io.InputStream;
 public class CommandLineInputTest {
     private final InputStream systemIn = System.in;
 
-    private ByteArrayInputStream testInput;
-
     @BeforeClass
     public static void setup() {
         AbstractIOFactory.setFactory(new IOFactory());
     }
 
     private void commandLineInput(String data) {
-        testInput = new ByteArrayInputStream(data.getBytes());
+        ByteArrayInputStream testInput = new ByteArrayInputStream(data.getBytes());
         System.setIn(testInput);
     }
 

@@ -34,4 +34,6 @@ public interface ITeam {
 
     boolean saveTeam(ITeamPersistence teamDB);
     boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
+
+    double calculateTeamStrength(ITeamStrength teamStrength);
 }
