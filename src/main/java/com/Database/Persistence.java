@@ -1,12 +1,12 @@
-package com.Database;
+/*package com.Database;
 
 import com.leaguemodel.models.*;
 import com.leaguemodel.IPersistence;
 
 public class Persistence implements IPersistence {
-    test obj = null;
+    storedProcedures obj = null;
     public Persistence(){
-            this.obj = new test();
+            this.obj = new storedProcedures();
     }
 
     @Override
@@ -86,3 +86,4 @@ public class Persistence implements IPersistence {
 
     }
 }
+*/

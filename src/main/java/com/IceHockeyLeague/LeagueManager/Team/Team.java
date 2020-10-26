@@ -119,6 +119,28 @@ public class Team implements ITeam {
         return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
     }
 
+    @Override
+    public boolean isNullOrEmpty(String teamName) {
+        if(teamName == null || teamName.equals("")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isTeamNameExist(List<ITeam> teams) {
+            boolean isExist = false;
+            for(ITeam t : teams){
+                if(t.getTeamName().equalsIgnoreCase(teamName)) {
+                    isExist = true;
+                    break;
+                }
+            }
+            return isExist;
+    }
+
     public double calculateTeamStrength(ITeamStrength teamStrength) {
         return teamStrength.calculate(players);
     }

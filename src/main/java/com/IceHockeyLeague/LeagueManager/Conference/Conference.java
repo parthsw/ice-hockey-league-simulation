@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Conference implements IConference {
     private int conferenceID;
-    private String conferenceName;
+        private String conferenceName;
     private int leagueID;
     private List<IDivision> divisions;
 
@@ -69,5 +69,27 @@ public class Conference implements IConference {
     @Override
     public boolean loadDivisions(IDivisionPersistence divisionDB, List<IDivision> divisions) {
         return divisionDB.loadDivisions(conferenceID, divisions);
+    }
+
+    @Override
+    public boolean isNullOrEmpty(String conferenceName) {
+        if(conferenceName == null || conferenceName.equals("")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isConferenceNameExist(List<IConference> conferences,String conferenceName) {
+        boolean isExist = false;
+        for(IConference c : conferences){
+            if(c.getConferenceName().equalsIgnoreCase(conferenceName)){
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
     }
 }
