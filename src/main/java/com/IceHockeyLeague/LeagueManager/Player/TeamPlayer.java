@@ -64,7 +64,7 @@ public class TeamPlayer extends Player implements ITeamPlayer {
                 skaterCounter++;
             }
         }
-        if(skaterCounter == 18 && goalieCounter == 2){
+        if(skaterCounter == 1 && goalieCounter == 1){
             listIsPerfect = true;
         }
         return listIsPerfect;
