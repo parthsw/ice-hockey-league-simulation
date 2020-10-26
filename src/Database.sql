@@ -1,3 +1,6 @@
+create schema CSCI5308_6_PRODUCTION;
+use CSCI5308_6_PRODUCTION;
+
 create table league
 (
     leagueID int auto_increment
@@ -141,13 +144,13 @@ create index playerToTeam_idx
 
 create index teamToDivision_idx
     on team (divisionID);
-
+DELIMITER $$
 create procedure checkIfLeagueNameExists(IN leagueName varchar(200))
 BEGIN
     select *
     from league
     where name = leagueName;
-END;
+END$$
 
 create procedure freeToTeamTrade(IN idFree int, IN idTeam int, IN isCaptain tinyint(1), OUT status varchar(100),
                                  OUT lastID int)
@@ -184,7 +187,7 @@ BEGIN
     select status;
     select lastID;
 
-END;
+END$$
 
 create procedure insertIntoCoach(IN teamID int, IN leagueID int, IN coachName varchar(45), IN skating decimal,
                                  IN shooting decimal, IN checking decimal, IN saving decimal, OUT coachID int)
@@ -192,21 +195,21 @@ BEGIN
     INSERT INTO coach VALUES (null, teamID, leagueID, coachName, skating, shooting, checking, saving);
 
     set coachID = last_insert_id();
-END;
+END$$
 
 create procedure insertIntoConference(IN leagueID int, IN conferenceName varchar(45), OUT conferenceID int)
 BEGIN
     INSERT INTO conference VALUES (NULL, leagueID, conferenceName);
 
     set conferenceID = last_insert_id();
-END;
+END$$
 
 create procedure insertIntoDivision(IN conferenceID int, IN divisionName varchar(45), OUT divisionID int)
 BEGIN
     INSERT INTO division VALUES (NULL, conferenceID, divisionName);
 
     set divisionID = last_insert_id();
-END;
+END$$
 
 create procedure insertIntoFreeAgent(IN leagueID int, IN playerName varchar(45), IN pos varchar(45), IN age int,
                                      IN skating int, IN shooting int, IN checking int, IN saving int,
@@ -216,21 +219,21 @@ BEGIN
     VALUES (NULL, leagueID, playerName, pos, age, skating, shooting, checking, saving, strength, isInjured);
 
     set freeAgentID = last_insert_id();
-END;
+END$$
 
 create procedure insertIntoLeague(IN leagueName varchar(45), OUT leagueID int)
 BEGIN
     INSERT INTO league values (null, leagueName);
 
     set leagueID = last_insert_id();
-END;
+END$$
 
 create procedure insertIntoManager(IN teamID int, IN leagueID int, IN managerName varchar(45), OUT managerID int)
 BEGIN
     INSERT INTO manager VALUES (NULL, teamID, leagueID, managerName);
 
     set managerID = last_insert_id();
-END;
+END$$
 
 create procedure insertIntoPlayer(IN teamID int, IN playerName varchar(45), IN pos varchar(45), IN age int,
                                   IN skating int, IN shooting int, IN checking int, IN saving int,
@@ -240,14 +243,14 @@ BEGIN
     VALUES (NULL, teamID, playerName, pos, age, skating, shooting, checking, saving, captain, strength, isInjured);
 
     set playerID = last_insert_id();
-END;
+END$$
 
 create procedure insertIntoTeam(IN divisionID int, IN teamName varchar(45), IN strength int, OUT teamID int)
 BEGIN
     INSERT INTO team VALUES (NULL, divisionID, teamName, strength);
 
     set teamID = last_insert_id();
-END;
+END$$
 
 create procedure interTeamTrade(IN toTeamID int, IN IdPlayer int, OUT status varchar(45))
 BEGIN
@@ -259,35 +262,35 @@ BEGIN
     commit;
     set status = "Player transfered successfully";
     select status;
-END;
+END$$
 
 create procedure loadConferences(IN ID int)
 BEGIN
     select *
     from conference
     where leagueID = ID;
-END;
+END$$
 
 create procedure loadDivisions(IN ID int)
 BEGIN
     select *
     from division
     where conferenceID = ID;
-END;
+END$$
 
 create procedure loadFreeAgents(IN ID int)
 BEGIN
     select *
     from freeagent
     where leagueID = ID;
-END;
+END$$
 
 create procedure loadLeague(IN ID int)
 BEGIN
     select *
     from league
     where leagueID = ID;
-END;
+END$$
 
 create procedure loadLeagueCoaches(IN ID int)
 BEGIN
@@ -295,7 +298,7 @@ BEGIN
     from coach
     where leagueID = ID
       and teamID = null;
-END;
+END$$
 
 create procedure loadLeagueManagers(IN ID int)
 BEGIN
@@ -303,35 +306,35 @@ BEGIN
     from manager
     where leagueID = ID
       and teamID = null;
-END;
+END$$
 
 create procedure loadTeamCoach(IN ID int)
 BEGIN
     select *
     from coach
     where teamID = ID;
-END;
+END$$
 
 create procedure loadTeamManager(IN ID int)
 BEGIN
     select *
     from manager
     where teamID = ID;
-END;
+END$$
 
 create procedure loadTeamPlayers(IN ID int)
 BEGIN
     select *
     from player
     where teamID = ID;
-END;
+END$$
 
 create procedure loadTeams(IN ID int)
 BEGIN
     select *
     from team
     where divisionID = ID;
-END;
+END$$
 
 create procedure teamToFreeTrade(IN idPlayer int, IN idLeague int, OUT status varchar(100), OUT lastID int)
 BEGIN
@@ -365,5 +368,4 @@ BEGIN
 
     select status;
     select lastID;
-END;
-
+END$$
