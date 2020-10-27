@@ -21,10 +21,10 @@ public class CoachDBMock implements ICoachPersistence {
         coach.setCoachName("Joe Doe");
 
         ICoachStats stats = AbstractLeagueManagerFactory.getFactory().getCoachStats();
-        stats.setSaving(0.2);
-        stats.setChecking(0.6);
-        stats.setShooting(0.9);
-        stats.setSkating(0.5);
+        stats.setSaving(0.2f);
+        stats.setChecking(0.6f);
+        stats.setShooting(0.9f);
+        stats.setSkating(0.5f);
 
         coach.setCoachStats(stats);
 

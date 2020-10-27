@@ -1,5 +1,7 @@
 package com;
 
+import com.Database.AbstractDatabaseFactory;
+import com.Database.DatabaseFactory;
 import com.IO.AbstractIOFactory;
 import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
@@ -30,6 +32,7 @@ public class HockeyLeagueSimulationApp {
                         LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
                 )
         );
+        AbstractDatabaseFactory.setFactory(new DatabaseFactory());
     }
 
     private static void runApp() {

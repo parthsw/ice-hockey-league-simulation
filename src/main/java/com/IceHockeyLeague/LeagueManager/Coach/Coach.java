@@ -1,7 +1,5 @@
 package com.IceHockeyLeague.LeagueManager.Coach;
 
-import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-
 import java.util.List;
 
 public class Coach implements ICoach {
