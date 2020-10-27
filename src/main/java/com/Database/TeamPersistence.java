@@ -23,7 +23,7 @@ public class TeamPersistence implements ITeamPersistence {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
 
-            myCall = connection.prepareCall("{call insertIntoTeam(?,?,?,?)}");
+            myCall = connection.prepareCall("{call insertIntoTeam(?,?,?,?,?)}");
             myCall.setInt(1, team.getDivisionID());
             myCall.setString(2, team.getTeamName());
             myCall.setBoolean(3,team.getIsUserCreated());
