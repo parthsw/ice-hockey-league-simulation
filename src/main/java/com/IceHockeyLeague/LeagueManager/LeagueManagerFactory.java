@@ -71,8 +71,8 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     }
 
     @Override
-    public ITeamStrength getTeamStrength() {
-        return new TeamStrength();
+    public ITeamStrengthCalculator getTeamStrengthCalculator() {
+        return new TeamStrengthCalculator();
     }
 
     @Override
