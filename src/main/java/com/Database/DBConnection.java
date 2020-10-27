@@ -41,7 +41,7 @@ public class DBConnection implements IDBConnection {
             Class.forName(Driver);
             this.connection =
                     DriverManager
-                            .getConnection(Url, Username, Password);
+                            .getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_6_TEST?serverTimezone=UTC", "CSCI5308_6_TEST_USER", "4pNXfd97eL");
         }
         catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

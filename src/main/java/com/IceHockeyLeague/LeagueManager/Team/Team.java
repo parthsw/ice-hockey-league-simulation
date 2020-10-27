@@ -156,4 +156,9 @@ public class Team implements ITeam {
     public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
         return teamStrength.calculate(players);
     }
+
+    @Override
+    public void setTeamStrength(float strength) {
+
+    }
 }

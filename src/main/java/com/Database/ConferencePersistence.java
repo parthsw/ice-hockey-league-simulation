@@ -1,5 +1,6 @@
 package com.Database;
 
+import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 
@@ -24,7 +25,7 @@ public class ConferencePersistence implements IConferencePersistence {
             myCall.registerOutParameter(3, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                conferenceID = result.getString("lastID");
+                conferenceID = result.getString("conferenceID");
             }
             myCall.close();
             conference.setConferenceID(Integer.parseInt(conferenceID));
@@ -42,6 +43,35 @@ public class ConferencePersistence implements IConferencePersistence {
 
     @Override
     public boolean loadConferences(int leagueId, List<IConference> conferences) {
-        return false;
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+
+
+        try {
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+
+            myCall = connection.prepareCall("{call loadConferences(?)}");
+            myCall.setInt(1, leagueId);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                IConference conference = new Conference();
+                conference.setConferenceID(result.getInt("conferenceID"));
+                conference.setLeagueID(result.getInt("leagueID"));
+                conference.setConferenceName(result.getString("name"));
+                conferences.add(conference);
+            }
+            myCall.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in loading Conference");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
     }
 }

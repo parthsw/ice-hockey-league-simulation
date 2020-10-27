@@ -152,7 +152,7 @@ public class TeamTest {
         ICoach coach = leagueManagerFactory.getCoach();
 
         ICoachPersistence coachDB = leagueManagerFactory.getCoachDB();
-        coachDB.loadTeamCoach(1, 1, coach);
+        coachDB.loadTeamCoach(1, coach);
 
         Assert.assertNull(team.getCoach());
         team.setCoach(coach);
@@ -165,7 +165,7 @@ public class TeamTest {
         ICoach coach = leagueManagerFactory.getCoach();
 
         ICoachPersistence coachDB = leagueManagerFactory.getCoachDB();
-        coachDB.loadTeamCoach(1, 1, coach);
+        coachDB.loadTeamCoach(1, coach);
 
         Assert.assertNull(team.getCoach());
         team.setCoach(coach);
@@ -178,7 +178,7 @@ public class TeamTest {
         IManager manager = leagueManagerFactory.getManager();
 
         IManagerPersistence managerDB = leagueManagerFactory.getManagerDB();
-        managerDB.loadTeamManager(1,1, manager);
+        managerDB.loadTeamManager(1, manager);
 
         Assert.assertNull(team.getManager());
         team.setManager(manager);
@@ -191,7 +191,7 @@ public class TeamTest {
         IManager manager = leagueManagerFactory.getManager();
 
         IManagerPersistence managerDB = leagueManagerFactory.getManagerDB();
-        managerDB.loadTeamManager(1,1, manager);
+        managerDB.loadTeamManager(1, manager);
 
         Assert.assertNull(team.getManager());
         team.setManager(manager);

@@ -25,10 +25,11 @@ public class LeaguePersistence implements ILeaguePersistence {
             myCall.registerOutParameter(2, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                leagueID = result.getString("lastID");
+                leagueID = result.getString("leagueID");
             }
             myCall.close();
             league.setLeagueID(Integer.parseInt(leagueID));
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in insert League");
@@ -38,16 +39,67 @@ public class LeaguePersistence implements ILeaguePersistence {
                 connectionManager.terminateConnection();
             }
         }
-        return false;
     }
 
     @Override
     public boolean loadLeague(int leagueId, ILeague league) {
-        return false;
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+        try {
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+            myCall = connection.prepareCall("{call loadLeague(?)}");
+
+            myCall.setInt(1, leagueId);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                league.setLeagueID(result.getInt("leagueID"));
+                league.setLeagueName(result.getString("name"));
+            }
+            myCall.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in loading League");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
+
     }
 
     @Override
     public boolean checkIfLeagueNameExists(String leagueName) {
-        return false;
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        String leagueID = null;
+        CallableStatement myCall;
+        try {
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+            myCall = connection.prepareCall("{call checkIfLeagueNameExists(?)}");
+            myCall.setString(1, leagueName);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                leagueID = result.getString("leagueID");
+            }
+            myCall.close();
+            if(leagueID == null){
+                return false;
+            }else{
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in checking League");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
     }
 }
