@@ -19,10 +19,7 @@ public interface IPlayer {
 
     int calculateStrength(IPlayerStats stats);
 
-    String getPlayerPosition();
-    void setPlayerPosition(String playerPosition);
-
     boolean isValid();
 
-    int getStrength();
+
 }

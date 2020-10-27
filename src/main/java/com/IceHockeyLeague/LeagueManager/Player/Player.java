@@ -63,20 +63,8 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public String getPlayerPosition() {
-        return null;
-    }
-
-    public void setPlayerPosition(String playerPosition){ }
-
-    @Override
     public boolean isValid() {
         return false;
-    }
-
-    @Override
-    public int getStrength() {
-        return 0;
     }
 
 }

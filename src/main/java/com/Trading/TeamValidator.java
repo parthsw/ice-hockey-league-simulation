@@ -4,6 +4,7 @@ import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamValidator {
@@ -15,26 +16,30 @@ public class TeamValidator {
     GetBestAgent obj = new GetBestAgent();
     ISwitchPlayer switchPlayer = new SwitchPlayer();
     private String goalie = "Goalie";
+    private boolean isValidated = false;
 
     public TeamValidator(ITeam team, int leagueID, List<IFreeAgent> agents){
         setDefaults(team, leagueID, agents);
     }
 
-    private void setDefaults(ITeam team, int leagueID, List<IFreeAgent> agents){
+    private void setDefaults(ITeam team, int leagueID, List<IFreeAgent> agents) {
         this.givenTeam = team;
         this.leagueID = leagueID;
         this.availableAgents = agents;
+        skaters = new ArrayList<>();
+        goalies = new ArrayList<>();
     }
 
     public void validateTeamNumber(){
+        isValidated = true;
         int numberOfSkaters = 0;
         int numberOfKeepers = 0;
         boolean flag = false;
         for (ITeamPlayer player : this.givenTeam.getPlayers()){
-            if(player.getPlayerPosition().equals(goalie)){
+            if (player.getPlayerStats().getPosition().equals(goalie)) {
                 this.goalies.add(player);
                 numberOfKeepers++;
-            }else{
+            } else {
                 this.skaters.add(player);
                 numberOfSkaters++;
             }
@@ -67,11 +72,12 @@ public class TeamValidator {
         if(flag){
             validateTeamNumber();
         }
+
     }
 
     private void addGoalie(int difference) {
         for(int i=0; i<difference; i++){
-            IFreeAgent temp = this.obj.getBestAgentWithPosition(this.availableAgents, goalie);
+            IFreeAgent temp = this.obj.getBestAgentWithPosition(this.availableAgents, this.goalie);
             this.availableAgents.remove(temp);
             ITeamPlayer switchedObject = switchPlayer.freeToTeamTrade(temp,this.givenTeam.getTeamID());
             this.givenTeam.addPlayer(switchedObject);
@@ -81,7 +87,7 @@ public class TeamValidator {
 
     private void dropGoalie(int difference) {
         for(int i=0; i<difference; i++){
-            ITeamPlayer temp = this.obj.getWorsePlayerInTeamWithPosition(this.goalies, goalie);
+            ITeamPlayer temp = this.obj.getWorsePlayerInTeamWithPosition(this.goalies, this.goalie);
             this.goalies.remove(temp);
             IFreeAgent switchedObject = switchPlayer.teamToFreeTrade(temp, this.leagueID);
             this.availableAgents.add(switchedObject);
@@ -100,7 +106,7 @@ public class TeamValidator {
     }
 
     private void dropSkaters(int difference) {
-        for(int i=0; i<difference; i++){
+        for (int i = 0; i < difference; i++) {
             ITeamPlayer temp = this.obj.getWorseSkaterInTeam(this.skaters);
             this.skaters.remove(temp);
             IFreeAgent switchedObject = switchPlayer.teamToFreeTrade(temp, this.leagueID);
@@ -108,8 +114,15 @@ public class TeamValidator {
         }
     }
 
-    public ITeam getValidatedTeam(){
-
+    public ITeam getValidatedTeam() throws Exception {
+        if (isValidated) {
+            this.skaters.addAll(this.goalies);
+            this.givenTeam.setPlayers(this.skaters);
+            this.isValidated = false;
+            return this.givenTeam;
+        } else {
+            throw new Exception("getValidatedTeam called before validating a team.");
+        }
     }
 }
 
