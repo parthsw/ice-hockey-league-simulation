@@ -5,11 +5,13 @@ import com.IO.AbstractIOFactory;
 import com.IO.IOFactory;
 import com.IOTest.IOMock;
 import com.IceHockeyLeague.LeagueManager.Coach.Coach;
+import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
@@ -116,5 +118,32 @@ public class CreateStateTest {
         flag = team.isTeamNameExist(teams, "Team 2");
         Assert.assertTrue("true",flag);
     }
+
+    @Test
+    public void isManagerNameExistTest(){
+        List<IManager> managers = new ArrayList<>();
+        boolean flag = false;
+        IManager manager1 = new Manager();
+        manager1.setManagerName("Parth Parmar");
+        IManager manager2 = new Manager();
+        manager2.setManagerName("Tejasvi Vig");
+        Manager manager = new Manager();
+        flag = manager.isManagerNameExist(managers,"Tejasvi Vig");
+        Assert.assertTrue("true",flag);
+    }
+
+    @Test
+    public void isCoachNameExist(){
+        List<ICoach> coaches = new ArrayList<>();
+        boolean flag = false;
+        ICoach coach1 = new Coach();
+        coach1.setCoachName("Rajveen Singh Chandok");
+        ICoach coach2 = new Coach();
+        coach2.setCoachName("Sagar Moghe");
+        Coach coach = new Coach();
+        flag = coach.isCoachNameExist(coaches,"Sagar Moghe");
+        Assert.assertTrue("true",flag);
+    }
+
 }
 
