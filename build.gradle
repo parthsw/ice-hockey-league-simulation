@@ -14,6 +14,7 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'com.github.everit-org.json-schema:org.everit.json.schema:1.12.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 jar {
