@@ -63,6 +63,8 @@ public abstract class AbstractLeagueManagerFactory {
     public abstract IManagerPersistence getManagerDB();
 
     public abstract IGamePlayConfig getGamePlayConfig();
+    public abstract IGamePlayConfigPersistence getGamePlayConfigDB();
+
     public abstract IAgingConfig getAgingConfig();
     public abstract IGameResolverConfig getGameResolverConfig();
     public abstract IInjuryConfig getInjuryConfig();

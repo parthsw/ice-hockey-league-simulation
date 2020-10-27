@@ -16,7 +16,6 @@ public class ManagerPersistence implements IManagerPersistence {
     public boolean saveTeamManager(IManager manager) {
         DBConnection connectionManager = null;
         Connection connection = null;
-        String managerID = null;
         CallableStatement myCall;
         try {
 
@@ -24,19 +23,10 @@ public class ManagerPersistence implements IManagerPersistence {
             connection = connectionManager.getConnection();
             myCall = connection.prepareCall("{call insertIntoManager(?,?,?,?)}");
             myCall.setInt(1, manager.getTeamID());
-            myCall.setInt(2, manager.getLeagueID());
-            myCall.setString(3, manager.getManagerName());
-            myCall.registerOutParameter(4, Types.INTEGER);
-            ResultSet result = myCall.executeQuery();
-            while(result.next()) {
-                managerID = result.getString("managerID");
-            }
-            myCall.close();
-            manager.setManagerID(Integer.parseInt(managerID));
-            return true;
+            return saveBaseManager(manager, myCall);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("error in insert Manager");
+            System.out.println("error in insert team Manager");
             return false;
         } finally {
             if (connection != null) {
@@ -45,9 +35,41 @@ public class ManagerPersistence implements IManagerPersistence {
         }
     }
 
+    private boolean saveBaseManager(IManager manager, CallableStatement myCall) throws SQLException {
+        String managerID = "";
+        myCall.setInt(2, manager.getLeagueID());
+        myCall.setString(3, manager.getManagerName());
+        myCall.registerOutParameter(4, Types.INTEGER);
+        ResultSet result = myCall.executeQuery();
+        while (result.next()) {
+            managerID = result.getString("managerID");
+        }
+        myCall.close();
+        manager.setManagerID(Integer.parseInt(managerID));
+        return true;
+    }
+
     @Override
     public boolean saveLeagueManager(IManager manager) {
-        return false;
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+        try {
+
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+            myCall = connection.prepareCall("{call insertIntoManager(?,?,?,?)}");
+            myCall.setNull(1, Types.INTEGER);
+            return saveBaseManager(manager, myCall);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in insert league Manager");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
     }
 
     @Override

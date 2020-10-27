@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.GamePlayConfig;
 
 public class GamePlayConfig implements IGamePlayConfig {
+    private int gamePlayConfigID;
     private int leagueID;
     private IAgingConfig agingConfig;
     private IGameResolverConfig gameResolverConfig;
@@ -9,7 +10,18 @@ public class GamePlayConfig implements IGamePlayConfig {
     private IInjuryConfig injuryConfig;
 
     public GamePlayConfig() {
+        gamePlayConfigID = -1;
         leagueID = -1;
+    }
+
+    @Override
+    public int getGamePlayConfigID() {
+        return gamePlayConfigID;
+    }
+
+    @Override
+    public void setGamePlayConfigID(int id) {
+        gamePlayConfigID = id;
     }
 
     @Override
@@ -70,5 +82,15 @@ public class GamePlayConfig implements IGamePlayConfig {
     @Override
     public ITradingConfig getTradingConfig() {
         return tradingConfig;
+    }
+
+    @Override
+    public boolean saveGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDB) {
+        return gamePlayConfigDB.saveGamePlayConfig(this);
+    }
+
+    @Override
+    public boolean loadGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDB, IGamePlayConfig gamePlayConfig) {
+        return gamePlayConfigDB.loadGamePlayConfig(leagueID, gamePlayConfig);
     }
 }

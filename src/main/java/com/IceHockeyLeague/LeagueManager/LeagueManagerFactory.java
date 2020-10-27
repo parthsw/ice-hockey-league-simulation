@@ -20,6 +20,7 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     private IFreeAgentPersistence freeAgentDB = null;
     private ICoachPersistence coachDB = null;
     private IManagerPersistence managerDB = null;
+    private IGamePlayConfigPersistence gamePlayConfigDB = null;
 
     @Override
     public ILeagueCreator getLeagueCreator() {
@@ -153,6 +154,14 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public IGamePlayConfig getGamePlayConfig() {
         return new GamePlayConfig();
+    }
+
+    @Override
+    public IGamePlayConfigPersistence getGamePlayConfigDB() {
+        if(gamePlayConfigDB == null) {
+            gamePlayConfigDB = new GamePlayConfigPersistence();
+        }
+        return gamePlayConfigDB;
     }
 
     @Override
