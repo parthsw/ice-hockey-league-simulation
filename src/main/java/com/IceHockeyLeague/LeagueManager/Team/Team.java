@@ -121,11 +121,6 @@ public class Team implements ITeam {
         this.manager = manager;
     }
 
-    private void setDefaults() {
-        teamID = -1;
-        isUserCreated = false;
-    }
-
     @Override
     public boolean saveTeam(ITeamPersistence teamDB) {
         return teamDB.saveTeam(this);
@@ -134,6 +129,11 @@ public class Team implements ITeam {
     @Override
     public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
         return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
+    }
+
+    @Override
+    public int getLossPointValue() {
+        return 0;
     }
 
     @Override

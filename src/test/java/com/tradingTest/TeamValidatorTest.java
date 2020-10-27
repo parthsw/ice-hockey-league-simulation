@@ -1,5 +1,7 @@
 package com.tradingTest;
 
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.LeagueManager.Team.Team;
 import org.junit.Test;
 
 public class TeamValidatorTest {
@@ -7,9 +9,7 @@ public class TeamValidatorTest {
 
     @Test
     public void validateTeamNumber() {
-//        IFreeAgent agent1 = new FreeAgent();
-//        agent1.setPlayerName("test player 1");
-//        agent1.setPlayerPosition("Goalie");
+        ITeam team = new Team();
     }
 
     @Test

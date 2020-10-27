@@ -27,14 +27,26 @@ public interface ITeam {
     IPlayer getPlayerById(int id);
     void addPlayer(ITeamPlayer player);
     List<ITeamPlayer> getPlayers();
+
     void setPlayers(List<ITeamPlayer> players);
 
     ICoach getCoach();
+
     void setCoach(ICoach coach);
 
     IManager getManager();
+
     void setManager(IManager manager);
 
     boolean saveTeam(ITeamPersistence teamDB);
+
     boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
+
+    int getLossPointValue();
+
+    boolean isNullOrEmpty(String teamName);
+
+    boolean isTeamNameExist(List<ITeam> teams);
+
+    float calculateTeamStrength(ITeamStrengthCalculator teamStrengthCalculator);
 }

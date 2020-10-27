@@ -14,7 +14,7 @@ public class GetBestAgent {
         for (IFreeAgent agent : agents){
             if (agent.getPlayerStats().getPosition().equals(position) && bestStrength < agent.getPlayerStats().getStrength()) {
                 this.bestFreeagent = agent;
-                bestStrength = agent.getPlayerStats().getStrength();
+                bestStrength = (int) agent.getPlayerStats().getStrength();
             }
         }
         return this.bestFreeagent;
@@ -25,7 +25,7 @@ public class GetBestAgent {
         for(ITeamPlayer player : players) {
             if (player.getPlayerStats().getPosition().equals(position) && bestStrength > player.getPlayerStats().getStrength()) {
                 this.worseTeamPlayer = player;
-                bestStrength = player.getPlayerStats().getStrength();
+                bestStrength = (int) player.getPlayerStats().getStrength();
             }
         }
         return this.worseTeamPlayer;
@@ -36,7 +36,7 @@ public class GetBestAgent {
         for (IFreeAgent agent : agents){
             if ((agent.getPlayerStats().getPosition().equals("Forward") || agent.getPlayerStats().getPosition().equals("Defence")) && bestStrength < agent.getPlayerStats().getStrength()) {
                 this.bestFreeagent = agent;
-                bestStrength = agent.getPlayerStats().getStrength();
+                bestStrength = (int) agent.getPlayerStats().getStrength();
             }
         }
         return this.bestFreeagent;
@@ -47,7 +47,7 @@ public class GetBestAgent {
         for(ITeamPlayer player : players) {
             if ((player.getPlayerStats().getPosition().equals("Forward") || player.getPlayerStats().getPosition().equals("Defence")) && bestStrength > player.getPlayerStats().getStrength()) {
                 this.worseTeamPlayer = player;
-                bestStrength = player.getPlayerStats().getStrength();
+                bestStrength = (int) player.getPlayerStats().getStrength();
             }
         }
         return this.worseTeamPlayer;
