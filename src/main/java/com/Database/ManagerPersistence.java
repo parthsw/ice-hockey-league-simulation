@@ -21,7 +21,6 @@ public class ManagerPersistence implements IManagerPersistence {
 
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
-
             myCall = connection.prepareCall("{call insertIntoManager(?,?,?,?)}");
             myCall.setInt(1, manager.getTeamID());
             myCall.setInt(2, manager.getLeagueID());
