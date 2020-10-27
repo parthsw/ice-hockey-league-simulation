@@ -1,7 +1,6 @@
 package com.Database;
 
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+import com.IceHockeyLeague.LeagueManager.Player.*;
 
 import java.util.List;
 import java.sql.*;
@@ -51,6 +50,44 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
 
     @Override
     public boolean loadTeamPlayers(int teamId, List<ITeamPlayer> teamPlayers) {
-        return false;
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+        try {
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+
+            myCall = connection.prepareCall("{call loadTeamPlayers(?)}");
+            myCall.setInt(1, teamId);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                ITeamPlayer player = new TeamPlayer();
+                IPlayerStats stats = new PlayerStats();
+                stats.setSkating(result.getInt("skating"));
+                stats.setSkating(result.getInt("shooting"));
+                stats.setSkating(result.getInt("checking"));
+                stats.setSkating(result.getInt("saving"));
+                stats.setStrength(result.getInt("strength"));
+
+                player.setTeamPlayerID(result.getInt("playerID"));
+                player.setTeamID(result.getInt("teamID"));
+                player.setPlayerName(result.getString("name"));
+                player.setPlayerAge(result.getInt("age"));
+                player.setPlayerStats(stats);
+                player.setIsInjured(result.getBoolean("isInjured"));
+                player.setIsCaptain(result.getBoolean("captain"));
+                teamPlayers.add(player);
+            }
+            myCall.close();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("error in load player");
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
     }
 }
