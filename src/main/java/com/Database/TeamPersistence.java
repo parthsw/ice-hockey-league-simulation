@@ -25,7 +25,6 @@ public class TeamPersistence implements ITeamPersistence {
             myCall = connection.prepareCall("{call insertIntoTeam(?,?,?,?)}");
             myCall.setInt(1, team.getDivisionID());
             myCall.setString(2, team.getTeamName());
-            //myCall.setInt(3, strength);
             myCall.registerOutParameter(4, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -33,6 +32,7 @@ public class TeamPersistence implements ITeamPersistence {
             }
             myCall.close();
             team.setTeamID(Integer.parseInt(teamID));
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in insert Team");
@@ -42,7 +42,6 @@ public class TeamPersistence implements ITeamPersistence {
                 connectionManager.terminateConnection();
             }
         }
-        return false;
     }
 
     @Override

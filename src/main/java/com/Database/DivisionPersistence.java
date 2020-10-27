@@ -23,10 +23,11 @@ public class DivisionPersistence implements IDivisionPersistence {
             myCall.registerOutParameter(3, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                divisionID = result.getString("lastID");
+                divisionID = result.getString("divisionID");
             }
             myCall.close();
             division.setDivisionID(Integer.parseInt(divisionID));
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in insert Division");
@@ -36,7 +37,6 @@ public class DivisionPersistence implements IDivisionPersistence {
                 connectionManager.terminateConnection();
             }
         }
-        return false;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class ConferencePersistence implements IConferencePersistence {
             myCall.registerOutParameter(3, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                conferenceID = result.getString("lastID");
+                conferenceID = result.getString("conferenceID");
             }
             myCall.close();
             conference.setConferenceID(Integer.parseInt(conferenceID));
