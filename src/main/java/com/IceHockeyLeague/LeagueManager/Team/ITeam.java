@@ -41,5 +41,5 @@ public interface ITeam {
 
     double calculateTeamStrength(ITeamStrength teamStrength);
 
-    void setTeamStrength(int strength);
+    void setTeamStrength(float strength);
 }

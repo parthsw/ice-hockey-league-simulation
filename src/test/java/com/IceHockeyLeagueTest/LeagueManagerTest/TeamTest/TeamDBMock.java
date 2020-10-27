@@ -31,11 +31,11 @@ public class TeamDBMock implements ITeamPersistence {
         team.setIsUserCreated(true);
 
         ICoach coach = leagueManagerFactory.getCoach();
-        leagueManagerFactory.getCoachDB().loadTeamCoach(1, 1, coach);
+        leagueManagerFactory.getCoachDB().loadTeamCoach(1, coach);
         team.setCoach(coach);
 
         IManager manager = leagueManagerFactory.getManager();
-        leagueManagerFactory.getManagerDB().loadTeamManager(1, 1, manager);
+        leagueManagerFactory.getManagerDB().loadTeamManager(1, manager);
         team.setManager(manager);
 
         List<ITeamPlayer> teamPlayers = new ArrayList<>();

@@ -108,6 +108,6 @@ public class Coach implements ICoach {
 
     @Override
     public boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach) {
-        return coachDB.loadTeamCoach(leagueID, teamID, this);
+        return coachDB.loadTeamCoach(teamID, this);
     }
 }
