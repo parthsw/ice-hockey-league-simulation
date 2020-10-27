@@ -42,12 +42,11 @@ public class CreateTeamState extends AbstractState {
         try {
             this.initializeInMemoryLeague();
             welcomeMessage();
-            // newTeam = this.constructNewTeam();
+            newTeam = this.constructNewTeam();
+            this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
             persistLeagueToDatabase(inMemoryLeague);
-           // this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
-
             return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
-        } catch (Exception exception) {
+        }catch (Exception exception) {
             appOutput.displayError("");
             return null;
         }
