@@ -18,7 +18,6 @@ public class ConferencePersistence implements IConferencePersistence {
         try {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
-
             myCall = connection.prepareCall("{call insertIntoConference(?,?,?)}");
             myCall.setInt(1, conference.getLeagueID());
             myCall.setString(2, conference.getConferenceName());

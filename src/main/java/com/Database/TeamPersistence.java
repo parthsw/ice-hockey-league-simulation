@@ -26,7 +26,9 @@ public class TeamPersistence implements ITeamPersistence {
             myCall = connection.prepareCall("{call insertIntoTeam(?,?,?,?)}");
             myCall.setInt(1, team.getDivisionID());
             myCall.setString(2, team.getTeamName());
-            myCall.registerOutParameter(4, Types.INTEGER);
+            myCall.setBoolean(3,team.getIsUserCreated());
+            myCall.setFloat(4, team.getTeamStrength());
+            myCall.registerOutParameter(5, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
                 teamID = result.getString("teamID");

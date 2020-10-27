@@ -133,32 +133,27 @@ public class Team implements ITeam {
 
     @Override
     public boolean isNullOrEmpty(String teamName) {
-        if(teamName == null || teamName.equals("")){
+        if (teamName == null || teamName.equals("")) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     @Override
     public boolean isTeamNameExist(List<ITeam> teams) {
-            boolean isExist = false;
-            for(ITeam t : teams){
-                if(t.getTeamName().equalsIgnoreCase(teamName)) {
-                    isExist = true;
-                    break;
-                }
+        boolean isExist = false;
+        for (ITeam t : teams) {
+            if (t.getTeamName().equalsIgnoreCase(teamName)) {
+                isExist = true;
+                break;
             }
-            return isExist;
+        }
+        return isExist;
     }
 
     public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
         return teamStrength.calculate(players);
     }
 
-    @Override
-    public void setTeamStrength(float strength) {
-
-    }
 }
