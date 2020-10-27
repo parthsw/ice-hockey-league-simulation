@@ -33,6 +33,7 @@ public class TeamPersistence implements ITeamPersistence {
             }
             myCall.close();
             team.setTeamID(Integer.parseInt(teamID));
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in insert Team");
@@ -42,7 +43,6 @@ public class TeamPersistence implements ITeamPersistence {
                 connectionManager.terminateConnection();
             }
         }
-        return false;
     }
 
     @Override

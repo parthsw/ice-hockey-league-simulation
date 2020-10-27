@@ -13,6 +13,8 @@ import com.IceHockeyLeague.LeagueManager.Division.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.Manager.*;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
+import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+
 import java.util.*;
 
 import java.util.ArrayList;
@@ -40,10 +42,11 @@ public class CreateTeamState extends AbstractState {
         try {
             this.initializeInMemoryLeague();
             welcomeMessage();
-            newTeam = this.constructNewTeam();
-            this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
+            // newTeam = this.constructNewTeam();
             persistLeagueToDatabase(inMemoryLeague);
-            return null;
+           // this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
+
+            return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
         } catch (Exception exception) {
             appOutput.displayError("");
             return null;
@@ -69,6 +72,7 @@ public class CreateTeamState extends AbstractState {
         this.newConference = this.processConferenceName();
         this.newDivision = this.processDivisionName(this.newConference);
         team = this.processTeamName(this.newDivision);
+        team.setIsUserCreated(true);
         IManager manager = this.processManager();
         ICoach coach = this.processCoach();
         this.players = this.processPlayers();
@@ -176,8 +180,9 @@ public class CreateTeamState extends AbstractState {
         List<ICoach> coaches = inMemoryLeague.getCoaches();
         appOutput.display("Showing you the list of coaches along with their stats");
         for(ICoach c : coaches){
+            appOutput.display("******************************************");
             appOutput.display(c.getCoachName());
-            appOutput.display("*********************STATS for "+c.getCoachName()+"*********************");
+            appOutput.display("********************* STATS for "+c.getCoachName()+" *********************");
             appOutput.display("Checking stat for coach "+c.getCoachName()+" is "+c.getCoachStats().getChecking());
             appOutput.display("Saving stat for coach "+c.getCoachName()+" is "+c.getCoachStats().getSaving());
             appOutput.display("Shooting stat for coach "+c.getCoachName()+" is "+c.getCoachStats().getShooting());
@@ -204,8 +209,9 @@ public class CreateTeamState extends AbstractState {
         freeAgents = inMemoryLeague.getFreeAgents();
         ITeamPlayer player = new TeamPlayer();
         for(IFreeAgent f : freeAgents){
+            appOutput.display("******************************************");
             appOutput.display(f.getPlayerName());
-            appOutput.display("*********************STATS for "+f.getPlayerName()+"*********************");
+            appOutput.display("********************* STATS for "+f.getPlayerName()+" *********************");
             appOutput.display("Position for free agent/player "+f.getPlayerName()+" is "+f.getPlayerStats().getPosition());
             appOutput.display("Checking stat for free agent/player "+f.getPlayerName()+" is "+Float.toString(f.getPlayerStats().getChecking()));
             appOutput.display("Saving stat for free agent/player "+f.getPlayerName()+" is "+Float.toString(f.getPlayerStats().getSaving()));

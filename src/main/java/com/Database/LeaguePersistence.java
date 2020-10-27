@@ -25,10 +25,11 @@ public class LeaguePersistence implements ILeaguePersistence {
             myCall.registerOutParameter(2, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                leagueID = result.getString("lastID");
+                leagueID = result.getString("leagueID");
             }
             myCall.close();
             league.setLeagueID(Integer.parseInt(leagueID));
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in insert League");
@@ -38,7 +39,6 @@ public class LeaguePersistence implements ILeaguePersistence {
                 connectionManager.terminateConnection();
             }
         }
-        return false;
     }
 
     @Override

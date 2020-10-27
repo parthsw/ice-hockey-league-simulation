@@ -19,7 +19,6 @@ public class CoachPersistence implements ICoachPersistence {
         try {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
-
             myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?)}");
             myCall.setInt(1, coach.getTeamID());
             myCall.setInt(2, coach.getLeagueID());
@@ -35,6 +34,7 @@ public class CoachPersistence implements ICoachPersistence {
             }
             myCall.close();
             coach.setCoachID(Integer.parseInt(coachID));
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in insert Coach");
@@ -44,7 +44,6 @@ public class CoachPersistence implements ICoachPersistence {
                 connectionManager.terminateConnection();
             }
         }
-        return false;
     }
 
     @Override

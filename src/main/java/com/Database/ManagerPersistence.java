@@ -30,10 +30,11 @@ public class ManagerPersistence implements IManagerPersistence {
             myCall.registerOutParameter(4, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                managerID = result.getString("lastID");
+                managerID = result.getString("managerID");
             }
             myCall.close();
             manager.setManagerID(Integer.parseInt(managerID));
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in insert Manager");
@@ -43,7 +44,6 @@ public class ManagerPersistence implements IManagerPersistence {
                 connectionManager.terminateConnection();
             }
         }
-        return false;
     }
 
     @Override
