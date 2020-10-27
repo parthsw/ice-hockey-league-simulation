@@ -17,14 +17,14 @@ public class GameResolverConfigTest {
     @Test
     public void setRandomWinChance() {
         IGameResolverConfig resolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
-        resolverConfig.setRandomWinChance(0.07);
-        Assert.assertEquals(0.07, resolverConfig.getRandomWinChance(), 0.0);
+        resolverConfig.setRandomWinChance(0.07f);
+        Assert.assertEquals(0.07f, resolverConfig.getRandomWinChance(), 0.0);
     }
 
     @Test
     public void getRandomWinChance() {
         IGameResolverConfig resolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
-        resolverConfig.setRandomWinChance(0.90);
-        Assert.assertEquals(0.90, resolverConfig.getRandomWinChance(), 0.0);
+        resolverConfig.setRandomWinChance(0.90f);
+        Assert.assertEquals(0.90f, resolverConfig.getRandomWinChance(), 0.0);
     }
 }

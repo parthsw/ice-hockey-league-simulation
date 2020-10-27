@@ -20,7 +20,8 @@ public interface ICoach {
 
     boolean isValid();
 
-    boolean saveCoach(ICoachPersistence coachDB);
+    boolean saveTeamCoach(ICoachPersistence coachDB);
+    boolean saveLeagueCoach(ICoachPersistence coachDB);
     boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach);
 
     boolean isNullOrEmpty(String coachName);

@@ -102,8 +102,13 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public boolean saveCoach(ICoachPersistence coachDB) {
-        return coachDB.saveCoach(this);
+    public boolean saveTeamCoach(ICoachPersistence coachDB) {
+        return coachDB.saveTeamCoach(this);
+    }
+
+    @Override
+    public boolean saveLeagueCoach(ICoachPersistence coachDB) {
+        return coachDB.saveLeagueCoach(this);
     }
 
     @Override

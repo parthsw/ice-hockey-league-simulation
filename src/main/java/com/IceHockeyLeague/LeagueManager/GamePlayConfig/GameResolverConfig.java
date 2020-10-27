@@ -1,15 +1,15 @@
 package com.IceHockeyLeague.LeagueManager.GamePlayConfig;
 
 public class GameResolverConfig implements IGameResolverConfig {
-    private double randomWinChance;
+    private float randomWinChance;
 
     @Override
-    public void setRandomWinChance(double winChance) {
+    public void setRandomWinChance(float winChance) {
         randomWinChance = winChance;
     }
 
     @Override
-    public double getRandomWinChance() {
+    public float getRandomWinChance() {
         return randomWinChance;
     }
 }

@@ -151,6 +151,9 @@ public class League implements ILeague {
     public boolean saveCompleteLeague() {
         this.saveLeague(LeagueManagerFactory.getFactory().getLeagueDB());
 
+        gamePlayConfig.setLeagueID(leagueID);
+        gamePlayConfig.saveGamePlayConfig(LeagueManagerFactory.getFactory().getGamePlayConfigDB());
+
         for(IConference conference: conferences) {
             conference.setLeagueID(leagueID);
             conference.saveConference(LeagueManagerFactory.getFactory().getConferenceDB());
@@ -171,12 +174,12 @@ public class League implements ILeague {
                     IManager manager = team.getManager();
                     manager.setTeamID(team.getTeamID());
                     manager.setLeagueID(leagueID);
-                    manager.saveManager(LeagueManagerFactory.getFactory().getManagerDB());
+                    manager.saveTeamManager(LeagueManagerFactory.getFactory().getManagerDB());
 
                     ICoach coach = team.getCoach();
                     coach.setTeamID(team.getTeamID());
                     coach.setLeagueID(leagueID);
-                    coach.saveCoach(LeagueManagerFactory.getFactory().getCoachDB());
+                    coach.saveTeamCoach(LeagueManagerFactory.getFactory().getCoachDB());
                 }
             }
         }
@@ -188,12 +191,12 @@ public class League implements ILeague {
 
         for (IManager manager: managers) {
             manager.setLeagueID(leagueID);
-            manager.saveManager(LeagueManagerFactory.getFactory().getManagerDB());
+            manager.saveLeagueManager(LeagueManagerFactory.getFactory().getManagerDB());
         }
 
         for (ICoach coach: coaches) {
             coach.setLeagueID(leagueID);
-            coach.saveCoach(LeagueManagerFactory.getFactory().getCoachDB());
+            coach.saveLeagueCoach(LeagueManagerFactory.getFactory().getCoachDB());
         }
 
         return true;

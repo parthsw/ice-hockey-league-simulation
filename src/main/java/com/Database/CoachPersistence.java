@@ -11,33 +11,59 @@ import java.sql.*;
 public class CoachPersistence implements ICoachPersistence {
 
     @Override
-    public boolean saveCoach(ICoach coach) {
+    public boolean saveTeamCoach(ICoach coach) {
         DBConnection connectionManager = null;
         Connection connection = null;
-        String coachID = null;
         CallableStatement myCall;
         try {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?)}");
+            myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?,?,?,?,?)}");
             myCall.setInt(1, coach.getTeamID());
-            myCall.setInt(2, coach.getLeagueID());
-            myCall.setString(3, coach.getCoachName());
-            myCall.setFloat(4,coach.getCoachStats().getSkating());
-            myCall.setFloat(5,coach.getCoachStats().getShooting());
-            myCall.setFloat(6,coach.getCoachStats().getChecking());
-            myCall.setFloat(7,coach.getCoachStats().getSaving());
-            myCall.registerOutParameter(8, Types.INTEGER);
-            ResultSet result = myCall.executeQuery();
-            while(result.next()) {
-                coachID = result.getString("coachID");
-            }
-            myCall.close();
-            coach.setCoachID(Integer.parseInt(coachID));
-            return true;
+            return saveBaseCoach(coach, myCall);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("error in insert Coach");
+            System.out.println("error in insert team Coach");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
+    }
+
+    private boolean saveBaseCoach(ICoach coach, CallableStatement myCall) throws SQLException {
+        String coachID = null;
+        myCall.setInt(2, coach.getLeagueID());
+        myCall.setString(3, coach.getCoachName());
+        myCall.setFloat(4,coach.getCoachStats().getSkating());
+        myCall.setFloat(5,coach.getCoachStats().getShooting());
+        myCall.setFloat(6,coach.getCoachStats().getChecking());
+        myCall.setFloat(7,coach.getCoachStats().getSaving());
+        myCall.registerOutParameter(8, Types.INTEGER);
+        ResultSet result = myCall.executeQuery();
+        while(result.next()) {
+            coachID = result.getString("coachID");
+        }
+        myCall.close();
+        coach.setCoachID(Integer.parseInt(coachID));
+        return true;
+    }
+
+    @Override
+    public boolean saveLeagueCoach(ICoach coach) {
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+        try {
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+            myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?,?,?,?,?)}");
+            myCall.setNull(1, Types.INTEGER);
+            return saveBaseCoach(coach, myCall);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in insert league Coach");
             return false;
         } finally {
             if (connection != null) {
