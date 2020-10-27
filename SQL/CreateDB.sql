@@ -124,7 +124,7 @@ CREATE TABLE gamePlayConfig
     lossPoint                   INT NOT NULL,
     randomTradeOfferChance      FLOAT(2) NOT NULL,
     maxPlayersPerTrade          INT NOT NULL,
-    randomAcceptanceChance      FLOAT(2) NOT NULL
+    randomAcceptanceChance      FLOAT(2) NOT NULL,
     CONSTRAINT gamePlayConfigToLeague
         FOREIGN KEY (leagueID) REFERENCES league (leagueID)
             ON UPDATE CASCADE ON DELETE CASCADE

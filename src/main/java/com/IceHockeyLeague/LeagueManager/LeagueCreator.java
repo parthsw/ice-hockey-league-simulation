@@ -262,13 +262,13 @@ public class LeagueCreator implements ILeagueCreator {
 
     private IGameResolverConfig createGameResolverConfig(JSONObject gameResolverConfigJson) {
         IGameResolverConfig gameResolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
-        gameResolverConfig.setRandomWinChance(gameResolverConfigJson.getDouble(RANDOM_WIN_CHANCE));
+        gameResolverConfig.setRandomWinChance(gameResolverConfigJson.getFloat(RANDOM_WIN_CHANCE));
         return gameResolverConfig;
     }
 
     private IInjuryConfig createInjuryConfig(JSONObject injuryConfigJson) {
         IInjuryConfig injuryConfig = AbstractLeagueManagerFactory.getFactory().getInjuryConfig();
-        injuryConfig.setRandomInjuryChance(injuryConfigJson.getDouble(RANDOM_INJURY_CHANCE));
+        injuryConfig.setRandomInjuryChance(injuryConfigJson.getFloat(RANDOM_INJURY_CHANCE));
         injuryConfig.setInjuryDaysLow(injuryConfigJson.getInt(INJURY_DAYS_LOW));
         injuryConfig.setInjuryDaysHigh(injuryConfigJson.getInt(INJURY_DAYS_HIGH));
         return injuryConfig;
@@ -284,8 +284,8 @@ public class LeagueCreator implements ILeagueCreator {
         ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
         tradingConfig.setLossPoint(tradingConfigJson.getInt(LOSS_POINT));
         tradingConfig.setMaxPlayersPerTrade(tradingConfigJson.getInt(MAX_PLAYERS_PER_TRADE));
-        tradingConfig.setRandomAcceptanceChance(tradingConfigJson.getDouble(RANDOM_ACCEPTANCE_CHANCE));
-        tradingConfig.setRandomTradeOfferChance(tradingConfigJson.getDouble(RANDOM_TRADE_OFFER_CHANCE));
+        tradingConfig.setRandomAcceptanceChance(tradingConfigJson.getFloat(RANDOM_ACCEPTANCE_CHANCE));
+        tradingConfig.setRandomTradeOfferChance(tradingConfigJson.getFloat(RANDOM_TRADE_OFFER_CHANCE));
         return tradingConfig;
     }
 }

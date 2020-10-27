@@ -150,6 +150,9 @@ public class League implements ILeague {
     public boolean saveCompleteLeague() {
         this.saveLeague(LeagueManagerFactory.getFactory().getLeagueDB());
 
+        gamePlayConfig.setLeagueID(leagueID);
+        gamePlayConfig.saveGamePlayConfig(LeagueManagerFactory.getFactory().getGamePlayConfigDB());
+
         for(IConference conference: conferences) {
             conference.setLeagueID(leagueID);
             conference.saveConference(LeagueManagerFactory.getFactory().getConferenceDB());

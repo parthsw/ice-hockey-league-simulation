@@ -1,6 +1,9 @@
 package com.IceHockeyLeague.LeagueManager.GamePlayConfig;
 
 public interface IGamePlayConfig {
+    int getGamePlayConfigID();
+    void setGamePlayConfigID(int id);
+
     int getLeagueID();
     void setLeagueID(int id);
 
@@ -18,4 +21,7 @@ public interface IGamePlayConfig {
 
     void setTradingConfig(ITradingConfig tradingConfig);
     ITradingConfig getTradingConfig();
+
+    boolean saveGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDB);
+    boolean loadGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDB, IGamePlayConfig gamePlayConfig);
 }

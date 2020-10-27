@@ -29,14 +29,14 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
             myCall.registerOutParameter(11, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                playerID = result.getString("playerID");
+                playerID = result.getString("freeAgentID");
             }
             myCall.close();
             freeAgent.setFreeAgentID(Integer.parseInt(playerID));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("error in insert player");
+            System.out.println("error in insert free agent");
             e.printStackTrace();
             return false;
         } finally {
