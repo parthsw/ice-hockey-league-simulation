@@ -28,6 +28,14 @@ public class League implements ILeague {
     private List<ICoach> coaches;
     private List<IManager> managers;
 
+    public League() {
+        setDefaults();
+    }
+
+    private void setDefaults() {
+        leagueID = -1;
+    }
+
     @Override
     public int getLeagueID() {
         return leagueID;
@@ -194,25 +202,25 @@ public class League implements ILeague {
         leagueID = id;
         this.loadLeague(LeagueManagerFactory.getFactory().getLeagueDB());
 
-        List<IConference> conferences = new ArrayList<IConference>();
+        List<IConference> conferences = new ArrayList<>();
         this.loadConferences(LeagueManagerFactory.getFactory().getConferenceDB(), conferences);
 
         for (IConference conference: conferences) {
             this.addConference(conference);
 
-            List<IDivision> divisions = new ArrayList<IDivision>();
+            List<IDivision> divisions = new ArrayList<>();
             conference.loadDivisions(LeagueManagerFactory.getFactory().getDivisionDB(), divisions);
 
             for (IDivision division: divisions) {
                 conference.addDivision(division);
 
-                List<ITeam> teams = new ArrayList<ITeam>();
+                List<ITeam> teams = new ArrayList<>();
                 division.loadTeams(LeagueManagerFactory.getFactory().getTeamDB(), teams);
 
                 for (ITeam team: teams) {
                     division.addTeam(team);
 
-                    List<ITeamPlayer> teamPlayers = new ArrayList<ITeamPlayer>();
+                    List<ITeamPlayer> teamPlayers = new ArrayList<>();
                     team.loadPlayers(LeagueManagerFactory.getFactory().getTeamPlayerDB(), teamPlayers);
 
                     for (ITeamPlayer teamPlayer: teamPlayers) {
@@ -234,15 +242,15 @@ public class League implements ILeague {
             }
         }
 
-        List<IFreeAgent> freeAgents = new ArrayList<IFreeAgent>();
+        List<IFreeAgent> freeAgents = new ArrayList<>();
         this.loadLeagueFreeAgents(LeagueManagerFactory.getFactory().getFreeAgentDB(), freeAgents);
         this.setFreeAgents(freeAgents);
 
-        List<IManager> managers = new ArrayList<IManager>();
+        List<IManager> managers = new ArrayList<>();
         this.loadLeagueManagers(LeagueManagerFactory.getFactory().getManagerDB(), managers);
         this.setManagers(managers);
 
-        List<ICoach> coaches = new ArrayList<ICoach>();
+        List<ICoach> coaches = new ArrayList<>();
         this.loadLeagueCoaches(LeagueManagerFactory.getFactory().getCoachDB(), coaches);
         this.setCoaches(coaches);
 

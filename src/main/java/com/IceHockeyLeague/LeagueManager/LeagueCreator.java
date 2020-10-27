@@ -13,6 +13,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 
+import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -126,6 +127,8 @@ public class LeagueCreator implements ILeagueCreator {
         team.setManager(createManager(((JSONObject) teamJson).getString(GENERAL_MANAGER)));
         team.setCoach(createCoach(((JSONObject) teamJson).getJSONObject(HEAD_COACH)));
         team.setPlayers(createTeamPlayerList(((JSONObject) teamJson).getJSONArray(PLAYERS)));
+        ITeamStrengthCalculator teamStrengthCalculator = AbstractLeagueManagerFactory.getFactory().getTeamStrengthCalculator();
+        team.setTeamStrength(team.calculateTeamStrength(teamStrengthCalculator));
 
         return team;
     }

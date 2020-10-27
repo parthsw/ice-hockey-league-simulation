@@ -67,7 +67,7 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public double calculateStrength(IPlayerStats stats) {
+    public float calculateStrength(IPlayerStats stats) {
         return stats.calculateStrength();
     }
 

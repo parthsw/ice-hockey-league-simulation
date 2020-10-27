@@ -13,6 +13,7 @@ public class Team implements ITeam {
     private int teamID;
     private String teamName;
     private boolean isUserCreated;
+    private float teamStrength;
     private int divisionID;
     private List<ITeamPlayer> players;
     private IManager manager;
@@ -25,6 +26,7 @@ public class Team implements ITeam {
     private void setDefaults() {
         teamID = -1;
         divisionID = -1;
+        teamStrength = 0f;
         isUserCreated = false;
         players = new ArrayList<>();
     }
@@ -57,6 +59,16 @@ public class Team implements ITeam {
     @Override
     public void setIsUserCreated(boolean userCreated) {
         isUserCreated = userCreated;
+    }
+
+    @Override
+    public float getTeamStrength() {
+        return teamStrength;
+    }
+
+    @Override
+    public void setTeamStrength(float strength) {
+        teamStrength = strength;
     }
 
     @Override
@@ -141,7 +153,7 @@ public class Team implements ITeam {
             return isExist;
     }
 
-    public double calculateTeamStrength(ITeamStrength teamStrength) {
+    public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
         return teamStrength.calculate(players);
     }
 
