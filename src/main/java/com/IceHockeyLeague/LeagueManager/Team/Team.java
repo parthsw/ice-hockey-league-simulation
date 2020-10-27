@@ -141,7 +141,7 @@ public class Team implements ITeam {
     }
 
     @Override
-    public boolean isTeamNameExist(List<ITeam> teams) {
+    public boolean isTeamNameExist(List<ITeam> teams, String teamName) {
         boolean isExist = false;
         for (ITeam t : teams) {
             if (t.getTeamName().equalsIgnoreCase(teamName)) {

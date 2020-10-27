@@ -40,7 +40,7 @@ public interface ITeam {
 
     boolean isNullOrEmpty(String teamName);
 
-    boolean isTeamNameExist(List<ITeam> teams);
+    boolean isTeamNameExist(List<ITeam> teams,String teamName);
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrength);
 }
