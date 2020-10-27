@@ -1,5 +1,7 @@
 package com;
 
+import com.Database.AbstractDatabaseFactory;
+import com.Database.DatabaseFactory;
 import com.IO.AbstractIOFactory;
 import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
@@ -20,7 +22,17 @@ public class HockeyLeagueSimulationApp {
         AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
         AbstractIOFactory.setFactory(new IOFactory());
         AbstractLeagueManagerFactory.setFactory(new LeagueManagerFactory());
-        AbstractStateMachineFactory.setFactory(new StateMachineFactory());
+
+        AbstractStateMachineFactory.setFactory(
+                new StateMachineFactory(
+                        AbstractIOFactory.getFactory().getCommandLineInput(),
+                        AbstractIOFactory.getFactory().getCommandLineOutput(),
+                        LeagueFileHandlerFactory.getFactory().getLeagueFileReader(),
+                        LeagueFileHandlerFactory.getFactory().getJsonParser(),
+                        LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
+                )
+        );
+        AbstractDatabaseFactory.setFactory(new DatabaseFactory());
     }
 
     private static void runApp() {

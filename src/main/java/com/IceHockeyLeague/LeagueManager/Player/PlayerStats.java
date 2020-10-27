@@ -9,7 +9,7 @@ public class PlayerStats implements IPlayerStats {
     private int shooting;
     private int checking;
     private int saving;
-    private int strength;
+    private float strength;
 
     public PlayerStats() {
         setDefaults();
@@ -21,7 +21,7 @@ public class PlayerStats implements IPlayerStats {
         shooting = 0;
         checking = 0;
         saving = 0;
-        strength = 0;
+        strength = 0f;
     }
 
     @Override
@@ -83,18 +83,18 @@ public class PlayerStats implements IPlayerStats {
     }
 
     @Override
-    public void setStrength(int strength) {
+    public void setStrength(float strength) {
         this.strength = strength;
     }
 
     @Override
-    public int getStrength() {
+    public float getStrength() {
         return strength;
     }
 
     @Override
-    public int calculateStrength() {
-        int strength = 0;
+    public float calculateStrength() {
+        float strength = 0f;
         if(position.equalsIgnoreCase(PlayerPosition.FORWARD.toString())) {
             return forwardStrength();
         }
@@ -107,24 +107,24 @@ public class PlayerStats implements IPlayerStats {
         return strength;
     }
 
-    private int forwardStrength() {
-        int strength = 0;
+    private float forwardStrength() {
+        float strength = 0f;
         if(isStatValid(skating) && isStatValid(shooting) && isStatValid(checking)) {
-            strength = skating + shooting + (checking/2);
+            strength = skating + shooting + ((float)checking/2);
         }
         return strength;
     }
 
-    private int defenseStrength() {
-        int strength = 0;
+    private float defenseStrength() {
+        float strength = 0f;
         if(isStatValid(skating) && isStatValid(shooting) && isStatValid(checking)) {
-            strength = skating + checking + (shooting/2);
+            strength = skating + checking + ((float)shooting/2);
         }
         return strength;
     }
 
-    private int goalieStrength() {
-        int strength = 0;
+    private float goalieStrength() {
+        float strength = 0f;
         if(isStatValid(skating) && isStatValid(saving)) {
             strength = skating + saving;
         }

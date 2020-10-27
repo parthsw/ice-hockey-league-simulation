@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Division;
 
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 
@@ -78,5 +79,27 @@ public class Division implements IDivision {
     @Override
     public boolean loadTeams(ITeamPersistence teamDB, List<ITeam> teams) {
         return teamDB.loadTeams(divisionID, teams);
+    }
+
+    @Override
+    public boolean isNullOrEmpty(String divisionName) {
+        if(divisionName == null || divisionName.equals("")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isDivisionNameExist(List<IDivision> divisions,String divisionName) {
+        boolean isExist = false;
+        for(IDivision d : divisions){
+            if(d.getDivisionName().equalsIgnoreCase(divisionName)){
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
     }
 }

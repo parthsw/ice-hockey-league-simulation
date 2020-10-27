@@ -1,5 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Coach;
 
+import java.util.List;
+
 public class Coach implements ICoach {
     private int coachID;
     private String coachName;
@@ -37,6 +39,28 @@ public class Coach implements ICoach {
     }
 
     @Override
+    public boolean isCoachNameExist(List<ICoach> coaches, String coachName) {
+        boolean isExist = false;
+        for(ICoach c : coaches){
+            if(c.getCoachName().equalsIgnoreCase(coachName)){
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
+    }
+
+    @Override
+    public boolean isNullOrEmpty(String coachName) {
+        if(coachName == null || coachName.equals("")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
     public void setTeamID(int id) {
         teamID = id;
     }
@@ -70,9 +94,6 @@ public class Coach implements ICoach {
         return valid;
     }
 
-    private boolean isNullOrEmpty(String s) {
-        return s == null || s.equals("");
-    }
 
     private void setDefaults() {
         coachID = -1;
@@ -87,6 +108,6 @@ public class Coach implements ICoach {
 
     @Override
     public boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach) {
-        return coachDB.loadTeamCoach(leagueID, teamID, this);
+        return coachDB.loadTeamCoach(teamID, this);
     }
 }

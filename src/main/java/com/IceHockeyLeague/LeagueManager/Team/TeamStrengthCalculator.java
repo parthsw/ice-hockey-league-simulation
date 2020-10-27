@@ -1,21 +1,22 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 
 import java.util.List;
 
-public class TeamStrengthCalculator {
+public class TeamStrengthCalculator implements ITeamStrengthCalculator {
 
-    public static int strength(List<IPlayer> players) {
-        int strength = 0;
+    @Override
+    public float calculate(List<ITeamPlayer> players) {
+        float teamStrength = 0f;
         for(IPlayer player: players) {
-            strength += player.calculateStrength(player.getPlayerStats());
-
+            float strength = player.calculateStrength(player.getPlayerStats());
             if(player.getIsInjured()) {
                 strength = strength / 2;
             }
+            teamStrength += strength;
         }
-        return strength;
+        return teamStrength;
     }
-
 }

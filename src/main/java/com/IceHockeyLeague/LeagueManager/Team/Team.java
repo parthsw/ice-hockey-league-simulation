@@ -6,12 +6,14 @@ import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team implements ITeam {
     private int teamID;
     private String teamName;
     private boolean isUserCreated;
+    private float teamStrength;
     private int divisionID;
     private List<ITeamPlayer> players;
     private IManager manager;
@@ -19,6 +21,14 @@ public class Team implements ITeam {
 
     public Team() {
         setDefaults();
+    }
+
+    private void setDefaults() {
+        teamID = -1;
+        divisionID = -1;
+        teamStrength = 0f;
+        isUserCreated = false;
+        players = new ArrayList<>();
     }
 
     @Override
@@ -49,6 +59,16 @@ public class Team implements ITeam {
     @Override
     public void setIsUserCreated(boolean userCreated) {
         isUserCreated = userCreated;
+    }
+
+    @Override
+    public float getTeamStrength() {
+        return teamStrength;
+    }
+
+    @Override
+    public void setTeamStrength(float strength) {
+        teamStrength = strength;
     }
 
     @Override
@@ -117,17 +137,33 @@ public class Team implements ITeam {
     }
 
     @Override
-    public int getLossPointValue() {
-        return 0;
+    public boolean isNullOrEmpty(String teamName) {
+        if(teamName == null || teamName.equals("")){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
-    public void resetLossPointValue() {
+    public boolean isTeamNameExist(List<ITeam> teams) {
+            boolean isExist = false;
+            for(ITeam t : teams){
+                if(t.getTeamName().equalsIgnoreCase(teamName)) {
+                    isExist = true;
+                    break;
+                }
+            }
+            return isExist;
+    }
 
+    public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
+        return teamStrength.calculate(players);
     }
 
     @Override
-    public float getTeamStrength() {
-        return 0;
+    public void setTeamStrength(float strength) {
+
     }
 }

@@ -12,5 +12,4 @@ public interface ICoachStats {
 
     float getSaving();
     void setSaving(float value);
-
 }

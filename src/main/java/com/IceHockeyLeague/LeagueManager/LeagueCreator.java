@@ -3,6 +3,7 @@ package com.IceHockeyLeague.LeagueManager;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
@@ -12,6 +13,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 
+import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -49,6 +51,24 @@ public class LeagueCreator implements ILeagueCreator {
 
     private static final String CAPTAIN = "captain";
 
+    private static final String GAME_PLAY_CONFIG = "gameplayConfig";
+    private static final String AGING = "aging";
+    private static final String AVERAGE_RETIREMENT_AGE = "averageRetirementAge";
+    private static final String MAXIMUM_AGE = "maximumAge";
+    private static final String GAME_RESOLVER = "gameResolver";
+    private static final String RANDOM_WIN_CHANCE = "randomWinChance";
+    private static final String INJURIES = "injuries";
+    private static final String RANDOM_INJURY_CHANCE = "randomInjuryChance";
+    private static final String INJURY_DAYS_LOW = "injuryDaysLow";
+    private static final String INJURY_DAYS_HIGH = "injuryDaysHigh";
+    private static final String TRAINING = "training";
+    private static final String DAYS_STAT_INCREASE_CHECK = "daysUntilStatIncreaseCheck";
+    private static final String TRADING = "trading";
+    private static final String LOSS_POINT = "lossPoint";
+    private static final String RANDOM_TRADE_OFFER_CHANCE = "randomTradeOfferChance";
+    private static final String MAX_PLAYERS_PER_TRADE = "maxPlayersPerTrade";
+    private static final String RANDOM_ACCEPTANCE_CHANCE = "randomAcceptanceChance";
+
     public LeagueCreator() {
     }
 
@@ -57,9 +77,9 @@ public class LeagueCreator implements ILeagueCreator {
         ILeague league = AbstractLeagueManagerFactory.getFactory().getLeague();
         league.setLeagueName(leagueJson.getString(LEAGUE_NAME));
 
+        league.setGamePlayConfig(createGamePlayConfig(leagueJson.getJSONObject(GAME_PLAY_CONFIG)));
         league.setConferences(createConferenceList(leagueJson.getJSONArray(CONFERENCES)));
         league.setFreeAgents(createFreeAgentList(leagueJson.getJSONArray(FREE_AGENTS)));
-        // TODO: set gamePlayConfig
         league.setCoaches(createCoachList(leagueJson.getJSONArray(COACHES)));
         league.setManagers(createManagerList(leagueJson.getJSONArray(GENERAL_MANAGERS)));
 
@@ -107,6 +127,8 @@ public class LeagueCreator implements ILeagueCreator {
         team.setManager(createManager(((JSONObject) teamJson).getString(GENERAL_MANAGER)));
         team.setCoach(createCoach(((JSONObject) teamJson).getJSONObject(HEAD_COACH)));
         team.setPlayers(createTeamPlayerList(((JSONObject) teamJson).getJSONArray(PLAYERS)));
+        ITeamStrengthCalculator teamStrengthCalculator = AbstractLeagueManagerFactory.getFactory().getTeamStrengthCalculator();
+        team.setTeamStrength(team.calculateTeamStrength(teamStrengthCalculator));
 
         return team;
     }
@@ -219,40 +241,51 @@ public class LeagueCreator implements ILeagueCreator {
         return coaches;
     }
 
-// TODO:
+    private IGamePlayConfig createGamePlayConfig(JSONObject gamePlayConfigJson) {
+        IGamePlayConfig gamePlayConfig = AbstractLeagueManagerFactory.getFactory().getGamePlayConfig();
 
-//    private List<IFreeAgent> createFreeAgents(JSONArray freeAgentsJson) {
-//        List<IFreeAgent> freeAgents = new ArrayList<IFreeAgent>();
-//
-//        for(Object playerJson: freeAgentsJson) {
-//            IFreeAgent freeAgent = AbstractLeagueFactory.getFactory().getFreeAgent();
-//            freeAgent.setName(((JSONObject) playerJson).getString(PLAYER_NAME));
-//            freeAgent.setPosition(((JSONObject) playerJson).getString(POSITION));
-//            freeAgent.setAge(((JSONObject) playerJson).getInt(AGE));
-//            freeAgent.setSkating(((JSONObject) playerJson).getInt(SKATING));
-//            freeAgent.setShooting(((JSONObject) playerJson).getInt(SHOOTING));
-//            freeAgent.setChecking(((JSONObject) playerJson).getInt(CHECKING));
-//            freeAgent.setSaving(((JSONObject) playerJson).getInt(SAVING));
-//            freeAgents.add(freeAgent); // No need to set teamID or playerID
-//        }
-//        return freeAgents;
-//    }
-//
-//    private List<IPlayer> createPlayers(JSONArray playersJson) {
-//        List<IPlayer> players = new ArrayList<IPlayer>();
-//
-//        for(Object playerJson: playersJson) {
-//            IPlayer player = AbstractLeagueFactory.getFactory().getPlayer();
-//            player.setPlayerName(((JSONObject) playerJson).getString(PLAYER_NAME));
-//            player.setPosition(((JSONObject) playerJson).getString(POSITION));
-//            player.setIsCaptain((JSONOBject));
-//            player.setAge(((JSONObject) playerJson).getInt(AGE));
-//            player.setSkating(((JSONObject) playerJson).getInt(SKATING));
-//            player.setShooting(((JSONObject) playerJson).getInt(SHOOTING));
-//            player.setChecking(((JSONObject) playerJson).getInt(CHECKING));
-//            player.setSaving(((JSONObject) playerJson).getInt(SAVING));
-//            players.add(player);
-//        }
-//        return players;
-//    }
+        gamePlayConfig.setAgingConfig(createAgingConfig(gamePlayConfigJson.getJSONObject(AGING)));
+        gamePlayConfig.setGameResolverConfig(createGameResolverConfig(gamePlayConfigJson.getJSONObject(GAME_RESOLVER)));
+        gamePlayConfig.setInjuryConfig(createInjuryConfig(gamePlayConfigJson.getJSONObject(INJURIES)));
+        gamePlayConfig.setTrainingConfig(createTrainingConfig(gamePlayConfigJson.getJSONObject(TRAINING)));
+        gamePlayConfig.setTradingConfig(createTradingConfig(gamePlayConfigJson.getJSONObject(TRADING)));
+
+        return gamePlayConfig;
+    }
+
+    private IAgingConfig createAgingConfig(JSONObject agingConfigJson) {
+        IAgingConfig agingConfig = AbstractLeagueManagerFactory.getFactory().getAgingConfig();
+        agingConfig.setAverageRetirementAge(agingConfigJson.getInt(AVERAGE_RETIREMENT_AGE));
+        agingConfig.setMaximumAge(agingConfigJson.getInt(MAXIMUM_AGE));
+        return agingConfig;
+    }
+
+    private IGameResolverConfig createGameResolverConfig(JSONObject gameResolverConfigJson) {
+        IGameResolverConfig gameResolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
+        gameResolverConfig.setRandomWinChance(gameResolverConfigJson.getDouble(RANDOM_WIN_CHANCE));
+        return gameResolverConfig;
+    }
+
+    private IInjuryConfig createInjuryConfig(JSONObject injuryConfigJson) {
+        IInjuryConfig injuryConfig = AbstractLeagueManagerFactory.getFactory().getInjuryConfig();
+        injuryConfig.setRandomInjuryChance(injuryConfigJson.getDouble(RANDOM_INJURY_CHANCE));
+        injuryConfig.setInjuryDaysLow(injuryConfigJson.getInt(INJURY_DAYS_LOW));
+        injuryConfig.setInjuryDaysHigh(injuryConfigJson.getInt(INJURY_DAYS_HIGH));
+        return injuryConfig;
+    }
+
+    private ITrainingConfig createTrainingConfig(JSONObject trainingConfigJson) {
+        ITrainingConfig trainingConfig = AbstractLeagueManagerFactory.getFactory().getTrainingConfig();
+        trainingConfig.setDaysUntilStatIncreaseCheck(trainingConfigJson.getInt(DAYS_STAT_INCREASE_CHECK));
+        return trainingConfig;
+    }
+
+    private ITradingConfig createTradingConfig(JSONObject tradingConfigJson) {
+        ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
+        tradingConfig.setLossPoint(tradingConfigJson.getInt(LOSS_POINT));
+        tradingConfig.setMaxPlayersPerTrade(tradingConfigJson.getInt(MAX_PLAYERS_PER_TRADE));
+        tradingConfig.setRandomAcceptanceChance(tradingConfigJson.getDouble(RANDOM_ACCEPTANCE_CHANCE));
+        tradingConfig.setRandomTradeOfferChance(tradingConfigJson.getDouble(RANDOM_TRADE_OFFER_CHANCE));
+        return tradingConfig;
+    }
 }

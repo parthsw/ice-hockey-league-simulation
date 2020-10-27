@@ -21,12 +21,12 @@ public class StateMachine implements IStateMachine {
 
     @Override
     public void onExecution() {
-        do {
-            currentState = currentState.onRun();
-        } while(currentState != null); // Is this negative condition?
-    }
-
-    public void setDefaultState() {
-        this.currentState = AbstractStateMachineFactory.getFactory().getImportState();
+        while(true) {
+            if(currentState == null) {
+                break;
+            } else {
+                currentState = currentState.onRun();
+            }
+        }
     }
 }

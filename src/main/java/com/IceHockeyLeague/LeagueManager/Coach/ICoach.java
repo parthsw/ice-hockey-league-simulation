@@ -1,5 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Coach;
 
+import java.util.List;
+
 public interface ICoach {
     int getCoachID();
     void setCoachID(int id);
@@ -20,4 +22,8 @@ public interface ICoach {
 
     boolean saveCoach(ICoachPersistence coachDB);
     boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach);
+
+    boolean isNullOrEmpty(String coachName);
+
+    boolean isCoachNameExist(List<ICoach> coaches, String coachName);
 }

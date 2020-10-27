@@ -3,7 +3,6 @@ package com.IceHockeyLeague.StateMachine.States;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueFileHandler.IJsonParser;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileReader;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
@@ -28,14 +27,23 @@ public class ImportState extends AbstractState {
     private static final String LEAGUE_SCHEMA_ERROR = "The provided json file violates below constraint(s):";
     private static final String TRANSITION_LOAD_TEAM = "Transitioning to Load Team State...";
 
-    private IAppInput appInput;
-    private IAppOutput appOutput;
-    private ILeagueFileReader leagueFileReader;
-    private IJsonParser jsonParser;
-    private ILeagueFileValidator leagueFileValidator;
+    private final IAppInput appInput;
+    private final IAppOutput appOutput;
+    private final ILeagueFileReader leagueFileReader;
+    private final IJsonParser jsonParser;
+    private final ILeagueFileValidator leagueFileValidator;
 
-    public ImportState(IAppInput appInput, IAppOutput appOutput) {
-        configureDefaults(appInput, appOutput);
+    public ImportState(
+            IAppInput appInput,
+            IAppOutput appOutput,
+            ILeagueFileReader leagueFileReader,
+            IJsonParser jsonParser,
+            ILeagueFileValidator leagueFileValidator) {
+        this.appInput = appInput;
+        this.appOutput = appOutput;
+        this.leagueFileReader = leagueFileReader;
+        this.jsonParser = jsonParser;
+        this.leagueFileValidator = leagueFileValidator;
     }
 
     @Override
@@ -49,14 +57,6 @@ public class ImportState extends AbstractState {
     @Override
     public void welcomeMessage() {
         appOutput.display(IMPORT_STATE);
-    }
-
-    private void configureDefaults(IAppInput appInput, IAppOutput appOutput) {
-        this.appInput = appInput;
-        this.appOutput = appOutput;
-        leagueFileReader = AbstractLeagueFileHandlerFactory.getFactory().getLeagueFileReader();
-        jsonParser = AbstractLeagueFileHandlerFactory.getFactory().getJsonParser();
-        leagueFileValidator = AbstractLeagueFileHandlerFactory.getFactory().getLeagueFileValidator();
     }
 
     private AbstractState processLeagueJsonFile(String filePath) {

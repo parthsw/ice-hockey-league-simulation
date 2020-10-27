@@ -23,4 +23,9 @@ public interface IConference {
 
     boolean saveConference(IConferencePersistence conferenceDB);
     boolean loadDivisions(IDivisionPersistence divisionDB, List<IDivision> divisions);
+
+    boolean isNullOrEmpty(String conferenceName);
+
+    boolean isConferenceNameExist(List<IConference> conferences,String conferenceName);
+
 }
