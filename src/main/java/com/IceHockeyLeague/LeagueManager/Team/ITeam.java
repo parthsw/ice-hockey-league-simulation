@@ -40,4 +40,6 @@ public interface ITeam {
     boolean isTeamNameExist(List<ITeam> teams);
 
     double calculateTeamStrength(ITeamStrength teamStrength);
+
+    void setTeamStrength(int strength);
 }

@@ -2,6 +2,7 @@ package com.Database;
 
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
+import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -45,12 +46,68 @@ public class ManagerPersistence implements IManagerPersistence {
     }
 
     @Override
-    public boolean loadTeamManager(int leagueId, int teamId, IManager manager) {
-        return false;
+    public boolean loadTeamManager(int teamId, IManager manager) {
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+        try {
+
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoManager(?)}");
+            myCall.setInt(1,teamId);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                manager.setManagerID(result.getInt("managerID"));
+                manager.setTeamID(result.getInt("teamID"));
+                manager.setLeagueID(result.getInt("leagueID"));
+                manager.setManagerName(result.getString("name"));
+            }
+            myCall.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in loading Manager");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
     }
 
     @Override
-    public boolean loadLeagueManagers(int leagueId, List<IManager> manager) {
-        return false;
+    public boolean loadLeagueManagers(int leagueId, List<IManager> managers) {
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+        try {
+
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+
+            myCall = connection.prepareCall("{call insertIntoManager(?)}");
+            myCall.setInt(1,leagueId);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                IManager manager = new Manager();
+                manager.setManagerID(result.getInt("managerID"));
+                manager.setTeamID(result.getInt("teamID"));
+                manager.setLeagueID(result.getInt("leagueID"));
+                manager.setManagerName(result.getString("name"));
+                managers.add(manager);
+            }
+            myCall.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in loading Manager");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
     }
 }

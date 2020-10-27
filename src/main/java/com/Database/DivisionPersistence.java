@@ -1,5 +1,6 @@
 package com.Database;
 
+import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 
@@ -41,6 +42,33 @@ public class DivisionPersistence implements IDivisionPersistence {
 
     @Override
     public boolean loadDivisions(int conferenceId, List<IDivision> divisions) {
-        return false;
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+        try {
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+
+            myCall = connection.prepareCall("{call loadDivisions(?)}");
+            myCall.setInt(1, conferenceId);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                IDivision division = new Division();
+                division.setDivisionID(result.getInt("divisionID"));
+                division.setConferenceID(result.getInt("ConferenceID"));
+                division.setDivisionName(result.getString("name"));
+            }
+            myCall.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in loading Division");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
+
     }
 }
