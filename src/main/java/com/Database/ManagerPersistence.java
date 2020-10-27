@@ -13,7 +13,7 @@ import java.sql.*;
 
 public class ManagerPersistence implements IManagerPersistence {
     @Override
-    public boolean saveManager(IManager manager) {
+    public boolean saveTeamManager(IManager manager) {
         DBConnection connectionManager = null;
         Connection connection = null;
         String managerID = null;
@@ -43,6 +43,11 @@ public class ManagerPersistence implements IManagerPersistence {
                 connectionManager.terminateConnection();
             }
         }
+    }
+
+    @Override
+    public boolean saveLeagueManager(IManager manager) {
+        return false;
     }
 
     @Override

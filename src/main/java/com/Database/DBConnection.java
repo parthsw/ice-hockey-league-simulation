@@ -38,7 +38,7 @@ public class DBConnection implements IDBConnection {
 
     public Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection =
                     DriverManager
                             .getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_6_DEVINT?serverTimezone=UTC", "CSCI5308_6_DEVINT_USER", "ZD8gnU7BsJ");

@@ -62,7 +62,7 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
         if(divisionDB == null) {
             divisionDB = new DivisionPersistence();
         }
-        return null;
+        return divisionDB;
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.sql.*;
 public class CoachPersistence implements ICoachPersistence {
 
     @Override
-    public boolean saveCoach(ICoach coach) {
+    public boolean saveTeamCoach(ICoach coach) {
         DBConnection connectionManager = null;
         Connection connection = null;
         String coachID = null;
@@ -19,7 +19,7 @@ public class CoachPersistence implements ICoachPersistence {
         try {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?)}");
+            myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?,?,?,?,?)}");
             myCall.setInt(1, coach.getTeamID());
             myCall.setInt(2, coach.getLeagueID());
             myCall.setString(3, coach.getCoachName());
@@ -44,6 +44,11 @@ public class CoachPersistence implements ICoachPersistence {
                 connectionManager.terminateConnection();
             }
         }
+    }
+
+    @Override
+    public boolean saveLeagueCoach(ICoach coach) {
+        return false;
     }
 
     @Override
