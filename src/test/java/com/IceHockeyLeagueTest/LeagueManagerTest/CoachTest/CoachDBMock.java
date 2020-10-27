@@ -14,7 +14,7 @@ public class CoachDBMock implements ICoachPersistence {
     }
 
     @Override
-    public boolean loadTeamCoach(int leagueId, int teamId, ICoach coach) {
+    public boolean loadTeamCoach(int teamId, ICoach coach) {
         coach.setLeagueID(1);
         coach.setTeamID(1);
         coach.setCoachID(1);

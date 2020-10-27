@@ -82,10 +82,10 @@ public class CoachPersistence implements ICoachPersistence {
                 coach.setTeamID(Integer.parseInt(teamID));
                 coach.setLeagueID(Integer.parseInt(leagueID));
                 coach.setCoachName(name);
-                stats.setSkating(Double.parseDouble(skating));
-                stats.setShooting(Double.parseDouble(shooting));
-                stats.setChecking(Double.parseDouble(checking));
-                stats.setSaving(Double.parseDouble(saving));
+                stats.setSkating(Float.parseFloat(skating));
+                stats.setShooting(Float.parseFloat(shooting));
+                stats.setChecking(Float.parseFloat(checking));
+                stats.setSaving(Float.parseFloat(saving));
                 coach.setCoachStats(stats);
             }
             myCall.close();

@@ -12,7 +12,7 @@ public class ManagerDBMock implements IManagerPersistence  {
     }
 
     @Override
-    public boolean loadTeamManager(int leagueId, int teamId, IManager manager) {
+    public boolean loadTeamManager(int teamId, IManager manager) {
         manager.setLeagueID(1);
         manager.setTeamID(1);
         manager.setManagerID(1);

@@ -68,7 +68,7 @@ public class Manager implements IManager {
 
     @Override
     public boolean loadTeamManager(IManagerPersistence managerDB, IManager manager) {
-        return managerDB.loadTeamManager(leagueID, teamID,this);
+        return managerDB.loadTeamManager( teamID,this);
     }
 
     @Override
