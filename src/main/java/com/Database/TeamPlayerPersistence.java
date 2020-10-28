@@ -27,7 +27,7 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
             myCall.setInt(8, teamPlayer.getPlayerStats().getSaving());
             myCall.setBoolean(9, teamPlayer.isCaptain());
             myCall.setDouble(10, teamPlayer.getPlayerStats().getStrength());
-            myCall.setBoolean(11, teamPlayer.getIsInjured());
+            myCall.setBoolean(11, teamPlayer.getInjuredStatus());
 
             myCall.registerOutParameter(12, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
@@ -74,7 +74,7 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
                 player.setPlayerName(result.getString("name"));
                 player.setPlayerAge(result.getInt("age"));
                 player.setPlayerStats(stats);
-                player.setIsInjured(result.getBoolean("isInjured"));
+                player.setInjuredStatus(result.getBoolean("isInjured"));
                 player.setIsCaptain(result.getBoolean("captain"));
                 teamPlayers.add(player);
             }

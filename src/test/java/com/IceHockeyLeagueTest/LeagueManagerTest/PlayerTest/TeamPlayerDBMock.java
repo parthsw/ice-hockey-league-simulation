@@ -37,7 +37,7 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
         teamPlayer.setPlayerStats(stats);
 
         teamPlayer.setPlayerAge(23);
-        teamPlayer.setIsInjured(false);
+        teamPlayer.setInjuredStatus(false);
         teamPlayer.setIsRetired(false);
 
         ITeamPlayer teamPlayer1 = leagueManagerFactory.getTeamPlayer();
@@ -55,7 +55,7 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
         teamPlayer1.setPlayerStats(stats1);
 
         teamPlayer1.setPlayerAge(27);
-        teamPlayer1.setIsInjured(true);
+        teamPlayer1.setInjuredStatus(true);
         teamPlayer1.setIsRetired(false);
 
         teamPlayers.add(teamPlayer);

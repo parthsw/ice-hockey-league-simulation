@@ -20,7 +20,7 @@ public class PlayerTest {
     @Test
     public void ConstructorTest() {
         IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
-        Assert.assertFalse(player.getIsInjured());
+        Assert.assertFalse(player.getInjuredStatus());
         Assert.assertFalse(player.getIsRetired());
     }
 
@@ -55,15 +55,15 @@ public class PlayerTest {
     @Test
     public void getIsInjuredTest() {
         IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
-        player.setIsInjured(true);
-        Assert.assertTrue(player.getIsInjured());
+        player.setInjuredStatus(true);
+        Assert.assertTrue(player.getInjuredStatus());
     }
 
     @Test
     public void setIsInjuredTest() {
         IPlayer player = LeagueManagerFactory.getFactory().getPlayer();
-        player.setIsInjured(false);
-        Assert.assertFalse(player.getIsInjured());
+        player.setInjuredStatus(false);
+        Assert.assertFalse(player.getInjuredStatus());
     }
 
     @Test
