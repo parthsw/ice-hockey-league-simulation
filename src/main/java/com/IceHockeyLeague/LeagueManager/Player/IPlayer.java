@@ -12,6 +12,8 @@ public interface IPlayer {
     int getPlayerAge();
     void setPlayerAge(int age);
 
+    int getElapsedDaysFromLastBDay();
+
     boolean getInjuredStatus();
     void setInjuredStatus(boolean isInjured);
 
@@ -24,15 +26,18 @@ public interface IPlayer {
     LocalDate getRetirementDate();
     void setRetirementDate(LocalDate retirementDate);
 
-    boolean getIsRetired();
-    void setIsRetired(boolean isRetired);
+    boolean getRetiredStatus();
+    void setRetiredStatus(boolean isRetired);
 
     IPlayerStats getPlayerStats();
     void setPlayerStats(IPlayerStats playerStats);
 
     float calculateStrength(IPlayerStats stats);
+
     boolean isInjured(IPlayerInjuryManager playerInjuryManager, IInjuryConfig injuryConfig, LocalDate currentDate);
     boolean isRecovered(IPlayerInjuryManager playerInjuryManager, LocalDate currentDate);
+
+    void agePlayerByDays(int days);
 
     boolean isValid();
 }

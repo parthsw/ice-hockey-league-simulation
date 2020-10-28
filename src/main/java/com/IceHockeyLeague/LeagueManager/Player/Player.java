@@ -5,8 +5,11 @@ import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import java.time.LocalDate;
 
 public class Player implements IPlayer {
+    private final static int DAYS_IN_YEAR = 365;
+
     private String name;
     private int age;
+    private int elapsedDaysFromLastBDay;
     private IPlayerStats playerStats;
     private boolean isInjured;
     private int daysInjured;
@@ -41,6 +44,21 @@ public class Player implements IPlayer {
     @Override
     public void setPlayerAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public int getElapsedDaysFromLastBDay() {
+        return elapsedDaysFromLastBDay;
+    }
+
+    @Override
+    public IPlayerStats getPlayerStats() {
+        return playerStats;
+    }
+
+    @Override
+    public void setPlayerStats(IPlayerStats playerStats) {
+        this.playerStats = playerStats;
     }
 
     @Override
@@ -84,23 +102,13 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public boolean getIsRetired() {
+    public boolean getRetiredStatus() {
         return isRetired;
     }
 
     @Override
-    public void setIsRetired(boolean isRetired) {
+    public void setRetiredStatus(boolean isRetired) {
         this.isRetired = isRetired;
-    }
-
-    @Override
-    public IPlayerStats getPlayerStats() {
-        return playerStats;
-    }
-
-    @Override
-    public void setPlayerStats(IPlayerStats playerStats) {
-        this.playerStats = playerStats;
     }
 
     @Override
@@ -121,6 +129,28 @@ public class Player implements IPlayer {
     @Override
     public boolean isRecovered(IPlayerInjuryManager playerInjuryManager, LocalDate currentDate) {
         return playerInjuryManager.isRecovered(this, currentDate);
+    }
+
+    @Override
+    public void agePlayerByDays(int days) {
+        if (days > 0) {
+           elapsedDaysFromLastBDay += days;
+           handlePlayerAgingInYears();
+        }
+    }
+
+    private void handlePlayerAgingInYears() {
+        if(elapsedDaysFromLastBDay >= DAYS_IN_YEAR) {
+            int remainderDays = elapsedDaysFromLastBDay % DAYS_IN_YEAR;
+
+            if (remainderDays == 0) {
+                age += 1;
+                elapsedDaysFromLastBDay = 0;
+            } else {
+                age += (elapsedDaysFromLastBDay / DAYS_IN_YEAR);
+                elapsedDaysFromLastBDay = remainderDays;
+            }
+        }
     }
 
 }
