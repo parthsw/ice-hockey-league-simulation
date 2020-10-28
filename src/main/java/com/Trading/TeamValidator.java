@@ -16,7 +16,7 @@ public class TeamValidator {
     GetBestAgent obj = new GetBestAgent();
     ISwitchPlayer switchPlayer = new SwitchPlayer();
     private String goalie = "Goalie";
-    private boolean isValidated = false;
+
 
     public TeamValidator(ITeam team, int leagueID, List<IFreeAgent> agents){
         setDefaults(team, leagueID, agents);
@@ -30,12 +30,12 @@ public class TeamValidator {
         goalies = new ArrayList<>();
     }
 
-    public void validateTeamNumber(){
-        isValidated = true;
+    public ITeam validateTeam() {
+
         int numberOfSkaters = 0;
         int numberOfKeepers = 0;
-        boolean flag = false;
-        for (ITeamPlayer player : this.givenTeam.getPlayers()){
+
+        for (ITeamPlayer player : this.givenTeam.getPlayers()) {
             if (player.getPlayerStats().getPosition().equals(goalie)) {
                 this.goalies.add(player);
                 numberOfKeepers++;
@@ -45,33 +45,25 @@ public class TeamValidator {
             }
         }
 
-        if(numberOfSkaters>18){
-            int difference = numberOfSkaters-18;
+        if (skaters.size() > 18) {
+            int difference = numberOfSkaters - 18;
             this.dropSkaters(difference);
-            flag = true;
-        }
-
-        if(numberOfSkaters<18){
-            int difference = 18-numberOfSkaters;
+        } else if (skaters.size() < 18) {
+            int difference = 18 - numberOfSkaters;
             this.addSkaters(difference);
-            flag = true;
         }
 
-        if(numberOfKeepers>2){
-            int difference = numberOfSkaters-2;
+        if (goalies.size() > 2) {
+            int difference = numberOfKeepers - 2;
             this.dropGoalie(difference);
-            flag = true;
-        }
-
-        if(numberOfKeepers<2){
-            int difference = 2-numberOfSkaters;
+        } else if (goalies.size() < 2) {
+            int difference = 2 - numberOfKeepers;
             this.addGoalie(difference);
-            flag = true;
         }
 
-        if(flag){
-            validateTeamNumber();
-        }
+        this.skaters.addAll(this.goalies);
+        this.givenTeam.setPlayers(this.skaters);
+        return this.givenTeam;
 
     }
 
@@ -80,7 +72,7 @@ public class TeamValidator {
             IFreeAgent temp = this.obj.getBestAgentWithPosition(this.availableAgents, this.goalie);
             this.availableAgents.remove(temp);
             ITeamPlayer switchedObject = switchPlayer.freeToTeamTrade(temp,this.givenTeam.getTeamID());
-            this.givenTeam.addPlayer(switchedObject);
+            this.goalies.add(switchedObject);
         }
 
     }
@@ -100,7 +92,7 @@ public class TeamValidator {
             IFreeAgent temp = this.obj.getRandomBestAgentSkater(this.availableAgents);
             this.availableAgents.remove(temp);
             ITeamPlayer switchedObject = switchPlayer.freeToTeamTrade(temp,this.givenTeam.getTeamID());
-            this.givenTeam.addPlayer(switchedObject);
+            this.skaters.add(switchedObject);
         }
 
     }
@@ -114,15 +106,13 @@ public class TeamValidator {
         }
     }
 
-    public ITeam getValidatedTeam() throws Exception {
-        if (isValidated) {
-            this.skaters.addAll(this.goalies);
-            this.givenTeam.setPlayers(this.skaters);
-            this.isValidated = false;
-            return this.givenTeam;
-        } else {
-            throw new Exception("getValidatedTeam called before validating a team.");
-        }
-    }
+//    public ITeam getValidatedTeam() throws Exception {
+//            this.skaters.addAll(this.goalies);
+//            this.givenTeam.setPlayers(this.skaters);
+//            return this.givenTeam;
+//        } else {
+//            throw new Exception("getValidatedTeam called before validating a team.");
+//        }
+//    }
 }
 
