@@ -20,6 +20,9 @@ import com.IceHockeyLeagueTest.LeagueManagerTest.ManagerTest.ManagerDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest.FreeAgentDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest.TeamPlayerDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TeamTest.TeamDBMock;
+import org.mockito.Mockito;
+
+import java.util.Random;
 
 public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
 
@@ -32,6 +35,8 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     private ICoachPersistence coachDB = null;
     private IManagerPersistence managerDB = null;
     private IGamePlayConfigPersistence gamePlayConfigDB = null;
+
+    private IRandomChance randomChanceGenerator = null;
 
     @Override
     public ILeagueCreator getLeagueCreator() {
@@ -103,6 +108,11 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public IPlayerStats getPlayerStats() {
         return new PlayerStats();
+    }
+
+    @Override
+    public IPlayerInjuryManager getPlayerInjuryManager() {
+        return new PlayerInjuryManager(getRandomChance());
     }
 
     @Override
@@ -198,5 +208,14 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public ITradingConfig getTradingConfig() {
         return new TradingConfig();
+    }
+
+    @Override
+    public IRandomChance getRandomChance() {
+        if(randomChanceGenerator == null) {
+            Random randomMock = Mockito.mock(Random.class);
+            return new RandomChance(randomMock);
+        }
+        return randomChanceGenerator;
     }
 }

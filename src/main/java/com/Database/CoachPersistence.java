@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 import java.sql.*;
+
 public class CoachPersistence implements ICoachPersistence {
 
     @Override
@@ -184,4 +185,5 @@ public class CoachPersistence implements ICoachPersistence {
             }
         }
     }
+
 }

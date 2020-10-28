@@ -25,7 +25,7 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
             myCall.setInt(7, freeAgent.getPlayerStats().getChecking());
             myCall.setInt(8, freeAgent.getPlayerStats().getSaving());
             myCall.setDouble(9, freeAgent.getPlayerStats().getStrength());
-            myCall.setBoolean(10, freeAgent.getIsInjured());
+            myCall.setBoolean(10, freeAgent.getInjuredStatus());
             myCall.registerOutParameter(11, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -72,7 +72,7 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
                 player.setPlayerName(result.getString("name"));
                 player.setPlayerAge(result.getInt("age"));
                 player.setPlayerStats(stats);
-                player.setIsInjured(result.getBoolean("isInjured"));
+                player.setInjuredStatus(result.getBoolean("isInjured"));
                 freeAgents.add(player);
             }
             myCall.close();

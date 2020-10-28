@@ -10,6 +10,8 @@ import com.IceHockeyLeague.LeagueManager.Manager.*;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.*;
 
+import java.util.Random;
+
 public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
 
     private ILeaguePersistence leagueDB = null;
@@ -21,6 +23,8 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     private ICoachPersistence coachDB = null;
     private IManagerPersistence managerDB = null;
     private IGamePlayConfigPersistence gamePlayConfigDB = null;
+
+    private IRandomChance randomChance = null;
 
     @Override
     public ILeagueCreator getLeagueCreator() {
@@ -92,6 +96,11 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public IPlayerStats getPlayerStats() {
         return new PlayerStats();
+    }
+
+    @Override
+    public IPlayerInjuryManager getPlayerInjuryManager() {
+        return new PlayerInjuryManager(getRandomChance());
     }
 
     @Override
@@ -187,5 +196,13 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public ITradingConfig getTradingConfig() {
         return new TradingConfig();
+    }
+
+    @Override
+    public IRandomChance getRandomChance() {
+        if(randomChance == null) {
+            return new RandomChance(new Random());
+        }
+        return randomChance;
     }
 }
