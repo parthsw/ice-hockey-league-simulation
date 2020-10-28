@@ -144,6 +144,5 @@ public class CreateStateTest {
         flag = coach.isCoachNameExist(coaches,"Sagar Moghe");
         Assert.assertTrue("true",flag);
     }
-
 }
 
