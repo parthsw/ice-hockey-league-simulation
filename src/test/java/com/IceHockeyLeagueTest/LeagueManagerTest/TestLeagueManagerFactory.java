@@ -14,6 +14,7 @@ import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeagueTest.LeagueManagerTest.CoachTest.CoachDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.ConferenceTest.ConferenceDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.DivisionTest.DivisionDBMock;
+import com.IceHockeyLeagueTest.LeagueManagerTest.GamePlayConfigTest.GamePlayConfigDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.LeagueTest.LeagueDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.ManagerTest.ManagerDBMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest.FreeAgentDBMock;
@@ -30,6 +31,7 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     private IFreeAgentPersistence freeAgentDB = null;
     private ICoachPersistence coachDB = null;
     private IManagerPersistence managerDB = null;
+    private IGamePlayConfigPersistence gamePlayConfigDB = null;
 
     @Override
     public ILeagueCreator getLeagueCreator() {
@@ -81,8 +83,8 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     }
 
     @Override
-    public ITeamStrength getTeamStrength() {
-        return new TeamStrength();
+    public ITeamStrengthCalculator getTeamStrengthCalculator() {
+        return new TeamStrengthCalculator();
     }
 
     @Override
@@ -163,6 +165,14 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     @Override
     public IGamePlayConfig getGamePlayConfig() {
         return new GamePlayConfig();
+    }
+
+    @Override
+    public IGamePlayConfigPersistence getGamePlayConfigDB() {
+        if(gamePlayConfigDB == null) {
+            gamePlayConfigDB = new GamePlayConfigDBMock();
+        }
+        return gamePlayConfigDB;
     }
 
     @Override

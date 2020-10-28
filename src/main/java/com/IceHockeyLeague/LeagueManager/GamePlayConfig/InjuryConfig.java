@@ -1,17 +1,17 @@
 package com.IceHockeyLeague.LeagueManager.GamePlayConfig;
 
 public class InjuryConfig implements IInjuryConfig {
-    private double randomInjuryChance;
+    private float randomInjuryChance;
     private int injuryDaysLow;
     private int injuryDaysHigh;
 
     @Override
-    public void setRandomInjuryChance(double injuryChance) {
+    public void setRandomInjuryChance(float injuryChance) {
         randomInjuryChance = injuryChance;
     }
 
     @Override
-    public double getRandomInjuryChance() {
+    public float getRandomInjuryChance() {
         return randomInjuryChance;
     }
 

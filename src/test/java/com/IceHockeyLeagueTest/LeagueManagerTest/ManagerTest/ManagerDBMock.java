@@ -7,12 +7,17 @@ import java.util.List;
 
 public class ManagerDBMock implements IManagerPersistence  {
     @Override
-    public boolean saveManager(IManager manager) {
+    public boolean saveTeamManager(IManager manager) {
         return false;
     }
 
     @Override
-    public boolean loadTeamManager(int leagueId, int teamId, IManager manager) {
+    public boolean saveLeagueManager(IManager manager) {
+        return false;
+    }
+
+    @Override
+    public boolean loadTeamManager(int teamId, IManager manager) {
         manager.setLeagueID(1);
         manager.setTeamID(1);
         manager.setManagerID(1);

@@ -1,74 +1,75 @@
 package com.IceHockeyLeague.LeagueManager.Coach;
 
 public class CoachStats implements ICoachStats {
-    private static final double STATS_LOWER_VALUE = 0.0;
-    private static final double STATS_HIGHER_VALUE = 1.0;
+    private static final float STATS_LOWER_VALUE = 0.0f;
+    private static final float STATS_HIGHER_VALUE = 1.0f;
+    private static final float DEFAULT_STAT = 0.0f;
 
-    private double skating;
-    private double shooting;
-    private double checking;
-    private double saving;
+    private float skating;
+    private float shooting;
+    private float checking;
+    private float saving;
 
     public CoachStats() {
         setDefaults();
     }
 
     private void setDefaults() {
-        skating = 0.0;
-        shooting = 0.0;
-        checking = 0.0;
-        saving = 0.0;
+        skating = DEFAULT_STAT;
+        shooting = DEFAULT_STAT;
+        checking = DEFAULT_STAT;
+        saving = DEFAULT_STAT;
     }
 
     @Override
-    public double getSkating() {
+    public float getSkating() {
         return skating;
     }
 
     @Override
-    public void setSkating(double value) {
+    public void setSkating(float value) {
         if(isStatValid(value)) {
             skating = value;
         }
     }
 
     @Override
-    public double getShooting() {
+    public float getShooting() {
         return shooting;
     }
 
     @Override
-    public void setShooting(double value) {
+    public void setShooting(float value) {
         if(isStatValid(value)) {
             shooting = value;
         }
     }
 
     @Override
-    public double getChecking() {
+    public float getChecking() {
         return checking;
     }
 
     @Override
-    public void setChecking(double value) {
+    public void setChecking(float value) {
         if(isStatValid(value)) {
             checking = value;
         }
     }
 
     @Override
-    public double getSaving() {
+    public float getSaving() {
         return saving;
     }
 
     @Override
-    public void setSaving(double value) {
+    public void setSaving(float value) {
         if(isStatValid(value)) {
             saving = value;
         }
     }
 
-    private boolean isStatValid(double statValue) {
+    private boolean isStatValid(float statValue) {
         return (statValue >= STATS_LOWER_VALUE && statValue <= STATS_HIGHER_VALUE);
     }
 }

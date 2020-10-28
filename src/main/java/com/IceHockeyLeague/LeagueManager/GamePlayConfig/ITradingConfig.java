@@ -4,12 +4,12 @@ public interface ITradingConfig {
     void setLossPoint(int lossPoint);
     int getLossPoint();
 
-    void setRandomTradeOfferChance(double tradeOfferChance);
-    double getRandomTradeOfferChance();
+    void setRandomTradeOfferChance(float tradeOfferChance);
+    float getRandomTradeOfferChance();
 
     void setMaxPlayersPerTrade(int maxPlayers);
     int getMaxPlayersPerTrade();
 
-    void setRandomAcceptanceChance(double acceptanceChance);
-    double getRandomAcceptanceChance();
+    void setRandomAcceptanceChance(float acceptanceChance);
+    float getRandomAcceptanceChance();
 }

@@ -70,4 +70,26 @@ public class Conference implements IConference {
     public boolean loadDivisions(IDivisionPersistence divisionDB, List<IDivision> divisions) {
         return divisionDB.loadDivisions(conferenceID, divisions);
     }
+
+    @Override
+    public boolean isNullOrEmpty(String conferenceName) {
+        if(conferenceName == null || conferenceName.equals("")){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isConferenceNameExist(List<IConference> conferences,String conferenceName) {
+        boolean isExist = false;
+        for(IConference c : conferences){
+            if(c.getConferenceName().equalsIgnoreCase(conferenceName)){
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
+    }
 }

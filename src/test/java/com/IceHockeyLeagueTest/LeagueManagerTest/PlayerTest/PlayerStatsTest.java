@@ -22,7 +22,7 @@ public class PlayerStatsTest {
         Assert.assertEquals(0, playerStats.getSaving());
         Assert.assertEquals(0, playerStats.getShooting());
         Assert.assertEquals(0, playerStats.getSkating());
-        Assert.assertEquals(0, playerStats.getStrength(), 0.0);
+        Assert.assertEquals(0f, playerStats.getStrength(), 0.0);
     }
 
     @Test
@@ -110,33 +110,33 @@ public class PlayerStatsTest {
     @Test
     public void setStrengthTest() {
         IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
-        playerStats.setStrength(80);
-        Assert.assertEquals(playerStats.getStrength(), 80, 0.0);
+        playerStats.setStrength(80.8f);
+        Assert.assertEquals(80.8f, playerStats.getStrength(), 0.0);
     }
 
     @Test
     public void getStrengthTest() {
         IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
-        playerStats.setStrength(230);
-        Assert.assertEquals(playerStats.getStrength(), 230, 0.0);
+        playerStats.setStrength(230.1f);
+        Assert.assertEquals(230.1f, playerStats.getStrength(),0.0);
     }
 
     @Test
     public void calculateStrengthTest() {
         IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
-        playerStats.setSkating(10);
-        playerStats.setShooting(4);
-        playerStats.setChecking(10);
-        playerStats.setSaving(18);
+        playerStats.setSkating(11);
+        playerStats.setShooting(3);
+        playerStats.setChecking(15);
+        playerStats.setSaving(19);
 
         playerStats.setPosition("goalie");
-        Assert.assertEquals(playerStats.calculateStrength(), 28.0, 0.0);
+        Assert.assertEquals(30.0f, playerStats.calculateStrength(), 0.0);
 
         playerStats.setPosition("defense");
-        Assert.assertEquals(playerStats.calculateStrength(), 22.0, 0.0);
+        Assert.assertEquals(27.5f, playerStats.calculateStrength(), 0.0);
 
         playerStats.setPosition("forward");
-        Assert.assertEquals(playerStats.calculateStrength(), 19.0, 0.0);
+        Assert.assertEquals(21.5f, playerStats.calculateStrength(), 0.0);
 
         playerStats.setPosition("invalidPosition");
         Assert.assertEquals(playerStats.calculateStrength(), 0.0, 0.0);

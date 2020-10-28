@@ -18,6 +18,9 @@ public interface ITeam {
     boolean getIsUserCreated();
     void setIsUserCreated(boolean isUserCreated);
 
+    float getTeamStrength();
+    void setTeamStrength(float strength);
+
     int getDivisionID();
     void setDivisionID(int id);
 
@@ -35,5 +38,9 @@ public interface ITeam {
     boolean saveTeam(ITeamPersistence teamDB);
     boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
 
-    double calculateTeamStrength(ITeamStrength teamStrength);
+    boolean isNullOrEmpty(String teamName);
+
+    boolean isTeamNameExist(List<ITeam> teams);
+
+    float calculateTeamStrength(ITeamStrengthCalculator teamStrength);
 }
