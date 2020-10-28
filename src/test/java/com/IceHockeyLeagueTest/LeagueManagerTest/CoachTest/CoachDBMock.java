@@ -9,7 +9,12 @@ import java.util.List;
 
 public class CoachDBMock implements ICoachPersistence {
     @Override
-    public boolean saveCoach(ICoach coach) {
+    public boolean saveTeamCoach(ICoach coach) {
+        return false;
+    }
+
+    @Override
+    public boolean saveLeagueCoach(ICoach coach) {
         return false;
     }
 

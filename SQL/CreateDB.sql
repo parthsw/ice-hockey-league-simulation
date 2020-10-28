@@ -1,10 +1,11 @@
+USE CSCI5308_6_DEVINT;
+
 CREATE TABLE league
 (
     leagueID INT AUTO_INCREMENT PRIMARY KEY,
     name     VARCHAR(45) NOT NULL,
     CONSTRAINT name_UNIQUE
         UNIQUE (name)
-    -- Need current date associated with the league
 );
 
 CREATE TABLE conference
@@ -108,3 +109,24 @@ CREATE TABLE player
         FOREIGN KEY (teamID) REFERENCES team (teamID)
             ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE gamePlayConfig
+(
+    gamePlayConfigID            INT AUTO_INCREMENT PRIMARY KEY,
+    leagueID                    INT NOT NULL,
+    averageRetirementAge        INT NOT NULL,
+    maximumAge                  INT NOT NULL,
+    randomWinChance             FLOAT(1) NOT NULL,
+    randomInjuryChance          FLOAT(2) NOT NULL,
+    injuryDaysLow               INT NOT NULL,
+    injuryDaysHigh              INT NOT NULL,
+    daysUntilStatIncreaseCheck  INT NOT NULL,
+    lossPoint                   INT NOT NULL,
+    randomTradeOfferChance      FLOAT(2) NOT NULL,
+    maxPlayersPerTrade          INT NOT NULL,
+    randomAcceptanceChance      FLOAT(2) NOT NULL,
+    CONSTRAINT gamePlayConfigToLeague
+        FOREIGN KEY (leagueID) REFERENCES league (leagueID)
+            ON UPDATE CASCADE ON DELETE CASCADE
+);
+

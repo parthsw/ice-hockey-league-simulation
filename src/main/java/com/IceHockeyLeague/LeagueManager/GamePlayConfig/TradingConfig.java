@@ -2,9 +2,9 @@ package com.IceHockeyLeague.LeagueManager.GamePlayConfig;
 
 public class TradingConfig implements ITradingConfig {
     private int lossPoint;
-    private double randomTradeOfferChance;
+    private float randomTradeOfferChance;
     private int maxPlayersPerTrade;
-    private double randomAcceptanceChance;
+    private float randomAcceptanceChance;
 
     @Override
     public void setLossPoint(int lossPoint) {
@@ -17,12 +17,12 @@ public class TradingConfig implements ITradingConfig {
     }
 
     @Override
-    public void setRandomTradeOfferChance(double tradeOfferChance) {
+    public void setRandomTradeOfferChance(float tradeOfferChance) {
         randomTradeOfferChance = tradeOfferChance;
     }
 
     @Override
-    public double getRandomTradeOfferChance() {
+    public float getRandomTradeOfferChance() {
         return randomTradeOfferChance;
     }
 
@@ -37,12 +37,12 @@ public class TradingConfig implements ITradingConfig {
     }
 
     @Override
-    public void setRandomAcceptanceChance(double acceptanceChance) {
+    public void setRandomAcceptanceChance(float acceptanceChance) {
         randomAcceptanceChance = acceptanceChance;
     }
 
     @Override
-    public double getRandomAcceptanceChance() {
+    public float getRandomAcceptanceChance() {
         return randomAcceptanceChance;
     }
 }

@@ -1,8 +1,8 @@
 package com.IceHockeyLeague.LeagueManager.GamePlayConfig;
 
 public interface IInjuryConfig {
-    void setRandomInjuryChance(double injuryChance);
-    double getRandomInjuryChance();
+    void setRandomInjuryChance(float injuryChance);
+    float getRandomInjuryChance();
 
     void setInjuryDaysLow(int minInjuryDays);
     int getInjuryDaysLow();

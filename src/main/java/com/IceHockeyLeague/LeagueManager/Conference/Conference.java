@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Conference implements IConference {
     private int conferenceID;
-        private String conferenceName;
+    private String conferenceName;
     private int leagueID;
     private List<IDivision> divisions;
 

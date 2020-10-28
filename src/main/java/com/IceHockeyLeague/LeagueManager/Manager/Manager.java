@@ -62,8 +62,13 @@ public class Manager implements IManager {
     }
 
     @Override
-    public boolean saveManager(IManagerPersistence managerDB) {
-        return managerDB.saveManager(this);
+    public boolean saveTeamManager(IManagerPersistence managerDB) {
+        return managerDB.saveTeamManager(this);
+    }
+
+    @Override
+    public boolean saveLeagueManager(IManagerPersistence managerDB) {
+        return managerDB.saveLeagueManager(this);
     }
 
     @Override

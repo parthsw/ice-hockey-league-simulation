@@ -31,15 +31,15 @@ public class TradingConfigTest {
     @Test
     public void setRandomTradeOfferChanceTest() {
         ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
-        tradingConfig.setRandomTradeOfferChance(7.2);
-        Assert.assertEquals(7.2, tradingConfig.getRandomTradeOfferChance(), 0.0);
+        tradingConfig.setRandomTradeOfferChance(7.2f);
+        Assert.assertEquals(7.2f, tradingConfig.getRandomTradeOfferChance(), 0.0);
     }
 
     @Test
     public void getRandomTradeOfferChanceTest() {
         ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
-        tradingConfig.setRandomTradeOfferChance(0.021);
-        Assert.assertEquals(0.021, tradingConfig.getRandomTradeOfferChance(), 0.0);
+        tradingConfig.setRandomTradeOfferChance(0.021f);
+        Assert.assertEquals(0.021f, tradingConfig.getRandomTradeOfferChance(), 0.0);
     }
 
     @Test
@@ -59,14 +59,14 @@ public class TradingConfigTest {
     @Test
     public void setRandomAcceptanceChanceTest() {
         ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
-        tradingConfig.setRandomAcceptanceChance(0.03);
-        Assert.assertEquals(0.03, tradingConfig.getRandomAcceptanceChance(), 0.0);
+        tradingConfig.setRandomAcceptanceChance(0.03f);
+        Assert.assertEquals(0.03f, tradingConfig.getRandomAcceptanceChance(), 0.0);
     }
 
     @Test
     public void getRandomAcceptanceChanceTest() {
         ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
-        tradingConfig.setRandomAcceptanceChance(0.23);
-        Assert.assertEquals(0.23, tradingConfig.getRandomAcceptanceChance(), 0.0);
+        tradingConfig.setRandomAcceptanceChance(0.23f);
+        Assert.assertEquals(0.23f, tradingConfig.getRandomAcceptanceChance(), 0.0);
     }
 }

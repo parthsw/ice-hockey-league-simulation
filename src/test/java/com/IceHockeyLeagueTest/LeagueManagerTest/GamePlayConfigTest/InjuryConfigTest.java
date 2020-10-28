@@ -17,15 +17,15 @@ public class InjuryConfigTest {
     @Test
     public void setRandomInjuryChanceTest() {
         IInjuryConfig injuryConfig = AbstractLeagueManagerFactory.getFactory().getInjuryConfig();
-        injuryConfig.setRandomInjuryChance(1.11);
-        Assert.assertEquals(1.11, injuryConfig.getRandomInjuryChance(), 0.0);
+        injuryConfig.setRandomInjuryChance(1.11f);
+        Assert.assertEquals(1.11f, injuryConfig.getRandomInjuryChance(), 0.0);
     }
 
     @Test
     public void getRandomInjuryChanceTest() {
         IInjuryConfig injuryConfig = AbstractLeagueManagerFactory.getFactory().getInjuryConfig();
-        injuryConfig.setRandomInjuryChance(2.12);
-        Assert.assertEquals(2.12, injuryConfig.getRandomInjuryChance(), 0.0);
+        injuryConfig.setRandomInjuryChance(2.12f);
+        Assert.assertEquals(2.12f, injuryConfig.getRandomInjuryChance(), 0.0);
     }
 
     @Test
