@@ -18,7 +18,7 @@ public class GetTopNBestPlayersForGivenPositionTest {
 
 
     @Test
-    public void getPlayers() {
+    public void getPlayersTest() {
         ITeam team = new Team();
         String[] positions = new String[]{"Goalie", "Forward", "Defence"};
         Random random = new Random();
@@ -39,6 +39,33 @@ public class GetTopNBestPlayersForGivenPositionTest {
         for (ITeamPlayer player : players) {
             Assert.assertEquals("Forward", player.getPlayerStats().getPosition());
 
+        }
+
+    }
+
+    @Test
+    public void getCominedStrengthTest() {
+        ITeam team = new Team();
+        String[] positions = new String[]{"Goalie", "Forward", "Defence"};
+        Random random = new Random();
+
+        for (int i = 0; i < 20; i++) {
+            String temp = positions[random.nextInt(positions.length)];
+            ITeamPlayer player = new TeamPlayer();
+            PlayerStats stats = new PlayerStats();
+            stats.setPosition(temp);
+            stats.setStrength(random.nextInt(100));
+            player.setPlayerStats(stats);
+            team.addPlayer(player);
+        }
+
+        GetTopNBestPlayersForGivenPosition object = new GetTopNBestPlayersForGivenPosition(team, 3, "Forward");
+        object.getPlayers();
+        float sum = object.getCombinedStrendth();
+        if (sum > 0) {
+            Assert.assertTrue(true);
+        } else {
+            Assert.fail();
         }
 
     }
