@@ -19,6 +19,7 @@ DROP PROCEDURE insertIntoPlayer;
 DROP PROCEDURE insertIntoCoach;
 DROP PROCEDURE insertIntoManager;
 DROP PROCEDURE insertIntoGamePlayConfig;
+DROP PROCEDURE checkIfTeamNameExists;
 DROP PROCEDURE checkIfLeagueNameExists;
 DROP PROCEDURE loadLeague;
 DROP PROCEDURE loadConferences;

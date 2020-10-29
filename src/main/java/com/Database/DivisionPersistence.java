@@ -57,6 +57,7 @@ public class DivisionPersistence implements IDivisionPersistence {
                 division.setDivisionID(result.getInt("divisionID"));
                 division.setConferenceID(result.getInt("ConferenceID"));
                 division.setDivisionName(result.getString("name"));
+                divisions.add(division);
             }
             myCall.close();
             return true;

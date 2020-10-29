@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.League;
 
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.Coach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
@@ -34,6 +35,10 @@ public class League implements ILeague {
 
     private void setDefaults() {
         leagueID = -1;
+        this.conferences = new ArrayList<>();
+        this.freeAgents = new ArrayList<>();
+        this.coaches = new ArrayList<>();
+        this.managers = new ArrayList<>();
     }
 
     @Override
@@ -256,6 +261,10 @@ public class League implements ILeague {
         List<ICoach> coaches = new ArrayList<>();
         this.loadLeagueCoaches(LeagueManagerFactory.getFactory().getCoachDB(), coaches);
         this.setCoaches(coaches);
+
+        gamePlayConfig = AbstractLeagueManagerFactory.getFactory().getGamePlayConfig();
+        gamePlayConfig.setLeagueID(leagueID);
+        gamePlayConfig.loadGamePlayConfig(LeagueManagerFactory.getFactory().getGamePlayConfigDB(), gamePlayConfig);
 
         return true;
     }

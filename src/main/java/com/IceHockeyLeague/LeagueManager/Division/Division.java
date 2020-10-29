@@ -1,9 +1,9 @@
 package com.IceHockeyLeague.LeagueManager.Division;
 
-import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Division implements IDivision {
@@ -11,6 +11,16 @@ public class Division implements IDivision {
     private String divisionName;
     private int conferenceID;
     private List<ITeam> teams;
+
+    public Division() {
+        setDefaults();
+    }
+
+    private void setDefaults() {
+        divisionID = -1;
+        conferenceID = -1;
+        teams = new ArrayList<>();
+    }
 
     @Override
     public int getDivisionID() {

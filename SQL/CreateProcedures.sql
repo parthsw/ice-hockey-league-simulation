@@ -248,6 +248,16 @@ BEGIN
     WHERE LOWER(league.name) = LOWER(leagueName);
 END $$
 
+CREATE PROCEDURE
+    checkIfTeamNameExists(
+        IN teamName VARCHAR(200)
+    )
+BEGIN
+    SELECT * FROM league WHERE leagueID =
+        (SELECT leagueID FROM conference WHERE conferenceID =
+            (SELECT conferenceID FROM division WHERE divisionID =
+                (SELECT divisionID FROM team WHERE LOWER(team.teamName) = LOWER(teamName) AND isUserCreated = 1)));
+END $$
 
 CREATE PROCEDURE
     loadLeague(
@@ -337,7 +347,7 @@ BEGIN
     SELECT *
     FROM coach
     WHERE leagueID = ID
-      and teamID = NULL;
+      AND teamID IS NULL;
 END $$
 
 CREATE PROCEDURE
@@ -348,7 +358,7 @@ BEGIN
     SELECT *
     FROM manager
     WHERE leagueID = ID
-      and teamID = NULL;
+      AND teamID IS NULL;
 END $$
 
 CREATE PROCEDURE

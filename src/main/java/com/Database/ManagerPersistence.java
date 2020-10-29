@@ -12,6 +12,21 @@ import java.util.List;
 import java.sql.*;
 
 public class ManagerPersistence implements IManagerPersistence {
+
+    private boolean saveBaseManager(IManager manager, CallableStatement myCall) throws SQLException {
+        String managerID = "";
+        myCall.setInt(2, manager.getLeagueID());
+        myCall.setString(3, manager.getManagerName());
+        myCall.registerOutParameter(4, Types.INTEGER);
+        ResultSet result = myCall.executeQuery();
+        while (result.next()) {
+            managerID = result.getString("managerID");
+        }
+        myCall.close();
+        manager.setManagerID(Integer.parseInt(managerID));
+        return true;
+    }
+
     @Override
     public boolean saveTeamManager(IManager manager) {
         DBConnection connectionManager = null;
@@ -33,20 +48,6 @@ public class ManagerPersistence implements IManagerPersistence {
                 connectionManager.terminateConnection();
             }
         }
-    }
-
-    private boolean saveBaseManager(IManager manager, CallableStatement myCall) throws SQLException {
-        String managerID = "";
-        myCall.setInt(2, manager.getLeagueID());
-        myCall.setString(3, manager.getManagerName());
-        myCall.registerOutParameter(4, Types.INTEGER);
-        ResultSet result = myCall.executeQuery();
-        while (result.next()) {
-            managerID = result.getString("managerID");
-        }
-        myCall.close();
-        manager.setManagerID(Integer.parseInt(managerID));
-        return true;
     }
 
     @Override
@@ -82,7 +83,7 @@ public class ManagerPersistence implements IManagerPersistence {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
 
-            myCall = connection.prepareCall("{call insertIntoManager(?)}");
+            myCall = connection.prepareCall("{call loadTeamManager(?)}");
             myCall.setInt(1,teamId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -114,7 +115,7 @@ public class ManagerPersistence implements IManagerPersistence {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
 
-            myCall = connection.prepareCall("{call insertIntoManager(?)}");
+            myCall = connection.prepareCall("{call loadLeagueManagers(?)}");
             myCall.setInt(1,leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
