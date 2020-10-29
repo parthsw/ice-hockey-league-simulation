@@ -61,14 +61,4 @@ public class GetBestPlayersFromAllTeamsTest {
         Assert.assertEquals("Best Team", bestTeam.getTeamName());
         Assert.assertEquals(2, players.size());
     }
-
-//    @Test
-//    public void getTeamTest() {
-//
-//    }
-//
-//    @Test
-//    public void getBestPlayersSetTest() {
-//
-//    }
 }
