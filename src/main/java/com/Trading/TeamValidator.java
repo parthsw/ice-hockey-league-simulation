@@ -106,13 +106,5 @@ public class TeamValidator {
         }
     }
 
-//    public ITeam getValidatedTeam() throws Exception {
-//            this.skaters.addAll(this.goalies);
-//            this.givenTeam.setPlayers(this.skaters);
-//            return this.givenTeam;
-//        } else {
-//            throw new Exception("getValidatedTeam called before validating a team.");
-//        }
-//    }
 }
 
