@@ -1,5 +1,6 @@
 package com.Database;
 
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 
 import java.util.List;
@@ -17,16 +18,19 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
             connection = connectionManager.getConnection();
 
             myCall = connection.prepareCall("{call insertIntoPlayer(?,?,?,?,?,?,?,?,?,?,?,?)}");
+
+            IPlayerStats teamPlayerStats = AbstractLeagueManagerFactory.getFactory().getPlayerStats();
+
             myCall.setInt(1, teamPlayer.getTeamID());
             myCall.setString(2, teamPlayer.getPlayerName());
-            myCall.setString(3, teamPlayer.getPlayerStats().getPosition());
+            myCall.setString(3, teamPlayerStats.getPosition());
             myCall.setInt(4, teamPlayer.getPlayerAge());
-            myCall.setInt(5, teamPlayer.getPlayerStats().getSkating());
-            myCall.setInt(6, teamPlayer.getPlayerStats().getShooting());
-            myCall.setInt(7, teamPlayer.getPlayerStats().getChecking());
-            myCall.setInt(8, teamPlayer.getPlayerStats().getSaving());
+            myCall.setInt(5, teamPlayerStats.getSkating());
+            myCall.setInt(6, teamPlayerStats.getShooting());
+            myCall.setInt(7, teamPlayerStats.getChecking());
+            myCall.setInt(8, teamPlayerStats.getSaving());
             myCall.setBoolean(9, teamPlayer.isCaptain());
-            myCall.setDouble(10, teamPlayer.getPlayerStats().getStrength());
+            myCall.setFloat(10, teamPlayerStats.getStrength());
             myCall.setBoolean(11, teamPlayer.getInjuredStatus());
 
             myCall.registerOutParameter(12, Types.INTEGER);
@@ -63,10 +67,11 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
             while(result.next()) {
                 ITeamPlayer player = new TeamPlayer();
                 IPlayerStats stats = new PlayerStats();
+                stats.setPosition(result.getString("position"));
                 stats.setSkating(result.getInt("skating"));
-                stats.setSkating(result.getInt("shooting"));
-                stats.setSkating(result.getInt("checking"));
-                stats.setSkating(result.getInt("saving"));
+                stats.setShooting(result.getInt("shooting"));
+                stats.setChecking(result.getInt("checking"));
+                stats.setSaving(result.getInt("saving"));
                 stats.setStrength(result.getInt("strength"));
 
                 player.setTeamPlayerID(result.getInt("playerID"));

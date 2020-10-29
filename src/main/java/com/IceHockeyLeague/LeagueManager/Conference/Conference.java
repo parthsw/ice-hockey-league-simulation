@@ -3,6 +3,7 @@ package com.IceHockeyLeague.LeagueManager.Conference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Conference implements IConference {
@@ -10,6 +11,16 @@ public class Conference implements IConference {
     private String conferenceName;
     private int leagueID;
     private List<IDivision> divisions;
+
+    public Conference() {
+        setDefaults();
+    }
+
+    private void setDefaults() {
+        conferenceID = -1;
+        leagueID = -1;
+        divisions = new ArrayList<>();
+    }
 
     @Override
     public int getConferenceID() {

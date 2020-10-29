@@ -35,8 +35,6 @@ CREATE TABLE team
     teamName        VARCHAR(45) NOT NULL,
     isUserCreated   TINYINT(1)  NOT NULL,
     strength        FLOAT(1)    NOT NULL,
-    CONSTRAINT teamName_UNIQUE
-        UNIQUE (teamName),
     CONSTRAINT teamToDivision
         FOREIGN KEY (divisionID) REFERENCES division (divisionID)
             ON UPDATE CASCADE ON DELETE CASCADE

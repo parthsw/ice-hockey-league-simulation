@@ -1,11 +1,13 @@
 package com.Database;
 
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 
 import java.sql.*;
 import java.util.List;
 
 public class FreeAgentPersistence implements IFreeAgentPersistence {
+
     @Override
     public boolean saveFreeAgent(IFreeAgent freeAgent) {
         DBConnection connectionManager = null;
@@ -16,15 +18,18 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
             myCall = connection.prepareCall("{call insertIntoFreeAgent(?,?,?,?,?,?,?,?,?,?,?)}");
+
+            IPlayerStats freeAgentStats = freeAgent.getPlayerStats();
+
             myCall.setInt(1, freeAgent.getLeagueID());
             myCall.setString(2, freeAgent.getPlayerName());
-            myCall.setString(3, freeAgent.getPlayerStats().getPosition());
+            myCall.setString(3, freeAgentStats.getPosition());
             myCall.setInt(4, freeAgent.getPlayerAge());
-            myCall.setInt(5, freeAgent.getPlayerStats().getSkating());
-            myCall.setInt(6, freeAgent.getPlayerStats().getShooting());
-            myCall.setInt(7, freeAgent.getPlayerStats().getChecking());
-            myCall.setInt(8, freeAgent.getPlayerStats().getSaving());
-            myCall.setDouble(9, freeAgent.getPlayerStats().getStrength());
+            myCall.setInt(5, freeAgentStats.getSkating());
+            myCall.setInt(6, freeAgentStats.getShooting());
+            myCall.setInt(7, freeAgentStats.getChecking());
+            myCall.setInt(8, freeAgentStats.getSaving());
+            myCall.setFloat(9, freeAgentStats.getStrength());
             myCall.setBoolean(10, freeAgent.getInjuredStatus());
             myCall.registerOutParameter(11, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
@@ -59,26 +64,27 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                IFreeAgent player = new FreeAgent();
-                IPlayerStats stats = new PlayerStats();
-                stats.setSkating(result.getInt("skating"));
-                stats.setSkating(result.getInt("shooting"));
-                stats.setSkating(result.getInt("checking"));
-                stats.setSkating(result.getInt("saving"));
-                stats.setStrength(result.getInt("strength"));
+                IPlayerStats freeAgentStats = AbstractLeagueManagerFactory.getFactory().getPlayerStats();
+                freeAgentStats.setPosition(result.getString("position"));
+                freeAgentStats.setSkating(result.getInt("skating"));
+                freeAgentStats.setShooting(result.getInt("shooting"));
+                freeAgentStats.setChecking(result.getInt("checking"));
+                freeAgentStats.setSaving(result.getInt("saving"));
+                freeAgentStats.setStrength(result.getFloat("strength"));
 
-                player.setLeagueID(result.getInt("leagueID"));
-                player.setFreeAgentID(result.getInt("freeAgentID"));
-                player.setPlayerName(result.getString("name"));
-                player.setPlayerAge(result.getInt("age"));
-                player.setPlayerStats(stats);
-                player.setInjuredStatus(result.getBoolean("isInjured"));
-                freeAgents.add(player);
+                IFreeAgent freeAgent = AbstractLeagueManagerFactory.getFactory().getFreeAgent();
+                freeAgent.setLeagueID(result.getInt("leagueID"));
+                freeAgent.setFreeAgentID(result.getInt("freeAgentID"));
+                freeAgent.setPlayerName(result.getString("name"));
+                freeAgent.setPlayerAge(result.getInt("age"));
+                freeAgent.setPlayerStats(freeAgentStats);
+                freeAgent.setInjuredStatus(result.getBoolean("isInjured"));
+                freeAgents.add(freeAgent);
             }
             myCall.close();
             return true;
         } catch (SQLException e) {
-            System.out.println("error in load freeAgent");
+            System.out.println("error in loading freeAgent");
             e.printStackTrace();
             return false;
         } finally {

@@ -74,33 +74,33 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                gamePlayConfig.setGamePlayConfigID(Integer.parseInt("gamePlayConfigID"));
+                gamePlayConfig.setGamePlayConfigID(result.getInt("gamePlayConfigID"));
                 gamePlayConfig.setLeagueID(leagueId);
 
                 IAgingConfig agingConfig = AbstractLeagueManagerFactory.getFactory().getAgingConfig();
-                agingConfig.setAverageRetirementAge(Integer.parseInt("averageRetirementAge"));
-                agingConfig.setMaximumAge(Integer.parseInt("maximumAge"));
+                agingConfig.setAverageRetirementAge(result.getInt("averageRetirementAge"));
+                agingConfig.setMaximumAge(result.getInt("maximumAge"));
                 gamePlayConfig.setAgingConfig(agingConfig);
 
                 IGameResolverConfig gameResolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
-                gameResolverConfig.setRandomWinChance(Float.parseFloat("randomWinChance"));
+                gameResolverConfig.setRandomWinChance(result.getFloat("randomWinChance"));
                 gamePlayConfig.setGameResolverConfig(gameResolverConfig);
 
                 IInjuryConfig injuryConfig = AbstractLeagueManagerFactory.getFactory().getInjuryConfig();
-                injuryConfig.setRandomInjuryChance(Float.parseFloat("randomInjuryChance"));
-                injuryConfig.setInjuryDaysLow(Integer.parseInt("injuryDaysLow"));
-                injuryConfig.setInjuryDaysHigh(Integer.parseInt("injuryDaysHigh"));
+                injuryConfig.setRandomInjuryChance(result.getFloat("randomInjuryChance"));
+                injuryConfig.setInjuryDaysLow(result.getInt("injuryDaysLow"));
+                injuryConfig.setInjuryDaysHigh(result.getInt("injuryDaysHigh"));
                 gamePlayConfig.setInjuryConfig(injuryConfig);
 
                 ITrainingConfig trainingConfig = AbstractLeagueManagerFactory.getFactory().getTrainingConfig();
-                trainingConfig.setDaysUntilStatIncreaseCheck(Integer.parseInt("daysUntilStatIncreaseCheck"));
+                trainingConfig.setDaysUntilStatIncreaseCheck(result.getInt("daysUntilStatIncreaseCheck"));
                 gamePlayConfig.setTrainingConfig(trainingConfig);
 
                 ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
-                tradingConfig.setLossPoint(Integer.parseInt("lossPoint"));
-                tradingConfig.setRandomTradeOfferChance(Float.parseFloat("randomTradeOfferChance"));
-                tradingConfig.setMaxPlayersPerTrade(Integer.parseInt("maxPlayersPerTrade"));
-                tradingConfig.setRandomAcceptanceChance(Float.parseFloat("randomAcceptanceChance"));
+                tradingConfig.setLossPoint(result.getInt("lossPoint"));
+                tradingConfig.setRandomTradeOfferChance(result.getFloat("randomTradeOfferChance"));
+                tradingConfig.setMaxPlayersPerTrade(result.getInt("maxPlayersPerTrade"));
+                tradingConfig.setRandomAcceptanceChance(result.getFloat("randomAcceptanceChance"));
                 gamePlayConfig.setTradingConfig(tradingConfig);
             }
             myCall.close();
