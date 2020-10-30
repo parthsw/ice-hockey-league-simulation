@@ -12,4 +12,6 @@ public abstract  class AbstractDatabaseFactory {
     }
 
     public abstract DBConnection getDBConnection();
+
+    public abstract IDateConversion getSQLDateConversion();
 }

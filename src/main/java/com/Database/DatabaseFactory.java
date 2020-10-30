@@ -10,4 +10,9 @@ public class DatabaseFactory extends AbstractDatabaseFactory {
         }
         return dbConnectionInstance;
     }
+
+    @Override
+    public IDateConversion getSQLDateConversion() {
+        return new SQLDateConversion();
+    }
 }

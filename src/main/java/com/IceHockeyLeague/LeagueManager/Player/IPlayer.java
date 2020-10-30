@@ -13,6 +13,7 @@ public interface IPlayer {
     void setPlayerAge(int age);
 
     int getElapsedDaysFromLastBDay();
+    void setElapsedDaysFromLastBDay(int days);
 
     boolean getInjuredStatus();
     void setInjuredStatus(boolean isInjured);

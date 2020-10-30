@@ -52,6 +52,13 @@ public class Player implements IPlayer {
     }
 
     @Override
+    public void setElapsedDaysFromLastBDay(int days) {
+        if(days > 0) {
+          elapsedDaysFromLastBDay = days;
+        }
+    }
+
+    @Override
     public IPlayerStats getPlayerStats() {
         return playerStats;
     }
