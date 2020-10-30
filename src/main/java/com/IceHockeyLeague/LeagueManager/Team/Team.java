@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
@@ -129,6 +130,11 @@ public class Team implements ITeam {
     @Override
     public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
         return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
+    }
+
+    @Override
+    public boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues) {
+        return teamDB.checkIfTeamNameExists(teamName, leagues);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
@@ -37,6 +38,7 @@ public interface ITeam {
 
     boolean saveTeam(ITeamPersistence teamDB);
     boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
+    boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues);
 
     boolean isNullOrEmpty(String teamName);
 

@@ -46,7 +46,6 @@ public class ConferencePersistence implements IConferencePersistence {
         Connection connection = null;
         CallableStatement myCall;
 
-
         try {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();

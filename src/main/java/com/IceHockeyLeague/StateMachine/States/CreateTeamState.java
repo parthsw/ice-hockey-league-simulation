@@ -43,6 +43,8 @@ public class CreateTeamState extends AbstractState {
             this.initializeInMemoryLeague();
             welcomeMessage();
             newTeam = this.constructNewTeam();
+            this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
+            persistLeagueToDatabase(inMemoryLeague);
             this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
             persistLeagueToDatabase(inMemoryLeague);
             newTeam = this.constructNewTeam();
@@ -144,7 +146,7 @@ public class CreateTeamState extends AbstractState {
             teamName = appInput.getInput();
            if (team.isNullOrEmpty(teamName)) {
                 appOutput.displayError("The team name cannot be empty");
-            } else if (team.isTeamNameExist(matchedDivision.getTeams(),teamName)) {
+            } else if (team.isTeamNameExist(matchedDivision.getTeams())) {
                 appOutput.displayError("The team name already exists");
             } else {
                 team.setTeamName(teamName.trim());

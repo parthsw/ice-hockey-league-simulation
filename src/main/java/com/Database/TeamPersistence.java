@@ -1,6 +1,7 @@
 package com.Database;
 
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
@@ -51,21 +52,21 @@ public class TeamPersistence implements ITeamPersistence {
     public boolean loadTeams(int divisionId, List<ITeam> teams) {
         DBConnection connectionManager = null;
         Connection connection = null;
-        String teamID = null;
         CallableStatement myCall;
         try {
             connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
             connection = connectionManager.getConnection();
 
-            myCall = connection.prepareCall("{call insertIntoTeam(?)}");
+            myCall = connection.prepareCall("{call loadTeams(?)}");
             myCall.setInt(1, divisionId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
                 ITeam team = new Team();
                 team.setTeamID(result.getInt("teamID"));
                 team.setDivisionID(result.getInt("divisionID"));
-                team.setTeamName(result.getString("name"));
-                team.setTeamStrength(result.getInt("strength"));
+                team.setTeamName(result.getString("teamName"));
+                team.setIsUserCreated(result.getBoolean("isUserCreated"));
+                team.setTeamStrength(result.getFloat("strength"));
                 teams.add(team);
             }
             myCall.close();
@@ -73,6 +74,37 @@ public class TeamPersistence implements ITeamPersistence {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in load Team");
+            return false;
+        } finally {
+            if (connection != null) {
+                connectionManager.terminateConnection();
+            }
+        }
+    }
+
+    @Override
+    public boolean checkIfTeamNameExists(String teamName, List<ILeague> leagues) {
+        DBConnection connectionManager = null;
+        Connection connection = null;
+        CallableStatement myCall;
+        try {
+            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+            connection = connectionManager.getConnection();
+
+            myCall = connection.prepareCall("{call checkIfTeamNameExists(?)}");
+            myCall.setString(1, teamName);
+            ResultSet result = myCall.executeQuery();
+            while(result.next()) {
+                ILeague league = AbstractLeagueManagerFactory.getFactory().getLeague();
+                league.setLeagueID(result.getInt("leagueID"));
+                league.setLeagueName(result.getString("name"));
+                leagues.add(league);
+            }
+            myCall.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("error in checking user created team existence");
             return false;
         } finally {
             if (connection != null) {

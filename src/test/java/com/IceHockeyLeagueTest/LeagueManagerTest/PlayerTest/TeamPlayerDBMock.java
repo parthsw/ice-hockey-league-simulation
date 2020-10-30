@@ -5,6 +5,7 @@ import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class TeamPlayerDBMock implements ITeamPlayerPersistence {
@@ -37,8 +38,8 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
         teamPlayer.setPlayerStats(stats);
 
         teamPlayer.setPlayerAge(23);
-        teamPlayer.setIsInjured(false);
-        teamPlayer.setIsRetired(false);
+        teamPlayer.setInjuredStatus(false);
+        teamPlayer.setRetiredStatus(false);
 
         ITeamPlayer teamPlayer1 = leagueManagerFactory.getTeamPlayer();
         teamPlayer1.setTeamID(1);
@@ -55,8 +56,10 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
         teamPlayer1.setPlayerStats(stats1);
 
         teamPlayer1.setPlayerAge(27);
-        teamPlayer1.setIsInjured(true);
-        teamPlayer1.setIsRetired(false);
+        teamPlayer1.setInjuredStatus(true);
+        teamPlayer1.setInjuryDate(LocalDate.of(2020, 10, 20));
+        teamPlayer1.setDaysInjured(23);
+        teamPlayer1.setRetiredStatus(false);
 
         teamPlayers.add(teamPlayer);
         teamPlayers.add(teamPlayer1);
