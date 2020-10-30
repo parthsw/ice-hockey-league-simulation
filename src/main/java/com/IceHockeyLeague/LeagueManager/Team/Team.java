@@ -156,4 +156,5 @@ public class Team implements ITeam {
         return teamStrength.calculate(players);
     }
 
+
 }

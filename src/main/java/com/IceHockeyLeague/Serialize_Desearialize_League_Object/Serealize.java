@@ -11,10 +11,12 @@ public class Serealize implements ISerealize {
         Gson gson = new Gson();
 
         String jsonOutput = gson.toJson(league);
+        File obj = null;
+        FileWriter myWriter = null;
         try{
-            FileWriter myWriter = new FileWriter("jsonOutput.json");
+            myWriter = new FileWriter("jsonOutput.json");
             myWriter.write(jsonOutput);
-            File obj = new File("jsonOutput");
+            obj = new File("jsonOutput");
             String path = obj.getAbsolutePath();
             Deserealize objD = new Deserealize();
             objD.desrealizeLeagueObject(path);

@@ -43,4 +43,6 @@ public interface ITeam {
     boolean isTeamNameExist(List<ITeam> teams,String teamName);
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrength);
+
+
 }
