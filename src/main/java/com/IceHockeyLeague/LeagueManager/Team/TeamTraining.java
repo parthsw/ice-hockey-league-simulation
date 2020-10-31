@@ -12,6 +12,7 @@ public class TeamTraining {
             // Generate random value between 0 and 1 for a single stat
             // If generated random value is less than the coach's stat
            // boolean flag = teamPlayer.getIsInjured();
+            //returning league object
         }
     }
 }

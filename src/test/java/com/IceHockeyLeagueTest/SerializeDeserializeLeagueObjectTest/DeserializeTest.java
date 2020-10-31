@@ -12,7 +12,8 @@ public class DeserializeTest {
     @Test
     public void deserializeLeagueObjectTest(){
         IDeserialize deserialize = new Deserialize();
-        ILeague league = deserialize.deserializeLeagueObject("C:\\Users\\Tejasvi\\IdeaProjects\\Adavnced SDC\\csci5308\\src\\test\\java\\com\\IceHockeyLeagueTest\\SerializeDeserializeLeagueObjectTest\\jsonInput");
+        ILeague league = new League();
+        league = deserialize.deserializeLeagueObject("jsonInput");
         String leagueName = league.getLeagueName();
         Assert.assertEquals(leagueName, "Dalhousie Hockey League");
     }

@@ -1,6 +1,8 @@
 package com.IceHockeyLeague.SerializeDeserializeLeagueObject;
 
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.League.League;
 import com.google.gson.Gson;
 import org.junit.Assert;
 
@@ -12,7 +14,7 @@ public class Deserialize implements IDeserialize {
     public ILeague deserializeLeagueObject(String path){
         Gson gson = new Gson();
         String jsonData = "";
-        ILeague league = null;
+        ILeague league = new League();
         String leagueName = "";
         Scanner myReader = null;
         try {
@@ -21,7 +23,7 @@ public class Deserialize implements IDeserialize {
             while(myReader.hasNextLine()) {
                 jsonData = myReader.nextLine();
             }
-             league = gson.fromJson(jsonData, ILeague.class);
+             league = gson.fromJson(jsonData, League.class);
         }
         catch(Exception exception){
             exception.printStackTrace();
