@@ -86,17 +86,17 @@ public class StandingTest {
     }
 
     @Test
-    public void sortStandingsOnDifferentPoints() {
+    public void sortStandingsOnDifferentPointsTest() {
         List<IStanding> standings = new ArrayList<>();
 
         Standing standing1 = new Standing();
-        standing1.setPoints(5);
-        standing1.setGamesWon(5);
+        standing1.setPoints(6);
+        standing1.setGamesWon(3);
         standing1.setGamesPlayed(5);
 
         Standing standing2 = new Standing();
-        standing2.setPoints(6);
-        standing2.setGamesWon(5);
+        standing2.setPoints(8);
+        standing2.setGamesWon(4);
         standing2.setGamesPlayed(5);
 
         standings.add(standing1);
@@ -107,7 +107,47 @@ public class StandingTest {
         Assert.assertEquals(standing1, standings.get(1));
     }
 
+    @Test
+    public void sortStandingsOnSamePointsDifferentGamesWonTest() {
+        List<IStanding> standings = new ArrayList<>();
 
+        Standing standing1 = new Standing();
+        standing1.setPoints(6);
+        standing1.setGamesWon(2);
+        standing1.setGamesPlayed(5);
 
+        Standing standing2 = new Standing();
+        standing2.setPoints(6);
+        standing2.setGamesWon(3);
+        standing2.setGamesPlayed(5);
 
+        standings.add(standing1);
+        standings.add(standing2);
+
+        standings.sort(Standing.standingComparator);
+        Assert.assertEquals(standing2, standings.get(0));
+        Assert.assertEquals(standing1, standings.get(1));
+    }
+
+    @Test
+    public void sortStandingsOnSamePointsSameGamesWonDifferentGamesPlayedTest() {
+        List<IStanding> standings = new ArrayList<>();
+
+        Standing standing1 = new Standing();
+        standing1.setPoints(6);
+        standing1.setGamesWon(3);
+        standing1.setGamesPlayed(5);
+
+        Standing standing2 = new Standing();
+        standing2.setPoints(6);
+        standing2.setGamesWon(3);
+        standing2.setGamesPlayed(4);
+
+        standings.add(standing1);
+        standings.add(standing2);
+
+        standings.sort(Standing.standingComparator);
+        Assert.assertEquals(standing2, standings.get(0));
+        Assert.assertEquals(standing1, standings.get(1));
+    }
 }

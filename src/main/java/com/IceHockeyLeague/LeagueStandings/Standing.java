@@ -92,7 +92,7 @@ public class Standing implements IStanding {
     public static Comparator<IStanding> standingComparator = (s1, s2) -> {
         int pointsComparison = s2.getPoints() - s1.getPoints();
         int gamesWonComparison = s2.getGamesWon() - s1.getGamesWon();
-        int gamesPlayedComparison = s2.getGamesPlayed() - s1.getGamesPlayed();
+        int gamesPlayedComparison = s1.getGamesPlayed() - s2.getGamesPlayed();
 
         if (pointsComparison == 0) {
             if (gamesWonComparison == 0) {
