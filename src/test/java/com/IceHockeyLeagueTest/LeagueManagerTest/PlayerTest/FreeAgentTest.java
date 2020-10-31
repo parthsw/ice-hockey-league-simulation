@@ -83,6 +83,20 @@ public class FreeAgentTest {
     }
 
     @Test
+    public void bestFreeAgentForPosition() {
+        List<IFreeAgent> freeAgents = new ArrayList<>();
+        IFreeAgentPersistence freeAgentDB = leagueManagerFactory.getFreeAgentDB();
+        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+
+        freeAgentDB.loadFreeAgents(1, freeAgents);
+        Assert.assertNull(freeAgent.bestFreeAgentForPosition(freeAgents, "goalie"));
+
+        IFreeAgent bestFreeAgent = freeAgent.bestFreeAgentForPosition(freeAgents, "forward");
+        Assert.assertEquals("Fred Two", bestFreeAgent.getPlayerName());
+        Assert.assertEquals(3, bestFreeAgent.getFreeAgentID());
+    }
+
+    @Test
     public void saveFreeAgentTest() {
         IFreeAgentPersistence freeAgentDB = leagueManagerFactory.getFreeAgentDB();
         IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();

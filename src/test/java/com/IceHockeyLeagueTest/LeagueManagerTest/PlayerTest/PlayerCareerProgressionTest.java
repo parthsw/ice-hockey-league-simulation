@@ -1,12 +1,15 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
+import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -14,6 +17,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -126,6 +130,37 @@ public class PlayerCareerProgressionTest {
         IFreeAgent freeAgentToRemove = league.getFreeAgents().get(1);
         playerCareerProgression.handleFreeAgentRetirement(freeAgentToRemove, league);
         Assert.assertEquals(2, league.getFreeAgents().size());
+    }
+
+    @Test
+    public void handleTeamPlayerRetirementTest() {
+        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.getPlayerCareerProgression();
+        ILeague league = leagueManagerFactory.getLeague();
+        ILeaguePersistence leagueDB = leagueManagerFactory.getLeagueDB();
+        league.loadCompleteLeague(1);
+
+        List<IConference> conferences = league.getConferences();
+        IConference conference = conferences.get(0);
+        List<IDivision> divisions = conference.getDivisions();
+        IDivision division = divisions.get(0);
+        List<ITeam> teams = division.getTeams();
+        ITeam team = teams.get(0);
+        List<ITeamPlayer> teamPlayers = team.getPlayers();
+        ITeamPlayer teamPlayer = teamPlayers.get(0);
+
+        playerCareerProgression.handleTeamPlayerRetirement(teamPlayer, team, league);
+        Assert.assertEquals(20, teamPlayers.size());
+        Assert.assertEquals(1, league.getRetiredTeamPlayers().size());
+        Assert.assertEquals(2, league.getFreeAgents().size());
+
+        ITeamPlayer emptyPlayer = leagueManagerFactory.getTeamPlayer();
+        Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(emptyPlayer, team, league));
+
+        ITeamPlayer goalieTeamPlayer = teamPlayers.get(0);
+        IPlayerStats stats = leagueManagerFactory.getPlayerStats();
+        stats.setPosition("goalie");
+        goalieTeamPlayer.setPlayerStats(stats);
+        Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(goalieTeamPlayer, team, league));
     }
 
 }

@@ -2,6 +2,8 @@ package com.IceHockeyLeague.LeagueManager.Player;
 
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 
+import java.util.List;
+
 public class FreeAgent extends Player implements IFreeAgent {
     private int freeAgentID;
     private int leagueID;
@@ -42,6 +44,22 @@ public class FreeAgent extends Player implements IFreeAgent {
         teamPlayer.setTeamID(-1);
         teamPlayer.setIsCaptain(false);
         return teamPlayer;
+    }
+
+    @Override
+    public IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgents, String position) {
+        float bestStrength = 0;
+        IFreeAgent bestFreeAgent = null;
+        for (IFreeAgent freeAgent: freeAgents) {
+            IPlayerStats freeAgentStats = freeAgent.getPlayerStats();
+            if(freeAgentStats.getPosition().equalsIgnoreCase(position)) {
+                if(freeAgentStats.getStrength() > bestStrength) {
+                    bestStrength = freeAgentStats.getStrength();
+                    bestFreeAgent = freeAgent;
+                }
+            }
+        }
+        return bestFreeAgent;
     }
 
     @Override
