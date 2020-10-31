@@ -76,12 +76,6 @@ public class TeamDBMock implements ITeamPersistence {
         league.setLeagueID(1);
         league.setLeagueName("Dalhousie Hockey League");
         leagues.add(league);
-
-        ILeague league1 = leagueManagerFactory.getLeague();
-        league1.setLeagueID(2);
-        league1.setLeagueName("Saint Marys League");
-        leagues.add(league1);
-
         return true;
     }
 }
