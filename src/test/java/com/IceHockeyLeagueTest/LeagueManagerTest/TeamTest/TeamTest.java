@@ -3,11 +3,13 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.TeamTest;
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
@@ -122,6 +124,24 @@ public class TeamTest {
     }
 
     @Test
+    public void removePlayerTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        ITeamPlayerPersistence teamPlayerDB = leagueManagerFactory.getTeamPlayerDB();
+        List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
+        team.setPlayers(teamPlayers);
+
+        team.removePlayer(teamPlayers.get(0));
+        List<ITeamPlayer> players = team.getPlayers();
+        Assert.assertEquals(1, players.size());
+
+        List<ITeamPlayer> emptyTeamPlayers = new ArrayList<>();
+        team.setPlayers(emptyTeamPlayers);
+        ITeamPlayer playerThatNotExist = leagueManagerFactory.getTeamPlayer();
+        Assert.assertFalse(team.removePlayer(playerThatNotExist));
+    }
+
+    @Test
     public void getPlayersTest() {
         ITeam team = leagueManagerFactory.getTeam();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
@@ -199,13 +219,61 @@ public class TeamTest {
     }
 
     @Test
-    public void loadPlayers() {
+    public void checkTeamPlayersTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        Assert.assertFalse(team.checkTeamPlayers());
+    }
+
+    @Test
+    public void saveTeamTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        ITeamPersistence teamDB = leagueManagerFactory.getTeamDB();
+        team.saveTeam(teamDB);
+
+        Assert.assertEquals("Halifax", team.getTeamName());
+        Assert.assertEquals(89.5f, team.getTeamStrength(), 0.0);
+    }
+
+    @Test
+    public void loadPlayersTest() {
         ITeamPlayerPersistence teamPlayerDB = leagueManagerFactory.getTeamPlayerDB();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        ITeam team = leagueManagerFactory.getTeam();
 
-        Assert.assertTrue(teamPlayerDB.loadTeamPlayers(1, teamPlayers));
+        Assert.assertTrue(team.loadPlayers(teamPlayerDB, teamPlayers));
         Assert.assertEquals(2, teamPlayers.size());
+    }
 
+    @Test
+    public void checkIfTeamNameExistsTest() {
+        ITeamPersistence teamDB = leagueManagerFactory.getTeamDB();
+        List<ILeague> leagues = new ArrayList<>();
+        ITeam team = leagueManagerFactory.getTeam();
+
+        team.checkIfTeamNameExists(teamDB, "Halifax", leagues);
+        Assert.assertEquals(2, leagues.size());
+    }
+
+    @Test
+    public void isNullOrEmptyTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+
+        Assert.assertTrue(team.isNullOrEmpty(""));
+        Assert.assertFalse(team.isNullOrEmpty("Halifax"));
+    }
+
+    @Test
+    public void isTeamNameExistTest() {
+        ITeamPersistence teamDB = leagueManagerFactory.getTeamDB();
+        List<ITeam> teams = new ArrayList<>();
+        teamDB.loadTeams(1, teams);
+
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setTeamName("Boston");
+        Assert.assertTrue(team.isTeamNameExist(teams));
+
+        team.setTeamName("Halifax");
+        Assert.assertFalse(team.isTeamNameExist(teams));
     }
 
     @Test

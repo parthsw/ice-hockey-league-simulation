@@ -93,6 +93,14 @@ public class Team implements ITeam {
     }
 
     @Override
+    public boolean removePlayer(ITeamPlayer player) {
+        if(players.size() > 0) {
+            return players.remove(player);
+        }
+        return false;
+    }
+
+    @Override
     public List<ITeamPlayer> getPlayers() {
         return players;
     }
@@ -120,6 +128,11 @@ public class Team implements ITeam {
     @Override
     public void setManager(IManager manager) {
         this.manager = manager;
+    }
+
+    @Override
+    public boolean checkTeamPlayers() {
+        return false;
     }
 
     @Override
@@ -158,6 +171,7 @@ public class Team implements ITeam {
         return isExist;
     }
 
+    @Override
     public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
         return teamStrength.calculate(players);
     }

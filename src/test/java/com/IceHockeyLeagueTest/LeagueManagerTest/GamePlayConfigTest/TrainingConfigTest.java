@@ -21,7 +21,6 @@ public class TrainingConfigTest {
         Assert.assertEquals(111, trainingConfig.getDaysUntilStatIncreaseCheck());
     }
 
-
     @Test
     public void getDaysUntilStatIncreaseCheckTest() {
         ITrainingConfig trainingConfig = AbstractLeagueManagerFactory.getFactory().getTrainingConfig();

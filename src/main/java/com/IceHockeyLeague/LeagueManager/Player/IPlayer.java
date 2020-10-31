@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 
 import java.time.LocalDate;
@@ -33,10 +34,14 @@ public interface IPlayer {
     IPlayerStats getPlayerStats();
     void setPlayerStats(IPlayerStats playerStats);
 
+    void convertBetweenPlayerTypes(IPlayer player);
+
     float calculateStrength(IPlayerStats stats);
 
-    boolean isInjured(IPlayerInjuryManager playerInjuryManager, IInjuryConfig injuryConfig, LocalDate currentDate);
-    boolean isRecovered(IPlayerInjuryManager playerInjuryManager, LocalDate currentDate);
+    boolean isInjured(IPlayerCareerProgression playerCareerProgression, IInjuryConfig injuryConfig, LocalDate currentDate);
+    boolean isRecovered(IPlayerCareerProgression playerCareerProgression, LocalDate currentDate);
+
+    boolean isRetired(IPlayerCareerProgression playerCareerProgression, IAgingConfig agingConfig, LocalDate currentDate);
 
     void agePlayerByDays(int days);
 

@@ -46,7 +46,7 @@ public abstract class AbstractLeagueManagerFactory {
 
     public abstract IPlayer getPlayer();
     public abstract IPlayerStats getPlayerStats();
-    public abstract IPlayerInjuryManager getPlayerInjuryManager();
+    public abstract IPlayerCareerProgression getPlayerCareerProgression();
 
     public abstract ITeamPlayer getTeamPlayer();
     public abstract ITeamPlayerPersistence getTeamPlayerDB();

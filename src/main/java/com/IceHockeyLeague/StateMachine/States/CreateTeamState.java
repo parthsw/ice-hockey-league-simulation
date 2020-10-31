@@ -225,7 +225,7 @@ public class CreateTeamState extends AbstractState {
                 players.add(player);
                 player = null;
             }
-            flagCheck = player.checkTeamPlayers(players);
+            // flagCheck = player.checkTeamPlayers(players);
             if(flagCheck){
                 break;
             }
