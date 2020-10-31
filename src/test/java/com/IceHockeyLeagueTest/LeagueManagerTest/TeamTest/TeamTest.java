@@ -251,7 +251,7 @@ public class TeamTest {
         ITeam team = leagueManagerFactory.getTeam();
 
         team.checkIfTeamNameExists(teamDB, "Halifax", leagues);
-        Assert.assertEquals(2, leagues.size());
+        Assert.assertEquals(1, leagues.size());
     }
 
     @Test
