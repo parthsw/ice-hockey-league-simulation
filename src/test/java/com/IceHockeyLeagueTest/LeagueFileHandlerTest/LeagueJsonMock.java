@@ -45,7 +45,7 @@ public class LeagueJsonMock {
             player.put("age", 34);
             player.put("position", "forward");
             player.put("captain", true);
-            player.put("skating", 17);
+            player.put("skating", 1+i);
             player.put("shooting", 9);
             player.put("checking", 11);
             player.put("saving", 12);

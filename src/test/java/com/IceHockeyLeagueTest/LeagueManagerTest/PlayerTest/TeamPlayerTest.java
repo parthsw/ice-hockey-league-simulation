@@ -1,10 +1,13 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -93,5 +96,15 @@ public class TeamPlayerTest {
 
         Assert.assertEquals(1, teamPlayer.getTeamPlayerID());
         Assert.assertEquals(1, teamPlayer.getTeamID());
+    }
+
+    @Test
+    public void handleTeamPlayerRetirementTest() {
+        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.getPlayerCareerProgression();
+        ITeam team = leagueManagerFactory.getTeam();
+        ILeague league = leagueManagerFactory.getLeague();
+        ITeamPlayer player = leagueManagerFactory.getTeamPlayer();
+
+        Assert.assertFalse(player.handleTeamPlayerRetirement(playerCareerProgression, team, league));
     }
 }

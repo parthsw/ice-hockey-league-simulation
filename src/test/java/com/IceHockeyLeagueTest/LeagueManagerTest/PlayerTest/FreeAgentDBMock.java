@@ -85,6 +85,29 @@ public class FreeAgentDBMock implements IFreeAgentPersistence {
 
         freeAgents.add(freeAgent);
         freeAgents.add(freeAgent1);
+
+        IFreeAgent freeAgent2 = leagueManagerFactory.getFreeAgent();
+        freeAgent2.setFreeAgentID(3);
+        freeAgent2.setLeagueID(1);
+        freeAgent2.setPlayerName("Fred Two");
+        freeAgent2.setPlayerAge(29);
+        freeAgent2.setElapsedDaysFromLastBDay(212);
+        freeAgent2.setInjuredStatus(false);
+        freeAgent2.setDaysInjured(0);
+        freeAgent2.setInjuryDate(null);
+        freeAgent2.setRetiredStatus(false);
+        freeAgent2.setRetirementDate(null);
+
+        IPlayerStats stats2 = leagueManagerFactory.getPlayerStats();
+        stats2.setPosition("forward");
+        stats2.setShooting(19);
+        stats2.setChecking(13);
+        stats2.setSaving(16);
+        stats2.setSkating(18);
+        stats2.setStrength(43.5f);
+        freeAgent2.setPlayerStats(stats2);
+        freeAgents.add(freeAgent2);
+
         return true;
     }
 }

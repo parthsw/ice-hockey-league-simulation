@@ -97,43 +97,26 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
 
     @Override
     public boolean handleTeamPlayerRetirement(ITeamPlayer teamPlayer, ITeam team, ILeague league) {
-        // 1. remove provided teamPlayer from the respected team inside of given league
         boolean isRemoved = team.removePlayer(teamPlayer);
         if(isRemoved) {
-            // 2. Push the removed teamPlayer to retiredPlayers list available at league level
             league.addRetiredTeamPlayer(teamPlayer);
         } else {
-            // Error while removing teamPlayer from associated team
             return false;
         }
 
-        // 3. Find the best player from freeAgent's list. If found return it else return false; Break the flow;
-        IFreeAgent bestFreeAgent = new FreeAgent(); // Best FreeAgent for given position
-        boolean isFreeAgentFound = true;
-        if(isFreeAgentFound) {
-            // 4. Remove the found freeAgent from league's freeAgent list
+        IFreeAgent freeAgent = AbstractLeagueManagerFactory.getFactory().getFreeAgent();
+        IFreeAgent bestFreeAgent = freeAgent.bestFreeAgentForPosition(league.getFreeAgents(), teamPlayer.getPlayerStats().getPosition());
+        if(bestFreeAgent == null) {
+            return false;
+        } else {
             boolean isFreeAgentRemoved = league.removeFreeAgent(bestFreeAgent);
             if(isFreeAgentRemoved) {
-                // 5. Convert the found freeAgent to TeamPlayer
                 ITeamPlayer newTeamPlayer = AbstractLeagueManagerFactory.getFactory().getTeamPlayer();
                 bestFreeAgent.convertToTeamPlayer(newTeamPlayer);
                 newTeamPlayer.setTeamID(team.getTeamID());
-
-                // 6. Push the converted teamPlayer to appropriate team
                 team.addPlayer(newTeamPlayer);
-            } else {
-                // Error removing freeAgent from league's freeAgent list
-                return false;
             }
-
-        } else {
-            // FreeAgent list does not have appropriate player
-            return false;
         }
-
-        // 7. Check the team combination is okay [Including player count and captain count]
-        // If no captain, assign one by finding best player
-        // If less more or less players, break the flow;
         return team.checkTeamPlayers();
     }
 

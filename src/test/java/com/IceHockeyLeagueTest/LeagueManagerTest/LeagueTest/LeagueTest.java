@@ -131,7 +131,7 @@ public class LeagueTest {
         league.removeFreeAgent(freeAgents.get(0));
 
         List<IFreeAgent> leagueFreeAgents = league.getFreeAgents();
-        Assert.assertEquals(1, leagueFreeAgents.size());
+        Assert.assertEquals(2, leagueFreeAgents.size());
 
         List<IFreeAgent> emptyList = new ArrayList<>();
         league.setFreeAgents(emptyList);
@@ -221,7 +221,7 @@ public class LeagueTest {
         Assert.assertEquals("DHL", league.getLeagueName());
 
         List<IFreeAgent> freeAgents = league.getFreeAgents();
-        Assert.assertEquals(2, freeAgents.size());
+        Assert.assertEquals(3, freeAgents.size());
 
         List<ICoach> coaches = league.getCoaches();
         Assert.assertEquals(2, coaches.size());
@@ -288,6 +288,6 @@ public class LeagueTest {
         List<IFreeAgent> freeAgents = new ArrayList<>();
         league.loadLeagueFreeAgents(freeAgentDB, freeAgents);
 
-        Assert.assertEquals(2, freeAgents.size());
+        Assert.assertEquals(3, freeAgents.size());
     }
 }
