@@ -12,7 +12,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamStrengthTest {
+public class TeamStrengthCalculatorTest {
 
     @BeforeClass
     public static void setup() {

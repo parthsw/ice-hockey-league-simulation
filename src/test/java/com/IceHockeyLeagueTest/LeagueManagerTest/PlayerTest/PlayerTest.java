@@ -1,13 +1,12 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
-import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.IPlayerInjuryManager;
-import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
+import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -17,8 +16,8 @@ public class PlayerTest {
     private static final String FORWARD = "forward";
     private static AbstractLeagueManagerFactory leagueManagerFactory;
 
-    @Before
-    public void setup() {
+    @BeforeClass
+    public static void setup() {
         AbstractLeagueManagerFactory.setFactory(new TestLeagueManagerFactory());
         leagueManagerFactory = AbstractLeagueManagerFactory.getFactory();
     }
@@ -56,6 +55,20 @@ public class PlayerTest {
         IPlayer player = leagueManagerFactory.getPlayer();
         player.setPlayerAge(46);
         Assert.assertEquals(46, player.getPlayerAge());
+    }
+
+    @Test
+    public void getElapsedDaysFromLastBDayTest() {
+        IPlayer player = leagueManagerFactory.getPlayer();
+        player.setElapsedDaysFromLastBDay(12);
+        Assert.assertEquals(12, player.getElapsedDaysFromLastBDay());
+    }
+
+    @Test
+    public void setElapsedDaysFromLastBDayTest() {
+        IPlayer player = leagueManagerFactory.getPlayer();
+        player.setElapsedDaysFromLastBDay(-1);
+        Assert.assertEquals(0, player.getElapsedDaysFromLastBDay());
     }
 
     @Test
@@ -155,22 +168,35 @@ public class PlayerTest {
 
     @Test
     public void isInjuredTest() {
-        IPlayerInjuryManager playerInjuryManager = leagueManagerFactory.getPlayerInjuryManager();
+        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.getPlayerCareerProgression();
         IPlayer player = leagueManagerFactory.getPlayer();
         IInjuryConfig injuryConfig = leagueManagerFactory.getInjuryConfig();
 
-        Assert.assertFalse(player.isInjured(playerInjuryManager, injuryConfig, LocalDate.now()));
+        Assert.assertFalse(player.isInjured(playerCareerProgression, injuryConfig, LocalDate.now()));
     }
 
     @Test
     public void isRecoveredTest() {
-        IPlayerInjuryManager playerInjuryManager = leagueManagerFactory.getPlayerInjuryManager();
+        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.getPlayerCareerProgression();
         IPlayer player = leagueManagerFactory.getPlayer();
 
         player.setInjuryDate(LocalDate.of(2020, 10, 20));
         player.setInjuredStatus(true);
         player.setDaysInjured(8);
-        Assert.assertTrue(player.isRecovered(playerInjuryManager, LocalDate.of(2020, 10, 28)));
+        Assert.assertTrue(player.isRecovered(playerCareerProgression, LocalDate.of(2020, 10, 28)));
+    }
+
+    @Test
+    public void isRetiredTest() {
+        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.getPlayerCareerProgression();
+        IPlayer player = leagueManagerFactory.getPlayer();
+        player.setPlayerAge(51);
+
+        IAgingConfig agingConfig = AbstractLeagueManagerFactory.getFactory().getAgingConfig();
+        agingConfig.setMaximumAge(50);
+        agingConfig.setAverageRetirementAge(35);
+
+        Assert.assertTrue(playerCareerProgression.isRetired(player, agingConfig, LocalDate.of(2020, 10, 29)));
 
     }
 

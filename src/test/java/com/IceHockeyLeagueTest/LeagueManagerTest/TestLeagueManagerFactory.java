@@ -79,7 +79,7 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
         if(divisionDB == null) {
             divisionDB = new DivisionDBMock();
         }
-        return null;
+        return divisionDB;
     }
 
     @Override
@@ -111,8 +111,8 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     }
 
     @Override
-    public IPlayerInjuryManager getPlayerInjuryManager() {
-        return new PlayerInjuryManager(getRandomChance());
+    public IPlayerCareerProgression getPlayerCareerProgression() {
+        return new PlayerCareerProgression(getRandomChance());
     }
 
     @Override
@@ -214,7 +214,7 @@ public class TestLeagueManagerFactory extends AbstractLeagueManagerFactory {
     public IRandomChance getRandomChance() {
         if(randomChanceGenerator == null) {
             Random randomMock = Mockito.mock(Random.class);
-            return new RandomChance(randomMock);
+            randomChanceGenerator = new RandomChance(randomMock);
         }
         return randomChanceGenerator;
     }

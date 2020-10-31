@@ -1,11 +1,18 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
+
 public class FreeAgent extends Player implements IFreeAgent {
     private int freeAgentID;
     private int leagueID;
 
     public FreeAgent() {
         setDefaults();
+    }
+
+    private void setDefaults() {
+        freeAgentID = -1;
+        leagueID = -1;
     }
 
     @Override
@@ -28,13 +35,23 @@ public class FreeAgent extends Player implements IFreeAgent {
         this.leagueID = leagueID;
     }
 
-    private void setDefaults() {
-        freeAgentID = -1;
-        leagueID = -1;
+    @Override
+    public ITeamPlayer convertToTeamPlayer(ITeamPlayer teamPlayer) {
+        super.convertBetweenPlayerTypes(teamPlayer);
+        teamPlayer.setTeamPlayerID(-1);
+        teamPlayer.setTeamID(-1);
+        teamPlayer.setIsCaptain(false);
+        return teamPlayer;
     }
 
     @Override
     public boolean saveFreeAgent(IFreeAgentPersistence freeAgentDB) {
         return freeAgentDB.saveFreeAgent(this);
     }
+
+    @Override
+    public boolean handleFreeAgentRetirement(IPlayerCareerProgression playerCareerProgression, ILeague league) {
+        return playerCareerProgression.handleFreeAgentRetirement(this, league);
+    }
+
 }

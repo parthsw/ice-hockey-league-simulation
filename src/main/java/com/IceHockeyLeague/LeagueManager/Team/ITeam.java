@@ -27,6 +27,7 @@ public interface ITeam {
 
     IPlayer getPlayerById(int id);
     void addPlayer(ITeamPlayer player);
+    boolean removePlayer(ITeamPlayer player);
     List<ITeamPlayer> getPlayers();
     void setPlayers(List<ITeamPlayer> players);
 
@@ -36,12 +37,13 @@ public interface ITeam {
     IManager getManager();
     void setManager(IManager manager);
 
+    boolean checkTeamPlayers();
+
     boolean saveTeam(ITeamPersistence teamDB);
     boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
     boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues);
 
     boolean isNullOrEmpty(String teamName);
-
     boolean isTeamNameExist(List<ITeam> teams);
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrength);

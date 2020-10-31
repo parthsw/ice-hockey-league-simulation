@@ -1,8 +1,5 @@
 package com.IceHockeyLeague.LeagueManager.Manager;
 
-import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
-
 import java.util.List;
 
 public class Manager implements IManager {
@@ -13,6 +10,12 @@ public class Manager implements IManager {
 
     public Manager() {
         setDefaults();
+    }
+
+    private void setDefaults() {
+        managerID = -1;
+        teamID = -1;
+        leagueID = -1;
     }
 
     @Override
@@ -53,12 +56,6 @@ public class Manager implements IManager {
     @Override
     public void setLeagueID(int id) {
         leagueID = id;
-    }
-
-    private void setDefaults() {
-        managerID = -1;
-        teamID = -1;
-        leagueID = -1;
     }
 
     @Override

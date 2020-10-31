@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 
 import java.time.LocalDate;
@@ -18,10 +19,10 @@ public class Player implements IPlayer {
     private LocalDate retirementDate;
 
     public Player() {
-        configureDefaults();
+        setDefaults();
     }
 
-    private void configureDefaults() {
+    private void setDefaults() {
         isInjured = false;
         isRetired = false;
     }
@@ -119,6 +120,19 @@ public class Player implements IPlayer {
     }
 
     @Override
+    public void convertBetweenPlayerTypes(IPlayer player) {
+        player.setPlayerName(this.getPlayerName());
+        player.setPlayerAge(this.getPlayerAge());
+        player.setElapsedDaysFromLastBDay(this.getElapsedDaysFromLastBDay());
+        player.setInjuredStatus(this.getInjuredStatus());
+        player.setDaysInjured(this.getDaysInjured());
+        player.setInjuryDate(this.getInjuryDate());
+        player.setRetiredStatus(this.getRetiredStatus());
+        player.setRetirementDate(this.getRetirementDate());
+        player.setPlayerStats(this.getPlayerStats());
+    }
+
+    @Override
     public float calculateStrength(IPlayerStats stats) {
         return stats.calculateStrength();
     }
@@ -129,13 +143,18 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public boolean isInjured(IPlayerInjuryManager playerInjuryManager, IInjuryConfig injuryConfig, LocalDate currentDate) {
-        return playerInjuryManager.isInjured(this, injuryConfig, currentDate);
+    public boolean isInjured(IPlayerCareerProgression playerCareerProgression, IInjuryConfig injuryConfig, LocalDate currentDate) {
+        return playerCareerProgression.isInjured(this, injuryConfig, currentDate);
     }
 
     @Override
-    public boolean isRecovered(IPlayerInjuryManager playerInjuryManager, LocalDate currentDate) {
-        return playerInjuryManager.isRecovered(this, currentDate);
+    public boolean isRecovered(IPlayerCareerProgression playerCareerProgression, LocalDate currentDate) {
+        return playerCareerProgression.isRecovered(this, currentDate);
+    }
+
+    @Override
+    public boolean isRetired(IPlayerCareerProgression playerCareerProgression, IAgingConfig agingConfig, LocalDate currentDate) {
+        return playerCareerProgression.isRetired(this, agingConfig, currentDate);
     }
 
     @Override
