@@ -43,13 +43,9 @@ public class CreateTeamState extends AbstractState {
             this.initializeInMemoryLeague();
             welcomeMessage();
             newTeam = this.constructNewTeam();
-            this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
-            persistLeagueToDatabase(inMemoryLeague);
             this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
             persistLeagueToDatabase(inMemoryLeague);
             newTeam = this.constructNewTeam();
-            // this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
-            // persistLeagueToDatabase(inMemoryLeague);
             return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
         }catch (Exception exception) {
             appOutput.displayError("");
@@ -146,7 +142,7 @@ public class CreateTeamState extends AbstractState {
             teamName = appInput.getInput();
            if (team.isNullOrEmpty(teamName)) {
                 appOutput.displayError("The team name cannot be empty");
-            } else if (team.isTeamNameExist(matchedDivision.getTeams())) {
+            } else if (team.isTeamNameExist(matchedDivision.getTeams(),teamName)) {
                 appOutput.displayError("The team name already exists");
             } else {
                 team.setTeamName(teamName.trim());
@@ -211,6 +207,7 @@ public class CreateTeamState extends AbstractState {
         List<ITeamPlayer> players = new ArrayList<>();
         appOutput.display("Please select 18 skaters and 2 goalies from the list of free agents");
         freeAgents = inMemoryLeague.getFreeAgents();
+        ITeam team = new Team();
         ITeamPlayer player = new TeamPlayer();
         for(IFreeAgent f : freeAgents){
             appOutput.display("******************************************");
@@ -230,7 +227,7 @@ public class CreateTeamState extends AbstractState {
                 players.add(player);
                 player = null;
             }
-            flagCheck = player.checkTeamPlayers(players);
+            flagCheck = team.checkTeamPlayers();
             if(flagCheck){
                 break;
             }

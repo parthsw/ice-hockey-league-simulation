@@ -13,5 +13,5 @@ public interface ITeamPlayer extends IPlayer {
 
     boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB);
 
-    boolean checkTeamPlayers(List<ITeamPlayer> players);
+
 }

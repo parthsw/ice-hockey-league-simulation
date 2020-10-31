@@ -6,6 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,9 +159,30 @@ public class Team implements ITeam {
         return isExist;
     }
 
+    @Override
+    public boolean checkTeamPlayers() {
+            int skaterCounter = 0;
+            int goalieCounter = 0;
+            boolean listIsPerfect = false;
+            for(ITeamPlayer p : players){
+                if(p.getPlayerStats().getPosition() == "goalie"){
+                    goalieCounter++;
+                }
+                else{
+                    skaterCounter++;
+                }
+            }
+            if(skaterCounter == 18 && goalieCounter == 2){
+                listIsPerfect = true;
+            }
+            return listIsPerfect;
+        }
+
+
     public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
         return teamStrength.calculate(players);
     }
+
 
 
 }

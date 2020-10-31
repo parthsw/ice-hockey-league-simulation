@@ -1,19 +1,22 @@
-package com.IceHockeyLeague.Serialize_Desearialize_League_Object;
+package com.IceHockeyLeague.SerializeDeserializeLeagueObject;
 
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.google.gson.Gson;
+import org.junit.Assert;
 
 import java.io.*;
 import java.util.Scanner;
 
-public class Deserealize implements IDeserealize {
-    public ILeague desrealizeLeagueObject(String path){
+public class Deserialize implements IDeserialize {
+
+    public ILeague deserializeLeagueObject(String path){
         Gson gson = new Gson();
         String jsonData = "";
         ILeague league = null;
+        String leagueName = "";
         Scanner myReader = null;
         try {
-            File obj = new File("path/jsonOutput.json");
+            File obj = new File("jsonInput");
             myReader = new Scanner(obj);
             while(myReader.hasNextLine()) {
                 jsonData = myReader.nextLine();
@@ -23,7 +26,7 @@ public class Deserealize implements IDeserealize {
         catch(Exception exception){
             exception.printStackTrace();
         }
-        finally{
+        finally {
             myReader.close();
         }
         return league;

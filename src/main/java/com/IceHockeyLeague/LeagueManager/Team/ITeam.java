@@ -46,5 +46,5 @@ public interface ITeam {
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrength);
 
-
+    boolean checkTeamPlayers();
 }

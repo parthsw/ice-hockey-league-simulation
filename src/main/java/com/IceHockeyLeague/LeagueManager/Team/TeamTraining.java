@@ -11,7 +11,7 @@ public class TeamTraining {
         for (ITeamPlayer teamPlayer: teamPlayers) {
             // Generate random value between 0 and 1 for a single stat
             // If generated random value is less than the coach's stat
-            boolean flag = teamPlayer.getIsInjured();
+           // boolean flag = teamPlayer.getIsInjured();
         }
     }
 }

@@ -51,22 +51,4 @@ public class TeamPlayer extends Player implements ITeamPlayer {
         return teamPlayerDB.saveTeamPlayer(this);
     }
 
-    @Override
-    public boolean checkTeamPlayers(List<ITeamPlayer> players) {
-        int skaterCounter = 0;
-        int goalieCounter = 0;
-        boolean listIsPerfect = false;
-        for(ITeamPlayer p : players){
-            if(p.getPlayerStats().getPosition() == "goalie"){
-                goalieCounter++;
-            }
-            else{
-                skaterCounter++;
-            }
-        }
-        if(skaterCounter == 1 && goalieCounter == 1){
-            listIsPerfect = true;
-        }
-        return listIsPerfect;
-    }
 }
