@@ -13,7 +13,6 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
-import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -24,7 +23,7 @@ public class League implements ILeague {
     private int leagueID;
     private String leagueName;
     private IGamePlayConfig gamePlayConfig;
-    private List<IConference> conferences;
+    private List<IConference> conferences = new ArrayList<>();
     private List<IFreeAgent> freeAgents;
     private List<ICoach> coaches;
     private List<IManager> managers;
