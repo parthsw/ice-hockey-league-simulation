@@ -275,7 +275,7 @@ BEGIN
     SELECT * FROM league WHERE leagueID IN
         (SELECT leagueID FROM conference WHERE conferenceID IN
             (SELECT conferenceID FROM division WHERE divisionID IN
-                (SELECT divisionID FROM team WHERE LOWER(team.teamName) = LOWER(teamName) AND isUserCreated = 0)))
+                (SELECT divisionID FROM team WHERE LOWER(team.teamName) = LOWER(teamName) AND isUserCreated = 1)))
                     ORDER BY leagueID;
 END $$
 
@@ -326,7 +326,7 @@ CREATE PROCEDURE
 BEGIN
     SELECT *
     FROM player
-    WHERE teamID = ID;
+    WHERE teamID = ID AND isRetired = 0;
 END $$
 
 CREATE PROCEDURE
@@ -356,7 +356,7 @@ CREATE PROCEDURE
 BEGIN
     SELECT *
     FROM freeagent
-    WHERE leagueID = ID;
+    WHERE leagueID = ID AND isRetired = 0;
 END $$
 
 CREATE PROCEDURE

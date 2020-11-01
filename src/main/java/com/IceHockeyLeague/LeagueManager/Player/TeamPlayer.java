@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
-import java.util.List;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 public class TeamPlayer extends Player implements ITeamPlayer {
     private int teamPlayerID;
@@ -9,6 +10,11 @@ public class TeamPlayer extends Player implements ITeamPlayer {
 
     public TeamPlayer() {
         setDefaults();
+    }
+
+    private void setDefaults() {
+        teamPlayerID = -1;
+        teamID = -1;
     }
 
     @Override
@@ -41,14 +47,22 @@ public class TeamPlayer extends Player implements ITeamPlayer {
         this.teamID = teamID;
     }
 
-    private void setDefaults() {
-        teamPlayerID = -1;
-        teamID = -1;
+    @Override
+    public IFreeAgent convertToFreeAgent(IFreeAgent freeAgent) {
+        super.convertBetweenPlayerTypes(freeAgent);
+        freeAgent.setFreeAgentID(-1);
+        freeAgent.setLeagueID(-1);
+        return freeAgent;
     }
 
     @Override
     public boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB) {
         return teamPlayerDB.saveTeamPlayer(this);
+    }
+
+    @Override
+    public boolean handleTeamPlayerRetirement(IPlayerCareerProgression playerCareerProgression, ITeam team, ILeague league) {
+        return playerCareerProgression.handleTeamPlayerRetirement(this, team, league);
     }
 
 }

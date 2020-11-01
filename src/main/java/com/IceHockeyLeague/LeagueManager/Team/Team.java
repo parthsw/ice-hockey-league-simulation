@@ -6,7 +6,6 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
-import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +93,14 @@ public class Team implements ITeam {
     }
 
     @Override
+    public boolean removePlayer(ITeamPlayer player) {
+        if(players.size() > 0) {
+            return players.remove(player);
+        }
+        return false;
+    }
+
+    @Override
     public List<ITeamPlayer> getPlayers() {
         return players;
     }
@@ -124,6 +131,27 @@ public class Team implements ITeam {
     }
 
     @Override
+    public boolean checkTeamPlayers() {
+        int skaterCounter = 0;
+        int goalieCounter = 0;
+        boolean listIsPerfect = false;
+        for(ITeamPlayer p : players){
+            if(p.getPlayerStats().getPosition() == "goalie"){
+                goalieCounter++;
+            }
+            else{
+                skaterCounter++;
+            }
+        }
+        if(skaterCounter == 18 && goalieCounter == 2){
+            listIsPerfect = true;
+        }
+        return listIsPerfect;
+    }
+
+
+
+    @Override
     public boolean saveTeam(ITeamPersistence teamDB) {
         return teamDB.saveTeam(this);
     }
@@ -148,7 +176,7 @@ public class Team implements ITeam {
     }
 
     @Override
-    public boolean isTeamNameExist(List<ITeam> teams, String teamName) {
+    public boolean isTeamNameExist(List<ITeam> teams,String teamName) {
         boolean isExist = false;
         for (ITeam t : teams) {
             if (t.getTeamName().equalsIgnoreCase(teamName)) {
@@ -160,29 +188,8 @@ public class Team implements ITeam {
     }
 
     @Override
-    public boolean checkTeamPlayers() {
-            int skaterCounter = 0;
-            int goalieCounter = 0;
-            boolean listIsPerfect = false;
-            for(ITeamPlayer p : players){
-                if(p.getPlayerStats().getPosition() == "goalie"){
-                    goalieCounter++;
-                }
-                else{
-                    skaterCounter++;
-                }
-            }
-            if(skaterCounter == 18 && goalieCounter == 2){
-                listIsPerfect = true;
-            }
-            return listIsPerfect;
-        }
-
-
     public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
         return teamStrength.calculate(players);
     }
-
-
 
 }

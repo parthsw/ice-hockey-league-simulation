@@ -99,8 +99,8 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
     }
 
     @Override
-    public IPlayerInjuryManager getPlayerInjuryManager() {
-        return new PlayerInjuryManager(getRandomChance());
+    public IPlayerCareerProgression getPlayerCareerProgression() {
+        return new PlayerCareerProgression(getRandomChance());
     }
 
     @Override

@@ -43,11 +43,10 @@ public class CreateTeamState extends AbstractState {
             this.initializeInMemoryLeague();
             welcomeMessage();
             newTeam = this.constructNewTeam();
-            this.addTeamToMemoryLeague(newConference,newDivision,newTeam);
+            this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
             persistLeagueToDatabase(inMemoryLeague);
-            newTeam = this.constructNewTeam();
             return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
-        }catch (Exception exception) {
+        } catch (Exception exception) {
             appOutput.displayError("");
             return null;
         }
@@ -208,7 +207,6 @@ public class CreateTeamState extends AbstractState {
         appOutput.display("Please select 18 skaters and 2 goalies from the list of free agents");
         freeAgents = inMemoryLeague.getFreeAgents();
         ITeam team = new Team();
-        ITeamPlayer player = new TeamPlayer();
         for(IFreeAgent f : freeAgents){
             appOutput.display("******************************************");
             appOutput.display(f.getPlayerName());

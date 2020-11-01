@@ -13,6 +13,12 @@ public class Coach implements ICoach {
         setDefaults();
     }
 
+    private void setDefaults() {
+        coachID = -1;
+        teamID = -1;
+        leagueID = -1;
+    }
+
     @Override
     public int getCoachID() {
         return coachID;
@@ -36,28 +42,6 @@ public class Coach implements ICoach {
     @Override
     public int getTeamID() {
         return teamID;
-    }
-
-    @Override
-    public boolean isCoachNameExist(List<ICoach> coaches, String coachName) {
-        boolean isExist = false;
-        for(ICoach c : coaches){
-            if(c.getCoachName().equalsIgnoreCase(coachName)){
-                isExist = true;
-                break;
-            }
-        }
-        return isExist;
-    }
-
-    @Override
-    public boolean isNullOrEmpty(String coachName) {
-        if(coachName == null || coachName.equals("")){
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 
     @Override
@@ -94,11 +78,26 @@ public class Coach implements ICoach {
         return valid;
     }
 
+    @Override
+    public boolean isCoachNameExist(List<ICoach> coaches, String coachName) {
+        boolean isExist = false;
+        for(ICoach c : coaches){
+            if(c.getCoachName().equalsIgnoreCase(coachName)){
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
+    }
 
-    private void setDefaults() {
-        coachID = -1;
-        teamID = -1;
-        leagueID = -1;
+    @Override
+    public boolean isNullOrEmpty(String coachName) {
+        if(coachName == null || coachName.equals("")){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
