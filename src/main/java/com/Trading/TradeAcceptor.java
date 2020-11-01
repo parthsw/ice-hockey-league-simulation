@@ -12,16 +12,13 @@ public class TradeAcceptor {
     private List<ITeamPlayer> fromTeam1;
     private List<ITeamPlayer> fromTeam2;
 
-    public TradeAcceptor(ITeam team1, ITeam team2, List<ITeamPlayer> fromTeam1, List<ITeamPlayer> fromTeam2) {
-        setDefaults(team1, team2, fromTeam1, fromTeam2);
+    public TradeAcceptor(Trade trade) {
+        this.team1 = trade.getSendingTeam();
+        this.team2 = trade.getReceivingTeam();
+        this.fromTeam1 = trade.getSendingPlayers();
+        this.fromTeam2 = trade.getReceivingPlayers();
     }
 
-    private void setDefaults(ITeam team1, ITeam team2, List<ITeamPlayer> fromTeam1, List<ITeamPlayer> fromTeam2) {
-        this.team1 = team1;
-        this.team2 = team2;
-        this.fromTeam1 = fromTeam1;
-        this.fromTeam2 = fromTeam2;
-    }
 
     public List<ITeam> acceptTrade() {
         List<ITeamPlayer> team1Players = new ArrayList<>();

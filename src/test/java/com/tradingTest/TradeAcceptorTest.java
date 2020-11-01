@@ -5,6 +5,7 @@ import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.Trading.Trade;
 import com.Trading.TradeAcceptor;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -45,8 +46,13 @@ public class TradeAcceptorTest {
         ITeam team2 = new Team();
         team1.setPlayers(offered);
         team2.setPlayers(requested);
+        Trade trade = new Trade(5);
+        trade.setSendingTeam(team1);
+        trade.setReceivingTeam(team2);
+        trade.setSendingPlayers(offered);
+        trade.setReceivingPlayers(requested);
 
-        TradeAcceptor object = new TradeAcceptor(team1, team2, offered, requested);
+        TradeAcceptor object = new TradeAcceptor(trade);
         List<ITeam> result = object.acceptTrade();
         ITeam resultTeam1 = result.get(0);
         ITeam resultTeam2 = result.get(1);

@@ -6,19 +6,17 @@ import java.util.List;
 import java.util.Random;
 
 public class TradeDecision {
-    float randomAcceptChance;
+    private float randomAcceptChance;
     private List<ITeamPlayer> offered;
     private List<ITeamPlayer> requested;
 
-    public TradeDecision(List<ITeamPlayer> offered, List<ITeamPlayer> requested, float randomAcceptChance) {
-        setDefaults(offered, requested, randomAcceptChance);
-    }
 
-    private void setDefaults(List<ITeamPlayer> offered, List<ITeamPlayer> requested, float randomAcceptChance) {
+    public TradeDecision(List<ITeamPlayer> offered, List<ITeamPlayer> requested, float randomAcceptChance) {
         this.offered = offered;
         this.requested = requested;
         this.randomAcceptChance = randomAcceptChance;
     }
+
 
     public boolean tradeDecision() {
         Random rand = new Random();
