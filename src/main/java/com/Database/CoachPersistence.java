@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
-import java.sql.*;
 
 public class CoachPersistence implements ICoachPersistence {
 
@@ -25,20 +24,17 @@ public class CoachPersistence implements ICoachPersistence {
         while (result.next()) {
             coachID = result.getString("coachID");
         }
-        myCall.close();
         coach.setCoachID(Integer.parseInt(coachID));
         return true;
     }
 
     @Override
     public boolean saveTeamCoach(ICoach coach) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?,?,?,?,?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoCoach(?,?,?,?,?,?,?,?)");
             myCall.setInt(1, coach.getTeamID());
             return saveBaseCoach(coach, myCall);
         } catch (SQLException e) {
@@ -46,21 +42,17 @@ public class CoachPersistence implements ICoachPersistence {
             System.out.println("error in insert team Coach");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean saveLeagueCoach(ICoach coach) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoCoach(?,?,?,?,?,?,?,?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoCoach(?,?,?,?,?,?,?,?)");
             myCall.setNull(1, Types.INTEGER);
             return saveBaseCoach(coach, myCall);
         } catch (SQLException e) {
@@ -68,51 +60,40 @@ public class CoachPersistence implements ICoachPersistence {
             System.out.println("error in insert league Coach");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadTeamCoach(int teamId, ICoach coach) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-
-            myCall = connection.prepareCall("{call loadTeamCoach(?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadTeamCoach(?)");
             myCall.setInt(1, teamId);
 
             ResultSet result = myCall.executeQuery();
             while (result.next()) {
                 loadBaseCoach(result, coach);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in loading team Coach");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadLeagueCoaches(int leagueId, List<ICoach> coaches) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-
-            myCall = connection.prepareCall("{call loadLeagueCoaches(?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadLeagueCoaches(?)");
             myCall.setInt(1, leagueId);
 
             ResultSet result = myCall.executeQuery();
@@ -121,16 +102,13 @@ public class CoachPersistence implements ICoachPersistence {
                 loadBaseCoach(result, coach);
                 coaches.add(coach);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in loading league Coaches");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 

@@ -10,15 +10,13 @@ import java.util.List;
 public class ConferencePersistence implements IConferencePersistence {
     @Override
     public boolean saveConference(IConference conference) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
         String conferenceID = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
 
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoConference(?,?,?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoConference(?,?,?)");
             myCall.setInt(1, conference.getLeagueID());
             myCall.setString(2, conference.getConferenceName());
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -26,7 +24,6 @@ public class ConferencePersistence implements IConferencePersistence {
             while(result.next()) {
                 conferenceID = result.getString("conferenceID");
             }
-            myCall.close();
             conference.setConferenceID(Integer.parseInt(conferenceID));
             return true;
         } catch (SQLException e) {
@@ -34,23 +31,18 @@ public class ConferencePersistence implements IConferencePersistence {
             System.out.println("error in insert Conference");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadConferences(int leagueId, List<IConference> conferences) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
 
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-
-            myCall = connection.prepareCall("{call loadConferences(?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadConferences(?)");
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -60,16 +52,13 @@ public class ConferencePersistence implements IConferencePersistence {
                 conference.setConferenceName(result.getString("name"));
                 conferences.add(conference);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in loading Conference");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 }
