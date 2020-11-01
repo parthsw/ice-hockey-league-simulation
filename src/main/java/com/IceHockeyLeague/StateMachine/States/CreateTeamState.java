@@ -47,7 +47,7 @@ public class CreateTeamState extends AbstractState {
             persistLeagueToDatabase(inMemoryLeague);
             return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
         } catch (Exception exception) {
-            appOutput.displayError("");
+            appOutput.displayError("Throwing exception");
             return null;
         }
     }

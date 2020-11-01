@@ -4,6 +4,8 @@ import com.Database.AbstractDatabaseFactory;
 import com.IO.AbstractIOFactory;
 import com.IO.IOFactory;
 import com.IOTest.IOMock;
+import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
+import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.Coach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
@@ -16,11 +18,12 @@ import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import com.IceHockeyLeague.StateMachine.States.LoadTeamState;
+import com.IceHockeyLeague.StateMachine.States.PlayerChoiceState;
+import org.junit.*;
+
 import java.util.*;
 import org.junit.rules.TemporaryFolder;
 
@@ -31,10 +34,33 @@ public class CreateStateTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
+    @Before
+    public void setupSystemOutput() {
+        ioMockInstance.setupSystemOutput();
+    }
+
+    @After
+    public void resetSystemOutput() {
+        ioMockInstance.resetSystemOutput();
+        ioMockInstance.resetSystemInput();
+    }
+
     @BeforeClass
     public static void setUp() {
+        AbstractIOFactory.setFactory(new IOFactory());
+        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
+        AbstractStateMachineFactory.setFactory(
+                new StateMachineFactory(
+                        AbstractIOFactory.getFactory().getCommandLineInput(),
+                        AbstractIOFactory.getFactory().getCommandLineOutput(),
+                        LeagueFileHandlerFactory.getFactory().getLeagueFileReader(),
+                        LeagueFileHandlerFactory.getFactory().getJsonParser(),
+                        LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
+                )
+        );
         ioMockInstance = IOMock.instance();
     }
+
 
     @Test
     public void welcomeMessageTest() {
@@ -47,6 +73,7 @@ public class CreateStateTest {
     public void onRunTest() {
         AbstractState createTeamState = AbstractStateMachineFactory.getFactory().getCreateTeamState();
         ioMockInstance.commandLineInput("");
+        Assert.assertNull(createTeamState.onRun());
     }
 
     @Test

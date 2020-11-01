@@ -51,7 +51,7 @@ public class TeamTraining implements ITeamTraining{
             }
         }
     }
-    
+
     public double generateRandomNumber(){
         double randomNumber = 0.0;
         Random rand = new Random();
