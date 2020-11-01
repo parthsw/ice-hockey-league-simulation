@@ -149,31 +149,6 @@ public class ScheduleSystem implements IScheduleSystem {
         }
     }
 
-//    private void generateDatesForRegularSeason() {
-//        int days =(int)(DAYS.between(regularSeasonStartDate, regularSeasonEndDate));// + 1);
-//        int noOfGames = regularSchedule.size();
-//
-//        int noOfGamesPerDay = noOfGames / days;
-//        int extraGames = noOfGames % days;
-//
-//        LocalDate scheduleDate = regularSeasonStartDate;
-//        int scheduleIndex = 0;
-//        for (int i = 0; i < days; i++) {
-//            for (int j = 0; j < noOfGamesPerDay; j++) {
-//                regularSchedule.get(scheduleIndex).setDate(scheduleDate);
-//                scheduleIndex++;
-//            }
-//
-//            if (extraGames > 0) {
-//                regularSchedule.get(scheduleIndex).setDate(scheduleDate);
-//                scheduleIndex++;
-//                extraGames--;
-//            }
-//
-//            scheduleDate = scheduleDate.plusDays(1);
-//        }
-//    }
-
     public void generatePlayoffSchedule(ILeague league, IStandingSystem standingSystem) {
         playoffSchedule = new ArrayList<>();
         generatePlayoffRound1(league, standingSystem);
@@ -248,31 +223,6 @@ public class ScheduleSystem implements IScheduleSystem {
             playoffSchedule.add(schedule4);
         }
     }
-
-//    private void generateDatesForPlayoffRound1() {
-//        int days =(int)(DAYS.between(playoffStartDate, playoffEndDate));// + 1);
-//        int noOfGames = playoffSchedule.size();
-//
-//        int noOfGamesPerDay = noOfGames / days;
-//        int extraGames = noOfGames % days;
-//
-//        LocalDate scheduleDate = playoffStartDate;
-//        int scheduleIndex = 0;
-//        for (int i = 0; i < days; i++) {
-//            for (int j = 0; j < noOfGamesPerDay; j++) {
-//                playoffSchedule.get(scheduleIndex).setDate(scheduleDate);
-//                scheduleIndex++;
-//            }
-//
-//            if (extraGames > 0) {
-//                playoffSchedule.get(scheduleIndex).setDate(scheduleDate);
-//                scheduleIndex++;
-//                extraGames--;
-//            }
-//
-//            scheduleDate = scheduleDate.plusDays(1);
-//        }
-//    }
 
     public boolean anyUnplayedGamesOnThisDate(LocalDate date) {
         List<ISchedule> scheduleListToCheck = null;
