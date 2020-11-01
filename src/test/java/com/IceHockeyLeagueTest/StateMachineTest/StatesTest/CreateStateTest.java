@@ -115,6 +115,9 @@ public class CreateStateTest {
         ITeam team3= new Team();
         team3.setTeamName("Team 3");
         Team team = new Team();
+        teams.add(team1);
+        teams.add(team2);
+        teams.add(team3);
         flag = team.isTeamNameExist(teams, "Team 2");
         Assert.assertTrue("true",flag);
     }
@@ -128,6 +131,8 @@ public class CreateStateTest {
         IManager manager2 = new Manager();
         manager2.setManagerName("Tejasvi Vig");
         Manager manager = new Manager();
+        managers.add(manager1);
+        managers.add(manager2);
         flag = manager.isManagerNameExist(managers,"Tejasvi Vig");
         Assert.assertTrue("true",flag);
     }
@@ -141,6 +146,8 @@ public class CreateStateTest {
         ICoach coach2 = new Coach();
         coach2.setCoachName("Sagar Moghe");
         Coach coach = new Coach();
+        coaches.add(coach1);
+        coaches.add(coach2);
         flag = coach.isCoachNameExist(coaches,"Sagar Moghe");
         Assert.assertTrue("true",flag);
     }
