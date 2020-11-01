@@ -270,10 +270,10 @@ public class TeamTest {
 
         ITeam team = leagueManagerFactory.getTeam();
         team.setTeamName("Boston");
-        Assert.assertTrue(team.isTeamNameExist(teams,team.getTeamName()));
+        Assert.assertTrue(team.isTeamNameExist(teams));
 
         team.setTeamName("Halifax");
-        Assert.assertFalse(team.isTeamNameExist(teams, team.getTeamName()));
+        Assert.assertFalse(team.isTeamNameExist(teams));
     }
 
     @Test

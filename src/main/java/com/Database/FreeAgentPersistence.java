@@ -11,14 +11,13 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
     @Override
     public boolean saveFreeAgent(IFreeAgent freeAgent) {
         IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
-        DBConnection connectionManager = null;
-        Connection connection = null;
-        String playerID = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
+        String playerID = null;
+
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoFreeAgent(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoFreeAgent(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             IPlayerStats freeAgentStats = freeAgent.getPlayerStats();
 
@@ -56,32 +55,25 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
             while(result.next()) {
                 playerID = result.getString("freeAgentID");
             }
-            myCall.close();
             freeAgent.setFreeAgentID(Integer.parseInt(playerID));
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println("error in insert free agent");
             e.printStackTrace();
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadFreeAgents(int leagueId, List<IFreeAgent> freeAgents) {
         IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-
-            myCall = connection.prepareCall("{call loadFreeAgents(?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadFreeAgents(?)");
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -109,16 +101,13 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
 
                 freeAgents.add(freeAgent);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             System.out.println("error in loading freeAgent");
             e.printStackTrace();
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 }
