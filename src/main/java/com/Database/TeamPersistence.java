@@ -10,21 +10,18 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.sql.*;
 import java.util.List;
 
 public class TeamPersistence implements ITeamPersistence {
     @Override
     public boolean saveTeam(ITeam team) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
-        String teamID = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
+        String teamID = null;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoTeam(?,?,?,?,?)");
 
-            myCall = connection.prepareCall("{call insertIntoTeam(?,?,?,?,?)}");
             myCall.setInt(1, team.getDivisionID());
             myCall.setString(2, team.getTeamName());
             myCall.setBoolean(3,team.getIsUserCreated());
@@ -34,7 +31,6 @@ public class TeamPersistence implements ITeamPersistence {
             while(result.next()) {
                 teamID = result.getString("teamID");
             }
-            myCall.close();
             team.setTeamID(Integer.parseInt(teamID));
             return true;
         } catch (SQLException e) {
@@ -42,22 +38,18 @@ public class TeamPersistence implements ITeamPersistence {
             System.out.println("error in insert Team");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadTeams(int divisionId, List<ITeam> teams) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadTeams(?)");
 
-            myCall = connection.prepareCall("{call loadTeams(?)}");
             myCall.setInt(1, divisionId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -69,29 +61,24 @@ public class TeamPersistence implements ITeamPersistence {
                 team.setTeamStrength(result.getFloat("strength"));
                 teams.add(team);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in load Team");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean checkIfTeamNameExists(String teamName, List<ILeague> leagues) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("checkIfTeamNameExists(?)");
 
-            myCall = connection.prepareCall("{call checkIfTeamNameExists(?)}");
             myCall.setString(1, teamName);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -100,16 +87,13 @@ public class TeamPersistence implements ITeamPersistence {
                 league.setLeagueName(result.getString("name"));
                 leagues.add(league);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in checking user created team existence");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 }
