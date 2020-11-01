@@ -267,13 +267,9 @@ public class TeamTest {
         ITeamPersistence teamDB = leagueManagerFactory.getTeamDB();
         List<ITeam> teams = new ArrayList<>();
         teamDB.loadTeams(1, teams);
-
         ITeam team = leagueManagerFactory.getTeam();
-        team.setTeamName("Boston");
-        Assert.assertTrue(team.isTeamNameExist(teams));
-
-        team.setTeamName("Halifax");
-        Assert.assertFalse(team.isTeamNameExist(teams));
+        Assert.assertTrue(team.isTeamNameExist(teams,"Boston"));
+        Assert.assertFalse(team.isTeamNameExist(teams,"Halifax"));
     }
 
     @Test
