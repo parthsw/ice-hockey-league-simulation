@@ -12,7 +12,7 @@ public class TeamStrengthCalculator implements ITeamStrengthCalculator {
         float teamStrength = 0f;
         for(IPlayer player: players) {
             float strength = player.calculateStrength(player.getPlayerStats());
-            if(player.getIsInjured()) {
+            if(player.getInjuredStatus()) {
                 strength = strength / 2;
             }
             teamStrength += strength;

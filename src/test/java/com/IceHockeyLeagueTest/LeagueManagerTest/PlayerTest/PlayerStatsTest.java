@@ -1,22 +1,25 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class PlayerStatsTest {
+    private static AbstractLeagueManagerFactory leagueManagerFactory;
 
-    @Before
-    public void setup() {
+    @BeforeClass
+    public static void setup() {
         LeagueManagerFactory.setFactory(new TestLeagueManagerFactory());
+        leagueManagerFactory = AbstractLeagueManagerFactory.getFactory();
     }
 
     @Test
     public void ConstructorTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         Assert.assertEquals("", playerStats.getPosition());
         Assert.assertEquals(0, playerStats.getChecking());
         Assert.assertEquals(0, playerStats.getSaving());
@@ -27,28 +30,28 @@ public class PlayerStatsTest {
 
     @Test
     public void getPositionTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setPosition("defense");
         Assert.assertTrue(playerStats.getPosition().equalsIgnoreCase("defense"));
     }
 
     @Test
     public void setPositionTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setPosition("goalie");
         Assert.assertTrue(playerStats.getPosition().equalsIgnoreCase("goalie"));
     }
 
     @Test
     public void getSkatingTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setSkating(12);
         Assert.assertEquals(playerStats.getSkating(), 12);
     }
 
     @Test
     public void setSkatingTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setSkating(1);
         Assert.assertEquals(playerStats.getSkating(), 1);
 
@@ -58,14 +61,14 @@ public class PlayerStatsTest {
 
     @Test
     public void getShootingTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setShooting(20);
         Assert.assertEquals(playerStats.getShooting(), 20);
     }
 
     @Test
     public void setShootingTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setShooting(11);
         Assert.assertEquals(playerStats.getShooting(), 11);
 
@@ -75,14 +78,14 @@ public class PlayerStatsTest {
 
     @Test
     public void getCheckingTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setChecking(13);
         Assert.assertEquals(playerStats.getChecking(), 13);
     }
 
     @Test
     public void setCheckingTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setChecking(9);
         Assert.assertEquals(playerStats.getChecking(), 9);
 
@@ -92,14 +95,14 @@ public class PlayerStatsTest {
 
     @Test
     public void getSavingTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setSaving(18);
         Assert.assertEquals(playerStats.getSaving(), 18);
     }
 
     @Test
     public void setSavingTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setSaving(2);
         Assert.assertEquals(playerStats.getSaving(), 2);
 
@@ -109,21 +112,21 @@ public class PlayerStatsTest {
 
     @Test
     public void setStrengthTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setStrength(80.8f);
         Assert.assertEquals(80.8f, playerStats.getStrength(), 0.0);
     }
 
     @Test
     public void getStrengthTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setStrength(230.1f);
         Assert.assertEquals(230.1f, playerStats.getStrength(),0.0);
     }
 
     @Test
     public void calculateStrengthTest() {
-        IPlayerStats playerStats = LeagueManagerFactory.getFactory().getPlayerStats();
+        IPlayerStats playerStats = leagueManagerFactory.getPlayerStats();
         playerStats.setSkating(11);
         playerStats.setShooting(3);
         playerStats.setChecking(15);

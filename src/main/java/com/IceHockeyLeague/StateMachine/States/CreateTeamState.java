@@ -43,8 +43,8 @@ public class CreateTeamState extends AbstractState {
             this.initializeInMemoryLeague();
             welcomeMessage();
             newTeam = this.constructNewTeam();
-            // this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
-            // persistLeagueToDatabase(inMemoryLeague);
+            this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
+            persistLeagueToDatabase(inMemoryLeague);
             return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
         } catch (Exception exception) {
             appOutput.displayError("");
@@ -225,7 +225,7 @@ public class CreateTeamState extends AbstractState {
                 players.add(player);
                 player = null;
             }
-            flagCheck = player.checkTeamPlayers(players);
+            // flagCheck = player.checkTeamPlayers(players);
             if(flagCheck){
                 break;
             }

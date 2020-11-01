@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.League;
 
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.Coach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
@@ -28,12 +29,21 @@ public class League implements ILeague {
     private List<ICoach> coaches;
     private List<IManager> managers;
 
+    private List<ITeamPlayer> retiredTeamPlayers;
+    private List<IFreeAgent> retiredFreeAgents;
+
     public League() {
         setDefaults();
     }
 
     private void setDefaults() {
         leagueID = -1;
+        this.conferences = new ArrayList<>();
+        this.freeAgents = new ArrayList<>();
+        this.coaches = new ArrayList<>();
+        this.managers = new ArrayList<>();
+        this.retiredFreeAgents = new ArrayList<>();
+        this.retiredTeamPlayers = new ArrayList<>();
     }
 
     @Override
@@ -97,6 +107,14 @@ public class League implements ILeague {
     }
 
     @Override
+    public boolean removeFreeAgent(IFreeAgent freeAgent) {
+        if(freeAgents.size() > 0) {
+            return freeAgents.remove(freeAgent);
+        }
+        return false;
+    }
+
+    @Override
     public List<IFreeAgent> getFreeAgents() {
         return freeAgents;
     }
@@ -144,6 +162,26 @@ public class League implements ILeague {
     @Override
     public void setManagers(List<IManager> managers) {
         this.managers = managers;
+    }
+
+    @Override
+    public void addRetiredTeamPlayer(ITeamPlayer teamPlayer) {
+        retiredTeamPlayers.add(teamPlayer);
+    }
+
+    @Override
+    public List<ITeamPlayer> getRetiredTeamPlayers() {
+        return retiredTeamPlayers;
+    }
+
+    @Override
+    public void addRetiredFreeAgent(IFreeAgent freeAgent) {
+        retiredFreeAgents.add(freeAgent);
+    }
+
+    @Override
+    public List<IFreeAgent> getRetiredFreeAgents() {
+        return retiredFreeAgents;
     }
 
     @Override
@@ -201,6 +239,7 @@ public class League implements ILeague {
         return true;
     }
 
+    @Override
     public boolean loadCompleteLeague(int id) {
         leagueID = id;
         this.loadLeague(LeagueManagerFactory.getFactory().getLeagueDB());
@@ -256,6 +295,10 @@ public class League implements ILeague {
         List<ICoach> coaches = new ArrayList<>();
         this.loadLeagueCoaches(LeagueManagerFactory.getFactory().getCoachDB(), coaches);
         this.setCoaches(coaches);
+
+        gamePlayConfig = AbstractLeagueManagerFactory.getFactory().getGamePlayConfig();
+        gamePlayConfig.setLeagueID(leagueID);
+        gamePlayConfig.loadGamePlayConfig(LeagueManagerFactory.getFactory().getGamePlayConfigDB(), gamePlayConfig);
 
         return true;
     }

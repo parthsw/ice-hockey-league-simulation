@@ -2,8 +2,12 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.TeamTest;
 
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
+import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
+import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 
@@ -19,7 +23,27 @@ public class TeamDBMock implements ITeamPersistence {
 
     @Override
     public boolean saveTeam(ITeam team) {
-        return false;
+        team.setTeamID(1);
+        team.setTeamName("Halifax");
+        team.setIsUserCreated(false);
+        team.setDivisionID(1);
+        team.setTeamStrength(89.5f);
+
+        ITeamPlayerPersistence teamPlayerDB = leagueManagerFactory.getTeamPlayerDB();
+        List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        team.loadPlayers(teamPlayerDB, teamPlayers);
+        team.setPlayers(teamPlayers);
+
+        ICoachPersistence coachDB = leagueManagerFactory.getCoachDB();
+        ICoach coach = leagueManagerFactory.getCoach();
+        coach.loadTeamCoach(coachDB, coach);
+        team.setCoach(coach);
+
+        IManagerPersistence managerDB = leagueManagerFactory.getManagerDB();
+        IManager manager = leagueManagerFactory.getManager();
+        manager.loadTeamManager(managerDB, manager);
+        team.setManager(manager);
+        return true;
     }
 
     @Override
@@ -42,6 +66,16 @@ public class TeamDBMock implements ITeamPersistence {
         leagueManagerFactory.getTeamPlayerDB().loadTeamPlayers(1, teamPlayers);
         team.setPlayers(teamPlayers);
 
+        teams.add(team);
+        return true;
+    }
+
+    @Override
+    public boolean checkIfTeamNameExists(String teamName, List<ILeague> leagues) {
+        ILeague league = leagueManagerFactory.getLeague();
+        league.setLeagueID(1);
+        league.setLeagueName("Dalhousie Hockey League");
+        leagues.add(league);
         return true;
     }
 }

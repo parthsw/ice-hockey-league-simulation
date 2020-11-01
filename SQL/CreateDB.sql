@@ -35,8 +35,6 @@ CREATE TABLE team
     teamName        VARCHAR(45) NOT NULL,
     isUserCreated   TINYINT(1)  NOT NULL,
     strength        FLOAT(1)    NOT NULL,
-    CONSTRAINT teamName_UNIQUE
-        UNIQUE (teamName),
     CONSTRAINT teamToDivision
         FOREIGN KEY (divisionID) REFERENCES division (divisionID)
             ON UPDATE CASCADE ON DELETE CASCADE
@@ -44,17 +42,22 @@ CREATE TABLE team
 
 CREATE TABLE freeagent
 (
-    freeAgentID INT AUTO_INCREMENT PRIMARY KEY,
-    leagueID    INT           NOT NULL,
-    name        VARCHAR(45)   NOT NULL,
-    position    VARCHAR(45)   NOT NULL,
-    age         INT           NOT NULL,
-    skating     INT           NOT NULL,
-    shooting    INT           NOT NULL,
-    checking    INT           NOT NULL,
-    saving      INT           NOT NULL,
-    strength    FLOAT(1)      NOT NULL,
-    isInjured   TINYINT(1)    NOT NULL,
+    freeAgentID             INT AUTO_INCREMENT PRIMARY KEY,
+    leagueID                INT           NOT NULL,
+    name                    VARCHAR(45)   NOT NULL,
+    age                     INT           NOT NULL,
+    elapsedDaysFromLastBDay INT           NOT NULL,
+    isInjured               TINYINT(1)    NOT NULL,
+    daysInjured             INT           NOT NULL,
+    injuryDate              DATE          NULL,
+    isRetired               TINYINT(1)    NOT NULL,
+    retirementDate          DATE          NULL,
+    position                VARCHAR(45)   NOT NULL,
+    skating                 INT           NOT NULL,
+    shooting                INT           NOT NULL,
+    checking                INT           NOT NULL,
+    saving                  INT           NOT NULL,
+    strength                FLOAT(1)      NOT NULL,
     CONSTRAINT freeAgentToLeague
         FOREIGN KEY (leagueID) REFERENCES league (leagueID)
             ON UPDATE CASCADE ON DELETE CASCADE
@@ -80,7 +83,7 @@ CREATE TABLE coach
 CREATE TABLE manager
 (
     managerID INT AUTO_INCREMENT PRIMARY KEY,
-    teamID    INT         null,
+    teamID    INT         NULL,
     leagueID  INT         NOT NULL,
     name      VARCHAR(45) NOT NULL,
     CONSTRAINT managerToLeague
@@ -93,18 +96,23 @@ CREATE TABLE manager
 
 CREATE TABLE player
 (
-    playerID  INT AUTO_INCREMENT PRIMARY KEY,
-    teamID    INT         NOT NULL,
-    name      VARCHAR(45) NOT NULL,
-    position  VARCHAR(45) NOT NULL,
-    age       INT         NOT NULL,
-    skating   INT         NOT NULL,
-    shooting  INT         NOT NULL,
-    checking  INT         NOT NULL,
-    saving    INT         NOT NULL,
-    captain   TINYINT(1)  NOT NULL,
-    strength  FLOAT(1)    NOT NULL,
-    isInjured TINYINT(1)  NOT NULL,
+    playerID                INT AUTO_INCREMENT PRIMARY KEY,
+    teamID                  INT             NOT NULL,
+    name                    VARCHAR(45)     NOT NULL,
+    captain                 TINYINT(1)      NOT NULL,
+    age                     INT             NOT NULL,
+    elapsedDaysFromLastBDay INT             NOT NULL,
+    isInjured               TINYINT(1)      NOT NULL,
+    daysInjured             INT             NOT NULL,
+    injuryDate              DATE            NULL,
+    isRetired               TINYINT(1)      NOT NULL,
+    retirementDate          DATE            NULL,
+    position                VARCHAR(45)     NOT NULL,
+    skating                 INT             NOT NULL,
+    shooting                INT             NOT NULL,
+    checking                INT             NOT NULL,
+    saving                  INT             NOT NULL,
+    strength                FLOAT(1)        NOT NULL,
     CONSTRAINT playerToTeam
         FOREIGN KEY (teamID) REFERENCES team (teamID)
             ON UPDATE CASCADE ON DELETE CASCADE
@@ -113,18 +121,18 @@ CREATE TABLE player
 CREATE TABLE gamePlayConfig
 (
     gamePlayConfigID            INT AUTO_INCREMENT PRIMARY KEY,
-    leagueID                    INT NOT NULL,
-    averageRetirementAge        INT NOT NULL,
-    maximumAge                  INT NOT NULL,
-    randomWinChance             FLOAT(1) NOT NULL,
-    randomInjuryChance          FLOAT(2) NOT NULL,
-    injuryDaysLow               INT NOT NULL,
-    injuryDaysHigh              INT NOT NULL,
-    daysUntilStatIncreaseCheck  INT NOT NULL,
-    lossPoint                   INT NOT NULL,
-    randomTradeOfferChance      FLOAT(2) NOT NULL,
-    maxPlayersPerTrade          INT NOT NULL,
-    randomAcceptanceChance      FLOAT(2) NOT NULL,
+    leagueID                    INT         NOT NULL,
+    averageRetirementAge        INT         NOT NULL,
+    maximumAge                  INT         NOT NULL,
+    randomWinChance             FLOAT(1)    NOT NULL,
+    randomInjuryChance          FLOAT(2)    NOT NULL,
+    injuryDaysLow               INT         NOT NULL,
+    injuryDaysHigh              INT         NOT NULL,
+    daysUntilStatIncreaseCheck  INT         NOT NULL,
+    lossPoint                   INT         NOT NULL,
+    randomTradeOfferChance      FLOAT(2)    NOT NULL,
+    maxPlayersPerTrade          INT         NOT NULL,
+    randomAcceptanceChance      FLOAT(2)    NOT NULL,
     CONSTRAINT gamePlayConfigToLeague
         FOREIGN KEY (leagueID) REFERENCES league (leagueID)
             ON UPDATE CASCADE ON DELETE CASCADE
