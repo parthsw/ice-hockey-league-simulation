@@ -10,15 +10,13 @@ import java.util.List;
 public class DivisionPersistence implements IDivisionPersistence {
     @Override
     public boolean saveDivision(IDivision division) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
-        String divisionID = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
-        try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
+        String divisionID = null;
 
-            myCall = connection.prepareCall("{call insertIntoDivision(?,?,?)}");
+        try {
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoDivision(?,?,?)");
             myCall.setInt(1, division.getConferenceID());
             myCall.setString(2, division.getDivisionName());
             myCall.registerOutParameter(3, Types.INTEGER);
@@ -26,7 +24,6 @@ public class DivisionPersistence implements IDivisionPersistence {
             while(result.next()) {
                 divisionID = result.getString("divisionID");
             }
-            myCall.close();
             division.setDivisionID(Integer.parseInt(divisionID));
             return true;
         } catch (SQLException e) {
@@ -34,22 +31,18 @@ public class DivisionPersistence implements IDivisionPersistence {
             System.out.println("error in insert Division");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadDivisions(int conferenceId, List<IDivision> divisions) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
-        try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
 
-            myCall = connection.prepareCall("{call loadDivisions(?)}");
+        try {
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadDivisions(?)");
             myCall.setInt(1, conferenceId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -59,17 +52,13 @@ public class DivisionPersistence implements IDivisionPersistence {
                 division.setDivisionName(result.getString("name"));
                 divisions.add(division);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in loading Division");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
-
     }
 }

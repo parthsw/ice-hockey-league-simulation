@@ -9,15 +9,13 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
 
     @Override
     public boolean saveGamePlayConfig(IGamePlayConfig gamePlayConfig) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
-        String gamePlayConfigID = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
+        String gamePlayConfigID = null;
 
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoGamePlayConfig(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoGamePlayConfig(?,?,?,?,?,?,?,?,?,?,?,?,?)");
             myCall.setInt(1, gamePlayConfig.getLeagueID());
 
             IAgingConfig agingConfig = gamePlayConfig.getAgingConfig();
@@ -46,7 +44,6 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
             while(result.next()) {
                 gamePlayConfigID = result.getString("gamePlayConfigID");
             }
-            myCall.close();
             gamePlayConfig.setGamePlayConfigID(Integer.parseInt(gamePlayConfigID));
             return true;
         } catch (SQLException e) {
@@ -54,23 +51,19 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
             System.out.println("error in insert game play configuration");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadGamePlayConfig(int leagueId, IGamePlayConfig gamePlayConfig) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
 
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadLeagueGamePlayConfig(?)");
 
-            myCall = connection.prepareCall("{call loadLeagueGamePlayConfig(?)}");
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -103,16 +96,13 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
                 tradingConfig.setRandomAcceptanceChance(result.getFloat("randomAcceptanceChance"));
                 gamePlayConfig.setTradingConfig(tradingConfig);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in loading game play configuration");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 }

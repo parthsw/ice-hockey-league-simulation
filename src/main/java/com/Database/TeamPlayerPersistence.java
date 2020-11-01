@@ -10,15 +10,13 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
     @Override
     public boolean saveTeamPlayer(ITeamPlayer teamPlayer) {
         IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
-        DBConnection connectionManager = null;
-        Connection connection = null;
-        String playerID = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
+        String playerID = null;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            myCall = connection.prepareCall("{call insertIntoPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
             IPlayerStats teamPlayerStats = teamPlayer.getPlayerStats();
 
             myCall.setInt(1, teamPlayer.getTeamID());
@@ -57,7 +55,6 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
             while(result.next()) {
                 playerID = result.getString("playerID");
             }
-            myCall.close();
             teamPlayer.setTeamPlayerID(Integer.parseInt(playerID));
             return true;
         } catch (SQLException e) {
@@ -65,24 +62,19 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
             e.printStackTrace();
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadTeamPlayers(int teamId, List<ITeamPlayer> teamPlayers) {
         IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
-
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadTeamPlayers(?)");
 
-            myCall = connection.prepareCall("{call loadTeamPlayers(?)}");
             myCall.setInt(1, teamId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -110,16 +102,13 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
 
                 teamPlayers.add(player);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             System.out.println("error in load player");
             e.printStackTrace();
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 }

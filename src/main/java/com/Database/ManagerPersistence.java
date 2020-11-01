@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
-import java.sql.*;
 
 public class ManagerPersistence implements IManagerPersistence {
 
@@ -22,21 +21,17 @@ public class ManagerPersistence implements IManagerPersistence {
         while (result.next()) {
             managerID = result.getString("managerID");
         }
-        myCall.close();
         manager.setManagerID(Integer.parseInt(managerID));
         return true;
     }
 
     @Override
     public boolean saveTeamManager(IManager manager) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoManager(?,?,?,?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoManager(?,?,?,?)");
             myCall.setInt(1, manager.getTeamID());
             return saveBaseManager(manager, myCall);
         } catch (SQLException e) {
@@ -44,22 +39,17 @@ public class ManagerPersistence implements IManagerPersistence {
             System.out.println("error in insert team Manager");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean saveLeagueManager(IManager manager) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-            myCall = connection.prepareCall("{call insertIntoManager(?,?,?,?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("insertIntoManager(?,?,?,?)");
             myCall.setNull(1, Types.INTEGER);
             return saveBaseManager(manager, myCall);
         } catch (SQLException e) {
@@ -67,23 +57,17 @@ public class ManagerPersistence implements IManagerPersistence {
             System.out.println("error in insert league Manager");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadTeamManager(int teamId, IManager manager) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-
-            myCall = connection.prepareCall("{call loadTeamManager(?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadTeamManager(?)");
             myCall.setInt(1,teamId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -92,30 +76,23 @@ public class ManagerPersistence implements IManagerPersistence {
                 manager.setLeagueID(result.getInt("leagueID"));
                 manager.setManagerName(result.getString("name"));
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in loading Manager");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 
     @Override
     public boolean loadLeagueManagers(int leagueId, List<IManager> managers) {
-        DBConnection connectionManager = null;
-        Connection connection = null;
+        IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-
-            connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
-            connection = connectionManager.getConnection();
-
-            myCall = connection.prepareCall("{call loadLeagueManagers(?)}");
+            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            myCall = storedProcedure.setup("loadLeagueManagers(?)");
             myCall.setInt(1,leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -126,16 +103,13 @@ public class ManagerPersistence implements IManagerPersistence {
                 manager.setManagerName(result.getString("name"));
                 managers.add(manager);
             }
-            myCall.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("error in loading Manager");
             return false;
         } finally {
-            if (connection != null) {
-                connectionManager.terminateConnection();
-            }
+            storedProcedure.cleanup();
         }
     }
 }
