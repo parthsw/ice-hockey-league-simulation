@@ -11,16 +11,18 @@ public class SimulateTrade {
     private GetAllTeamsFromLeague getAllTeamsObject;
     private GetTradableTeams getTradableTeamsObject;
     private GetWorsePlayersToTradeFromTeam selectPlayersToTrade;
-    private List<ITeam> allteams;
+    private List<ITeam> allTeams;
     private List<ITeam> tradableTeams;
     private int maxPlayerPerTrade;
     private int tradeSize;
     private float randomAcceptChance;
+    private ILeague league;
 
     public void simulateTrade(ILeague league, int lossPointValue, int maxPlayersPerTrade, float randomAcceptChance) {
-        this.getAllTeamsObject = new GetAllTeamsFromLeague(league);
-        this.allteams = this.getAllTeamsObject.getTeams();
-        this.getTradableTeamsObject = new GetTradableTeams(allteams, lossPointValue);
+        this.league = league;
+        this.getAllTeamsObject = new GetAllTeamsFromLeague(this.league);
+        this.allTeams = this.getAllTeamsObject.getTeams();
+        this.getTradableTeamsObject = new GetTradableTeams(allTeams, lossPointValue);
         this.tradableTeams = this.getTradableTeamsObject.getTeams();
         this.selectPlayersToTrade = new GetWorsePlayersToTradeFromTeam();
         this.maxPlayerPerTrade = maxPlayersPerTrade;
@@ -37,8 +39,17 @@ public class SimulateTrade {
                     this.userChoice();
                 } else {
                     GenerateTrade generateTrade = new GenerateTrade();
-                    generateTrade.generateTrade(team, this.tradeSize, selectedTeam, this.randomAcceptChance);
-
+                    generateTrade.generateTrade(team, this.maxPlayerPerTrade, selectedTeam, this.randomAcceptChance);
+                    List<ITeam> resultTeams = generateTrade.getResultTeams();
+                    List<ITeam> validatedTeams = new ArrayList<>();
+                    for (ITeam modifiedTeam : resultTeams) {
+                        TeamValidator validate = new TeamValidator(modifiedTeam, this.league.getLeagueID(), this.league.getFreeAgents());
+                        ITeam validatedTeam = validate.validateTeam();
+                        validatedTeams.add(validatedTeam);
+                    }
+                    this.allTeams.remove(team);
+                    this.allTeams.remove(selectedTeam);
+                    this.allTeams.addAll(validatedTeams);
                 }
             }
         }
@@ -47,7 +58,7 @@ public class SimulateTrade {
     private ITeam selectTeamToTrade(ITeam team) {
         List<ITeam> temp = new ArrayList<>();
         List<ITeamPlayer> playerListToBeTraded;
-        temp.addAll(this.allteams);
+        temp.addAll(this.allTeams);
         temp.remove(team);
         playerListToBeTraded = this.selectPlayersToTrade.getPlayersToTrade(this.maxPlayerPerTrade, team);
         this.tradeSize = playerListToBeTraded.size();

@@ -19,16 +19,13 @@ public class TeamValidator {
 
 
     public TeamValidator(ITeam team, int leagueID, List<IFreeAgent> agents){
-        setDefaults(team, leagueID, agents);
-    }
-
-    private void setDefaults(ITeam team, int leagueID, List<IFreeAgent> agents) {
         this.givenTeam = team;
         this.leagueID = leagueID;
         this.availableAgents = agents;
         skaters = new ArrayList<>();
         goalies = new ArrayList<>();
     }
+
 
     public ITeam validateTeam() {
 

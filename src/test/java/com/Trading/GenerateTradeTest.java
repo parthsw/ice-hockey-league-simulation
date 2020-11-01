@@ -19,7 +19,7 @@ public class GenerateTradeTest {
         ITeam team2 = new Team();
         Random random = new Random();
         String[] positions = new String[]{"Forward", "Defence", "Goalie"};
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 20; i++) {
             ITeamPlayer player = new TeamPlayer();
             IPlayerStats stats = new PlayerStats();
             stats.setStrength(random.nextInt(100));
@@ -29,7 +29,7 @@ public class GenerateTradeTest {
             team1.addPlayer(player);
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 20; i++) {
             ITeamPlayer player = new TeamPlayer();
             IPlayerStats stats = new PlayerStats();
             stats.setStrength(random.nextInt(100));
@@ -38,7 +38,7 @@ public class GenerateTradeTest {
             player.setPlayerStats(stats);
             team2.addPlayer(player);
         }
-        int maxTradablePlayers = 1;
+        int maxTradablePlayers = 4;
 
         GenerateTrade testObject = new GenerateTrade();
         testObject.generateTrade(team1, maxTradablePlayers, team2, 1);
