@@ -19,6 +19,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +64,20 @@ public class LeagueTest {
         ILeague league = leagueManagerFactory.getLeague();
         league.setLeagueName("NHL");
         Assert.assertEquals("NHL", league.getLeagueName());
+    }
+
+    @Test
+    public void getLeagueDateTest() {
+        ILeague league = leagueManagerFactory.getLeague();
+        league.setLeagueDate(LocalDate.now());
+        Assert.assertEquals(LocalDate.now(), league.getLeagueDate());
+    }
+
+    @Test
+    public void setLeagueDateTest() {
+        ILeague league = leagueManagerFactory.getLeague();
+        league.setLeagueDate(LocalDate.of(2000, 4, 2));
+        Assert.assertEquals(LocalDate.of(2000, 4, 2), league.getLeagueDate());
     }
 
     @Test

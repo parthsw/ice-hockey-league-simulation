@@ -6,6 +6,8 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeagueTest.LeagueFileHandlerTest.LeagueJsonMock;
 
+import java.time.LocalDate;
+
 public class LeagueDBMock implements ILeaguePersistence {
     @Override
     public boolean saveLeague(ILeague league) {
@@ -15,6 +17,7 @@ public class LeagueDBMock implements ILeaguePersistence {
 
         league.setLeagueName("NHL");
         league.setLeagueID(2);
+        league.setLeagueDate(LocalDate.now());
         league.setGamePlayConfig(createdLeague.getGamePlayConfig());
         league.setConferences(createdLeague.getConferences());
         league.setFreeAgents(createdLeague.getFreeAgents());

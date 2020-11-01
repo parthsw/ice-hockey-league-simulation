@@ -17,12 +17,14 @@ import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class League implements ILeague {
     private int leagueID;
     private String leagueName;
+    private LocalDate leagueDate;
     private IGamePlayConfig gamePlayConfig;
     private List<IConference> conferences;
     private List<IFreeAgent> freeAgents;
@@ -64,6 +66,16 @@ public class League implements ILeague {
     @Override
     public void setLeagueName(String name) {
         leagueName = name;
+    }
+
+    @Override
+    public LocalDate getLeagueDate() {
+        return leagueDate;
+    }
+
+    @Override
+    public void setLeagueDate(LocalDate date) {
+        leagueDate = date;
     }
 
     @Override

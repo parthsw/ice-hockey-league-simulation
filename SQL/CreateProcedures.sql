@@ -5,6 +5,7 @@ DELIMITER $$
 CREATE PROCEDURE
     insertIntoLeague(
         IN leagueName VARCHAR(45),
+        IN leagueDate DATE,
         OUT leagueID INT
     )
 BEGIN
@@ -12,7 +13,8 @@ BEGIN
         league
     VALUES
         (NULL,
-         leagueName);
+         leagueName,
+         leagueDate);
 
     SET leagueID = last_insert_id();
     SELECT leagueID;

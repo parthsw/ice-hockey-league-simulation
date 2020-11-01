@@ -12,6 +12,7 @@ import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ILeague {
@@ -20,6 +21,9 @@ public interface ILeague {
 
     String getLeagueName();
     void setLeagueName(String name);
+
+    LocalDate getLeagueDate();
+    void setLeagueDate(LocalDate date);
 
     IGamePlayConfig getGamePlayConfig();
     void setGamePlayConfig(IGamePlayConfig gamePlayConfig);

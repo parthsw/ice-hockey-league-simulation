@@ -4,6 +4,7 @@ CREATE TABLE league
 (
     leagueID INT AUTO_INCREMENT PRIMARY KEY,
     name     VARCHAR(45) NOT NULL,
+    date     DATE DEFAULT NULL,
     CONSTRAINT name_UNIQUE
         UNIQUE (name)
 );
