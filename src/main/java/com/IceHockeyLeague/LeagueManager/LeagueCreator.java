@@ -69,14 +69,10 @@ public class LeagueCreator implements ILeagueCreator {
     private static final String MAX_PLAYERS_PER_TRADE = "maxPlayersPerTrade";
     private static final String RANDOM_ACCEPTANCE_CHANCE = "randomAcceptanceChance";
 
-    public LeagueCreator() {
-    }
-
     @Override
     public ILeague createLeague(JSONObject leagueJson) {
         ILeague league = AbstractLeagueManagerFactory.getFactory().getLeague();
         league.setLeagueName(leagueJson.getString(LEAGUE_NAME));
-
         league.setGamePlayConfig(createGamePlayConfig(leagueJson.getJSONObject(GAME_PLAY_CONFIG)));
         league.setConferences(createConferenceList(leagueJson.getJSONArray(CONFERENCES)));
         league.setFreeAgents(createFreeAgentList(leagueJson.getJSONArray(FREE_AGENTS)));
@@ -88,7 +84,6 @@ public class LeagueCreator implements ILeagueCreator {
 
     private IConference createConference(Object conferenceJson) {
         IConference conference = AbstractLeagueManagerFactory.getFactory().getConference();
-
         conference.setConferenceName(((JSONObject) conferenceJson).getString(CONFERENCE_NAME));
         conference.setDivisions(createDivisionList(((JSONObject) conferenceJson).getJSONArray(DIVISIONS)));
 
@@ -97,15 +92,15 @@ public class LeagueCreator implements ILeagueCreator {
 
     private List<IConference> createConferenceList(JSONArray conferencesJson) {
         List<IConference> conferences = new ArrayList<>();
-        for (Object conference : conferencesJson) {
+        for(Object conference : conferencesJson) {
             conferences.add(createConference(conference));
         }
+
         return conferences;
     }
 
     private IDivision createDivision(Object divisionJson) {
         IDivision division = AbstractLeagueManagerFactory.getFactory().getDivision();
-
         division.setDivisionName(((JSONObject) divisionJson).getString(DIVISION_NAME));
         division.setTeams(createTeamList(((JSONObject) divisionJson).getJSONArray(TEAMS)));
 
@@ -114,15 +109,15 @@ public class LeagueCreator implements ILeagueCreator {
 
     private List<IDivision> createDivisionList(JSONArray divisionsJson) {
         List<IDivision> divisions = new ArrayList<>();
-        for (Object division : divisionsJson) {
+        for(Object division : divisionsJson) {
             divisions.add(createDivision(division));
         }
+
         return divisions;
     }
 
     private ITeam createTeam(Object teamJson) {
         ITeam team = AbstractLeagueManagerFactory.getFactory().getTeam();
-
         team.setTeamName(((JSONObject) teamJson).getString(TEAM_NAME));
         team.setManager(createManager(((JSONObject) teamJson).getString(GENERAL_MANAGER)));
         team.setCoach(createCoach(((JSONObject) teamJson).getJSONObject(HEAD_COACH)));
@@ -135,15 +130,15 @@ public class LeagueCreator implements ILeagueCreator {
 
     private List<ITeam> createTeamList(JSONArray teamsJson) {
         List<ITeam> teams = new ArrayList<>();
-        for (Object team : teamsJson) {
+        for(Object team : teamsJson) {
             teams.add(createTeam(team));
         }
+
         return teams;
     }
 
     private IPlayer createPlayer(Object playerJson) {
         IPlayer player = AbstractLeagueManagerFactory.getFactory().getPlayer();
-
         player.setPlayerName(((JSONObject) playerJson).getString(PLAYER_NAME));
         player.setPlayerAge(((JSONObject) playerJson).getInt(AGE));
 
@@ -154,7 +149,6 @@ public class LeagueCreator implements ILeagueCreator {
         playerStats.setChecking(((JSONObject) playerJson).getInt(CHECKING));
         playerStats.setSaving(((JSONObject) playerJson).getInt(SAVING));
         playerStats.setStrength(playerStats.calculateStrength());
-
         player.setPlayerStats(playerStats);
 
         return player;
@@ -174,9 +168,10 @@ public class LeagueCreator implements ILeagueCreator {
 
     private List<ITeamPlayer> createTeamPlayerList(JSONArray teamPlayerJson) {
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        for (Object teamPlayer : teamPlayerJson) {
+        for(Object teamPlayer : teamPlayerJson) {
             teamPlayers.add(createTeamPlayer(teamPlayer));
         }
+
         return teamPlayers;
     }
 
@@ -193,29 +188,31 @@ public class LeagueCreator implements ILeagueCreator {
 
     private List<IFreeAgent> createFreeAgentList(JSONArray freeAgentJson) {
         List<IFreeAgent> freeAgents = new ArrayList<>();
-        for (Object freeAgent : freeAgentJson) {
+        for(Object freeAgent : freeAgentJson) {
             freeAgents.add(createFreeAgent(freeAgent));
         }
+
         return freeAgents;
     }
 
     private IManager createManager(String generalManager) {
         IManager manager = AbstractLeagueManagerFactory.getFactory().getManager();
         manager.setManagerName(generalManager);
+
         return manager;
     }
 
     private List<IManager> createManagerList(JSONArray managersJson) {
         List<IManager> managers = new ArrayList<>();
-        for (Object manager : managersJson) {
+        for(Object manager : managersJson) {
             managers.add(createManager(manager.toString()));
         }
+
         return managers;
     }
 
     private ICoach createCoach(Object coachJson) {
         ICoach coach = AbstractLeagueManagerFactory.getFactory().getCoach();
-
         coach.setCoachName(((JSONObject) coachJson).getString(COACH_NAME));
         coach.setCoachStats(createCoachStats(coachJson));
 
@@ -224,7 +221,6 @@ public class LeagueCreator implements ILeagueCreator {
 
     private ICoachStats createCoachStats(Object coachJson) {
         ICoachStats coachStats = AbstractLeagueManagerFactory.getFactory().getCoachStats();
-
         coachStats.setSkating(((JSONObject) coachJson).getFloat(SKATING));
         coachStats.setShooting(((JSONObject) coachJson).getFloat(SHOOTING));
         coachStats.setChecking(((JSONObject) coachJson).getFloat(CHECKING));
@@ -235,15 +231,15 @@ public class LeagueCreator implements ILeagueCreator {
 
     private List<ICoach> createCoachList(JSONArray coachesJson) {
         List<ICoach> coaches = new ArrayList<>();
-        for (Object coach : coachesJson) {
+        for(Object coach : coachesJson) {
             coaches.add(createCoach(coach));
         }
+
         return coaches;
     }
 
     private IGamePlayConfig createGamePlayConfig(JSONObject gamePlayConfigJson) {
         IGamePlayConfig gamePlayConfig = AbstractLeagueManagerFactory.getFactory().getGamePlayConfig();
-
         gamePlayConfig.setAgingConfig(createAgingConfig(gamePlayConfigJson.getJSONObject(AGING)));
         gamePlayConfig.setGameResolverConfig(createGameResolverConfig(gamePlayConfigJson.getJSONObject(GAME_RESOLVER)));
         gamePlayConfig.setInjuryConfig(createInjuryConfig(gamePlayConfigJson.getJSONObject(INJURIES)));
@@ -257,12 +253,14 @@ public class LeagueCreator implements ILeagueCreator {
         IAgingConfig agingConfig = AbstractLeagueManagerFactory.getFactory().getAgingConfig();
         agingConfig.setAverageRetirementAge(agingConfigJson.getInt(AVERAGE_RETIREMENT_AGE));
         agingConfig.setMaximumAge(agingConfigJson.getInt(MAXIMUM_AGE));
+
         return agingConfig;
     }
 
     private IGameResolverConfig createGameResolverConfig(JSONObject gameResolverConfigJson) {
         IGameResolverConfig gameResolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
         gameResolverConfig.setRandomWinChance(gameResolverConfigJson.getFloat(RANDOM_WIN_CHANCE));
+
         return gameResolverConfig;
     }
 
@@ -271,12 +269,14 @@ public class LeagueCreator implements ILeagueCreator {
         injuryConfig.setRandomInjuryChance(injuryConfigJson.getFloat(RANDOM_INJURY_CHANCE));
         injuryConfig.setInjuryDaysLow(injuryConfigJson.getInt(INJURY_DAYS_LOW));
         injuryConfig.setInjuryDaysHigh(injuryConfigJson.getInt(INJURY_DAYS_HIGH));
+
         return injuryConfig;
     }
 
     private ITrainingConfig createTrainingConfig(JSONObject trainingConfigJson) {
         ITrainingConfig trainingConfig = AbstractLeagueManagerFactory.getFactory().getTrainingConfig();
         trainingConfig.setDaysUntilStatIncreaseCheck(trainingConfigJson.getInt(DAYS_STAT_INCREASE_CHECK));
+
         return trainingConfig;
     }
 
@@ -286,6 +286,7 @@ public class LeagueCreator implements ILeagueCreator {
         tradingConfig.setMaxPlayersPerTrade(tradingConfigJson.getInt(MAX_PLAYERS_PER_TRADE));
         tradingConfig.setRandomAcceptanceChance(tradingConfigJson.getFloat(RANDOM_ACCEPTANCE_CHANCE));
         tradingConfig.setRandomTradeOfferChance(tradingConfigJson.getFloat(RANDOM_TRADE_OFFER_CHANCE));
+
         return tradingConfig;
     }
 }
