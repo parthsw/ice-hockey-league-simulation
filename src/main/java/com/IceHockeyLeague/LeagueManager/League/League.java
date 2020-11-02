@@ -29,6 +29,7 @@ public class League implements ILeague {
     private int leagueID;
     private String leagueName;
     private LocalDate leagueDate;
+    private int daysSinceLastStatIncrease;
     private IGamePlayConfig gamePlayConfig;
     private List<IConference> conferences;
     private List<IFreeAgent> freeAgents;
@@ -83,6 +84,26 @@ public class League implements ILeague {
     @Override
     public void setLeagueDate(LocalDate date) {
         leagueDate = date;
+    }
+
+    @Override
+    public int getDaysSinceLastStatIncrease() {
+        return daysSinceLastStatIncrease;
+    }
+
+    @Override
+    public void setDaysSinceLastStatIncrease(int daysSinceLastStatIncrease) {
+        this.daysSinceLastStatIncrease = daysSinceLastStatIncrease;
+    }
+
+    @Override
+    public void incrementDaysSinceLastStatIncrease() {
+        this.daysSinceLastStatIncrease = this.daysSinceLastStatIncrease + 1;
+    }
+
+    @Override
+    public void resetDaysSinceLastStatIncrease() {
+        this.daysSinceLastStatIncrease = 0;
     }
 
     @Override

@@ -46,9 +46,4 @@ public class AdvanceToNextSeasonState extends AbstractState {
 
         return AbstractStateMachineFactory.getFactory().getPersistState();
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

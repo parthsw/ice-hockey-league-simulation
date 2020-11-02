@@ -11,9 +11,4 @@ public class GeneratePlayoffScheduleState extends AbstractState {
         league.getScheduleSystem().generatePlayoffSchedule(league, league.getStandingSystem());
         return AbstractStateMachineFactory.getFactory().getTrainingState();
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

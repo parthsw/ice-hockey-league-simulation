@@ -174,6 +174,18 @@ public class Team implements ITeam {
     }
 
     @Override
+    public void incrementLossPointValue() {
+        this.losspoint = this.losspoint + 1;
+    }
+
+    @Override
+    public void decrementLossPointValue() {
+        if (this.losspoint > 0) {
+            this.losspoint = this.losspoint - 1;
+        }
+    }
+
+    @Override
     public boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues) {
         return teamDB.checkIfTeamNameExists(teamName, leagues);
     }

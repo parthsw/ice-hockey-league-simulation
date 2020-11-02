@@ -14,5 +14,4 @@ public abstract class AbstractState {
     }
 
     public abstract AbstractState onRun();
-    public abstract void welcomeMessage();
 }

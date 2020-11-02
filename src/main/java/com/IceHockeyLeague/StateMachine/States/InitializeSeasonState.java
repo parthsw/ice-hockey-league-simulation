@@ -25,6 +25,8 @@ public class InitializeSeasonState extends AbstractState {
     public AbstractState onRun() {
         ILeague league = this.getLeague();
 
+        league.resetDaysSinceLastStatIncrease();
+
         LocalDate currentDate = league.getLeagueDate();
         int year;
         if (currentDate == null) {
@@ -56,10 +58,5 @@ public class InitializeSeasonState extends AbstractState {
         league.getStandingSystem().initializeStandings(league);
 
         return AbstractStateMachineFactory.getFactory().getAdvanceTimeState();
-    }
-
-    @Override
-    public void welcomeMessage() {
-
     }
 }

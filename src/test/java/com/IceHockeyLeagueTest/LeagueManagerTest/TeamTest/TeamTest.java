@@ -108,6 +108,44 @@ public class TeamTest {
     }
 
     @Test
+    public void getLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(3);
+        Assert.assertEquals(3, team.getLossPointValue());
+    }
+
+    @Test
+    public void setLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        Assert.assertEquals(5, team.getLossPointValue());
+    }
+
+    @Test
+    public void incrementLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        team.incrementLossPointValue();
+        Assert.assertEquals(6, team.getLossPointValue());
+    }
+
+    @Test
+    public void decrementLossPointValueWhenLossPointIsZeroTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(0);
+        team.decrementLossPointValue();
+        Assert.assertEquals(0, team.getLossPointValue());
+    }
+
+    @Test
+    public void decrementLossPointValueWhenLossPointIsGreaterThanZeroTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        team.decrementLossPointValue();
+        Assert.assertEquals(4, team.getLossPointValue());
+    }
+
+    @Test
     public void getPlayerByIdTest() {
         ITeam team = leagueManagerFactory.getTeam();
         Assert.assertNull(team.getPlayerById(1));
@@ -221,12 +259,11 @@ public class TeamTest {
     @Test
     public void checkTeamPlayersTest() {
         ITeam team = leagueManagerFactory.getTeam();
-        String[] positions = new String[]{"Forward", "Defence"};
+        String[] positions = new String[]{"forward", "defence"};
         List<ITeamPlayer> players = new ArrayList<>();
         Random random = new Random();
         int skater = 0;
         int goalie = 0;
-        String keeper = "Goalie";
         for (int i = 0; i < 18; i++) {
             String temp = positions[random.nextInt(positions.length)];
             ITeamPlayer player = new TeamPlayer();
@@ -237,7 +274,7 @@ public class TeamTest {
             players.add(player);
         }
         for (int i = 0; i < 2; i++) {
-            String temp = "Goalie";
+            String temp = "goalie";
             ITeamPlayer player = new TeamPlayer();
             PlayerStats stats = new PlayerStats();
             stats.setPosition(temp);
