@@ -58,8 +58,12 @@ public class StandingSystem implements IStandingSystem{
     }
 
     public List<IStanding> getStandingsInDivision(IDivision division) {
-        List<IStanding> myStandings = new ArrayList<>(standings);
-        myStandings.removeIf(st -> st.getDivision() != division);
+        List<IStanding> myStandings = new ArrayList<>();
+        for (IStanding standing: standings){
+            if (standing.getDivision() == division){
+                myStandings.add(standing);
+            }
+        }
         myStandings.sort(Standing.standingComparator);
         return myStandings;
     }

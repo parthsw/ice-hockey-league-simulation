@@ -25,7 +25,10 @@ public interface IScheduleSystem {
     LocalDate getPlayoffEndDate();
     void setPlayoffEndDate(LocalDate playoffEndDate);
 
-    void generateRegularSchedule(ILeague league);
+    LocalDate getTradeDeadline();
+    void setTradeDeadline(LocalDate tradeDeadline);
+
+    void generateRegularSeasonSchedule(ILeague league);
     void generatePlayoffSchedule(ILeague league, IStandingSystem standingSystem);
     boolean anyUnplayedGamesOnThisDate(LocalDate date);
     ISchedule getScheduledMatchOnThisDate(LocalDate date);
