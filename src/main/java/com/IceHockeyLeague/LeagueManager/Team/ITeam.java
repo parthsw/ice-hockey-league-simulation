@@ -48,11 +48,12 @@ public interface ITeam {
     boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues);
 
     int getLossPointValue();
+    void setLossPointValue(int value);
+    void incrementLossPointValue();
+    void decrementLossPointValue();
 
     boolean isNullOrEmpty(String teamName);
     boolean isTeamNameExist(List<ITeam> teams,String teamName);
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrengthCalculator);
-
-    void setLossPointValue(int value);
 }

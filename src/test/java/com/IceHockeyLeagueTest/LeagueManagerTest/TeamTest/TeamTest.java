@@ -108,6 +108,44 @@ public class TeamTest {
     }
 
     @Test
+    public void getLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(3);
+        Assert.assertEquals(3, team.getLossPointValue());
+    }
+
+    @Test
+    public void setLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        Assert.assertEquals(5, team.getLossPointValue());
+    }
+
+    @Test
+    public void incrementLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        team.incrementLossPointValue();
+        Assert.assertEquals(6, team.getLossPointValue());
+    }
+
+    @Test
+    public void decrementLossPointValueWhenLossPointIsZeroTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(0);
+        team.decrementLossPointValue();
+        Assert.assertEquals(0, team.getLossPointValue());
+    }
+
+    @Test
+    public void decrementLossPointValueWhenLossPointIsGreaterThanZeroTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        team.decrementLossPointValue();
+        Assert.assertEquals(4, team.getLossPointValue());
+    }
+
+    @Test
     public void getPlayerByIdTest() {
         ITeam team = leagueManagerFactory.getTeam();
         Assert.assertNull(team.getPlayerById(1));
