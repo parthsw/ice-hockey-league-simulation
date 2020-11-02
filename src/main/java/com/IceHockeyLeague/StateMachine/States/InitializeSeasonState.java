@@ -57,9 +57,4 @@ public class InitializeSeasonState extends AbstractState {
 
         return AbstractStateMachineFactory.getFactory().getAdvanceTimeState();
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

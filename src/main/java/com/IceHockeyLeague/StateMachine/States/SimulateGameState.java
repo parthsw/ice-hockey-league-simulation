@@ -76,9 +76,4 @@ public class SimulateGameState extends AbstractState {
 
         return AbstractStateMachineFactory.getFactory().getInjuryCheckState(teamA, teamB);
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

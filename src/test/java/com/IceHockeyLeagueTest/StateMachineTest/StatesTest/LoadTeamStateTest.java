@@ -9,6 +9,7 @@ import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
+import com.IceHockeyLeague.StateMachine.States.LoadTeamState;
 import com.IceHockeyLeague.StateMachine.States.PlayerChoiceState;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.*;
@@ -50,7 +51,7 @@ public class LoadTeamStateTest {
 
     @Test
     public void welcomeMessageTest() {
-        AbstractState loadTeamState = AbstractStateMachineFactory.getFactory().getLoadTeamState();
+        LoadTeamState loadTeamState = (LoadTeamState) AbstractStateMachineFactory.getFactory().getLoadTeamState();
         loadTeamState.welcomeMessage();
 
         Assert.assertTrue(ioMockInstance.getOutput().contains("*****Load Team State*****"));

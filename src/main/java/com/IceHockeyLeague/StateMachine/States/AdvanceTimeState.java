@@ -45,9 +45,4 @@ public class AdvanceTimeState extends AbstractState {
 
         return nextState;
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

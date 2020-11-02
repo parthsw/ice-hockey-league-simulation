@@ -5,9 +5,4 @@ public class TrainingState extends AbstractState {
     public AbstractState onRun() {
         return null;
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

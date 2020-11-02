@@ -61,7 +61,6 @@ public class CreateTeamState extends AbstractState {
         this.appOutput = appOutput;
     }
 
-    @Override
     public void welcomeMessage() {
         appOutput.display(TEAM_CREATION);
     }

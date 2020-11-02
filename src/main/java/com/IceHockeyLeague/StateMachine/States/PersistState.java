@@ -20,9 +20,4 @@ public class PersistState extends AbstractState {
 
         return nextState;
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }
