@@ -54,7 +54,6 @@ public class ImportState extends AbstractState {
         return processLeagueJsonFile(filePath);
     }
 
-    @Override
     public void welcomeMessage() {
         appOutput.display(IMPORT_STATE);
     }

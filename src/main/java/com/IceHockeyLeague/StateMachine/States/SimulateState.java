@@ -24,9 +24,4 @@ public class SimulateState extends AbstractState {
         }
         return null;
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

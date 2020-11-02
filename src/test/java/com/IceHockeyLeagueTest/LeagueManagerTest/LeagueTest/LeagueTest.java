@@ -89,6 +89,36 @@ public class LeagueTest {
     }
 
     @Test
+    public void getDaysSinceLastStatIncreaseTest() {
+        ILeague league = leagueManagerFactory.getLeague();
+        league.setDaysSinceLastStatIncrease(10);
+        Assert.assertEquals(10, league.getDaysSinceLastStatIncrease());
+    }
+
+    @Test
+    public void setDaysSinceLastStatIncreaseTest() {
+        ILeague league = leagueManagerFactory.getLeague();
+        league.setDaysSinceLastStatIncrease(99);
+        Assert.assertEquals(99, league.getDaysSinceLastStatIncrease());
+    }
+
+    @Test
+    public void incrementDaysSinceLastStatIncreaseTest() {
+        ILeague league = leagueManagerFactory.getLeague();
+        league.setDaysSinceLastStatIncrease(99);
+        league.incrementDaysSinceLastStatIncrease();
+        Assert.assertEquals(100, league.getDaysSinceLastStatIncrease());
+    }
+
+    @Test
+    public void resetDaysSinceLastStatIncreaseTest() {
+        ILeague league = leagueManagerFactory.getLeague();
+        league.setDaysSinceLastStatIncrease(99);
+        league.resetDaysSinceLastStatIncrease();
+        Assert.assertEquals(0, league.getDaysSinceLastStatIncrease());
+    }
+
+    @Test
     public void setGamePlayConfigTest() {
         IGamePlayConfigPersistence gamePlayConfigDB = leagueManagerFactory.getGamePlayConfigDB();
         ILeague league = leagueManagerFactory.getLeague();

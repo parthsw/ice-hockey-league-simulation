@@ -28,7 +28,7 @@ build:
     paths:
       - build/libs/*.jar
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
   only:
     - develop
 
@@ -55,7 +55,7 @@ test:
       junit:
         - build/surefire-reports/TEST-*.xml
   tags:
-    - ugrad
+    - dalfcs_gitlab_docker_ci
   only:
     - develop
 

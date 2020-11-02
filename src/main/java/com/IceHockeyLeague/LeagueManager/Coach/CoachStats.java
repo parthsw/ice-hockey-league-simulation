@@ -52,7 +52,7 @@ public class CoachStats implements ICoachStats {
 
     @Override
     public void setChecking(float value) {
-        if(isStatValid(value)) {
+        if (isStatValid(value)) {
             checking = value;
         }
     }

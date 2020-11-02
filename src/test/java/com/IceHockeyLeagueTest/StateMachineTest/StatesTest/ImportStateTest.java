@@ -10,6 +10,7 @@ import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.CreateTeamState;
+import com.IceHockeyLeague.StateMachine.States.ImportState;
 import com.IceHockeyLeague.StateMachine.States.LoadTeamState;
 import com.IceHockeyLeagueTest.LeagueFileHandlerTest.LeagueJsonMock;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
@@ -56,7 +57,7 @@ public class ImportStateTest {
 
     @Test
     public void welcomeMessageTest() {
-        AbstractState importState = AbstractStateMachineFactory.getFactory().getImportState();
+        ImportState importState = (ImportState) AbstractStateMachineFactory.getFactory().getImportState();
         importState.welcomeMessage();
 
         Assert.assertTrue(ioMockInstance.getOutput().contains("*****Import State*****"));

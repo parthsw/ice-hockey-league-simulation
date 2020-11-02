@@ -13,15 +13,13 @@ public class GetTopNBestPlayersForGivenPosition {
     private List<ITeamPlayer> relaventPlayers = new ArrayList<>();
     private List<ITeamPlayer> bestPlayers = new ArrayList<>();
 
-    public GetTopNBestPlayersForGivenPosition(ITeam teams, int tradeNumber, String position) {
-        setDefaults(teams, tradeNumber, position);
-    }
-
-    private void setDefaults(ITeam team, int tradeNumber, String position) {
+    public GetTopNBestPlayersForGivenPosition(ITeam team, int tradeNumber, String position) {
         this.team = team;
         this.tradeNumber = tradeNumber;
         this.position = position;
     }
+
+
 
     public List<ITeamPlayer> getPlayers() {
         for (ITeamPlayer player : this.team.getPlayers()) {

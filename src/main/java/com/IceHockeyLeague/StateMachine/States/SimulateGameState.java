@@ -73,12 +73,9 @@ public class SimulateGameState extends AbstractState {
         league.getScheduleSystem().updateScheduleAfterGamePlayed(schedule);
         league.getStandingSystem().updateStatsForWinningTeam(winningTeamConference, winningTeamDivision, winningTeam);
         league.getStandingSystem().updateStatsForLosingTeam(losingTeamConference, losingTeamDivision, losingTeam);
+        winningTeam.decrementLossPointValue();
+        losingTeam.incrementLossPointValue();
 
         return AbstractStateMachineFactory.getFactory().getInjuryCheckState(teamA, teamB);
-    }
-
-    @Override
-    public void welcomeMessage() {
-
     }
 }

@@ -28,6 +28,11 @@ public interface ILeague {
     void setLeagueDate(LocalDate date);
     void incrementLeagueDate();
 
+    int getDaysSinceLastStatIncrease();
+    void setDaysSinceLastStatIncrease(int daysSinceLastStatIncrease);
+    void incrementDaysSinceLastStatIncrease();
+    void resetDaysSinceLastStatIncrease();
+
     IGamePlayConfig getGamePlayConfig();
     void setGamePlayConfig(IGamePlayConfig gamePlayConfig);
 

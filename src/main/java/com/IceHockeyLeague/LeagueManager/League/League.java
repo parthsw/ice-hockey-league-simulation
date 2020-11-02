@@ -29,6 +29,7 @@ public class League implements ILeague {
     private int leagueID;
     private String leagueName;
     private LocalDate leagueDate;
+    private int daysSinceLastStatIncrease;
     private IGamePlayConfig gamePlayConfig;
     private List<IConference> conferences;
     private List<IFreeAgent> freeAgents;
@@ -83,6 +84,26 @@ public class League implements ILeague {
     @Override
     public void setLeagueDate(LocalDate date) {
         leagueDate = date;
+    }
+
+    @Override
+    public int getDaysSinceLastStatIncrease() {
+        return daysSinceLastStatIncrease;
+    }
+
+    @Override
+    public void setDaysSinceLastStatIncrease(int daysSinceLastStatIncrease) {
+        this.daysSinceLastStatIncrease = daysSinceLastStatIncrease;
+    }
+
+    @Override
+    public void incrementDaysSinceLastStatIncrease() {
+        this.daysSinceLastStatIncrease = this.daysSinceLastStatIncrease + 1;
+    }
+
+    @Override
+    public void resetDaysSinceLastStatIncrease() {
+        this.daysSinceLastStatIncrease = 0;
     }
 
     @Override
@@ -255,17 +276,17 @@ public class League implements ILeague {
             }
         }
 
-        for (IFreeAgent freeAgent: freeAgents) {
+        for(IFreeAgent freeAgent: freeAgents) {
             freeAgent.setLeagueID(leagueID);
             freeAgent.saveFreeAgent(LeagueManagerFactory.getFactory().getFreeAgentDB());
         }
 
-        for (IManager manager: managers) {
+        for(IManager manager: managers) {
             manager.setLeagueID(leagueID);
             manager.saveLeagueManager(LeagueManagerFactory.getFactory().getManagerDB());
         }
 
-        for (ICoach coach: coaches) {
+        for(ICoach coach: coaches) {
             coach.setLeagueID(leagueID);
             coach.saveLeagueCoach(LeagueManagerFactory.getFactory().getCoachDB());
         }
@@ -281,25 +302,25 @@ public class League implements ILeague {
         List<IConference> conferences = new ArrayList<>();
         this.loadConferences(LeagueManagerFactory.getFactory().getConferenceDB(), conferences);
 
-        for (IConference conference: conferences) {
+        for(IConference conference: conferences) {
             this.addConference(conference);
 
             List<IDivision> divisions = new ArrayList<>();
             conference.loadDivisions(LeagueManagerFactory.getFactory().getDivisionDB(), divisions);
 
-            for (IDivision division: divisions) {
+            for(IDivision division: divisions) {
                 conference.addDivision(division);
 
                 List<ITeam> teams = new ArrayList<>();
                 division.loadTeams(LeagueManagerFactory.getFactory().getTeamDB(), teams);
 
-                for (ITeam team: teams) {
+                for(ITeam team: teams) {
                     division.addTeam(team);
 
                     List<ITeamPlayer> teamPlayers = new ArrayList<>();
                     team.loadPlayers(LeagueManagerFactory.getFactory().getTeamPlayerDB(), teamPlayers);
 
-                    for (ITeamPlayer teamPlayer: teamPlayers) {
+                    for(ITeamPlayer teamPlayer: teamPlayers) {
                         team.addPlayer(teamPlayer);
                     }
 

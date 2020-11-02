@@ -90,9 +90,9 @@ public class SimulateTrade {
         }
         this.appOutput.display("To accept this offer type 'YES'");
         this.appOutput.display("To reject this offer type 'NO'");
-//        String userChoice = this.appInput.getInput();
+        String userChoice = this.appInput.getInput();
 
-        String userChoice = "YES";
+//        String userChoice = "YES";
         System.out.println("YES");
         if (userChoice.equals("YES")) {
             this.tradeResolution(generateTrade, 1);

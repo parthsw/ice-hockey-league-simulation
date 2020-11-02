@@ -47,7 +47,7 @@ public class CreateTeamState extends AbstractState {
             persistLeagueToDatabase(inMemoryLeague);
             return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
         } catch (Exception exception) {
-            appOutput.displayError("");
+            appOutput.displayError("Throwing exception");
             return null;
         }
     }
@@ -61,7 +61,6 @@ public class CreateTeamState extends AbstractState {
         this.appOutput = appOutput;
     }
 
-    @Override
     public void welcomeMessage() {
         appOutput.display(TEAM_CREATION);
     }
@@ -141,7 +140,7 @@ public class CreateTeamState extends AbstractState {
             teamName = appInput.getInput();
            if (team.isNullOrEmpty(teamName)) {
                 appOutput.displayError("The team name cannot be empty");
-            } else if (team.isTeamNameExist(matchedDivision.getTeams())) {
+            } else if (team.isTeamNameExist(matchedDivision.getTeams(),teamName)) {
                 appOutput.displayError("The team name already exists");
             } else {
                 team.setTeamName(teamName.trim());
@@ -206,7 +205,7 @@ public class CreateTeamState extends AbstractState {
         List<ITeamPlayer> players = new ArrayList<>();
         appOutput.display("Please select 18 skaters and 2 goalies from the list of free agents");
         freeAgents = inMemoryLeague.getFreeAgents();
-        ITeamPlayer player = new TeamPlayer();
+        ITeam team = new Team();
         for(IFreeAgent f : freeAgents){
             appOutput.display("******************************************");
             appOutput.display(f.getPlayerName());
@@ -219,13 +218,14 @@ public class CreateTeamState extends AbstractState {
         }
         while(true) {
             appOutput.display("select the players for your team from the list of free agents shown above");
-            for (int count = 0; count < 2; count++) {
+            for (int count = 0; count < 20; count++) {
                 String playerName = appInput.getInput();
                 player.setPlayerName(playerName);
                 players.add(player);
                 player = null;
             }
-            // flagCheck = player.checkTeamPlayers(players);
+            team.setPlayers(players);
+            flagCheck = team.checkTeamPlayers();
             if(flagCheck){
                 break;
             }

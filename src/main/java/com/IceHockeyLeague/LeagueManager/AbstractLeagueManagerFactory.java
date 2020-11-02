@@ -30,7 +30,6 @@ public abstract class AbstractLeagueManagerFactory {
     }
 
     public abstract ILeagueCreator getLeagueCreator();
-
     public abstract ILeague getLeague();
     public abstract ILeaguePersistence getLeagueDB();
 
@@ -47,16 +46,13 @@ public abstract class AbstractLeagueManagerFactory {
     public abstract IPlayer getPlayer();
     public abstract IPlayerStats getPlayerStats();
     public abstract IPlayerCareerProgression getPlayerCareerProgression();
-
     public abstract ITeamPlayer getTeamPlayer();
     public abstract ITeamPlayerPersistence getTeamPlayerDB();
-
     public abstract IFreeAgent getFreeAgent();
     public abstract IFreeAgentPersistence getFreeAgentDB();
 
     public abstract ICoach getCoach();
     public abstract ICoachPersistence getCoachDB();
-
     public abstract ICoachStats getCoachStats();
 
     public abstract IManager getManager();

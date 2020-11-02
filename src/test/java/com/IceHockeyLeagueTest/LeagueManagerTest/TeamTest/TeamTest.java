@@ -6,8 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
@@ -18,6 +17,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TeamTest {
     private static AbstractLeagueManagerFactory leagueManagerFactory;
@@ -105,6 +105,44 @@ public class TeamTest {
         ITeam team = leagueManagerFactory.getTeam();
         team.setDivisionID(7);
         Assert.assertEquals(7, team.getDivisionID());
+    }
+
+    @Test
+    public void getLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(3);
+        Assert.assertEquals(3, team.getLossPointValue());
+    }
+
+    @Test
+    public void setLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        Assert.assertEquals(5, team.getLossPointValue());
+    }
+
+    @Test
+    public void incrementLossPointValueTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        team.incrementLossPointValue();
+        Assert.assertEquals(6, team.getLossPointValue());
+    }
+
+    @Test
+    public void decrementLossPointValueWhenLossPointIsZeroTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(0);
+        team.decrementLossPointValue();
+        Assert.assertEquals(0, team.getLossPointValue());
+    }
+
+    @Test
+    public void decrementLossPointValueWhenLossPointIsGreaterThanZeroTest() {
+        ITeam team = leagueManagerFactory.getTeam();
+        team.setLossPointValue(5);
+        team.decrementLossPointValue();
+        Assert.assertEquals(4, team.getLossPointValue());
     }
 
     @Test
@@ -221,7 +259,31 @@ public class TeamTest {
     @Test
     public void checkTeamPlayersTest() {
         ITeam team = leagueManagerFactory.getTeam();
-        Assert.assertFalse(team.checkTeamPlayers());
+        String[] positions = new String[]{"forward", "defence"};
+        List<ITeamPlayer> players = new ArrayList<>();
+        Random random = new Random();
+        int skater = 0;
+        int goalie = 0;
+        for (int i = 0; i < 18; i++) {
+            String temp = positions[random.nextInt(positions.length)];
+            ITeamPlayer player = new TeamPlayer();
+            PlayerStats stats = new PlayerStats();
+            stats.setPosition(temp);
+            stats.setStrength(random.nextInt(100));
+            player.setPlayerStats(stats);
+            players.add(player);
+        }
+        for (int i = 0; i < 2; i++) {
+            String temp = "goalie";
+            ITeamPlayer player = new TeamPlayer();
+            PlayerStats stats = new PlayerStats();
+            stats.setPosition(temp);
+            stats.setStrength(random.nextInt(100));
+            player.setPlayerStats(stats);
+            players.add(player);
+        }
+        team.setPlayers(players);
+        Assert.assertTrue(team.checkTeamPlayers());
     }
 
     @Test
@@ -267,13 +329,9 @@ public class TeamTest {
         ITeamPersistence teamDB = leagueManagerFactory.getTeamDB();
         List<ITeam> teams = new ArrayList<>();
         teamDB.loadTeams(1, teams);
-
         ITeam team = leagueManagerFactory.getTeam();
-        team.setTeamName("Boston");
-        Assert.assertTrue(team.isTeamNameExist(teams));
-
-        team.setTeamName("Halifax");
-        Assert.assertFalse(team.isTeamNameExist(teams));
+        Assert.assertTrue(team.isTeamNameExist(teams,"Boston"));
+        Assert.assertFalse(team.isTeamNameExist(teams,"Halifax"));
     }
 
     @Test

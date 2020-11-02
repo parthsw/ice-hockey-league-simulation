@@ -45,9 +45,4 @@ public class InjuryCheckState extends AbstractState {
 
         return nextState;
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

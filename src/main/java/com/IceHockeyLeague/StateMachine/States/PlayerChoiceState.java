@@ -33,9 +33,4 @@ public class PlayerChoiceState extends AbstractState {
 
         return AbstractStateMachineFactory.getFactory().getSimulateState(noOfSeasons);
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }
