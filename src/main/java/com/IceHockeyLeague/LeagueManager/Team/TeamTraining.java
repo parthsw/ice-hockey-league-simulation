@@ -24,6 +24,7 @@ public class TeamTraining implements ITeamTraining{
             }
             else{
                 teamPlayer.getInjuredStatus();
+
             }
 
             if(randomSkating < coachStats.getSkating()){
