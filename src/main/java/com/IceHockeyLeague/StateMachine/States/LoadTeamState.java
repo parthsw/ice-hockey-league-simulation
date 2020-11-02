@@ -64,7 +64,7 @@ public class LoadTeamState extends AbstractState {
                 else {
                     appOutput.display(LEAGUE_SELECTION_PROMPT);
                     for (ILeague league: leagueList) {
-                        appOutput.display("League ID: " + league.getLeagueID() + " & League Name: " + league.getLeagueName());
+                        appOutput.display("League ID: " + league.getLeagueID() + "& League Name: " + league.getLeagueName());
                     }
                     int leagueId = Integer.parseInt(appInput.getInput());
                     ILeague leagueToLoad = AbstractLeagueManagerFactory.getFactory().getLeague();

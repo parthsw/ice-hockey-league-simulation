@@ -135,8 +135,24 @@ public class Team implements ITeam {
 
     @Override
     public boolean checkTeamPlayers() {
-        return false;
+        int skaterCounter = 0;
+        int goalieCounter = 0;
+        boolean listIsPerfect = false;
+        for(ITeamPlayer p : players){
+            if(p.getPlayerStats().getPosition() == "goalie"){
+                goalieCounter++;
+            }
+            else{
+                skaterCounter++;
+            }
+        }
+        if(skaterCounter == 18 && goalieCounter == 2){
+            listIsPerfect = true;
+        }
+        return listIsPerfect;
     }
+
+
 
     @Override
     public boolean saveTeam(ITeamPersistence teamDB) {
@@ -173,7 +189,7 @@ public class Team implements ITeam {
     }
 
     @Override
-    public boolean isTeamNameExist(List<ITeam> teams) {
+    public boolean isTeamNameExist(List<ITeam> teams,String teamName) {
         boolean isExist = false;
         for (ITeam t : teams) {
             if (t.getTeamName().equalsIgnoreCase(teamName)) {
