@@ -221,12 +221,11 @@ public class TeamTest {
     @Test
     public void checkTeamPlayersTest() {
         ITeam team = leagueManagerFactory.getTeam();
-        String[] positions = new String[]{"Forward", "Defence"};
+        String[] positions = new String[]{"forward", "defence"};
         List<ITeamPlayer> players = new ArrayList<>();
         Random random = new Random();
         int skater = 0;
         int goalie = 0;
-        String keeper = "Goalie";
         for (int i = 0; i < 18; i++) {
             String temp = positions[random.nextInt(positions.length)];
             ITeamPlayer player = new TeamPlayer();
@@ -237,7 +236,7 @@ public class TeamTest {
             players.add(player);
         }
         for (int i = 0; i < 2; i++) {
-            String temp = "Goalie";
+            String temp = "goalie";
             ITeamPlayer player = new TeamPlayer();
             PlayerStats stats = new PlayerStats();
             stats.setPosition(temp);
