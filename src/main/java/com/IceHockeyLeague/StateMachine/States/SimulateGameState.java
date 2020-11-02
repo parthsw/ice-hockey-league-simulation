@@ -4,8 +4,8 @@ import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import com.IceHockeyLeague.LeagueScheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 
@@ -24,10 +24,7 @@ public class SimulateGameState extends AbstractState {
         ISchedule schedule = league.getScheduleSystem().getScheduledMatchOnThisDate(league.getLeagueDate());
         ITeam teamA = schedule.getFirstTeam();
         ITeam teamB = schedule.getSecondTeam();
-        //TODO: Check this part
-//        ITeamStrengthCalculator teamStrengthCalculator = AbstractLeagueManagerFactory.getFactory().getTeamStrengthCalculator()
-//        float teamAStrength = teamA.calculateTeamStrength(teamStrengthCalculator);
-//        float teamBStrength = teamB.calculateTeamStrength(teamStrengthCalculator);
+
         float teamAStrength = teamA.getTeamStrength();
         float teamBStrength = teamB.getTeamStrength();
 
@@ -41,7 +38,9 @@ public class SimulateGameState extends AbstractState {
         }
 
         boolean flipResult = false;
-        float randomUpsetValue = (float) Math.random();
+        IRandomChance randomChance = AbstractLeagueManagerFactory.getFactory().getRandomChance();
+        float randomUpsetValue = randomChance.getRandomFloatNumber(0, 1);
+
         if (randomUpsetValue < league.getGamePlayConfig().getGameResolverConfig().getRandomWinChance()) {
             flipResult = true;
         }

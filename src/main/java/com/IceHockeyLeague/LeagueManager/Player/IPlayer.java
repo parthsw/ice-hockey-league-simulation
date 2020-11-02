@@ -46,4 +46,6 @@ public interface IPlayer {
     void agePlayerByDays(int days);
 
     boolean isValid();
+
+
 }
