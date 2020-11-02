@@ -12,4 +12,8 @@ public abstract  class AbstractDatabaseFactory {
     }
 
     public abstract DBConnection getDBConnection();
+
+    public abstract IStoredProcedure getStoredProcedure();
+
+    public abstract IDateConversion getSQLDateConversion();
 }

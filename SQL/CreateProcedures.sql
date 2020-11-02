@@ -5,6 +5,7 @@ DELIMITER $$
 CREATE PROCEDURE
     insertIntoLeague(
         IN leagueName VARCHAR(45),
+        IN leagueDate DATE,
         OUT leagueID INT
     )
 BEGIN
@@ -12,7 +13,8 @@ BEGIN
         league
     VALUES
         (NULL,
-         leagueName);
+         leagueName,
+         leagueDate);
 
     SET leagueID = last_insert_id();
     SELECT leagueID;
@@ -81,14 +83,19 @@ CREATE PROCEDURE
     insertIntoFreeAgent(
         IN leagueID INT,
         IN playerName VARCHAR(45),
-        IN pos VARCHAR(45),
         IN age INT,
+        IN elapsedDaysFromLastBDay INT,
+        IN isInjured TINYINT(1),
+        IN daysInjured INT,
+        IN injuryDate DATE,
+        IN isRetired TINYINT(1),
+        IN retirementDate DATE,
+        IN pos VARCHAR(45),
         IN skating INT,
         IN shooting INT,
         IN checking INT,
         IN saving INT,
         IN strength FLOAT(1),
-        IN isInjured TINYINT(1),
         OUT freeAgentID INT
     )
 BEGIN
@@ -97,14 +104,19 @@ BEGIN
         (NULL,
          leagueID,
          playerName,
-         pos,
          age,
+         elapsedDaysFromLastBDay,
+         isInjured,
+         daysInjured,
+         injuryDate,
+         isRetired,
+         retirementDate,
+         pos,
          skating,
          shooting,
          checking,
          saving,
-         strength,
-         isInjured);
+         strength);
 
     SET freeAgentID = last_insert_id();
     SELECT freeAgentID;
@@ -114,33 +126,42 @@ CREATE PROCEDURE
     insertIntoPlayer(
         IN teamID INT,
         IN playerName VARCHAR(45),
-        IN pos VARCHAR(45),
+        IN captain TINYINT(1),
         IN age INT,
+        IN elapsedDaysFromLastBDay INT,
+        IN isInjured TINYINT(1),
+        IN daysInjured INT,
+        IN injuryDate DATE,
+        IN isRetired TINYINT(1),
+        IN retirementDate DATE,
+        IN pos VARCHAR(45),
         IN skating INT,
         IN shooting INT,
         IN checking INT,
         IN saving INT,
-        IN captain TINYINT(1),
         IN strength FLOAT(1),
-        IN isInjured TINYINT(1),
         OUT playerID INT
     )
 BEGIN
-    INSERT INTO
-        player
+    INSERT INTO player
     VALUES
         (NULL,
          teamID,
          playerName,
-         pos,
+         captain,
          age,
+         elapsedDaysFromLastBDay,
+         isInjured,
+         daysInjured,
+         injuryDate,
+         isRetired,
+         retirementDate,
+         pos,
          skating,
          shooting,
          checking,
          saving,
-         captain,
-         strength,
-         isInjured);
+         strength);
 
     SET playerID = last_insert_id();
     SELECT playerID;
@@ -248,6 +269,17 @@ BEGIN
     WHERE LOWER(league.name) = LOWER(leagueName);
 END $$
 
+CREATE PROCEDURE
+    checkIfTeamNameExists(
+        IN teamName VARCHAR(200)
+    )
+BEGIN
+    SELECT * FROM league WHERE leagueID IN
+        (SELECT leagueID FROM conference WHERE conferenceID IN
+            (SELECT conferenceID FROM division WHERE divisionID IN
+                (SELECT divisionID FROM team WHERE LOWER(team.teamName) = LOWER(teamName) AND isUserCreated = 1)))
+                    ORDER BY leagueID;
+END $$
 
 CREATE PROCEDURE
     loadLeague(
@@ -296,7 +328,7 @@ CREATE PROCEDURE
 BEGIN
     SELECT *
     FROM player
-    WHERE teamID = ID;
+    WHERE teamID = ID AND isRetired = 0;
 END $$
 
 CREATE PROCEDURE
@@ -326,7 +358,7 @@ CREATE PROCEDURE
 BEGIN
     SELECT *
     FROM freeagent
-    WHERE leagueID = ID;
+    WHERE leagueID = ID AND isRetired = 0;
 END $$
 
 CREATE PROCEDURE
@@ -337,7 +369,7 @@ BEGIN
     SELECT *
     FROM coach
     WHERE leagueID = ID
-      and teamID = NULL;
+      AND teamID IS NULL;
 END $$
 
 CREATE PROCEDURE
@@ -348,7 +380,7 @@ BEGIN
     SELECT *
     FROM manager
     WHERE leagueID = ID
-      and teamID = NULL;
+      AND teamID IS NULL;
 END $$
 
 CREATE PROCEDURE

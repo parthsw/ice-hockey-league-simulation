@@ -10,7 +10,11 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueScheduler.IScheduleSystem;
+import com.IceHockeyLeague.LeagueStandings.IStandingSystem;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ILeague {
@@ -19,6 +23,10 @@ public interface ILeague {
 
     String getLeagueName();
     void setLeagueName(String name);
+
+    LocalDate getLeagueDate();
+    void setLeagueDate(LocalDate date);
+    void incrementLeagueDate();
 
     IGamePlayConfig getGamePlayConfig();
     void setGamePlayConfig(IGamePlayConfig gamePlayConfig);
@@ -30,6 +38,7 @@ public interface ILeague {
 
     IPlayer getFreeAgentById(int id);
     void addFreeAgent(IFreeAgent freeAgent);
+    boolean removeFreeAgent(IFreeAgent freeAgent);
     List<IFreeAgent> getFreeAgents();
     void setFreeAgents(List<IFreeAgent> freeAgents);
 
@@ -42,6 +51,14 @@ public interface ILeague {
     void addManager(IManager manager);
     List<IManager> getManagers();
     void setManagers(List<IManager> managers);
+
+    void addRetiredTeamPlayer(ITeamPlayer teamPlayer);
+    List<ITeamPlayer> getRetiredTeamPlayers();
+    void addRetiredFreeAgent(IFreeAgent freeAgent);
+    List<IFreeAgent> getRetiredFreeAgents();
+
+    IScheduleSystem getScheduleSystem();
+    IStandingSystem getStandingSystem();
 
     boolean saveCompleteLeague();
     boolean loadCompleteLeague(int leagueId);

@@ -1,6 +1,5 @@
 package com.IceHockeyLeague.LeagueManager.Division;
 
-import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 
@@ -18,7 +17,9 @@ public class Division implements IDivision {
     }
 
     private void setDefaults() {
-        teams = new ArrayList<ITeam>();
+        divisionID = -1;
+        conferenceID = -1;
+        teams = new ArrayList<>();
     }
 
     @Override

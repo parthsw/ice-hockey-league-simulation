@@ -12,12 +12,14 @@ public class Conference implements IConference {
     private int leagueID;
     private List<IDivision> divisions;
 
-    public Conference(){
+    public Conference() {
         setDefaults();
     }
 
     private void setDefaults() {
-        this.divisions = new ArrayList<IDivision>();
+        conferenceID = -1;
+        leagueID = -1;
+        divisions = new ArrayList<>();
     }
 
     @Override
