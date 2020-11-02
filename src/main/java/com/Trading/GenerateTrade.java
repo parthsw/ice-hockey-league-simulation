@@ -8,9 +8,10 @@ import java.util.List;
 public class GenerateTrade {
     private List<ITeam> resultTeams;
     private boolean tradeResult;
+    private Trade trade;
 
-    public void generateTrade(ITeam team1, int maxPlayersPerTrade, ITeam team2, float randomAcceptChance) {
-        Trade trade = new Trade(maxPlayersPerTrade);
+    public void generateTrade(ITeam team1, int maxPlayersPerTrade, ITeam team2) {
+        this.trade = new Trade(maxPlayersPerTrade);
 
         GetWorsePlayersToTradeFromTeam getSendTeamPlayers = new GetWorsePlayersToTradeFromTeam();
         List<ITeamPlayer> toTradePlayers = getSendTeamPlayers.getPlayersToTrade(maxPlayersPerTrade, team1);
@@ -23,6 +24,13 @@ public class GenerateTrade {
         trade.setReceivingTeam(team2);
         trade.setReceivingPlayers(team2Players);
 
+    }
+
+    public Trade getGeneratedTrade() {
+        return this.trade;
+    }
+
+    public void decideTrade(float randomAcceptChance) {
         TradeDecision decision = new TradeDecision(trade.getSendingPlayers(), trade.getReceivingPlayers(), randomAcceptChance);
         boolean result = decision.tradeDecision();
         this.tradeResult = result;
