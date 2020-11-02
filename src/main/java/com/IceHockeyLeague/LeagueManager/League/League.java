@@ -34,7 +34,12 @@ public class League implements ILeague {
 
     private void setDefaults() {
         leagueID = -1;
+        this.conferences = new ArrayList<>();
+        this.freeAgents = new ArrayList<>();
+        this.coaches = new ArrayList<>();
+        this.managers = new ArrayList<>();
     }
+
 
     @Override
     public int getLeagueID() {

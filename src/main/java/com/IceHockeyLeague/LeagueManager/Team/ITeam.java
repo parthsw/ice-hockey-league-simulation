@@ -49,4 +49,6 @@ public interface ITeam {
     boolean isTeamNameExist(List<ITeam> teams);
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrengthCalculator);
+
+    void setLossPointValue(int value);
 }

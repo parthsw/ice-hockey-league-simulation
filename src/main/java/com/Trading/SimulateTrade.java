@@ -45,11 +45,11 @@ public class SimulateTrade {
                     for (ITeam modifiedTeam : resultTeams) {
                         TeamValidator validate = new TeamValidator(modifiedTeam, this.league.getLeagueID(), this.league.getFreeAgents());
                         ITeam validatedTeam = validate.validateTeam();
-                        validatedTeams.add(validatedTeam);
+//                        validatedTeams.add(validatedTeam);
                     }
-                    this.allTeams.remove(team);
-                    this.allTeams.remove(selectedTeam);
-                    this.allTeams.addAll(validatedTeams);
+//                    this.allTeams.remove(team);
+//                    this.allTeams.remove(selectedTeam);
+//                    this.allTeams.addAll(validatedTeams);
                 }
             }
         }
