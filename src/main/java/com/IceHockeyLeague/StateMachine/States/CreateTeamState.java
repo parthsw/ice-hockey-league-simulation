@@ -219,12 +219,13 @@ public class CreateTeamState extends AbstractState {
         }
         while(true) {
             appOutput.display("select the players for your team from the list of free agents shown above");
-            for (int count = 0; count < 2; count++) {
+            for (int count = 0; count < 20; count++) {
                 String playerName = appInput.getInput();
                 player.setPlayerName(playerName);
                 players.add(player);
                 player = null;
             }
+            team.setPlayers(players);
             flagCheck = team.checkTeamPlayers();
             if(flagCheck){
                 break;

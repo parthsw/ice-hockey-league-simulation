@@ -1,6 +1,9 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
@@ -11,7 +14,7 @@ import java.util.Random;
 public class TeamTraining implements ITeamTraining{
 
     @Override
-    public void trainTeam(List<ITeamPlayer> teamPlayers, ICoachStats coachStats) {
+    public void trainTeam(ILeague league, List<ITeamPlayer> teamPlayers, ICoachStats coachStats) {
         for (ITeamPlayer teamPlayer: teamPlayers) {
             double randomChecking = generateRandomNumber();
             double randomSkating = generateRandomNumber();
@@ -23,8 +26,8 @@ public class TeamTraining implements ITeamTraining{
                 stat.setChecking(stat.getChecking()+1);
             }
             else{
-                teamPlayer.getInjuredStatus();
-
+                IPlayerCareerProgression playerCareerProgression = AbstractLeagueManagerFactory.getFactory().getPlayerCareerProgression();
+                teamPlayer.isInjured(playerCareerProgression, league.getGamePlayConfig().getInjuryConfig(), league.getLeagueDate());
             }
 
             if(randomSkating < coachStats.getSkating()){
@@ -32,7 +35,8 @@ public class TeamTraining implements ITeamTraining{
                 stat.setSkating(stat.getSkating()+1);
             }
             else{
-                teamPlayer.getInjuredStatus();
+                IPlayerCareerProgression playerCareerProgression = AbstractLeagueManagerFactory.getFactory().getPlayerCareerProgression();
+                teamPlayer.isInjured(playerCareerProgression, league.getGamePlayConfig().getInjuryConfig(), league.getLeagueDate());
             }
 
             if(randomShooting < coachStats.getShooting()){
@@ -40,7 +44,8 @@ public class TeamTraining implements ITeamTraining{
                 stat.setShooting(stat.getShooting()+1);
             }
             else{
-                teamPlayer.getInjuredStatus();
+                IPlayerCareerProgression playerCareerProgression = AbstractLeagueManagerFactory.getFactory().getPlayerCareerProgression();
+                teamPlayer.isInjured(playerCareerProgression, league.getGamePlayConfig().getInjuryConfig(), league.getLeagueDate());
             }
 
             if(randomSaving < coachStats.getSaving()){
@@ -48,7 +53,8 @@ public class TeamTraining implements ITeamTraining{
                 stat.setSaving(stat.getSaving()+1);
             }
             else{
-                teamPlayer.getInjuredStatus();
+                IPlayerCareerProgression playerCareerProgression = AbstractLeagueManagerFactory.getFactory().getPlayerCareerProgression();
+                teamPlayer.isInjured(playerCareerProgression, league.getGamePlayConfig().getInjuryConfig(), league.getLeagueDate());
             }
         }
     }

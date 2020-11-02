@@ -6,8 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
@@ -18,6 +17,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TeamTest {
     private static AbstractLeagueManagerFactory leagueManagerFactory;
@@ -221,7 +221,32 @@ public class TeamTest {
     @Test
     public void checkTeamPlayersTest() {
         ITeam team = leagueManagerFactory.getTeam();
-        Assert.assertFalse(team.checkTeamPlayers());
+        String[] positions = new String[]{"Forward", "Defence"};
+        List<ITeamPlayer> players = new ArrayList<>();
+        Random random = new Random();
+        int skater = 0;
+        int goalie = 0;
+        String keeper = "Goalie";
+        for (int i = 0; i < 18; i++) {
+            String temp = positions[random.nextInt(positions.length)];
+            ITeamPlayer player = new TeamPlayer();
+            PlayerStats stats = new PlayerStats();
+            stats.setPosition(temp);
+            stats.setStrength(random.nextInt(100));
+            player.setPlayerStats(stats);
+            players.add(player);
+        }
+        for (int i = 0; i < 2; i++) {
+            String temp = "Goalie";
+            ITeamPlayer player = new TeamPlayer();
+            PlayerStats stats = new PlayerStats();
+            stats.setPosition(temp);
+            stats.setStrength(random.nextInt(100));
+            player.setPlayerStats(stats);
+            players.add(player);
+        }
+        team.setPlayers(players);
+        Assert.assertTrue(team.checkTeamPlayers());
     }
 
     @Test
