@@ -44,9 +44,4 @@ public class AgingState extends AbstractState {
         }
         return nextState;
     }
-
-    @Override
-    public void welcomeMessage() {
-
-    }
 }

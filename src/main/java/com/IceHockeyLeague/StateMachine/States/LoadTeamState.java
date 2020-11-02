@@ -34,7 +34,6 @@ public class LoadTeamState extends AbstractState {
         return processLeagueLoad();
     }
 
-    @Override
     public void welcomeMessage() {
         appOutput.display(LOAD_STATE);
     }
