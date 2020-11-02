@@ -21,56 +21,80 @@ public class ScheduleSystem implements IScheduleSystem {
     private LocalDate regularSeasonEndDate;
     private LocalDate playoffStartDate;
     private LocalDate playoffEndDate;
+    private LocalDate tradeDeadline;
 
+    @Override
     public List<ISchedule> getRegularSchedule() {
         return regularSchedule;
     }
 
+    @Override
     public void setRegularSchedule(List<ISchedule> regularSchedule) {
         this.regularSchedule = regularSchedule;
     }
 
+    @Override
     public List<ISchedule> getPlayoffSchedule() {
         return playoffSchedule;
     }
 
+    @Override
     public void setPlayoffSchedule(List<ISchedule> playoffSchedule) {
         this.playoffSchedule = playoffSchedule;
     }
 
+    @Override
     public LocalDate getRegularSeasonStartDate() {
         return regularSeasonStartDate;
     }
 
+    @Override
     public void setRegularSeasonStartDate(LocalDate regularSeasonStartDate) {
         this.regularSeasonStartDate = regularSeasonStartDate;
     }
 
+    @Override
     public LocalDate getRegularSeasonEndDate() {
         return regularSeasonEndDate;
     }
 
+    @Override
     public void setRegularSeasonEndDate(LocalDate regularSeasonEndDate) {
         this.regularSeasonEndDate = regularSeasonEndDate;
     }
 
+    @Override
     public LocalDate getPlayoffStartDate() {
         return playoffStartDate;
     }
 
+    @Override
     public void setPlayoffStartDate(LocalDate playoffStartDate) {
         this.playoffStartDate = playoffStartDate;
     }
 
+    @Override
     public LocalDate getPlayoffEndDate() {
         return playoffEndDate;
     }
 
+    @Override
     public void setPlayoffEndDate(LocalDate playoffEndDate) {
         this.playoffEndDate = playoffEndDate;
     }
 
-    public void generateRegularSchedule(ILeague league) {
+    @Override
+    public LocalDate getTradeDeadline() {
+        return tradeDeadline;
+    }
+
+    @Override
+    public void setTradeDeadline(LocalDate tradeDeadline) {
+        this.tradeDeadline = tradeDeadline;
+    }
+
+    @Override
+    public void generateRegularSeasonSchedule(ILeague league) {
         regularSchedule = new ArrayList<>();
         generateGamesForRegularSeason(league);
         generateDates(true);
@@ -149,31 +173,7 @@ public class ScheduleSystem implements IScheduleSystem {
         }
     }
 
-//    private void generateDatesForRegularSeason() {
-//        int days =(int)(DAYS.between(regularSeasonStartDate, regularSeasonEndDate));// + 1);
-//        int noOfGames = regularSchedule.size();
-//
-//        int noOfGamesPerDay = noOfGames / days;
-//        int extraGames = noOfGames % days;
-//
-//        LocalDate scheduleDate = regularSeasonStartDate;
-//        int scheduleIndex = 0;
-//        for (int i = 0; i < days; i++) {
-//            for (int j = 0; j < noOfGamesPerDay; j++) {
-//                regularSchedule.get(scheduleIndex).setDate(scheduleDate);
-//                scheduleIndex++;
-//            }
-//
-//            if (extraGames > 0) {
-//                regularSchedule.get(scheduleIndex).setDate(scheduleDate);
-//                scheduleIndex++;
-//                extraGames--;
-//            }
-//
-//            scheduleDate = scheduleDate.plusDays(1);
-//        }
-//    }
-
+    @Override
     public void generatePlayoffSchedule(ILeague league, IStandingSystem standingSystem) {
         playoffSchedule = new ArrayList<>();
         generatePlayoffRound1(league, standingSystem);
@@ -249,31 +249,7 @@ public class ScheduleSystem implements IScheduleSystem {
         }
     }
 
-//    private void generateDatesForPlayoffRound1() {
-//        int days =(int)(DAYS.between(playoffStartDate, playoffEndDate));// + 1);
-//        int noOfGames = playoffSchedule.size();
-//
-//        int noOfGamesPerDay = noOfGames / days;
-//        int extraGames = noOfGames % days;
-//
-//        LocalDate scheduleDate = playoffStartDate;
-//        int scheduleIndex = 0;
-//        for (int i = 0; i < days; i++) {
-//            for (int j = 0; j < noOfGamesPerDay; j++) {
-//                playoffSchedule.get(scheduleIndex).setDate(scheduleDate);
-//                scheduleIndex++;
-//            }
-//
-//            if (extraGames > 0) {
-//                playoffSchedule.get(scheduleIndex).setDate(scheduleDate);
-//                scheduleIndex++;
-//                extraGames--;
-//            }
-//
-//            scheduleDate = scheduleDate.plusDays(1);
-//        }
-//    }
-
+    @Override
     public boolean anyUnplayedGamesOnThisDate(LocalDate date) {
         List<ISchedule> scheduleListToCheck = null;
         if (isRegularSeasonOngoing(date)) {
@@ -306,6 +282,7 @@ public class ScheduleSystem implements IScheduleSystem {
                date.isEqual(playoffEndDate);
     }
 
+    @Override
     public ISchedule getScheduledMatchOnThisDate(LocalDate date) {
         List<ISchedule> scheduleListToCheck;
         ISchedule todaySchedule = null;
@@ -324,7 +301,11 @@ public class ScheduleSystem implements IScheduleSystem {
         return todaySchedule;
     }
 
+    @Override
     public boolean isStanleyCupWinnerDetermined() {
+        if (playoffSchedule == null) {
+            return false;
+        }
         for (ISchedule schedule: playoffSchedule) {
             if (schedule.getIsGamePlayed() == false) {
                 return false;
@@ -333,6 +314,7 @@ public class ScheduleSystem implements IScheduleSystem {
         return true;
     }
 
+    @Override
     public void updateScheduleAfterGamePlayed(ISchedule schedule) {
         schedule.setIsGamePlayed(true);
         if (isPlayoffSeasonOngoing(schedule.getDate())) {

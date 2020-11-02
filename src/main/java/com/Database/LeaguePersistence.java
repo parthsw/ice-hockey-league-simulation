@@ -3,10 +3,6 @@ package com.Database;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 
-import java.sql.CallableStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Types;
 import java.sql.*;
 
 public class LeaguePersistence implements ILeaguePersistence {
@@ -17,10 +13,11 @@ public class LeaguePersistence implements ILeaguePersistence {
         String leagueID = null;
         try {
             storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
-            myCall = storedProcedure.setup("insertIntoLeague(?,?)");
+            myCall = storedProcedure.setup("insertIntoLeague(?,?,?)");
 
             myCall.setString(1, league.getLeagueName());
-            myCall.registerOutParameter(2, Types.INTEGER);
+            myCall.setDate(2, Date.valueOf(league.getLeagueDate()));
+            myCall.registerOutParameter(3, Types.INTEGER);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
                 leagueID = result.getString("leagueID");
@@ -49,6 +46,7 @@ public class LeaguePersistence implements ILeaguePersistence {
             while(result.next()) {
                 league.setLeagueID(result.getInt("leagueID"));
                 league.setLeagueName(result.getString("name"));
+                league.setLeagueDate(result.getDate("date").toLocalDate());
             }
             return true;
         } catch (SQLException e) {

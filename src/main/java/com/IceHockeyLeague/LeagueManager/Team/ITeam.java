@@ -29,22 +29,30 @@ public interface ITeam {
     void addPlayer(ITeamPlayer player);
     boolean removePlayer(ITeamPlayer player);
     List<ITeamPlayer> getPlayers();
+
     void setPlayers(List<ITeamPlayer> players);
 
     ICoach getCoach();
+
     void setCoach(ICoach coach);
 
     IManager getManager();
+
     void setManager(IManager manager);
 
     boolean checkTeamPlayers();
 
     boolean saveTeam(ITeamPersistence teamDB);
+
     boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
     boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues);
+
+    int getLossPointValue();
 
     boolean isNullOrEmpty(String teamName);
     boolean isTeamNameExist(List<ITeam> teams,String teamName);
 
-    float calculateTeamStrength(ITeamStrengthCalculator teamStrength);
+    float calculateTeamStrength(ITeamStrengthCalculator teamStrengthCalculator);
+
+    void setLossPointValue(int value);
 }
