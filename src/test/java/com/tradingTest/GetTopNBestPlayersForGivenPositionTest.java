@@ -33,9 +33,9 @@ public class GetTopNBestPlayersForGivenPositionTest {
             team.addPlayer(player);
         }
 
-        GetTopNBestPlayersForGivenPosition object = new GetTopNBestPlayersForGivenPosition(team, 3, "Forward");
+        GetTopNBestPlayersForGivenPosition object = new GetTopNBestPlayersForGivenPosition(team, 1, "Forward");
         List<ITeamPlayer> players = object.getPlayers();
-        Assert.assertEquals(3, players.size());
+        Assert.assertEquals(1, players.size());
         for (ITeamPlayer player : players) {
             Assert.assertEquals("Forward", player.getPlayerStats().getPosition());
 
@@ -58,8 +58,8 @@ public class GetTopNBestPlayersForGivenPositionTest {
             player.setPlayerStats(stats);
             team.addPlayer(player);
         }
-
-        GetTopNBestPlayersForGivenPosition object = new GetTopNBestPlayersForGivenPosition(team, 3, "Forward");
+        String tempPosition = team.getPlayers().get(0).getPlayerStats().getPosition();
+        GetTopNBestPlayersForGivenPosition object = new GetTopNBestPlayersForGivenPosition(team, 1, tempPosition);
         object.getPlayers();
         float sum = object.getCombinedStrendth();
         if (sum > 0) {
