@@ -175,13 +175,13 @@ public class Team implements ITeam {
 
     @Override
     public void incrementLossPointValue() {
-        this.losspoint = this.losspoint + 1;
+        this.lossPoint = this.lossPoint + 1;
     }
 
     @Override
     public void decrementLossPointValue() {
-        if (this.losspoint > 0) {
-            this.losspoint = this.losspoint - 1;
+        if (this.lossPoint > 0) {
+            this.lossPoint = this.lossPoint - 1;
         }
     }
 
