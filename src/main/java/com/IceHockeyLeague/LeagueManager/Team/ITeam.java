@@ -50,7 +50,7 @@ public interface ITeam {
     int getLossPointValue();
 
     boolean isNullOrEmpty(String teamName);
-    boolean isTeamNameExist(List<ITeam> teams);
+    boolean isTeamNameExist(List<ITeam> teams,String teamName);
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrengthCalculator);
 
