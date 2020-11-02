@@ -1,5 +1,8 @@
 package com.tradingTest;
 
+import com.IO.AbstractIOFactory;
+import com.IO.IOFactory;
+import com.IOTest.IOMock;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.Division;
@@ -11,12 +14,19 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.Trading.SimulateTrade;
 import junit.framework.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Random;
 
 
 public class SimulateTradeTest {
+    private static IOMock ioMockInstance = null;
+
+    @BeforeClass
+    public static void setup() {
+        ioMockInstance = IOMock.instance();
+    }
 
 
     @Test
@@ -106,6 +116,7 @@ public class SimulateTradeTest {
 
     @Test
     public void simulateTradeTest2() {
+        ioMockInstance.commandLineInput("YES");
         ILeague league = new League();
         league.setLeagueID(1);
         IConference conference = new Conference();
