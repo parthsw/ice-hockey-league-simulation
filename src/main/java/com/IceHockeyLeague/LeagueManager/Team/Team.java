@@ -19,6 +19,8 @@ public class Team implements ITeam {
     private List<ITeamPlayer> players;
     private IManager manager;
     private ICoach coach;
+    private int losspoint;
+
 
     public Team() {
         setDefaults();
@@ -30,6 +32,7 @@ public class Team implements ITeam {
         teamStrength = 0f;
         isUserCreated = false;
         players = new ArrayList<>();
+        losspoint = 0;
     }
 
     @Override
@@ -143,6 +146,16 @@ public class Team implements ITeam {
     @Override
     public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
         return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
+    }
+
+    @Override
+    public int getLossPointValue() {
+        return this.losspoint;
+    }
+
+    @Override
+    public void setLossPointValue(int value) {
+        this.losspoint = value;
     }
 
     @Override
