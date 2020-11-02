@@ -23,7 +23,7 @@ public class League implements ILeague {
     private int leagueID;
     private String leagueName;
     private IGamePlayConfig gamePlayConfig;
-    private List<IConference> conferences = new ArrayList<>();
+    private List<IConference> conferences;
     private List<IFreeAgent> freeAgents;
     private List<ICoach> coaches;
     private List<IManager> managers;
