@@ -368,7 +368,15 @@ public class ScheduleSystemTest {
     }
 
     @Test
-    public void generateRegularScheduleTest() {
+    public void setTradeDeadline() {
+        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        LocalDate date = LocalDate.now();
+        scheduleSystem.setTradeDeadline(date);
+        Assert.assertEquals(date, scheduleSystem.getTradeDeadline());
+    }
+
+    @Test
+    public void generateRegularSeasonScheduleTest() {
         ILeague league = new League();
         IConference conference = new Conference();
         List<IConference> conferences = new ArrayList<>();
@@ -389,7 +397,7 @@ public class ScheduleSystemTest {
         ScheduleSystem scheduleSystem = new ScheduleSystem();
         scheduleSystem.setRegularSeasonStartDate(LocalDate.now());
         scheduleSystem.setRegularSeasonEndDate(LocalDate.now().plusDays(2));
-        scheduleSystem.generateRegularSchedule(league);
+        scheduleSystem.generateRegularSeasonSchedule(league);
         Assert.assertEquals(team1, scheduleSystem.getRegularSchedule().get(0).getFirstTeam());
         Assert.assertEquals(team2, scheduleSystem.getRegularSchedule().get(0).getSecondTeam());
         Assert.assertNotNull(scheduleSystem.getRegularSchedule().get(0).getDate());
@@ -681,6 +689,12 @@ public class ScheduleSystemTest {
         playoffSchedule.add(schedule2);
         scheduleSystem.setPlayoffSchedule(playoffSchedule);
 
+        Assert.assertFalse(scheduleSystem.isStanleyCupWinnerDetermined());
+    }
+
+    @Test
+    public void isStanleyCupWinnerDeterminedNoPlayoffGeneratedTest() {
+        IScheduleSystem scheduleSystem = new ScheduleSystem();
         Assert.assertFalse(scheduleSystem.isStanleyCupWinnerDetermined());
     }
 

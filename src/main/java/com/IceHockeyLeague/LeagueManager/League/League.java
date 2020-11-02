@@ -16,6 +16,10 @@ import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.LeagueScheduler.IScheduleSystem;
+import com.IceHockeyLeague.LeagueScheduler.ScheduleSystem;
+import com.IceHockeyLeague.LeagueStandings.IStandingSystem;
+import com.IceHockeyLeague.LeagueStandings.StandingSystem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,9 +34,10 @@ public class League implements ILeague {
     private List<IFreeAgent> freeAgents;
     private List<ICoach> coaches;
     private List<IManager> managers;
-
     private List<ITeamPlayer> retiredTeamPlayers;
     private List<IFreeAgent> retiredFreeAgents;
+    private IScheduleSystem scheduleSystem;
+    private IStandingSystem standingSystem;
 
     public League() {
         setDefaults();
@@ -46,6 +51,8 @@ public class League implements ILeague {
         this.managers = new ArrayList<>();
         this.retiredFreeAgents = new ArrayList<>();
         this.retiredTeamPlayers = new ArrayList<>();
+        this.scheduleSystem = new ScheduleSystem();
+        this.standingSystem = new StandingSystem();
     }
 
     @Override
@@ -76,6 +83,11 @@ public class League implements ILeague {
     @Override
     public void setLeagueDate(LocalDate date) {
         leagueDate = date;
+    }
+
+    @Override
+    public void incrementLeagueDate() {
+        leagueDate = leagueDate.plusDays(1);
     }
 
     @Override
@@ -194,6 +206,16 @@ public class League implements ILeague {
     @Override
     public List<IFreeAgent> getRetiredFreeAgents() {
         return retiredFreeAgents;
+    }
+
+    @Override
+    public IScheduleSystem getScheduleSystem() {
+        return scheduleSystem;
+    }
+
+    @Override
+    public IStandingSystem getStandingSystem() {
+        return standingSystem;
     }
 
     @Override

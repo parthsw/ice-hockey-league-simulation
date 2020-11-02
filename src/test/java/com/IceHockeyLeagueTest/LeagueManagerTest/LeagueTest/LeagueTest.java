@@ -74,6 +74,14 @@ public class LeagueTest {
     }
 
     @Test
+    public void incrementLeagueDateTest() {
+        ILeague league = leagueManagerFactory.getLeague();
+        league.setLeagueDate(LocalDate.now());
+        league.incrementLeagueDate();
+        Assert.assertEquals(LocalDate.now().plusDays(1), league.getLeagueDate());
+    }
+
+    @Test
     public void setLeagueDateTest() {
         ILeague league = leagueManagerFactory.getLeague();
         league.setLeagueDate(LocalDate.of(2000, 4, 2));

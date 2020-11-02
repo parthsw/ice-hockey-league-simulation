@@ -6,6 +6,7 @@ import com.IO.IAppOutput;
 import com.IceHockeyLeague.LeagueFileHandler.IJsonParser;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileReader;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.States.*;
 
 public class StateMachineFactory extends AbstractStateMachineFactory {
@@ -51,5 +52,60 @@ public class StateMachineFactory extends AbstractStateMachineFactory {
     @Override
     public AbstractState getPlayerChoiceState() {
         return new PlayerChoiceState(appInput, appOutput);
+    }
+
+    @Override
+    public AbstractState getSimulateState(int numberOfSeasons) {
+        return new SimulateState(appInput, appOutput, numberOfSeasons);
+    }
+
+    @Override
+    public AbstractState getInitializeSeasonState() {
+        return new InitializeSeasonState(appInput, appOutput);
+    }
+
+    @Override
+    public AbstractState getAdvanceTimeState() {
+        return new AdvanceTimeState();
+    }
+
+    @Override
+    public AbstractState getGeneratePlayoffScheduleState() {
+        return new GeneratePlayoffScheduleState();
+    }
+
+    @Override
+    public AbstractState getTrainingState() {
+        return new TrainingState();
+    }
+
+    @Override
+    public AbstractState getSimulateGameState() {
+        return new SimulateGameState();
+    }
+
+    @Override
+    public AbstractState getInjuryCheckState(ITeam teamA, ITeam teamB) {
+        return new InjuryCheckState(teamA, teamB);
+    }
+
+    @Override
+    public AbstractState getExecuteTradesState() {
+        return new ExecuteTradesState();
+    }
+
+    @Override
+    public AbstractState getAgingState() {
+        return new AgingState();
+    }
+
+    @Override
+    public AbstractState getAdvanceToNextSeasonState() {
+        return new AdvanceToNextSeasonState();
+    }
+
+    @Override
+    public AbstractState getPersistState() {
+        return new PersistState();
     }
 }
