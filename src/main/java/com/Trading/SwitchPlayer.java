@@ -11,8 +11,8 @@ public class SwitchPlayer implements ISwitchPlayer {
         IFreeAgent agent = new FreeAgent();
         agent.setLeagueID(leagueID);
         agent.setPlayerName(player.getPlayerName());
-        agent.setIsInjured(player.getIsInjured());
-        agent.setIsRetired(player.getIsRetired());
+        agent.setInjuredStatus(player.getInjuredStatus());
+        agent.setRetiredStatus(player.getRetiredStatus());
         agent.setPlayerStats(player.getPlayerStats());
         agent.setPlayerAge(player.getPlayerAge());
         return agent;
@@ -24,8 +24,8 @@ public class SwitchPlayer implements ISwitchPlayer {
         player.setTeamID(teamId);
         player.setIsCaptain(false);
         player.setPlayerName(freeAgent.getPlayerName());
-        player.setIsInjured(freeAgent.getIsInjured());
-        player.setIsRetired(freeAgent.getIsRetired());
+        player.setInjuredStatus(freeAgent.getInjuredStatus());
+        player.setRetiredStatus(freeAgent.getRetiredStatus());
         player.setPlayerStats(freeAgent.getPlayerStats());
         player.setPlayerAge(freeAgent.getPlayerAge());
         return player;
