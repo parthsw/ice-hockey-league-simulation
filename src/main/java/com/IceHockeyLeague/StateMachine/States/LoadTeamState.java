@@ -45,25 +45,25 @@ public class LoadTeamState extends AbstractState {
         while(true) {
             teamName = appInput.getInput();
             team.setTeamName(teamName);
-            if (team.isNullOrEmpty(teamName)) {
+            if(team.isNullOrEmpty(teamName)) {
                 appOutput.displayError(TEAM_NAME_EMPTY);
                 continue;
             }
             ITeamPersistence teamDB = AbstractLeagueManagerFactory.getFactory().getTeamDB();
             List<ILeague> leagueList = new ArrayList<>();
             if(team.checkIfTeamNameExists(teamDB, teamName, leagueList)) {
-                if (leagueList.size() == 0) {
+                if(leagueList.size() == 0) {
                     appOutput.displayError(TEAM_NOT_EXIST);
                     return null;
                 }
-                if (leagueList.size() == 1) {
+                if(leagueList.size() == 1) {
                     ILeague leagueToLoad = leagueList.get(0);
                     leagueToLoad.loadCompleteLeague(leagueToLoad.getLeagueID());
                     this.setLeague(leagueToLoad);
                 }
                 else {
                     appOutput.display(LEAGUE_SELECTION_PROMPT);
-                    for (ILeague league: leagueList) {
+                    for(ILeague league: leagueList) {
                         appOutput.display("League ID: " + league.getLeagueID() + "& League Name: " + league.getLeagueName());
                     }
                     int leagueId = Integer.parseInt(appInput.getInput());

@@ -64,5 +64,4 @@ public class TeamPlayer extends Player implements ITeamPlayer {
     public boolean handleTeamPlayerRetirement(IPlayerCareerProgression playerCareerProgression, ITeam team, ILeague league) {
         return playerCareerProgression.handleTeamPlayerRetirement(this, team, league);
     }
-
 }

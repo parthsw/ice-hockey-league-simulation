@@ -159,7 +159,7 @@ public class Player implements IPlayer {
 
     @Override
     public void agePlayerByDays(int days) {
-        if (days > 0) {
+        if(days > 0) {
            elapsedDaysFromLastBDay += days;
            handlePlayerAgingInYears();
         }
@@ -169,7 +169,7 @@ public class Player implements IPlayer {
         if(elapsedDaysFromLastBDay >= DAYS_IN_YEAR) {
             int remainderDays = elapsedDaysFromLastBDay % DAYS_IN_YEAR;
 
-            if (remainderDays == 0) {
+            if(remainderDays == 0) {
                 age += 1;
                 elapsedDaysFromLastBDay = 0;
             } else {
@@ -178,5 +178,4 @@ public class Player implements IPlayer {
             }
         }
     }
-
 }

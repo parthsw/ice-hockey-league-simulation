@@ -19,8 +19,7 @@ public class Team implements ITeam {
     private List<ITeamPlayer> players;
     private IManager manager;
     private ICoach coach;
-    private int losspoint;
-
+    private int lossPoint;
 
     public Team() {
         setDefaults();
@@ -32,7 +31,7 @@ public class Team implements ITeam {
         teamStrength = 0f;
         isUserCreated = false;
         players = new ArrayList<>();
-        losspoint = 0;
+        lossPoint = 0;
     }
 
     @Override
@@ -166,12 +165,12 @@ public class Team implements ITeam {
 
     @Override
     public int getLossPointValue() {
-        return this.losspoint;
+        return this.lossPoint;
     }
 
     @Override
     public void setLossPointValue(int value) {
-        this.losspoint = value;
+        this.lossPoint = value;
     }
 
     @Override
@@ -193,7 +192,7 @@ public class Team implements ITeam {
 
     @Override
     public boolean isNullOrEmpty(String teamName) {
-        if (teamName == null || teamName.equals("")) {
+        if(teamName == null || teamName.equals("")) {
             return true;
         } else {
             return false;
@@ -203,7 +202,7 @@ public class Team implements ITeam {
     @Override
     public boolean isTeamNameExist(List<ITeam> teams,String teamName) {
         boolean isExist = false;
-        for (ITeam t : teams) {
+        for(ITeam t : teams) {
             if (t.getTeamName().equalsIgnoreCase(teamName)) {
                 isExist = true;
                 break;
@@ -216,5 +215,4 @@ public class Team implements ITeam {
     public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
         return teamStrength.calculate(players);
     }
-
 }

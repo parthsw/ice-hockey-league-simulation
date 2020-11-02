@@ -78,7 +78,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
         } else {
             retirementFactor = 1 / ((float) (currentAgeInDays - averageRetirementAgeInDays) / (float) DAYS_IN_YEAR) * agingConfig.getAverageRetirementAge();
         }
-        if (randomRetirementChance < retirementFactor) {
+        if(randomRetirementChance < retirementFactor) {
             setPlayerRetirementFields(player, currentDate);
             return true;
         }
@@ -130,5 +130,4 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
         player.setRetiredStatus(true);
         player.setRetirementDate(currentDate);
     }
-
 }
