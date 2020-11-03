@@ -43,7 +43,7 @@ build_prod:
   tags:
     - ugrad
   only:
-    - release
+    - release_v2
 
 test:
   stage: test
@@ -56,8 +56,6 @@ test:
         - build/surefire-reports/TEST-*.xml
   tags:
     - ugrad
-  only:
-    - develop
 
 deploy:
   stage: deploy
@@ -102,4 +100,4 @@ deploy_prod:
   tags:
     - ugrad
   only:
-    - release
+    - release_v2
