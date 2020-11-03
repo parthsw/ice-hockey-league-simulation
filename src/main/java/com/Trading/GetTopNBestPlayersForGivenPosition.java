@@ -50,6 +50,9 @@ public class GetTopNBestPlayersForGivenPosition {
 
     public float getCombinedStrendth() {
         float sum = 0;
+        if (this.bestPlayers.size() == 0) {
+            return 0;
+        }
         for (ITeamPlayer player : this.bestPlayers) {
             sum += player.getPlayerStats().getStrength();
         }

@@ -1,7 +1,5 @@
 package com.tradingTest;
 
-import com.IO.AbstractIOFactory;
-import com.IO.IOFactory;
 import com.IOTest.IOMock;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
@@ -17,6 +15,8 @@ import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -39,62 +39,34 @@ public class SimulateTradeTest {
         conference.addDivision(division);
         Random random = new Random();
         String[] positions = new String[]{"Forward", "Defence", "Goalie"};
-        for (int j = 0; j < 20; j++) {
-            IFreeAgent player = new FreeAgent();
-            player.setPlayerName("AgentPlayer");
-            IPlayerStats stats = new PlayerStats();
-            stats.setStrength(random.nextInt(1000));
-            String temp = positions[random.nextInt(positions.length)];
-            stats.setPosition(temp);
-            player.setPlayerStats(stats);
-            player.setLeagueID(1);
-            league.addFreeAgent(player);
+        for (int j = 0; j < 200; j++) {
+            league.addFreeAgent(generateAgent(positions[random.nextInt(positions.length)]));
         }
-        for (int i = 0; i < 10; i++) {
-            ITeam team = new Team();
-            team.setLossPointValue(1);
-            for (int j = 0; j < 20; j++) {
-                ITeamPlayer player = new TeamPlayer();
-                IPlayerStats stats = new PlayerStats();
-                stats.setStrength(random.nextInt(100));
-                String temp = positions[random.nextInt(positions.length)];
-                stats.setPosition(temp);
-                player.setPlayerStats(stats);
-                team.addPlayer(player);
-            }
+        for (int i = 0; i < 1; i++) {
+            List<ITeamPlayer> players = generatePlayers();
+            ITeam team = generateTeam(players, random.nextInt(5));
             division.addTeam(team);
         }
-        ITeam team1 = new Team();
+
+        List<ITeamPlayer> players1 = generatePlayers();
+        for (ITeamPlayer player : players1) {
+            player.getPlayerStats().setStrength(200);
+            player.setPlayerName("StrongTeamPlayer");
+        }
+        List<ITeamPlayer> players2 = generatePlayers();
+        for (ITeamPlayer player : players2) {
+            player.getPlayerStats().setStrength(150);
+            player.setPlayerName("WeakTeamPlayer");
+        }
+        ITeam team1 = generateTeam(players1, 0);
+        ITeam team2 = generateTeam(players2, 6);
         team1.setTeamName("teamStrong");
-        team1.setLossPointValue(0);
-        for (int j = 0; j < 20; j++) {
-            ITeamPlayer player = new TeamPlayer();
-            player.setPlayerName("fromStrongTeam");
-            IPlayerStats stats = new PlayerStats();
-            stats.setStrength(1001);
-            String temp = positions[random.nextInt(positions.length)];
-            stats.setPosition(temp);
-            player.setPlayerStats(stats);
-            team1.addPlayer(player);
-        }
-        ITeam team2 = new Team();
         team2.setTeamName("teamWeak");
-        team2.setLossPointValue(5);
-        for (int j = 0; j < 20; j++) {
-            ITeamPlayer player = new TeamPlayer();
-            player.setPlayerName("fromWeakTeam");
-            IPlayerStats stats = new PlayerStats();
-            stats.setStrength(101);
-            String temp = positions[random.nextInt(positions.length)];
-            stats.setPosition(temp);
-            player.setPlayerStats(stats);
-            team2.addPlayer(player);
-        }
         division.addTeam(team1);
         division.addTeam(team2);
 
         SimulateTrade simulation = new SimulateTrade();
-        simulation.simulateTrade(league, 3, 5, 1);
+        simulation.simulateTrade(league, 6, 5, 1);
         simulation.simulate();
 
         boolean flag1 = false;
@@ -114,6 +86,53 @@ public class SimulateTradeTest {
         Assert.assertTrue(flag2);
     }
 
+    private ITeamPlayer generatePlayer(String position) {
+        Random random = new Random();
+        ITeamPlayer player = new TeamPlayer();
+        IPlayerStats stats = new PlayerStats();
+        stats.setPosition(position);
+        stats.setStrength(random.nextInt(100));
+        player.setPlayerStats(stats);
+        return player;
+    }
+
+    private ITeam generateTeam(List<ITeamPlayer> players, int lossPointValue) {
+        ITeam team = new Team();
+        team.setPlayers(players);
+        team.setLossPointValue(lossPointValue);
+        return team;
+    }
+
+    private List<ITeamPlayer> generatePlayers() {
+        List<ITeamPlayer> players = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            ITeamPlayer player = generatePlayer("Forward");
+            players.add(player);
+        }
+        for (int i = 0; i < 9; i++) {
+            ITeamPlayer player = generatePlayer("Defence");
+            players.add(player);
+        }
+        for (int i = 0; i < 2; i++) {
+            ITeamPlayer player = generatePlayer("Goalie");
+            players.add(player);
+        }
+        return players;
+    }
+
+    private IFreeAgent generateAgent(String position) {
+        Random random = new Random();
+        IFreeAgent player = new FreeAgent();
+        player.setPlayerName("AgentPlayer");
+        IPlayerStats stats = new PlayerStats();
+        stats.setStrength(random.nextInt(1000));
+        stats.setPosition(position);
+        player.setPlayerStats(stats);
+        player.setLeagueID(1);
+
+        return player;
+    }
+
     @Test
     public void simulateTradeTest2() {
         ioMockInstance.commandLineInput("YES");
@@ -125,64 +144,37 @@ public class SimulateTradeTest {
         conference.addDivision(division);
         Random random = new Random();
         String[] positions = new String[]{"Forward", "Defence", "Goalie"};
-        for (int j = 0; j < 20; j++) {
-            IFreeAgent player = new FreeAgent();
-            player.setPlayerName("AgentPlayer");
-            IPlayerStats stats = new PlayerStats();
-            stats.setStrength(random.nextInt(100));
-            String temp = positions[random.nextInt(positions.length)];
-            stats.setPosition(temp);
-            player.setPlayerStats(stats);
-            player.setLeagueID(1);
-            league.addFreeAgent(player);
+        for (int j = 0; j < 200; j++) {
+            league.addFreeAgent(generateAgent(positions[random.nextInt(positions.length)]));
         }
-        for (int i = 0; i < 10; i++) {
-            ITeam team = new Team();
-            team.setLossPointValue(1);
-            for (int j = 0; j < 20; j++) {
-                ITeamPlayer player = new TeamPlayer();
-                IPlayerStats stats = new PlayerStats();
-                stats.setStrength(random.nextInt(100));
-                String temp = positions[random.nextInt(positions.length)];
-                stats.setPosition(temp);
-                player.setPlayerStats(stats);
-                team.addPlayer(player);
-            }
+        for (int i = 0; i < 1; i++) {
+            List<ITeamPlayer> players = generatePlayers();
+            ITeam team = generateTeam(players, random.nextInt(5));
             division.addTeam(team);
         }
-        ITeam team1 = new Team();
+
+        List<ITeamPlayer> players1 = generatePlayers();
+        for (ITeamPlayer player : players1) {
+            player.getPlayerStats().setStrength(200);
+            player.setPlayerName("StrongTeamPlayer");
+        }
+        List<ITeamPlayer> players2 = generatePlayers();
+        for (ITeamPlayer player : players2) {
+            player.getPlayerStats().setStrength(150);
+            player.setPlayerName("WeakTeamPlayer");
+        }
+        ITeam team1 = generateTeam(players1, 0);
+        ITeam team2 = generateTeam(players2, 6);
         team1.setTeamName("teamStrong");
-        team1.setIsUserCreated(true);
-        team1.setLossPointValue(0);
-        for (int j = 0; j < 20; j++) {
-            ITeamPlayer player = new TeamPlayer();
-            player.setPlayerName("fromStrongTeam");
-            IPlayerStats stats = new PlayerStats();
-            stats.setStrength(1001);
-            String temp = positions[random.nextInt(positions.length)];
-            stats.setPosition(temp);
-            player.setPlayerStats(stats);
-            team1.addPlayer(player);
-        }
-        ITeam team2 = new Team();
         team2.setTeamName("teamWeak");
-        team2.setLossPointValue(5);
-        for (int j = 0; j < 20; j++) {
-            ITeamPlayer player = new TeamPlayer();
-            player.setPlayerName("fromWeakTeam");
-            IPlayerStats stats = new PlayerStats();
-            stats.setStrength(random.nextInt(100));
-            String temp = positions[random.nextInt(positions.length)];
-            stats.setPosition(temp);
-            player.setPlayerStats(stats);
-            team2.addPlayer(player);
-        }
+        team1.setIsUserCreated(true);
         division.addTeam(team1);
         division.addTeam(team2);
 
         SimulateTrade simulation = new SimulateTrade();
-        simulation.simulateTrade(league, 3, 5, 1);
+        simulation.simulateTrade(league, 6, 5, 1);
         simulation.simulate();
+
 
         boolean flag1 = false;
         boolean flag2 = false;

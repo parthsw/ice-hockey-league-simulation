@@ -92,8 +92,6 @@ public class SimulateTrade {
         this.appOutput.display("To reject this offer type 'NO'");
         String userChoice = this.appInput.getInput();
 
-//        String userChoice = "YES";
-        System.out.println("YES");
         if (userChoice.equals("YES")) {
             this.tradeResolution(generateTrade, 1);
             trade.getSendingTeam().setLossPointValue(0);
