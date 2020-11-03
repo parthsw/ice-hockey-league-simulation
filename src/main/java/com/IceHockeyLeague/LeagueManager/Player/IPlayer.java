@@ -37,15 +37,11 @@ public interface IPlayer {
     void convertBetweenPlayerTypes(IPlayer player);
 
     float calculateStrength(IPlayerStats stats);
+    void agePlayerByDays(int days);
 
     boolean isInjured(IPlayerCareerProgression playerCareerProgression, IInjuryConfig injuryConfig, LocalDate currentDate);
     boolean isRecovered(IPlayerCareerProgression playerCareerProgression, LocalDate currentDate);
-
     boolean isRetired(IPlayerCareerProgression playerCareerProgression, IAgingConfig agingConfig, LocalDate currentDate);
 
-    void agePlayerByDays(int days);
-
     boolean isValid();
-
-
 }

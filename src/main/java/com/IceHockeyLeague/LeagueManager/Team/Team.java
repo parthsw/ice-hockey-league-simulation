@@ -21,7 +21,6 @@ public class Team implements ITeam {
     private ICoach coach;
     private int lossPoint;
 
-
     public Team() {
         setDefaults();
     }
@@ -139,7 +138,7 @@ public class Team implements ITeam {
         int goalieCounter = 0;
         boolean listIsPerfect = false;
         for(ITeamPlayer p : players){
-            if(p.getPlayerStats().getPosition().equalsIgnoreCase( "goalie")){
+            if(p.getPlayerStats().getPosition().equalsIgnoreCase("goalie")){
                 goalieCounter++;
             }
             else{
@@ -193,7 +192,7 @@ public class Team implements ITeam {
 
     @Override
     public boolean isNullOrEmpty(String teamName) {
-        if (teamName == null || teamName.equals("")) {
+        if(teamName == null || teamName.equals("")) {
             return true;
         } else {
             return false;
@@ -203,7 +202,7 @@ public class Team implements ITeam {
     @Override
     public boolean isTeamNameExist(List<ITeam> teams,String teamName) {
         boolean isExist = false;
-        for (ITeam t : teams) {
+        for(ITeam t : teams) {
             if (t.getTeamName().equalsIgnoreCase(teamName)) {
                 isExist = true;
                 break;

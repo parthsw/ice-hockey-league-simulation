@@ -14,6 +14,9 @@ public class LeagueFileReader implements ILeagueFileReader {
 
     @Override
     public InputStream readSystemFile(String filePath) throws FileNotFoundException {
+        if(filePath.isEmpty()) {
+            return null;
+        }
         return new FileInputStream(filePath);
     }
 
@@ -21,8 +24,8 @@ public class LeagueFileReader implements ILeagueFileReader {
     public InputStream readAppResourceFile(String resourceFileName) {
         if(resourceFileName.isEmpty()) {
             return null;
-        } else {
-            return getClass().getClassLoader().getResourceAsStream(resourceFileName);
         }
+        ClassLoader classLoader = getClass().getClassLoader();
+        return classLoader.getResourceAsStream(resourceFileName);
     }
 }

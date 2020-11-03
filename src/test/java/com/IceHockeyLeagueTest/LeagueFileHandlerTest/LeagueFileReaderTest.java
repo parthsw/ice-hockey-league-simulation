@@ -32,6 +32,7 @@ public class LeagueFileReaderTest {
         ILeagueFileReader leagueFileReader = AbstractLeagueFileHandlerFactory.getFactory().getLeagueFileReader();
         File systemFile = folder.newFile("systemFile.txt");
 
+        Assert.assertNull(leagueFileReader.readSystemFile(""));
         Assert.assertTrue(leagueFileReader.readSystemFile(systemFile.getAbsolutePath()) instanceof FileInputStream);
     }
 

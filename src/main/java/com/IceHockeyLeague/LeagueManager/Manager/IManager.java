@@ -20,7 +20,5 @@ public interface IManager {
     boolean loadTeamManager(IManagerPersistence managerDB, IManager manager);
 
     boolean isNullOrEmpty(String managerName);
-
     boolean isManagerNameExist(List<IManager> managers, String managerName);
-
 }
