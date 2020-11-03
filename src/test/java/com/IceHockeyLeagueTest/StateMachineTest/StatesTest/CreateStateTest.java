@@ -20,6 +20,7 @@ import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
+import com.IceHockeyLeague.StateMachine.States.CreateTeamState;
 import com.IceHockeyLeague.StateMachine.States.LoadTeamState;
 import com.IceHockeyLeague.StateMachine.States.PlayerChoiceState;
 import org.junit.*;
@@ -64,7 +65,7 @@ public class CreateStateTest {
 
     @Test
     public void welcomeMessageTest() {
-        AbstractState createTeamState = AbstractStateMachineFactory.getFactory().getCreateTeamState();
+        CreateTeamState createTeamState = (CreateTeamState) AbstractStateMachineFactory.getFactory().getCreateTeamState();
         createTeamState.welcomeMessage();
         Assert.assertTrue(ioMockInstance.getOutput().contains("************Welcome to team creation************"));
     }

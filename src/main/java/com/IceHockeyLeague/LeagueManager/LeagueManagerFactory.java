@@ -38,7 +38,7 @@ public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
 
     @Override
     public ILeaguePersistence getLeagueDB() {
-        if (leagueDB == null) {
+        if(leagueDB == null) {
             leagueDB = new LeaguePersistence();
         }
         return leagueDB;

@@ -50,12 +50,14 @@ public class FreeAgent extends Player implements IFreeAgent {
     public IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgents, String position) {
         float bestStrength = 0;
         IFreeAgent bestFreeAgent = null;
-        for (IFreeAgent freeAgent: freeAgents) {
-            IPlayerStats freeAgentStats = freeAgent.getPlayerStats();
-            if(freeAgentStats.getPosition().equalsIgnoreCase(position)) {
-                if(freeAgentStats.getStrength() > bestStrength) {
-                    bestStrength = freeAgentStats.getStrength();
-                    bestFreeAgent = freeAgent;
+        if(freeAgents.size() > 0) {
+            for (IFreeAgent freeAgent: freeAgents) {
+                IPlayerStats freeAgentStats = freeAgent.getPlayerStats();
+                if(freeAgentStats.getPosition().equalsIgnoreCase(position)) {
+                    if(freeAgentStats.getStrength() > bestStrength) {
+                        bestStrength = freeAgentStats.getStrength();
+                        bestFreeAgent = freeAgent;
+                    }
                 }
             }
         }
@@ -71,5 +73,4 @@ public class FreeAgent extends Player implements IFreeAgent {
     public boolean handleFreeAgentRetirement(IPlayerCareerProgression playerCareerProgression, ILeague league) {
         return playerCareerProgression.handleFreeAgentRetirement(this, league);
     }
-
 }

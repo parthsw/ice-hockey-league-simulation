@@ -2,7 +2,6 @@ package com.IceHockeyLeague.LeagueManager.Conference;
 
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
-import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 
 import java.util.List;
 
@@ -27,5 +26,4 @@ public interface IConference {
     boolean isNullOrEmpty(String conferenceName);
 
     boolean isConferenceNameExist(List<IConference> conferences,String conferenceName);
-
 }

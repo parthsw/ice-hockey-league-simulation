@@ -72,7 +72,7 @@ public class Coach implements ICoach {
     @Override
     public boolean isValid() {
         boolean valid = true;
-        if (isNullOrEmpty(coachName)) {
+        if(isNullOrEmpty(coachName)) {
             valid = false;
         }
         return valid;
@@ -82,7 +82,7 @@ public class Coach implements ICoach {
     public boolean isCoachNameExist(List<ICoach> coaches, String coachName) {
         boolean isExist = false;
         for(ICoach c : coaches){
-            if(c.getCoachName().equalsIgnoreCase(coachName)){
+            if (c.getCoachName().equalsIgnoreCase(coachName)){
                 isExist = true;
                 break;
             }
