@@ -27,6 +27,8 @@ public interface ITeam {
 
     void setLossPointValue(int value);
     int getLossPointValue();
+    void incrementLossPointValue();
+    void decrementLossPointValue();
 
     IPlayer getPlayerById(int id);
     void addPlayer(ITeamPlayer player);
