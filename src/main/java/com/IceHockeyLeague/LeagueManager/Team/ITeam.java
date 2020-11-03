@@ -56,7 +56,4 @@ public interface ITeam {
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrengthCalculator);
 
-    void incrementLossPointValue();
-
-    void decrementLossPointValue();
 }
