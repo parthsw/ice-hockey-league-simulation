@@ -1,4 +1,4 @@
-package com.TradingTest;
+package com.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import org.junit.Assert;

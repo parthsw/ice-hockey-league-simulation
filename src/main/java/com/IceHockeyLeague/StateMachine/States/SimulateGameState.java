@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.IO.IAppOutput;
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
@@ -10,6 +11,12 @@ import com.IceHockeyLeague.LeagueScheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 
 public class SimulateGameState extends AbstractState {
+
+    private IAppOutput appOutput;
+
+    public SimulateGameState(IAppOutput appOutput) {
+        this.appOutput = appOutput;
+    }
 
     @Override
     public AbstractState onRun() {
@@ -24,6 +31,9 @@ public class SimulateGameState extends AbstractState {
         ISchedule schedule = league.getScheduleSystem().getScheduledMatchOnThisDate(league.getLeagueDate());
         ITeam teamA = schedule.getFirstTeam();
         ITeam teamB = schedule.getSecondTeam();
+
+        appOutput.display("--------------------------------------------------------");
+        appOutput.display("Game: " + teamA.getTeamName() + " vs " + teamB.getTeamName());
 
         float teamAStrength = teamA.getTeamStrength();
         float teamBStrength = teamB.getTeamStrength();
@@ -75,6 +85,8 @@ public class SimulateGameState extends AbstractState {
         league.getStandingSystem().updateStatsForLosingTeam(losingTeamConference, losingTeamDivision, losingTeam);
         winningTeam.decrementLossPointValue();
         losingTeam.incrementLossPointValue();
+
+        appOutput.display("Winner: " + winningTeam.getTeamName());
 
         return AbstractStateMachineFactory.getFactory().getInjuryCheckState(teamA, teamB);
     }

@@ -1,4 +1,4 @@
-package com.TradingTest;
+package com.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -31,7 +31,7 @@ public class GetWorsePlayersToTradeFromTeam {
         String position = tempList.get(0).getPlayerStats().getPosition();
 
         for (ITeamPlayer player : tempList) {
-            if (player.getPlayerStats().getPosition().equals(position)) {
+            if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
                 resultList.add(player);
             } else {
                 break;

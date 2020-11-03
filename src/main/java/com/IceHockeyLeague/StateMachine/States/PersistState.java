@@ -9,9 +9,10 @@ public class PersistState extends AbstractState {
     public AbstractState onRun() {
         AbstractState nextState;
         ILeague league = getLeague();
-        league.saveCompleteLeague();
+//        league.saveCompleteLeague();
 
         if (league.getScheduleSystem().isStanleyCupWinnerDetermined()) {
+            league.saveCompleteLeague();
             nextState = null;
         }
         else {

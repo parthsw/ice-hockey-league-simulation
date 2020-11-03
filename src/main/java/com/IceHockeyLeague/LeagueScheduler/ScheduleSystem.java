@@ -354,4 +354,8 @@ public class ScheduleSystem implements IScheduleSystem {
         }
     }
 
+    public ITeam getStanleyCupWinner() {
+        int lastMatch = playoffSchedule.size() - 1;
+        return playoffSchedule.get(lastMatch).getWinningTeam();
+    }
 }

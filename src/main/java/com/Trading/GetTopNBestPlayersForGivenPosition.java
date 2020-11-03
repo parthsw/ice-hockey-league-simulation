@@ -1,4 +1,4 @@
-package com.TradingTest;
+package com.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -23,7 +23,7 @@ public class GetTopNBestPlayersForGivenPosition {
 
     public List<ITeamPlayer> getPlayers() {
         for (ITeamPlayer player : this.team.getPlayers()) {
-            if (player.getPlayerStats().getPosition().equals(this.position)) {
+            if (player.getPlayerStats().getPosition().equalsIgnoreCase(this.position)) {
                 this.relaventPlayers.add(player);
             }
         }

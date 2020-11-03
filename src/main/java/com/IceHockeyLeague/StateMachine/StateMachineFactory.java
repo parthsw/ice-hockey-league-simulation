@@ -81,12 +81,12 @@ public class StateMachineFactory extends AbstractStateMachineFactory {
 
     @Override
     public AbstractState getSimulateGameState() {
-        return new SimulateGameState();
+        return new SimulateGameState(appOutput);
     }
 
     @Override
     public AbstractState getInjuryCheckState(ITeam teamA, ITeam teamB) {
-        return new InjuryCheckState(teamA, teamB);
+        return new InjuryCheckState(appOutput, teamA, teamB);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class StateMachineFactory extends AbstractStateMachineFactory {
 
     @Override
     public AbstractState getAdvanceToNextSeasonState() {
-        return new AdvanceToNextSeasonState();
+        return new AdvanceToNextSeasonState(appOutput);
     }
 
     @Override

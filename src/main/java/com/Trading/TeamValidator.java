@@ -1,4 +1,4 @@
-package com.TradingTest;
+package com.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
@@ -33,7 +33,7 @@ public class TeamValidator {
         int numberOfKeepers = 0;
 
         for (ITeamPlayer player : this.givenTeam.getPlayers()) {
-            if (player.getPlayerStats().getPosition().equals(goalie)) {
+            if (player.getPlayerStats().getPosition().equalsIgnoreCase(goalie)) {
                 this.goalies.add(player);
                 numberOfKeepers++;
             } else {

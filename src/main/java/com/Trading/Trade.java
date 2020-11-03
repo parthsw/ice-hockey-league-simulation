@@ -1,4 +1,4 @@
-package com.TradingTest;
+package com.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -49,7 +49,7 @@ public class Trade {
     }
 
     public boolean validateTrade() {
-        if (this.sendingTeam.getTeamName().equals(receivingTeam.getTeamName())) {
+        if (this.sendingTeam.getTeamName().equalsIgnoreCase(receivingTeam.getTeamName())) {
             return false;
         }
 
@@ -60,7 +60,7 @@ public class Trade {
         String position = this.receivingPlayers.get(0).getPlayerStats().getPosition();
         if (this.sendingPlayers.size() == this.receivingPlayers.size()) {
             for (ITeamPlayer player : this.sendingPlayers) {
-                if (player.getPlayerStats().getPosition().equals(position)) {
+                if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
 
                 } else {
                     return false;
@@ -68,7 +68,7 @@ public class Trade {
             }
 
             for (ITeamPlayer player : this.receivingPlayers) {
-                if (player.getPlayerStats().getPosition().equals(position)) {
+                if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
 
                 } else {
                     return false;
