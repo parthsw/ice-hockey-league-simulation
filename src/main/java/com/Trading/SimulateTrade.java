@@ -94,10 +94,10 @@ public class SimulateTrade {
 
 //        String userChoice = "YES";
         System.out.println("YES");
-        if (userChoice.equals("YES")) {
+        if (userChoice.equalsIgnoreCase("YES")) {
             this.tradeResolution(generateTrade, 1);
             trade.getSendingTeam().setLossPointValue(0);
-        } else if (userChoice.equals("NO")) {
+        } else if (userChoice.equalsIgnoreCase("NO")) {
             trade.getSendingTeam().setLossPointValue(0);
         } else {
             this.appOutput.displayError("Invalid choice input entered.");
@@ -107,9 +107,14 @@ public class SimulateTrade {
     private void tradeResolution(GenerateTrade generateTrade, float randomAcceptChance) {
         generateTrade.decideTrade(randomAcceptChance);
         List<ITeam> resultTeams = generateTrade.getResultTeams();
-        for (ITeam modifiedTeam : resultTeams) {
-            TeamValidator validate = new TeamValidator(modifiedTeam, this.league.getLeagueID(), this.league.getFreeAgents());
-            validate.validateTeam();
+        if(resultTeams == null){
+
+        }
+        else{
+            for (ITeam modifiedTeam : resultTeams) {
+                TeamValidator validate = new TeamValidator(modifiedTeam, this.league.getLeagueID(), this.league.getFreeAgents());
+                validate.validateTeam();
+            }
         }
     }
 

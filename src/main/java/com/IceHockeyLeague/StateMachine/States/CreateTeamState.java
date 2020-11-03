@@ -44,7 +44,7 @@ public class CreateTeamState extends AbstractState {
             welcomeMessage();
             newTeam = this.constructNewTeam();
             this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
-            persistLeagueToDatabase(inMemoryLeague);
+//            persistLeagueToDatabase(inMemoryLeague);
             return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
         } catch (Exception exception) {
             appOutput.displayError("Throwing exception");
@@ -218,11 +218,11 @@ public class CreateTeamState extends AbstractState {
         }
         while(true) {
             appOutput.display("select the players for your team from the list of free agents shown above");
-            for (int count = 0; count < 20; count++) {
+            for (int count = 0; count < 1; count++) {
+                player = new TeamPlayer();
                 String playerName = appInput.getInput();
                 player.setPlayerName(playerName);
                 players.add(player);
-                player = null;
             }
             team.setPlayers(players);
             flagCheck = team.checkTeamPlayers();

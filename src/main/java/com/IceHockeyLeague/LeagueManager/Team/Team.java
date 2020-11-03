@@ -19,7 +19,7 @@ public class Team implements ITeam {
     private List<ITeamPlayer> players;
     private IManager manager;
     private ICoach coach;
-    private int losspoint;
+    private int lossPoint;
 
 
     public Team() {
@@ -32,7 +32,7 @@ public class Team implements ITeam {
         teamStrength = 0f;
         isUserCreated = false;
         players = new ArrayList<>();
-        losspoint = 0;
+        lossPoint = 0;
     }
 
     @Override
@@ -139,7 +139,7 @@ public class Team implements ITeam {
         int goalieCounter = 0;
         boolean listIsPerfect = false;
         for(ITeamPlayer p : players){
-            if(p.getPlayerStats().getPosition() == "goalie"){
+            if(p.getPlayerStats().getPosition().equalsIgnoreCase( "goalie")){
                 goalieCounter++;
             }
             else{
@@ -166,23 +166,23 @@ public class Team implements ITeam {
 
     @Override
     public int getLossPointValue() {
-        return this.losspoint;
+        return this.lossPoint;
     }
 
     @Override
     public void setLossPointValue(int value) {
-        this.losspoint = value;
+        this.lossPoint = value;
     }
 
     @Override
     public void incrementLossPointValue() {
-        this.losspoint = this.losspoint + 1;
+        this.lossPoint = this.lossPoint + 1;
     }
 
     @Override
     public void decrementLossPointValue() {
-        if (this.losspoint > 0) {
-            this.losspoint = this.losspoint - 1;
+        if (this.lossPoint > 0) {
+            this.lossPoint = this.lossPoint - 1;
         }
     }
 
