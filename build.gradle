@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.21'
+    compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'com.github.everit-org.json-schema:org.everit.json.schema:1.12.1'
+    implementation 'com.google.code.gson:gson:2.6.2'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+}
+
+jar {
+    manifest {
+        attributes (
+            'Main-Class': 'com.HockeyLeagueSimulationApp'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

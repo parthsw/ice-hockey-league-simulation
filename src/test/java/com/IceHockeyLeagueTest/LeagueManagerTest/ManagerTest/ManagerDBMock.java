@@ -1,0 +1,62 @@
+package com.IceHockeyLeagueTest.LeagueManagerTest.ManagerTest;
+
+import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.Manager.IManager;
+import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
+
+import java.util.List;
+
+public class ManagerDBMock implements IManagerPersistence  {
+    @Override
+    public boolean saveTeamManager(IManager manager) {
+        manager.setLeagueID(2);
+        manager.setTeamID(1);
+        manager.setManagerID(2);
+        manager.setManagerName("Joseph Hans");
+        return true;
+    }
+
+    @Override
+    public boolean saveLeagueManager(IManager manager) {
+        manager.setLeagueID(3);
+        manager.setTeamID(-1);
+        manager.setManagerID(3);
+        manager.setManagerName("Roy K");
+        return true;
+    }
+
+    @Override
+    public boolean loadTeamManager(int teamId, IManager manager) {
+        manager.setLeagueID(1);
+        manager.setTeamID(1);
+        manager.setManagerID(1);
+        manager.setManagerName("Joseph Spaghetti");
+        return true;
+    }
+
+    @Override
+    public boolean loadLeagueManagers(int leagueId, List<IManager> managers) {
+        IManager manager = AbstractLeagueManagerFactory.getFactory().getManager();
+        manager.setLeagueID(leagueId);
+        manager.setTeamID(-1);
+        manager.setManagerName("Fred One");
+        manager.setManagerID(1);
+        managers.add(manager);
+
+        IManager manager1 = AbstractLeagueManagerFactory.getFactory().getManager();
+        manager1.setLeagueID(leagueId);
+        manager1.setTeamID(-1);
+        manager1.setManagerName("Mike One");
+        manager1.setManagerID(2);
+        managers.add(manager1);
+
+        IManager manager2 = AbstractLeagueManagerFactory.getFactory().getManager();
+        manager2.setLeagueID(leagueId);
+        manager2.setTeamID(-1);
+        manager2.setManagerName("Mike Two");
+        manager2.setManagerID(3);
+        managers.add(manager2);
+
+        return true;
+    }
+}
