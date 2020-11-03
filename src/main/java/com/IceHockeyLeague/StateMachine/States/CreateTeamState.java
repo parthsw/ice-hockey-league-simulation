@@ -3,10 +3,7 @@ package com.IceHockeyLeague.StateMachine.States;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.Player;
-import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
@@ -44,7 +41,6 @@ public class CreateTeamState extends AbstractState {
             welcomeMessage();
             newTeam = this.constructNewTeam();
             this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
-            persistLeagueToDatabase(inMemoryLeague);
             return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
         } catch (Exception exception) {
             appOutput.displayError("Throwing exception");
@@ -66,7 +62,7 @@ public class CreateTeamState extends AbstractState {
     }
 
     private ITeam constructNewTeam() {
-        ITeam team = null;
+        ITeam team;
         this.newConference = this.processConferenceName();
         this.newDivision = this.processDivisionName(this.newConference);
         team = this.processTeamName(this.newDivision);
@@ -188,7 +184,15 @@ public class CreateTeamState extends AbstractState {
         }
         while(true) {
             appOutput.display("Please provide the name of the coach");
+            ICoachStats stats;
             coachName = appInput.getInput();
+            for(ICoach c : coaches){
+                if(c.getCoachName().equalsIgnoreCase(coachName)){
+                    stats = c.getCoachStats();
+                    coach.setCoachStats(stats);
+                    break;
+                }
+            }
             if (coach.isNullOrEmpty(coachName)) {
                 appOutput.displayError("The team name cannot be empty");
             }
@@ -219,12 +223,25 @@ public class CreateTeamState extends AbstractState {
         while(true) {
             appOutput.display("select the players for your team from the list of free agents shown above");
             for (int count = 0; count < 20; count++) {
+                player = new TeamPlayer();
+                IPlayerStats stats = null;
                 String playerName = appInput.getInput();
                 player.setPlayerName(playerName);
+                for(IFreeAgent f : freeAgents){
+                    if(playerName.equalsIgnoreCase(f.getPlayerName())){
+                        int age = f.getPlayerAge();
+                        player.setPlayerAge(age);
+                        stats = f.getPlayerStats();
+                        break;
+                    }
+                }
+                player.setPlayerStats(stats);
                 players.add(player);
-                player = null;
             }
             team.setPlayers(players);
+            ITeamStrengthCalculator calculator = new TeamStrengthCalculator();
+            float teamStrength = team.calculateTeamStrength(calculator);
+            team.setTeamStrength(teamStrength);
             flagCheck = team.checkTeamPlayers();
             if(flagCheck){
                 break;
@@ -244,10 +261,6 @@ public class CreateTeamState extends AbstractState {
                 }
             }
         }
-    }
-
-    private void persistLeagueToDatabase(ILeague league){
-        league.saveCompleteLeague();
     }
 }
 
