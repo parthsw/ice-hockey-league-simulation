@@ -56,8 +56,6 @@ test:
         - build/surefire-reports/TEST-*.xml
   tags:
     - ugrad
-  only:
-    - develop
 
 deploy:
   stage: deploy
