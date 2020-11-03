@@ -1,4 +1,4 @@
-package com.TradingTest;
+package com.Trading;
 
 import com.IO.CommandLineInput;
 import com.IO.CommandLineOutput;
