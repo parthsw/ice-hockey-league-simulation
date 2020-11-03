@@ -2,7 +2,7 @@ package com.IceHockeyLeague.StateMachine.States;
 
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
-import com.Trading.SimulateTrade;
+import com.TradingTest.SimulateTrade;
 
 public class ExecuteTradesState extends AbstractState {
     @Override
