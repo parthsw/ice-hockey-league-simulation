@@ -2,17 +2,14 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.IO.AbstractIOFactory;
 import com.IO.IOFactory;
-import com.IOTest.IOMock;
 import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.TrainingState;
-import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

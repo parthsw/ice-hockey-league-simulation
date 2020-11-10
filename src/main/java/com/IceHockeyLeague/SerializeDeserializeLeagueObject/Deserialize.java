@@ -1,10 +1,8 @@
 package com.IceHockeyLeague.SerializeDeserializeLeagueObject;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.League;
 import com.google.gson.Gson;
-import org.junit.Assert;
 
 import java.io.*;
 import java.util.Scanner;

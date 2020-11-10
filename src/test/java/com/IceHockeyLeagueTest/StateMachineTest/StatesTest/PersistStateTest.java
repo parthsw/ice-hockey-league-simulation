@@ -13,7 +13,6 @@ import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.AdvanceTimeState;
-import com.IceHockeyLeague.StateMachine.States.AdvanceToNextSeasonState;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;

@@ -1,6 +1,5 @@
 package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
-import com.Database.AbstractDatabaseFactory;
 import com.IO.AbstractIOFactory;
 import com.IO.IOFactory;
 import com.IOTest.IOMock;
@@ -12,7 +11,6 @@ import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -21,8 +19,6 @@ import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.CreateTeamState;
-import com.IceHockeyLeague.StateMachine.States.LoadTeamState;
-import com.IceHockeyLeague.StateMachine.States.PlayerChoiceState;
 import org.junit.*;
 
 import java.util.*;
