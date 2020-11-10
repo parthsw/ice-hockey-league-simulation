@@ -5,7 +5,8 @@ import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GetAllTeamsFromLeague {
 

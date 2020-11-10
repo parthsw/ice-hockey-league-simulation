@@ -1,9 +1,8 @@
-package com.tradingTest;
+package com.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
-import com.Trading.TradeDecision;
 import junit.framework.Assert;
 import org.junit.Test;
 

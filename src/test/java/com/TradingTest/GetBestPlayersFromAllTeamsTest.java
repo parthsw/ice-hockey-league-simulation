@@ -1,4 +1,4 @@
-package com.tradingTest;
+package com.Trading;
 
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
@@ -6,7 +6,6 @@ import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
-import com.Trading.GetBestPlayersFromAllTeams;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -55,10 +54,10 @@ public class GetBestPlayersFromAllTeamsTest {
         teams.add(test);
 
         GetBestPlayersFromAllTeams object = new GetBestPlayersFromAllTeams(teams);
-        object.getBestTradeOption("Forward", 2);
+        object.getBestTradeOption("Forward", 1);
         ITeam bestTeam = object.getTeam();
         List<ITeamPlayer> players = object.getBestPlayersSet();
         Assert.assertEquals("Best Team", bestTeam.getTeamName());
-        Assert.assertEquals(2, players.size());
+        Assert.assertEquals(1, players.size());
     }
 }

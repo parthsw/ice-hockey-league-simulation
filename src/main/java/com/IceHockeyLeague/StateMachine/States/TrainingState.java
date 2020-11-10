@@ -14,6 +14,7 @@ public class TrainingState extends AbstractState {
     public AbstractState onRun() {
         AbstractState nextState;
         ILeague league = getLeague();
+        league.incrementDaysSinceLastStatIncrease();
         int daysUntilStatIncreaseCheck = league.getGamePlayConfig().getTrainingConfig().getDaysUntilStatIncreaseCheck();
         int daysSinceLastStatIncrease = league.getDaysSinceLastStatIncrease();
         if (daysSinceLastStatIncrease > daysUntilStatIncreaseCheck) {

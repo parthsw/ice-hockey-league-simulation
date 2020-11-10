@@ -3,10 +3,11 @@ package com.Trading;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GenerateTrade {
-    private List<ITeam> resultTeams;
+    private List<ITeam> resultTeams = new ArrayList<>();
     private boolean tradeResult;
     private Trade trade;
 

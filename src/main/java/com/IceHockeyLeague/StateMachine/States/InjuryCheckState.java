@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.IO.IAppOutput;
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
@@ -12,10 +13,12 @@ public class InjuryCheckState extends AbstractState {
 
     private final ITeam teamA;
     private final ITeam teamB;
+    private final IAppOutput appOutput;
 
-    public InjuryCheckState(ITeam teamA, ITeam teamB) {
+    public InjuryCheckState(IAppOutput appOutput, ITeam teamA, ITeam teamB) {
         this.teamA = teamA;
         this.teamB = teamB;
+        this.appOutput = appOutput;
     }
 
     @Override
@@ -25,12 +28,17 @@ public class InjuryCheckState extends AbstractState {
         IPlayerCareerProgression playerCareerProgression = AbstractLeagueManagerFactory.getFactory().getPlayerCareerProgression();
         IInjuryConfig injuryConfig = league.getGamePlayConfig().getInjuryConfig();
 
+        appOutput.display("Players injured during game: ");
         for (ITeamPlayer teamPlayer: teamA.getPlayers()) {
-            teamPlayer.isInjured(playerCareerProgression, injuryConfig, league.getLeagueDate());
+            if (teamPlayer.isInjured(playerCareerProgression, injuryConfig, league.getLeagueDate())) {
+                appOutput.display(teamPlayer.getPlayerName() + " injured for " + teamPlayer.getDaysInjured() + " days");
+            }
         }
 
         for (ITeamPlayer teamPlayer: teamB.getPlayers()) {
-            teamPlayer.isInjured(playerCareerProgression, injuryConfig, league.getLeagueDate());
+            if (teamPlayer.isInjured(playerCareerProgression, injuryConfig, league.getLeagueDate())) {
+                appOutput.display(teamPlayer.getPlayerName() + " injured for " + teamPlayer.getDaysInjured() + " days");
+            }
         }
 
         if (league.getScheduleSystem().anyUnplayedGamesOnThisDate(league.getLeagueDate())) {

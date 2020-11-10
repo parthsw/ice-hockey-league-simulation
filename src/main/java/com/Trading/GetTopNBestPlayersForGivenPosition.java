@@ -23,7 +23,7 @@ public class GetTopNBestPlayersForGivenPosition {
 
     public List<ITeamPlayer> getPlayers() {
         for (ITeamPlayer player : this.team.getPlayers()) {
-            if (player.getPlayerStats().getPosition().equals(this.position)) {
+            if (player.getPlayerStats().getPosition().equalsIgnoreCase(this.position)) {
                 this.relaventPlayers.add(player);
             }
         }
@@ -50,6 +50,9 @@ public class GetTopNBestPlayersForGivenPosition {
 
     public float getCombinedStrendth() {
         float sum = 0;
+        if (this.bestPlayers.size() == 0) {
+            return 0;
+        }
         for (ITeamPlayer player : this.bestPlayers) {
             sum += player.getPlayerStats().getStrength();
         }

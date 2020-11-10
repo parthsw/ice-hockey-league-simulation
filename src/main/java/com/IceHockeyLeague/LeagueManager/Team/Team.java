@@ -138,7 +138,7 @@ public class Team implements ITeam {
         int goalieCounter = 0;
         boolean listIsPerfect = false;
         for(ITeamPlayer p : players){
-            if(p.getPlayerStats().getPosition() == "goalie"){
+            if(p.getPlayerStats().getPosition().equalsIgnoreCase("goalie")){
                 goalieCounter++;
             }
             else{
@@ -215,4 +215,5 @@ public class Team implements ITeam {
     public float calculateTeamStrength(ITeamStrengthCalculator teamStrength) {
         return teamStrength.calculate(players);
     }
+
 }

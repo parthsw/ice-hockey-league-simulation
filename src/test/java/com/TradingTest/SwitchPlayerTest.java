@@ -1,7 +1,6 @@
-package com.tradingTest;
+package com.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.*;
-import com.Trading.SwitchPlayer;
 import org.junit.Assert;
 import org.junit.Test;
 

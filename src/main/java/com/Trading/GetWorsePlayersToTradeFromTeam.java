@@ -14,10 +14,11 @@ public class GetWorsePlayersToTradeFromTeam {
         ITeamPlayer badPlayer = null;
         playerList.addAll(team.getPlayers());
         float strength = Float.MAX_VALUE;
-
+        int counter = 0;
 
         for (int i = 0; i < maxTradablePlayers; i++) {
             for (ITeamPlayer player : playerList) {
+                counter++;
                 if (player.getPlayerStats().getStrength() < strength) {
                     strength = player.getPlayerStats().getStrength();
                     badPlayer = player;
@@ -30,7 +31,7 @@ public class GetWorsePlayersToTradeFromTeam {
         String position = tempList.get(0).getPlayerStats().getPosition();
 
         for (ITeamPlayer player : tempList) {
-            if (player.getPlayerStats().getPosition().equals(position)) {
+            if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
                 resultList.add(player);
             } else {
                 break;

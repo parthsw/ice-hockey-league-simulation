@@ -1,4 +1,4 @@
-package com.tradingTest;
+package com.Trading;
 
 import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
@@ -14,7 +14,6 @@ import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
-import com.Trading.DivisionUpdatorAfterTrading;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

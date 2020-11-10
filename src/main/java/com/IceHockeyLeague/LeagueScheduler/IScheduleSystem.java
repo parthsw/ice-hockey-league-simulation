@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueScheduler;
 
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueStandings.IStandingSystem;
 
 import java.time.LocalDate;
@@ -34,4 +35,5 @@ public interface IScheduleSystem {
     ISchedule getScheduledMatchOnThisDate(LocalDate date);
     boolean isStanleyCupWinnerDetermined();
     void updateScheduleAfterGamePlayed(ISchedule schedule);
+    ITeam getStanleyCupWinner();
 }

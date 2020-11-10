@@ -1,4 +1,4 @@
-package com.tradingTest;
+package com.Trading;
 
 
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
@@ -7,7 +7,6 @@ import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
-import com.Trading.Trade;
 import org.junit.Assert;
 import org.junit.Test;
 

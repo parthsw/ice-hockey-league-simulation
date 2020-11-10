@@ -9,19 +9,19 @@ public class DBConnection implements IDBConnection {
     private static DBConnection dbConnectionInstance = null;
 
     String[] properties;
-    public static String Url;
-    public static String Username;
-    public static String Password;
-    public static String Driver;
+    public static String url;
+    public static String userName;
+    public static String password;
+    public static String driver;
     public Connection connection;
 
      DBConnection() {
-//        PropertiesLoader pl = new PropertiesLoader();
-//        properties = pl.getProperties();
-//        Url = properties[0];
-//        Username = properties[1];
-//        Password = properties[2];
-//        Driver = properties[3];
+        PropertiesLoader pl = new PropertiesLoader();
+        properties = pl.getProperties();
+        url = properties[0];
+        userName = properties[1];
+        password = properties[2];
+        driver = properties[3];
     }
 
     public static DBConnection instance() {
@@ -34,10 +34,10 @@ public class DBConnection implements IDBConnection {
 
     public Connection getConnection() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(driver);
             this.connection =
                     DriverManager
-                            .getConnection("jdbc:mysql://db-5308.cs.dal.ca:3306/CSCI5308_6_DEVINT?serverTimezone=UTC", "CSCI5308_6_DEVINT_USER", "ZD8gnU7BsJ");
+                            .getConnection(url, userName, password);
         }
         catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
