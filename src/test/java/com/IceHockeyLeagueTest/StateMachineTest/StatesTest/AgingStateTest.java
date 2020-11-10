@@ -27,9 +27,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 

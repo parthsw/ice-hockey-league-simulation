@@ -10,7 +10,6 @@ import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.AdvanceTimeState;
-import com.IceHockeyLeague.StateMachine.States.TrainingState;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

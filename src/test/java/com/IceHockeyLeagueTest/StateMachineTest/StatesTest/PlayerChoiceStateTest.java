@@ -5,13 +5,10 @@ import com.IO.IOFactory;
 import com.IOTest.IOMock;
 import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
-import com.IceHockeyLeague.StateMachine.States.LoadTeamState;
 import com.IceHockeyLeague.StateMachine.States.SimulateState;
-import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.*;
 
 public class PlayerChoiceStateTest {

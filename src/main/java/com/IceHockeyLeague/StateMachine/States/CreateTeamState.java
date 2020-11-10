@@ -3,7 +3,8 @@ package com.IceHockeyLeague.StateMachine.States;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
-import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
@@ -13,8 +14,6 @@ import com.IceHockeyLeague.LeagueManager.Coach.*;
 import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
 
 import java.util.*;
-
-import java.util.ArrayList;
 
 public class CreateTeamState extends AbstractState {
 
