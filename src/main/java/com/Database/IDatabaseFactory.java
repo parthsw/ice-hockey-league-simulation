@@ -36,4 +36,5 @@ public interface IDatabaseFactory {
 
     IGamePlayConfigPersistence createGamePlayConfigPersistence();
 
+    PropertiesLoader createPropertiesLoader();
 }

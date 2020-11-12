@@ -62,7 +62,7 @@ public class TeamPersistence implements ITeamPersistence {
             myCall.setInt(1, divisionId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                ITeam team = new Team();
+                ITeam team = leagueManagerFactory.createTeam();
                 team.setTeamID(result.getInt("teamID"));
                 team.setDivisionID(result.getInt("divisionID"));
                 team.setTeamName(result.getString("teamName"));

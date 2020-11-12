@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertiesLoader {
-
     FileInputStream fileInputStream;
     public static String Url;
     public static String Username;

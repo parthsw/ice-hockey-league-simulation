@@ -1,9 +1,9 @@
 package com.Database;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
-import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
@@ -13,9 +13,11 @@ import java.util.List;
 
 public class ManagerPersistence implements IManagerPersistence {
     private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
 
     public ManagerPersistence() {
         databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     private boolean saveBaseManager(IManager manager, CallableStatement myCall) throws SQLException {
@@ -102,7 +104,7 @@ public class ManagerPersistence implements IManagerPersistence {
             myCall.setInt(1,leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                IManager manager = new Manager();
+                IManager manager = leagueManagerFactory.createManager();
                 manager.setManagerID(result.getInt("managerID"));
                 manager.setTeamID(result.getInt("teamID"));
                 manager.setLeagueID(result.getInt("leagueID"));

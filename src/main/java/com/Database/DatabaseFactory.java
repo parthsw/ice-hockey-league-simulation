@@ -112,4 +112,9 @@ public class DatabaseFactory implements IDatabaseFactory {
         }
         return gamePlayConfigDB;
     }
+
+    @Override
+    public PropertiesLoader createPropertiesLoader() {
+        return new PropertiesLoader();
+    }
 }
