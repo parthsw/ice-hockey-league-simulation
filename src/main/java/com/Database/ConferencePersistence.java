@@ -1,18 +1,20 @@
 package com.Database;
 
 import com.AbstractAppFactory;
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 
 import java.sql.*;
 import java.util.List;
 
 public class ConferencePersistence implements IConferencePersistence {
     private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
 
     public ConferencePersistence() {
         databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     @Override
@@ -53,7 +55,7 @@ public class ConferencePersistence implements IConferencePersistence {
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                IConference conference = new Conference();
+                IConference conference = leagueManagerFactory.createConference();
                 conference.setConferenceID(result.getInt("conferenceID"));
                 conference.setLeagueID(result.getInt("leagueID"));
                 conference.setConferenceName(result.getString("name"));

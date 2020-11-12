@@ -1,6 +1,7 @@
 package com.Database;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 
 import java.util.List;
@@ -8,9 +9,11 @@ import java.sql.*;
 
 public class TeamPlayerPersistence implements ITeamPlayerPersistence {
     private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
 
     public TeamPlayerPersistence() {
         databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     @Override
@@ -84,8 +87,8 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
             myCall.setInt(1, teamId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                ITeamPlayer player = new TeamPlayer();
-                IPlayerStats stats = new PlayerStats();
+                ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+                IPlayerStats stats = leagueManagerFactory.createPlayerStats();
                 stats.setPosition(result.getString("position"));
                 stats.setSkating(result.getInt("skating"));
                 stats.setShooting(result.getInt("shooting"));
