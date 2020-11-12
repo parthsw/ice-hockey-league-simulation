@@ -18,10 +18,11 @@ public class AdvanceTimeStateTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory appFactory = AppFactoryTest.createAppFactoryTest();
-        stateMachineFactory = appFactory.createStateMachineFactory();
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
-        AbstractAppFactory.setStateMachineFactory(stateMachineFactory);
+        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Test

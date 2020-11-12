@@ -43,14 +43,14 @@ public class TradeDecisionTest {
         TradeDecision object = new TradeDecision(offered, requested, 0);
         boolean decision = object.tradeDecision();
         if (requestedSum > offeredSum) {
-            Assert.assertEquals(false, decision);
+            Assert.assertFalse(decision);
         } else {
-            Assert.assertEquals(true, decision);
+            Assert.assertTrue(decision);
         }
 
         TradeDecision object2 = new TradeDecision(offered, requested, 1);
         boolean decision2 = object2.tradeDecision();
-        Assert.assertEquals(true, decision2);
+        Assert.assertTrue(decision2);
         System.out.println(decision);
         System.out.println(decision2);
         System.out.println("Requested " + requestedSum);

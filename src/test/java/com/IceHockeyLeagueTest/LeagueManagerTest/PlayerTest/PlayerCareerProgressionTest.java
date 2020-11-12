@@ -31,11 +31,12 @@ public class PlayerCareerProgressionTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory appFactory = AppFactoryTest.createAppFactoryTest();
-        leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
-        AbstractAppFactory.setLeagueManagerFactory(leagueManagerFactory);
-        AbstractAppFactory.setDatabaseFactory(databaseFactory);
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
         randomChanceMock = Mockito.mock(RandomChance.class);
         playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChanceMock);
         player = leagueManagerFactory.createPlayer();

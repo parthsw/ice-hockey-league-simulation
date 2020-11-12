@@ -21,7 +21,7 @@ public class ConferenceTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
         databaseFactory = appFactory.createDatabaseFactory();

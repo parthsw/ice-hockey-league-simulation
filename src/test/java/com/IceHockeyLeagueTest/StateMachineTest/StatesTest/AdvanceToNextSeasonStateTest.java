@@ -37,13 +37,14 @@ public class AdvanceToNextSeasonStateTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory appFactory = AppFactoryTest.createAppFactoryTest();
-        stateMachineFactory = appFactory.createStateMachineFactory();
-        leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
-        AbstractAppFactory.setStateMachineFactory(stateMachineFactory);
-        AbstractAppFactory.setLeagueManagerFactory(leagueManagerFactory);
-        AbstractAppFactory.setDatabaseFactory(databaseFactory);
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
     }
 
     private ILeague createDummyLeague() {

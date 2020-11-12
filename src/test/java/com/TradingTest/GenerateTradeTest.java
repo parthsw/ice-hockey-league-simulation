@@ -14,6 +14,7 @@ import org.junit.Test;
 import java.util.Random;
 
 public class GenerateTradeTest {
+
     @Test
     public void generateTradeTest() {
         ITeam team1 = new Team();

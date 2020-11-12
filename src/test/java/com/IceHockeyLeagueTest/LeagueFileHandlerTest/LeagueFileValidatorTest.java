@@ -1,6 +1,7 @@
 package com.IceHockeyLeagueTest.LeagueFileHandlerTest;
 
 import com.AbstractAppFactory;
+import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
 
@@ -17,7 +18,8 @@ public class LeagueFileValidatorTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory appFactory = AbstractAppFactory.createAppFactory();
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
         leagueFileHandlerFactory = AbstractAppFactory.getLeagueFileHandlerFactory();
     }

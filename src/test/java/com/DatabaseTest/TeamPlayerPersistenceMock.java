@@ -14,7 +14,7 @@ public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public TeamPlayerPersistenceMock() {
-        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
