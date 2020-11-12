@@ -45,8 +45,7 @@ public class AppFactoryTest extends AbstractAppFactory {
                 leagueFileHandlerFactory.createLeagueFileValidator());
     }
 
-    public static AbstractAppFactory createAppFactoryTest() {
+    public static AbstractAppFactory createAppFactory() {
         return new AppFactoryTest();
     }
-
 }

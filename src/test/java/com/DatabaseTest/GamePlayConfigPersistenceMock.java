@@ -9,7 +9,7 @@ public class GamePlayConfigPersistenceMock implements IGamePlayConfigPersistence
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public GamePlayConfigPersistenceMock() {
-        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }

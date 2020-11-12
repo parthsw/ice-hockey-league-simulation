@@ -1,6 +1,7 @@
 package com.IOTest;
 
 import com.AbstractAppFactory;
+import com.AppFactoryTest;
 import com.IO.IIOFactory;
 import com.IO.IAppOutput;
 import org.junit.*;
@@ -16,7 +17,8 @@ public class CommandLineOutputTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory appFactory = AbstractAppFactory.createAppFactory();
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
         ioFactory = AbstractAppFactory.getIOFactory();
     }

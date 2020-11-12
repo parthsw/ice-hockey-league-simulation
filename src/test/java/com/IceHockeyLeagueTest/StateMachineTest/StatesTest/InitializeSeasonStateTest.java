@@ -16,7 +16,8 @@ public class InitializeSeasonStateTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory appFactory = AppFactoryTest.createAppFactoryTest();
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         stateMachineFactory = appFactory.createStateMachineFactory();
     }
 

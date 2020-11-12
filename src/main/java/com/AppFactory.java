@@ -45,4 +45,7 @@ public class AppFactory extends AbstractAppFactory {
                 leagueFileHandlerFactory.createLeagueFileValidator());
     }
 
+    public static AbstractAppFactory createAppFactory() {
+        return new AppFactory();
+    }
 }

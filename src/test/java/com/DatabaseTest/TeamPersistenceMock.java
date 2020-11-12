@@ -22,7 +22,7 @@ public class TeamPersistenceMock implements ITeamPersistence {
     private final IDatabaseFactory databaseFactory;
 
     public TeamPersistenceMock() {
-        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
         databaseFactory = appFactory.createDatabaseFactory();

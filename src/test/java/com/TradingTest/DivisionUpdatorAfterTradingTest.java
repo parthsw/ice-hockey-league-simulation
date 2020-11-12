@@ -27,7 +27,8 @@ public class DivisionUpdatorAfterTradingTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory appFactory = AppFactoryTest.createAppFactoryTest();
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 

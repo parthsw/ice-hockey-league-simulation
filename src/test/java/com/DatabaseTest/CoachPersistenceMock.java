@@ -13,7 +13,7 @@ public class CoachPersistenceMock implements ICoachPersistence {
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public CoachPersistenceMock() {
-        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }

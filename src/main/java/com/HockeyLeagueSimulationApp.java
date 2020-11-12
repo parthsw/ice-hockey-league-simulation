@@ -12,7 +12,7 @@ public class HockeyLeagueSimulationApp {
     }
 
     private static void initializeFactories() {
-        AbstractAppFactory.setAppFactory(new AppFactory());
+        AbstractAppFactory.setAppFactory(AppFactory.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
 
         AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());

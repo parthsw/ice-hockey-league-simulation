@@ -37,6 +37,6 @@ public class TradeTest {
         testObj.setSendingPlayers(dummyPlayers);
         testObj.setReceivingPlayers(dummyPlayers);
         boolean success = testObj.validateTrade();
-        Assert.assertEquals(true, success);
+        Assert.assertTrue(success);
     }
 }

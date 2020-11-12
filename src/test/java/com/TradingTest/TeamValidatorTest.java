@@ -16,7 +16,7 @@ public class TeamValidatorTest {
     @Test
     public void validateTeamNumberTest() {
         ITeam team = new Team();
-        List<IFreeAgent> agents = new ArrayList<IFreeAgent>();
+        List<IFreeAgent> agents = new ArrayList<>();
         String[] positions = new String[]{"Goalie", "Forward", "Defence"};
         Random random = new Random();
         int skater = 0;

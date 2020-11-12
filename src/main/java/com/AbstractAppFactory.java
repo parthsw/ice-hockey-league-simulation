@@ -21,10 +21,6 @@ public abstract class AbstractAppFactory {
     public abstract ILeagueManagerFactory createLeagueManagerFactory();
     public abstract IStateMachineFactory createStateMachineFactory();
 
-    public static AbstractAppFactory createAppFactory() {
-        return new AppFactory();
-    }
-
     public static AbstractAppFactory getAppFactory() {
         return appFactory;
     }

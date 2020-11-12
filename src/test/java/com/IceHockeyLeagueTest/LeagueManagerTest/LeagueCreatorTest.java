@@ -17,10 +17,10 @@ public class LeagueCreatorTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-        leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        AbstractAppFactory.setLeagueManagerFactory(leagueManagerFactory);
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
     @Test
     public void createLeagueTest() {
