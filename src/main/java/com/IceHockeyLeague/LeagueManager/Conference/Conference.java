@@ -84,12 +84,7 @@ public class Conference implements IConference {
 
     @Override
     public boolean isNullOrEmpty(String conferenceName) {
-        if(conferenceName == null || conferenceName.equals("")){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (conferenceName == null || conferenceName.equals(""));
     }
 
     @Override

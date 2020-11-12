@@ -92,12 +92,7 @@ public class Coach implements ICoach {
 
     @Override
     public boolean isNullOrEmpty(String coachName) {
-        if(coachName == null || coachName.equals("")){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (coachName == null || coachName.equals(""));
     }
 
     @Override

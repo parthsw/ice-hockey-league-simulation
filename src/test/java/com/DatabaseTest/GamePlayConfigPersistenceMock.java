@@ -1,35 +1,44 @@
-package com.IceHockeyLeagueTest.LeagueManagerTest.GamePlayConfigTest;
+package com.DatabaseTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 
-public class GamePlayConfigDBMock implements IGamePlayConfigPersistence {
+public class GamePlayConfigPersistenceMock implements IGamePlayConfigPersistence {
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public GamePlayConfigPersistenceMock() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+    }
 
     @Override
     public boolean saveGamePlayConfig(IGamePlayConfig gamePlayConfig) {
         gamePlayConfig.setGamePlayConfigID(2);
         gamePlayConfig.setLeagueID(2);
 
-        IAgingConfig agingConfig = AbstractLeagueManagerFactory.getFactory().getAgingConfig();
+        IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setAverageRetirementAge(33);
         agingConfig.setMaximumAge(57);
         gamePlayConfig.setAgingConfig(agingConfig);
 
-        IGameResolverConfig gameResolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
+        IGameResolverConfig gameResolverConfig = leagueManagerFactory.createGameResolverConfig();
         gameResolverConfig.setRandomWinChance(0.2f);
         gamePlayConfig.setGameResolverConfig(gameResolverConfig);
 
-        IInjuryConfig injuryConfig = AbstractLeagueManagerFactory.getFactory().getInjuryConfig();
+        IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
         injuryConfig.setRandomInjuryChance(0.14f);
         injuryConfig.setInjuryDaysLow(10);
         injuryConfig.setInjuryDaysHigh(340);
         gamePlayConfig.setInjuryConfig(injuryConfig);
 
-        ITrainingConfig trainingConfig = AbstractLeagueManagerFactory.getFactory().getTrainingConfig();
+        ITrainingConfig trainingConfig = leagueManagerFactory.createTrainingConfig();
         trainingConfig.setDaysUntilStatIncreaseCheck(150);
         gamePlayConfig.setTrainingConfig(trainingConfig);
 
-        ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
+        ITradingConfig tradingConfig = leagueManagerFactory.createTradingConfig();
         tradingConfig.setLossPoint(6);
         tradingConfig.setRandomTradeOfferChance(0.45f);
         tradingConfig.setMaxPlayersPerTrade(4);
@@ -44,26 +53,26 @@ public class GamePlayConfigDBMock implements IGamePlayConfigPersistence {
         gamePlayConfig.setGamePlayConfigID(1);
         gamePlayConfig.setLeagueID(leagueId);
 
-        IAgingConfig agingConfig = AbstractLeagueManagerFactory.getFactory().getAgingConfig();
+        IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setAverageRetirementAge(35);
         agingConfig.setMaximumAge(50);
         gamePlayConfig.setAgingConfig(agingConfig);
 
-        IGameResolverConfig gameResolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
+        IGameResolverConfig gameResolverConfig = leagueManagerFactory.createGameResolverConfig();
         gameResolverConfig.setRandomWinChance(0.1f);
         gamePlayConfig.setGameResolverConfig(gameResolverConfig);
 
-        IInjuryConfig injuryConfig = AbstractLeagueManagerFactory.getFactory().getInjuryConfig();
+        IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
         injuryConfig.setRandomInjuryChance(0.05f);
         injuryConfig.setInjuryDaysLow(1);
         injuryConfig.setInjuryDaysHigh(260);
         gamePlayConfig.setInjuryConfig(injuryConfig);
 
-        ITrainingConfig trainingConfig = AbstractLeagueManagerFactory.getFactory().getTrainingConfig();
+        ITrainingConfig trainingConfig = leagueManagerFactory.createTrainingConfig();
         trainingConfig.setDaysUntilStatIncreaseCheck(100);
         gamePlayConfig.setTrainingConfig(trainingConfig);
 
-        ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
+        ITradingConfig tradingConfig = leagueManagerFactory.createTradingConfig();
         tradingConfig.setLossPoint(8);
         tradingConfig.setRandomTradeOfferChance(0.05f);
         tradingConfig.setMaxPlayersPerTrade(2);

@@ -1,5 +1,6 @@
 package com.Database;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Manager.Manager;
@@ -11,6 +12,11 @@ import java.sql.Types;
 import java.util.List;
 
 public class ManagerPersistence implements IManagerPersistence {
+    private final IDatabaseFactory databaseFactory;
+
+    public ManagerPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+    }
 
     private boolean saveBaseManager(IManager manager, CallableStatement myCall) throws SQLException {
         String managerID = "";
@@ -30,7 +36,7 @@ public class ManagerPersistence implements IManagerPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoManager(?,?,?,?)");
             myCall.setInt(1, manager.getTeamID());
             return saveBaseManager(manager, myCall);
@@ -48,7 +54,7 @@ public class ManagerPersistence implements IManagerPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoManager(?,?,?,?)");
             myCall.setNull(1, Types.INTEGER);
             return saveBaseManager(manager, myCall);
@@ -66,7 +72,7 @@ public class ManagerPersistence implements IManagerPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadTeamManager(?)");
             myCall.setInt(1,teamId);
             ResultSet result = myCall.executeQuery();
@@ -91,7 +97,7 @@ public class ManagerPersistence implements IManagerPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadLeagueManagers(?)");
             myCall.setInt(1,leagueId);
             ResultSet result = myCall.executeQuery();

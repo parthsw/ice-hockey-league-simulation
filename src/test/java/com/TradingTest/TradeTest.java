@@ -1,5 +1,4 @@
-package com.Trading;
-
+package com.TradingTest;
 
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
@@ -7,12 +6,12 @@ import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.Trading.Trade;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class TradeTest {
 

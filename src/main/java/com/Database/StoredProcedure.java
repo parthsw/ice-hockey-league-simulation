@@ -9,8 +9,8 @@ public class StoredProcedure implements IStoredProcedure {
     private CallableStatement callableStatement;
     private final IDBConnection connectionManager;
 
-    public StoredProcedure() {
-        connectionManager = AbstractDatabaseFactory.getFactory().getDBConnection();
+    public StoredProcedure(IDatabaseFactory databaseFactory) {
+        connectionManager = databaseFactory.createDBConnection();
         connection = connectionManager.getConnection();
     }
 

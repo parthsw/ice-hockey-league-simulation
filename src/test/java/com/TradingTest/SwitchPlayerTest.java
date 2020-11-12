@@ -1,12 +1,11 @@
-package com.Trading;
+package com.TradingTest;
 
 import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.Trading.SwitchPlayer;
 import org.junit.Assert;
 import org.junit.Test;
 
-
 public class SwitchPlayerTest {
-
 
     @Test
     public void teamToFreeTradeTest() {
@@ -22,7 +21,6 @@ public class SwitchPlayerTest {
         Assert.assertEquals("Sagar", agent.getPlayerName());
         Assert.assertEquals("Defence", agent.getPlayerStats().getPosition());
         Assert.assertEquals(10, (int) agent.getPlayerStats().getStrength());
-
     }
 
     @Test

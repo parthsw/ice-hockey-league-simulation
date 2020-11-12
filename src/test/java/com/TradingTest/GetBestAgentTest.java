@@ -1,13 +1,12 @@
-package com.Trading;
-
+package com.TradingTest;
 
 import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.Trading.GetBestAgent;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class GetBestAgentTest {
 
@@ -27,7 +26,7 @@ public class GetBestAgentTest {
         agent2.setPlayerName("test player 2");
         agent2.setPlayerStats(stats2);
 
-        List<IFreeAgent> agentList = new ArrayList<IFreeAgent>();
+        List<IFreeAgent> agentList = new ArrayList<>();
         agentList.add(agent1);
         agentList.add(agent2);
 
@@ -80,7 +79,7 @@ public class GetBestAgentTest {
         agent2.setPlayerName("test player 2");
         agent2.setPlayerStats(stats2);
 
-        List<IFreeAgent> agentList = new ArrayList<IFreeAgent>();
+        List<IFreeAgent> agentList = new ArrayList<>();
         agentList.add(agent1);
         agentList.add(agent2);
 

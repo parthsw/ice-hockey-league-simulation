@@ -1,19 +1,20 @@
 package com.IceHockeyLeague.LeagueFileHandler;
 
-public class LeagueFileHandlerFactory extends AbstractLeagueFileHandlerFactory {
+public class LeagueFileHandlerFactory implements ILeagueFileHandlerFactory {
 
     @Override
-    public ILeagueFileReader getLeagueFileReader() {
+    public ILeagueFileReader createLeagueFileReader() {
         return new LeagueFileReader();
     }
 
     @Override
-    public IJsonParser getJsonParser() {
+    public IJsonParser createJsonParser() {
         return new JsonParser();
     }
 
     @Override
-    public ILeagueFileValidator getLeagueFileValidator() {
+    public ILeagueFileValidator createLeagueFileValidator() {
         return new LeagueFileValidator();
     }
+
 }

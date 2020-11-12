@@ -1,18 +1,25 @@
 package com.Database;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 
 import java.sql.*;
 
 public class LeaguePersistence implements ILeaguePersistence {
+    private final IDatabaseFactory databaseFactory;
+
+    public LeaguePersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+    }
+
     @Override
     public boolean saveLeague(ILeague league) {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         String leagueID = null;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoLeague(?,?,?)");
 
             myCall.setString(1, league.getLeagueName());
@@ -38,7 +45,7 @@ public class LeaguePersistence implements ILeaguePersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadLeague(?)");
 
             myCall.setInt(1, leagueId);
@@ -64,7 +71,7 @@ public class LeaguePersistence implements ILeaguePersistence {
         CallableStatement myCall;
         String leagueID = null;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("checkIfLeagueNameExists(?)");
             myCall.setString(1, leagueName);
             ResultSet result = myCall.executeQuery();

@@ -1,22 +1,30 @@
 package com.Database;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 
 import java.sql.*;
 import java.util.List;
 
 public class FreeAgentPersistence implements IFreeAgentPersistence {
+    private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public FreeAgentPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
 
     @Override
     public boolean saveFreeAgent(IFreeAgent freeAgent) {
-        IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
+        IDateConversion sqlDateConversion = databaseFactory.createSQLDateConversion();
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         String playerID = null;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoFreeAgent(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             IPlayerStats freeAgentStats = freeAgent.getPlayerStats();
@@ -68,16 +76,16 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
 
     @Override
     public boolean loadFreeAgents(int leagueId, List<IFreeAgent> freeAgents) {
-        IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
+        IDateConversion sqlDateConversion = databaseFactory.createSQLDateConversion();
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadFreeAgents(?)");
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                IPlayerStats freeAgentStats = AbstractLeagueManagerFactory.getFactory().getPlayerStats();
+                IPlayerStats freeAgentStats = leagueManagerFactory.createPlayerStats();
                 freeAgentStats.setPosition(result.getString("position"));
                 freeAgentStats.setSkating(result.getInt("skating"));
                 freeAgentStats.setShooting(result.getInt("shooting"));
@@ -85,7 +93,7 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
                 freeAgentStats.setSaving(result.getInt("saving"));
                 freeAgentStats.setStrength(result.getFloat("strength"));
 
-                IFreeAgent freeAgent = AbstractLeagueManagerFactory.getFactory().getFreeAgent();
+                IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
                 freeAgent.setLeagueID(result.getInt("leagueID"));
                 freeAgent.setFreeAgentID(result.getInt("freeAgentID"));
                 freeAgent.setPlayerName(result.getString("name"));

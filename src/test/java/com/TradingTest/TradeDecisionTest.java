@@ -1,8 +1,9 @@
-package com.Trading;
+package com.TradingTest;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
+import com.Trading.TradeDecision;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -10,12 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 public class TradeDecisionTest {
 
     @Test
     public void tradeDecision() {
-
         List<ITeamPlayer> offered = new ArrayList<>();
         List<ITeamPlayer> requested = new ArrayList<>();
         int offeredSum = 0;

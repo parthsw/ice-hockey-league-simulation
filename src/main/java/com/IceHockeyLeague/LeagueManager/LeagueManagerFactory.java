@@ -1,6 +1,5 @@
 package com.IceHockeyLeague.LeagueManager;
 
-import com.Database.*;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
@@ -12,194 +11,112 @@ import com.IceHockeyLeague.LeagueManager.Team.*;
 
 import java.util.Random;
 
-public class LeagueManagerFactory extends AbstractLeagueManagerFactory {
-
-    private ILeaguePersistence leagueDB = null;
-    private IConferencePersistence conferenceDB = null;
-    private IDivisionPersistence divisionDB = null;
-    private ITeamPersistence teamDB = null;
-    private ITeamPlayerPersistence teamPlayerDB = null;
-    private IFreeAgentPersistence freeAgentDB = null;
-    private ICoachPersistence coachDB = null;
-    private IManagerPersistence managerDB = null;
-    private IGamePlayConfigPersistence gamePlayConfigDB = null;
+public class LeagueManagerFactory implements ILeagueManagerFactory {
 
     private IRandomChance randomChance = null;
 
     @Override
-    public ILeagueCreator getLeagueCreator() {
+    public ILeagueCreator createLeagueCreator() {
         return new LeagueCreator();
     }
 
     @Override
-    public ILeague getLeague() {
+    public ILeague createLeague() {
         return new League();
     }
 
     @Override
-    public ILeaguePersistence getLeagueDB() {
-        if(leagueDB == null) {
-            leagueDB = new LeaguePersistence();
-        }
-        return leagueDB;
-    }
-
-    @Override
-    public IConference getConference() {
+    public IConference createConference() {
         return new Conference();
     }
 
     @Override
-    public IConferencePersistence getConferenceDB() {
-        if(conferenceDB == null) {
-            conferenceDB = new ConferencePersistence();
-        }
-        return conferenceDB;
-    }
-
-    @Override
-    public IDivision getDivision() {
+    public IDivision createDivision() {
         return new Division();
     }
 
     @Override
-    public IDivisionPersistence getDivisionDB() {
-        if(divisionDB == null) {
-            divisionDB = new DivisionPersistence();
-        }
-        return divisionDB;
-    }
-
-    @Override
-    public ITeam getTeam() {
+    public ITeam createTeam() {
         return new Team();
     }
 
     @Override
-    public ITeamStrengthCalculator getTeamStrengthCalculator() {
+    public ITeamStrengthCalculator createTeamStrengthCalculator() {
         return new TeamStrengthCalculator();
     }
 
     @Override
-    public ITeamPersistence getTeamDB() {
-        if(teamDB == null) {
-            teamDB = new TeamPersistence();
-        }
-        return teamDB;
-    }
-
-    @Override
-    public IPlayer getPlayer() {
+    public IPlayer createPlayer() {
         return new Player();
     }
 
     @Override
-    public IPlayerStats getPlayerStats() {
+    public IPlayerStats createPlayerStats() {
         return new PlayerStats();
     }
 
     @Override
-    public IPlayerCareerProgression getPlayerCareerProgression() {
-        return new PlayerCareerProgression(getRandomChance());
+    public IPlayerCareerProgression createPlayerCareerProgression(IRandomChance randomChance) {
+        return new PlayerCareerProgression(randomChance);
     }
 
     @Override
-    public ITeamPlayer getTeamPlayer() {
+    public ITeamPlayer createTeamPlayer() {
         return new TeamPlayer();
     }
 
     @Override
-    public ITeamPlayerPersistence getTeamPlayerDB() {
-        if(teamPlayerDB == null) {
-            teamPlayerDB = new TeamPlayerPersistence();
-        }
-        return teamPlayerDB;
-    }
-
-    @Override
-    public IFreeAgent getFreeAgent() {
+    public IFreeAgent createFreeAgent() {
         return new FreeAgent();
     }
 
     @Override
-    public IFreeAgentPersistence getFreeAgentDB() {
-        if(freeAgentDB == null) {
-            freeAgentDB = new FreeAgentPersistence();
-        }
-        return freeAgentDB;
-    }
-
-    @Override
-    public ICoach getCoach() {
+    public ICoach createCoach() {
         return new Coach();
     }
 
     @Override
-    public ICoachStats getCoachStats() {
+    public ICoachStats createCoachStats() {
         return new CoachStats();
     }
 
     @Override
-    public ICoachPersistence getCoachDB() {
-        if(coachDB == null) {
-            coachDB = new CoachPersistence();
-        }
-        return coachDB;
-    }
-
-    @Override
-    public IManager getManager() {
+    public IManager createManager() {
         return new Manager();
     }
 
     @Override
-    public IManagerPersistence getManagerDB() {
-        if(managerDB == null) {
-            managerDB = new ManagerPersistence();
-        }
-        return managerDB;
-    }
-
-    @Override
-    public IGamePlayConfig getGamePlayConfig() {
+    public IGamePlayConfig createGamePlayConfig() {
         return new GamePlayConfig();
     }
 
     @Override
-    public IGamePlayConfigPersistence getGamePlayConfigDB() {
-        if(gamePlayConfigDB == null) {
-            gamePlayConfigDB = new GamePlayConfigPersistence();
-        }
-        return gamePlayConfigDB;
-    }
-
-    @Override
-    public IAgingConfig getAgingConfig() {
+    public IAgingConfig createAgingConfig() {
         return new AgingConfig();
     }
 
     @Override
-    public IGameResolverConfig getGameResolverConfig() {
+    public IGameResolverConfig createGameResolverConfig() {
         return new GameResolverConfig();
     }
 
     @Override
-    public IInjuryConfig getInjuryConfig() {
+    public IInjuryConfig createInjuryConfig() {
         return new InjuryConfig();
     }
 
     @Override
-    public ITrainingConfig getTrainingConfig() {
+    public ITrainingConfig createTrainingConfig() {
         return new TrainingConfig();
     }
 
     @Override
-    public ITradingConfig getTradingConfig() {
+    public ITradingConfig createTradingConfig() {
         return new TradingConfig();
     }
 
     @Override
-    public IRandomChance getRandomChance() {
+    public IRandomChance createRandomChance() {
         if(randomChance == null) {
             return new RandomChance(new Random());
         }

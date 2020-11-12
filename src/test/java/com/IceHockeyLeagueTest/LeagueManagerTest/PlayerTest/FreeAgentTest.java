@@ -1,79 +1,82 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.Database.IDatabaseFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
-import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FreeAgentTest {
-    private AbstractLeagueManagerFactory leagueManagerFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static IDatabaseFactory databaseFactory;
 
-    @Before
-    public void setup() {
-        LeagueManagerFactory.setFactory(new TestLeagueManagerFactory());
-        leagueManagerFactory = AbstractLeagueManagerFactory.getFactory();
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        databaseFactory = appFactory.createDatabaseFactory();
     }
-
     @Test
     public void ConstructorTest() {
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         Assert.assertEquals(-1, freeAgent.getFreeAgentID());
         Assert.assertEquals(-1, freeAgent.getLeagueID());
     }
 
     @Test
     public void getFreeAgentIDTest() {
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         freeAgent.setFreeAgentID(2);
         Assert.assertEquals(2, freeAgent.getFreeAgentID());
     }
 
     @Test
     public void setFreeAgentID() {
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         freeAgent.setFreeAgentID(11);
         Assert.assertEquals(11, freeAgent.getFreeAgentID());
     }
 
     @Test
     public void getLeagueIDTest() {
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         freeAgent.setLeagueID(9);
         Assert.assertEquals(9, freeAgent.getLeagueID());
     }
 
     @Test
     public void setLeagueIDTest() {
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         freeAgent.setLeagueID(17);
         Assert.assertEquals(17, freeAgent.getLeagueID());
     }
 
     @Test
     public void isValidTest() {
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         Assert.assertFalse(freeAgent.isValid());
     }
 
     @Test
     public void convertToTeamPlayerTest() {
-        IFreeAgentPersistence freeAgentDB = leagueManagerFactory.getFreeAgentDB();
+        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
         List<IFreeAgent> freeAgents = new ArrayList<>();
         freeAgentDB.loadFreeAgents(1, freeAgents);
 
         IFreeAgent freeAgent = freeAgents.get(1);
-        ITeamPlayer teamPlayer = leagueManagerFactory.getTeamPlayer();
+        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
 
         freeAgent.convertToTeamPlayer(teamPlayer);
 
@@ -85,8 +88,8 @@ public class FreeAgentTest {
     @Test
     public void bestFreeAgentForPosition() {
         List<IFreeAgent> freeAgents = new ArrayList<>();
-        IFreeAgentPersistence freeAgentDB = leagueManagerFactory.getFreeAgentDB();
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
 
         freeAgentDB.loadFreeAgents(1, freeAgents);
         Assert.assertNull(freeAgent.bestFreeAgentForPosition(freeAgents, "goalie"));
@@ -98,8 +101,8 @@ public class FreeAgentTest {
 
     @Test
     public void saveFreeAgentTest() {
-        IFreeAgentPersistence freeAgentDB = leagueManagerFactory.getFreeAgentDB();
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
 
         freeAgent.saveFreeAgent(freeAgentDB);
 
@@ -109,10 +112,10 @@ public class FreeAgentTest {
 
     @Test
     public void handleFreeAgentRetirementTest() {
-        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.getPlayerCareerProgression();
-        ILeaguePersistence leagueDB = leagueManagerFactory.getLeagueDB();
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
-        ILeague league = leagueManagerFactory.getLeague();
+        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
+        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+        ILeague league = leagueManagerFactory.createLeague();
         leagueDB.loadLeague(1, league);
 
         Assert.assertFalse(freeAgent.handleFreeAgentRetirement(playerCareerProgression, league));

@@ -1,13 +1,14 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
+import com.Database.IDatabaseFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,9 @@ public class LoadTeamState extends AbstractState {
     private static final String TEAM_NOT_EXIST = "The provided team name is not available in any persisted leagues.";
     private static final String LEAGUE_SELECTION_PROMPT = "Please enter the ID of a league that you want to load";
 
+    private final ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    private final IDatabaseFactory databaseFactory = AbstractAppFactory.getDatabaseFactory();
+    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     private final IAppInput appInput;
     private final IAppOutput appOutput;
 
@@ -40,7 +44,7 @@ public class LoadTeamState extends AbstractState {
 
     private AbstractState processLeagueLoad() {
         String teamName;
-        ITeam team = LeagueManagerFactory.getFactory().getTeam();
+        ITeam team = leagueManagerFactory.createTeam();
 
         while(true) {
             teamName = appInput.getInput();
@@ -49,7 +53,7 @@ public class LoadTeamState extends AbstractState {
                 appOutput.displayError(TEAM_NAME_EMPTY);
                 continue;
             }
-            ITeamPersistence teamDB = AbstractLeagueManagerFactory.getFactory().getTeamDB();
+            ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
             List<ILeague> leagueList = new ArrayList<>();
             if(team.checkIfTeamNameExists(teamDB, teamName, leagueList)) {
                 if(leagueList.size() == 0) {
@@ -67,7 +71,7 @@ public class LoadTeamState extends AbstractState {
                         appOutput.display("League ID: " + league.getLeagueID() + "& League Name: " + league.getLeagueName());
                     }
                     int leagueId = Integer.parseInt(appInput.getInput());
-                    ILeague leagueToLoad = AbstractLeagueManagerFactory.getFactory().getLeague();
+                    ILeague leagueToLoad = leagueManagerFactory.createLeague();
                     leagueToLoad.loadCompleteLeague(leagueId);
                     this.setLeague(leagueToLoad);
                 }
@@ -75,6 +79,6 @@ public class LoadTeamState extends AbstractState {
             }
         }
 
-        return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
+        return stateMachineFactory.createPlayerChoiceState();
     }
 }

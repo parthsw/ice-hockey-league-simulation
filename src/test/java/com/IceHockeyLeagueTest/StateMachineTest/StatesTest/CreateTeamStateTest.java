@@ -1,10 +1,8 @@
 package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
-import com.IO.AbstractIOFactory;
-import com.IO.IOFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
 import com.IOTest.IOMock;
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.Coach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
@@ -15,8 +13,7 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
-import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.CreateTeamState;
 import org.junit.*;
@@ -24,12 +21,19 @@ import org.junit.*;
 import java.util.*;
 import org.junit.rules.TemporaryFolder;
 
-public class CreateStateTest {
-
+public class CreateTeamStateTest {
+    private static IStateMachineFactory stateMachineFactory;
     private static IOMock ioMockInstance = null;
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
+
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory appFactory = AppFactoryTest.createAppFactoryTest();
+        stateMachineFactory = appFactory.createStateMachineFactory();
+        ioMockInstance = IOMock.instance();
+    }
 
     @Before
     public void setupSystemOutput() {
@@ -42,33 +46,16 @@ public class CreateStateTest {
         ioMockInstance.resetSystemInput();
     }
 
-    @BeforeClass
-    public static void setUp() {
-        AbstractIOFactory.setFactory(new IOFactory());
-        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
-        AbstractStateMachineFactory.setFactory(
-                new StateMachineFactory(
-                        AbstractIOFactory.getFactory().getCommandLineInput(),
-                        AbstractIOFactory.getFactory().getCommandLineOutput(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileReader(),
-                        LeagueFileHandlerFactory.getFactory().getJsonParser(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
-                )
-        );
-        ioMockInstance = IOMock.instance();
-    }
-
-
     @Test
     public void welcomeMessageTest() {
-        CreateTeamState createTeamState = (CreateTeamState) AbstractStateMachineFactory.getFactory().getCreateTeamState();
+        CreateTeamState createTeamState = (CreateTeamState) stateMachineFactory.createCreateTeamState();
         createTeamState.welcomeMessage();
         Assert.assertTrue(ioMockInstance.getOutput().contains("************Welcome to team creation************"));
     }
 
     @Test
     public void onRunTest() {
-        AbstractState createTeamState = AbstractStateMachineFactory.getFactory().getCreateTeamState();
+        AbstractState createTeamState = stateMachineFactory.createCreateTeamState();
         ioMockInstance.commandLineInput("");
         Assert.assertNull(createTeamState.onRun());
     }
@@ -95,7 +82,7 @@ public class CreateStateTest {
     @Test
     public void isConferenceNameExistTest() {
         List<IConference> conferences = new ArrayList<>();
-        boolean flag = false;
+        boolean flag;
         Conference conference1 = new Conference();
         conference1.setConferenceName("Eastern Conference");
         Conference conference2 = new Conference();
@@ -113,7 +100,7 @@ public class CreateStateTest {
     @Test
     public void isDivisionNameExistTest(){
         List<IDivision> divisions = new ArrayList<>();
-        boolean flag = false;
+        boolean flag;
         Division division1= new Division();
         division1.setDivisionName("Atlantic");
         Division division2= new Division();
@@ -131,7 +118,7 @@ public class CreateStateTest {
     @Test
     public void isTeamNameExist(){
         List<ITeam> teams = new ArrayList<>();
-        boolean flag = false;
+        boolean flag;
         ITeam team1= new Team();
         team1.setTeamName("Team 1");
         ITeam team2= new Team();
@@ -149,7 +136,7 @@ public class CreateStateTest {
     @Test
     public void isManagerNameExistTest(){
         List<IManager> managers = new ArrayList<>();
-        boolean flag = false;
+        boolean flag;
         IManager manager1 = new Manager();
         manager1.setManagerName("Parth Parmar");
         IManager manager2 = new Manager();
@@ -164,7 +151,7 @@ public class CreateStateTest {
     @Test
     public void isCoachNameExist(){
         List<ICoach> coaches = new ArrayList<>();
-        boolean flag = false;
+        boolean flag;
         ICoach coach1 = new Coach();
         coach1.setCoachName("Rajveen Singh Chandok");
         ICoach coach2 = new Coach();
