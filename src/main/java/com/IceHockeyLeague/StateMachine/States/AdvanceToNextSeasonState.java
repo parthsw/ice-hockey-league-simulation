@@ -1,14 +1,16 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IO.IAppOutput;
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
+import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -16,17 +18,20 @@ import java.time.Month;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class AdvanceToNextSeasonState extends AbstractState {
-
-    private IAppOutput appOutput;
+    private final IAppOutput appOutput;
 
     public AdvanceToNextSeasonState(IAppOutput appOutput) {
         this.appOutput = appOutput;
     }
+
     @Override
     public AbstractState onRun() {
+        ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        IRandomChance randomChance = leagueManagerFactory.createRandomChance();
+        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         ILeague league = getLeague();
 
-        IPlayerCareerProgression playerCareerProgression = AbstractLeagueManagerFactory.getFactory().getPlayerCareerProgression();
+        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChance);
 
         int seasonStartYear = league.getScheduleSystem().getRegularSeasonStartDate().getYear();
         LocalDate newDateToSet = LocalDate.of(seasonStartYear + 1, Month.SEPTEMBER, 29);
@@ -63,6 +68,6 @@ public class AdvanceToNextSeasonState extends AbstractState {
             retiredTeamPlayer.agePlayerByDays(numberOfDaysElapsed);
         }
 
-        return AbstractStateMachineFactory.getFactory().getPersistState();
+        return stateMachineFactory.createPersistState();
     }
 }

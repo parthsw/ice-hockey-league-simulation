@@ -1,14 +1,16 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamTraining;
 import com.IceHockeyLeague.LeagueManager.Team.TeamTraining;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class TrainingState extends AbstractState {
+    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
 
     @Override
     public AbstractState onRun() {
@@ -30,13 +32,13 @@ public class TrainingState extends AbstractState {
         }
 
         if (league.getScheduleSystem().anyUnplayedGamesOnThisDate(league.getLeagueDate())) {
-            nextState = AbstractStateMachineFactory.getFactory().getSimulateGameState();
+            nextState = stateMachineFactory.createSimulateGameState();
         }
         else if (league.getLeagueDate().isAfter(league.getScheduleSystem().getTradeDeadline())) {
-            nextState = AbstractStateMachineFactory.getFactory().getAgingState();
+            nextState = stateMachineFactory.createAgingState();
         }
         else {
-            nextState = AbstractStateMachineFactory.getFactory().getExecuteTradesState();
+            nextState = stateMachineFactory.createExecuteTradesState();
         }
 
         return nextState;

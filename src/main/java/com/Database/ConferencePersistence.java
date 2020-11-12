@@ -1,5 +1,6 @@
 package com.Database;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
@@ -8,6 +9,12 @@ import java.sql.*;
 import java.util.List;
 
 public class ConferencePersistence implements IConferencePersistence {
+    private final IDatabaseFactory databaseFactory;
+
+    public ConferencePersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+    }
+
     @Override
     public boolean saveConference(IConference conference) {
         String conferenceID = null;
@@ -15,7 +22,7 @@ public class ConferencePersistence implements IConferencePersistence {
         CallableStatement myCall;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoConference(?,?,?)");
             myCall.setInt(1, conference.getLeagueID());
             myCall.setString(2, conference.getConferenceName());
@@ -41,7 +48,7 @@ public class ConferencePersistence implements IConferencePersistence {
         CallableStatement myCall;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadConferences(?)");
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();

@@ -1,5 +1,6 @@
 package com.Database;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
@@ -8,6 +9,12 @@ import java.sql.*;
 import java.util.List;
 
 public class DivisionPersistence implements IDivisionPersistence {
+    private final IDatabaseFactory databaseFactory;
+
+    public DivisionPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+    }
+
     @Override
     public boolean saveDivision(IDivision division) {
         IStoredProcedure storedProcedure = null;
@@ -15,7 +22,7 @@ public class DivisionPersistence implements IDivisionPersistence {
         String divisionID = null;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoDivision(?,?,?)");
             myCall.setInt(1, division.getConferenceID());
             myCall.setString(2, division.getDivisionName());
@@ -41,7 +48,7 @@ public class DivisionPersistence implements IDivisionPersistence {
         CallableStatement myCall;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadDivisions(?)");
             myCall.setInt(1, conferenceId);
             ResultSet result = myCall.executeQuery();

@@ -84,12 +84,7 @@ public class Division implements IDivision {
 
     @Override
     public boolean isNullOrEmpty(String divisionName) {
-        if(divisionName == null || divisionName.equals("")){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (divisionName == null || divisionName.equals(""));
     }
 
     @Override

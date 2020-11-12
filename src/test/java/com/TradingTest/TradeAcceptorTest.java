@@ -1,10 +1,12 @@
-package com.Trading;
+package com.TradingTest;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.Trading.Trade;
+import com.Trading.TradeAcceptor;
 import junit.framework.Assert;
 import org.junit.Test;
 
@@ -12,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 public class TradeAcceptorTest {
-
 
     @Test
     public void acceptTrade() {
@@ -61,7 +61,5 @@ public class TradeAcceptorTest {
         for (ITeamPlayer player : resultTeam2.getPlayers()) {
             Assert.assertEquals("team1", player.getPlayerName());
         }
-
-
     }
 }

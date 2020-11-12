@@ -1,8 +1,10 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
@@ -13,14 +15,13 @@ import com.IceHockeyLeague.LeagueManager.Division.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.Manager.*;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 import java.util.*;
 
 public class CreateTeamState extends AbstractState {
 
     private static final String TEAM_CREATION = "************Welcome to team creation************";
-    private final String VALID = "VALID";
     private IAppInput appInput;
     private IAppOutput appOutput;
     private ITeam newTeam;
@@ -31,18 +32,22 @@ public class CreateTeamState extends AbstractState {
     private ITeamPlayer player;
     private List<IFreeAgent> freeAgents;
 
+    private ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+
     public CreateTeamState(IAppInput appInput, IAppOutput appOutput) {
         configureDefaults(appInput, appOutput);
     }
 
     @Override
     public AbstractState onRun() {
+        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+
         try {
             this.initializeInMemoryLeague();
             welcomeMessage();
             newTeam = this.constructNewTeam();
             this.addTeamToMemoryLeague(newConference, newDivision, newTeam);
-            return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
+            return stateMachineFactory.createPlayerChoiceState();
         } catch (Exception exception) {
             appOutput.displayError("Throwing exception");
             return null;

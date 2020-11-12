@@ -1,9 +1,10 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
 
 public class InitializeSeasonState extends AbstractState {
-
+    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     private final IAppInput appInput;
     private final IAppOutput appOutput;
 
@@ -57,6 +58,6 @@ public class InitializeSeasonState extends AbstractState {
         league.getScheduleSystem().generateRegularSeasonSchedule(league);
         league.getStandingSystem().initializeStandings(league);
 
-        return AbstractStateMachineFactory.getFactory().getAdvanceTimeState();
+        return stateMachineFactory.createAdvanceTimeState();
     }
 }

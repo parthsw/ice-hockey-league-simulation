@@ -1,6 +1,8 @@
-package com.Trading;
+package com.TradingTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.Division;
@@ -13,19 +15,20 @@ import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
-import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
+import com.Trading.DivisionUpdatorAfterTrading;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Random;
 
-
 public class DivisionUpdatorAfterTradingTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
 
     @BeforeClass
     public static void setup() {
-        AbstractLeagueManagerFactory.setFactory(new TestLeagueManagerFactory());
+        AbstractAppFactory appFactory = AppFactoryTest.createAppFactoryTest();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 
     @Test

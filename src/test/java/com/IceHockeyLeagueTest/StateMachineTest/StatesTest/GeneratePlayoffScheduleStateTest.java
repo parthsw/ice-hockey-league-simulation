@@ -1,9 +1,7 @@
 package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
-import com.IO.AbstractIOFactory;
-import com.IO.IOFactory;
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.Division;
@@ -14,8 +12,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.IceHockeyLeague.LeagueStandings.IStanding;
 import com.IceHockeyLeague.LeagueStandings.Standing;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
-import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.TrainingState;
 import org.junit.Assert;
@@ -27,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GeneratePlayoffScheduleStateTest {
+    private static IStateMachineFactory stateMachineFactory;
 
     private ILeague createDummyLeague() {
         ILeague league = new League();
@@ -312,17 +310,8 @@ public class GeneratePlayoffScheduleStateTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractIOFactory.setFactory(new IOFactory());
-        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
-        AbstractStateMachineFactory.setFactory(
-                new StateMachineFactory(
-                        AbstractIOFactory.getFactory().getCommandLineInput(),
-                        AbstractIOFactory.getFactory().getCommandLineOutput(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileReader(),
-                        LeagueFileHandlerFactory.getFactory().getJsonParser(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
-                )
-        );
+        AbstractAppFactory appFactory = AppFactoryTest.createAppFactoryTest();
+        stateMachineFactory = appFactory.createStateMachineFactory();
     }
 
     @Test
@@ -333,7 +322,7 @@ public class GeneratePlayoffScheduleStateTest {
         league.getScheduleSystem().setPlayoffStartDate(LocalDate.now());
         league.getScheduleSystem().setPlayoffEndDate(LocalDate.now().plusDays(50));
 
-        AbstractState generatePlayoffScheduleStateState = AbstractStateMachineFactory.getFactory().getGeneratePlayoffScheduleState();
+        AbstractState generatePlayoffScheduleStateState = stateMachineFactory.createGeneratePlayoffScheduleState();
         generatePlayoffScheduleStateState.setLeague(league);
 
         Assert.assertTrue(generatePlayoffScheduleStateState.onRun() instanceof TrainingState);

@@ -15,7 +15,7 @@ public class DBConnection implements IDBConnection {
     public static String driver;
     public Connection connection;
 
-     DBConnection() {
+     public DBConnection() {
         PropertiesLoader pl = new PropertiesLoader();
         properties = pl.getProperties();
         url = properties[0];

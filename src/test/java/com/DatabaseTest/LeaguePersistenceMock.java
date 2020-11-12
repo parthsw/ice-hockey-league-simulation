@@ -1,6 +1,8 @@
-package com.IceHockeyLeagueTest.LeagueManagerTest.LeagueTest;
+package com.DatabaseTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
@@ -8,11 +10,19 @@ import com.IceHockeyLeagueTest.LeagueFileHandlerTest.LeagueJsonMock;
 
 import java.time.LocalDate;
 
-public class LeagueDBMock implements ILeaguePersistence {
+public class LeaguePersistenceMock implements ILeaguePersistence {
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public LeaguePersistenceMock() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactoryTest());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+    }
+
     @Override
     public boolean saveLeague(ILeague league) {
         LeagueJsonMock leagueJsonMock = LeagueJsonMock.getInstance();
-        ILeagueCreator leagueCreator = AbstractLeagueManagerFactory.getFactory().getLeagueCreator();
+        ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
         ILeague createdLeague = leagueCreator.createLeague(leagueJsonMock.validLeagueJson());
 
         league.setLeagueName("NHL");
@@ -29,7 +39,7 @@ public class LeagueDBMock implements ILeaguePersistence {
     @Override
     public boolean loadLeague(int leagueId, ILeague league) {
         LeagueJsonMock leagueJsonMock = LeagueJsonMock.getInstance();
-        ILeagueCreator leagueCreator = AbstractLeagueManagerFactory.getFactory().getLeagueCreator();
+        ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
         ILeague createdLeague = leagueCreator.createLeague(leagueJsonMock.validLeagueJson());
 
         league.setLeagueName(createdLeague.getLeagueName());

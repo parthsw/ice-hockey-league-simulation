@@ -192,11 +192,7 @@ public class Team implements ITeam {
 
     @Override
     public boolean isNullOrEmpty(String teamName) {
-        if(teamName == null || teamName.equals("")) {
-            return true;
-        } else {
-            return false;
-        }
+        return (teamName == null || teamName.equals(""));
     }
 
     @Override

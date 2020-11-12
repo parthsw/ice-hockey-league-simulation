@@ -14,7 +14,7 @@ public class PropertiesLoader {
     public static String Driver;
 
     public String[] getProperties(){
-        String properties[] = new String[4];
+        String[] properties = new String[4];
         try {
             this.fileInputStream = new FileInputStream("../../application.properties");
         } catch (FileNotFoundException fileNotFoundException) {

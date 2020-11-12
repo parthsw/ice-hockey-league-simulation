@@ -1,13 +1,15 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class PlayerChoiceState extends AbstractState {
     private static final String NUMBER_OF_SEASONS = "Please provide the number of seasons to simulate";
     private static final String INVALID_FORMAT = "Invalid format for a number";
 
+    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     private final IAppInput appInput;
     private final IAppOutput appOutput;
 
@@ -31,6 +33,6 @@ public class PlayerChoiceState extends AbstractState {
             }
         }
 
-        return AbstractStateMachineFactory.getFactory().getSimulateState(noOfSeasons);
+        return stateMachineFactory.createSimulateState(noOfSeasons);
     }
 }

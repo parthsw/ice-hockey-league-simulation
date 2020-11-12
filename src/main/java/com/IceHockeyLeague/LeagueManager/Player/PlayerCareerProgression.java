@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
@@ -10,11 +11,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class PlayerCareerProgression implements IPlayerCareerProgression {
-    private final int INJURY_LIKELIHOOD_LOWER = 0;
-    private final int INJURY_LIKELIHOOD_HIGHER = 1;
-    private final int INJURY_LIKELIHOOD_DECIMAL = 2;
-    private final int DAYS_IN_YEAR = 365;
-
     private final IRandomChance randomChanceGenerator;
 
     public PlayerCareerProgression(IRandomChance randomChance) {
@@ -30,6 +26,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
         if(player.getInjuredStatus()) {
             return true;
         } else {
+            int INJURY_LIKELIHOOD_LOWER = 0, INJURY_LIKELIHOOD_HIGHER = 1, INJURY_LIKELIHOOD_DECIMAL = 2;
             float injuryLikelihood = randomChanceGenerator.getRandomFloatNumber(INJURY_LIKELIHOOD_LOWER, INJURY_LIKELIHOOD_HIGHER);
             float roundedInjuryLikelihood = randomChanceGenerator.roundFloatNumber(injuryLikelihood, INJURY_LIKELIHOOD_DECIMAL);
             if(roundedInjuryLikelihood < randomInjuryChance) {
@@ -60,7 +57,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
 
     @Override
     public boolean isRetired(IPlayer player, IAgingConfig agingConfig, LocalDate currentDate) {
-
+        int DAYS_IN_YEAR = 365;
         int currentAgeInDays = (player.getPlayerAge() * DAYS_IN_YEAR) + player.getElapsedDaysFromLastBDay();
         int maximumAgeInDays = (agingConfig.getMaximumAge() * DAYS_IN_YEAR);
 
@@ -97,6 +94,8 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
 
     @Override
     public boolean handleTeamPlayerRetirement(ITeamPlayer teamPlayer, ITeam team, ILeague league) {
+        ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+
         boolean isRemoved = team.removePlayer(teamPlayer);
         if(isRemoved) {
             league.addRetiredTeamPlayer(teamPlayer);
@@ -104,14 +103,14 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
             return false;
         }
 
-        IFreeAgent freeAgent = AbstractLeagueManagerFactory.getFactory().getFreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         IFreeAgent bestFreeAgent = freeAgent.bestFreeAgentForPosition(league.getFreeAgents(), teamPlayer.getPlayerStats().getPosition());
         if(bestFreeAgent == null) {
             return false;
         } else {
             boolean isFreeAgentRemoved = league.removeFreeAgent(bestFreeAgent);
             if(isFreeAgentRemoved) {
-                ITeamPlayer newTeamPlayer = AbstractLeagueManagerFactory.getFactory().getTeamPlayer();
+                ITeamPlayer newTeamPlayer = leagueManagerFactory.createTeamPlayer();
                 bestFreeAgent.convertToTeamPlayer(newTeamPlayer);
                 newTeamPlayer.setTeamID(team.getTeamID());
                 team.addPlayer(newTeamPlayer);

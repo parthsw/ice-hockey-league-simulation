@@ -1,35 +1,36 @@
 package com.IceHockeyLeagueTest.LeagueFileHandlerTest;
 
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
+import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileReader;
-import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
 import org.junit.*;
 import org.junit.rules.TemporaryFolder;
-
 import java.io.*;
 
 public class LeagueFileReaderTest {
+    private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
 
     @Rule
     public TemporaryFolder folder= new TemporaryFolder();
 
     @BeforeClass
     public static void setup() {
-        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.createAppFactory();
+        AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
+        leagueFileHandlerFactory = AbstractAppFactory.getLeagueFileHandlerFactory();
     }
 
     @Test
     public void isFileExistTest() throws IOException {
-        ILeagueFileReader leagueFileReader = AbstractLeagueFileHandlerFactory.getFactory().getLeagueFileReader();
+        ILeagueFileReader leagueFileReader = leagueFileHandlerFactory.createLeagueFileReader();
         Assert.assertFalse(leagueFileReader.isFileExist(new File("")));
-
         File tempFile = folder.newFile("test.json");
         Assert.assertTrue(leagueFileReader.isFileExist(tempFile));
     }
 
     @Test
     public void readSystemFileTest() throws IOException {
-        ILeagueFileReader leagueFileReader = AbstractLeagueFileHandlerFactory.getFactory().getLeagueFileReader();
+        ILeagueFileReader leagueFileReader = leagueFileHandlerFactory.createLeagueFileReader();
         File systemFile = folder.newFile("systemFile.txt");
 
         Assert.assertNull(leagueFileReader.readSystemFile(""));
@@ -38,8 +39,7 @@ public class LeagueFileReaderTest {
 
     @Test
     public void readAppResourceFileTest() {
-        ILeagueFileReader leagueFileReader = AbstractLeagueFileHandlerFactory.getFactory().getLeagueFileReader();
-
+        ILeagueFileReader leagueFileReader = leagueFileHandlerFactory.createLeagueFileReader();
         Assert.assertNull(leagueFileReader.readAppResourceFile(""));
         Assert.assertNull(leagueFileReader.readAppResourceFile("LeagueFile"));
     }

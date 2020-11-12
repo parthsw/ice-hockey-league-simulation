@@ -1,26 +1,27 @@
 package com.IceHockeyLeagueTest.LeagueFileHandlerTest;
 
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueFileHandler.IJsonParser;
-import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
+import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import java.io.*;
 
 public class JsonParserTest {
+    private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
 
     @BeforeClass
     public static void setup() {
-        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.createAppFactory();
+        AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
+        leagueFileHandlerFactory = AbstractAppFactory.getLeagueFileHandlerFactory();
     }
 
     @Test
     public void parseTest() {
         InputStream inputStream = new ByteArrayInputStream("{\"leagueName\": \"DHL\"}".getBytes());
-        IJsonParser jsonParser = AbstractLeagueFileHandlerFactory.getFactory().getJsonParser();
-
+        IJsonParser jsonParser = leagueFileHandlerFactory.createJsonParser();
         Assert.assertEquals(jsonParser.parse(inputStream).getString("leagueName"), "DHL");
     }
 }

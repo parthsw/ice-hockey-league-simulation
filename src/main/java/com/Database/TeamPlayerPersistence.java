@@ -1,20 +1,26 @@
 package com.Database;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 
 import java.util.List;
 import java.sql.*;
 
 public class TeamPlayerPersistence implements ITeamPlayerPersistence {
+    private final IDatabaseFactory databaseFactory;
+
+    public TeamPlayerPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+    }
 
     @Override
     public boolean saveTeamPlayer(ITeamPlayer teamPlayer) {
-        IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
+        IDateConversion sqlDateConversion = databaseFactory.createSQLDateConversion();
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         String playerID = null;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             IPlayerStats teamPlayerStats = teamPlayer.getPlayerStats();
@@ -68,11 +74,11 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
 
     @Override
     public boolean loadTeamPlayers(int teamId, List<ITeamPlayer> teamPlayers) {
-        IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
+        IDateConversion sqlDateConversion = databaseFactory.createSQLDateConversion();
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadTeamPlayers(?)");
 
             myCall.setInt(1, teamId);
