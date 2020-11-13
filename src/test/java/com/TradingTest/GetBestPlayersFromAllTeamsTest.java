@@ -1,4 +1,4 @@
-package com.Trading;
+package com.TradingTest;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
