@@ -9,10 +9,14 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class AgingState extends AbstractState {
+    private final IStateMachineFactory stateMachineFactory;
+
+    public AgingState() {
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+    }
 
     @Override
     public AbstractState onRun() {
-        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         AbstractState nextState;
         ILeague league = getLeague();
 

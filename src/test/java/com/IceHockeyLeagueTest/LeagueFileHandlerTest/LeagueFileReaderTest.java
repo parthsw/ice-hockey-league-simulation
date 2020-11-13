@@ -12,7 +12,7 @@ public class LeagueFileReaderTest {
     private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
 
     @Rule
-    public TemporaryFolder folder= new TemporaryFolder();
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @BeforeClass
     public static void setup() {

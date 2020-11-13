@@ -11,8 +11,8 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class InjuryCheckState extends AbstractState {
-    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
-    private final ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    private final IStateMachineFactory stateMachineFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
     private final ITeam teamA;
     private final ITeam teamB;
     private final IAppOutput appOutput;
@@ -21,6 +21,8 @@ public class InjuryCheckState extends AbstractState {
         this.teamA = teamA;
         this.teamB = teamB;
         this.appOutput = appOutput;
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     @Override

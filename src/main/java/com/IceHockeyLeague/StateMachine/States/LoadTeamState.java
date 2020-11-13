@@ -20,15 +20,18 @@ public class LoadTeamState extends AbstractState {
     private static final String TEAM_NOT_EXIST = "The provided team name is not available in any persisted leagues.";
     private static final String LEAGUE_SELECTION_PROMPT = "Please enter the ID of a league that you want to load";
 
-    private final ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-    private final IDatabaseFactory databaseFactory = AbstractAppFactory.getDatabaseFactory();
-    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+    private final ILeagueManagerFactory leagueManagerFactory;
+    private final IDatabaseFactory databaseFactory;
+    private final IStateMachineFactory stateMachineFactory;
     private final IAppInput appInput;
     private final IAppOutput appOutput;
 
     public LoadTeamState(IAppInput appInput, IAppOutput appOutput) {
         this.appInput = appInput;
         this.appOutput = appOutput;
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override

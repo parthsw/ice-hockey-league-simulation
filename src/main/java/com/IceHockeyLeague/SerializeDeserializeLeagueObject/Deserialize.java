@@ -13,7 +13,6 @@ public class Deserialize implements IDeserialize {
         Gson gson = new Gson();
         String jsonData = "";
         ILeague league = new League();
-        String leagueName = "";
         Scanner myReader = null;
         try {
             File obj = new File("jsonInput");

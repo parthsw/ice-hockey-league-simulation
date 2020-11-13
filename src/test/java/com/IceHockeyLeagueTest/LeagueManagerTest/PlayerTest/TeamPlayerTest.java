@@ -28,6 +28,7 @@ public class TeamPlayerTest {
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
         databaseFactory = appFactory.createDatabaseFactory();
     }
+
     @Test
     public void ConstructorTest() {
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();

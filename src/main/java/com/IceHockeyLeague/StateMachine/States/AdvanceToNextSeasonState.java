@@ -19,16 +19,18 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class AdvanceToNextSeasonState extends AbstractState {
     private final IAppOutput appOutput;
+    private final ILeagueManagerFactory leagueManagerFactory;
+    private final IStateMachineFactory stateMachineFactory;
 
     public AdvanceToNextSeasonState(IAppOutput appOutput) {
         this.appOutput = appOutput;
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override
     public AbstractState onRun() {
-        ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
-        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         ILeague league = getLeague();
 
         IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChance);

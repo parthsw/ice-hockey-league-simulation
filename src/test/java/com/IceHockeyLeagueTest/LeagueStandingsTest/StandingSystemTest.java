@@ -1,42 +1,51 @@
 package com.IceHockeyLeagueTest.LeagueStandingsTest;
 
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
-import com.IceHockeyLeague.LeagueStandings.IStanding;
-import com.IceHockeyLeague.LeagueStandings.IStandingSystem;
-import com.IceHockeyLeague.LeagueStandings.Standing;
-import com.IceHockeyLeague.LeagueStandings.StandingSystem;
+import com.IceHockeyLeague.LeagueStandings.*;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StandingSystemTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ILeagueStandingsFactory leagueStandingsFactory;
+
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
+        leagueStandingsFactory = AbstractAppFactory.getLeagueStandingsFactory();
+    }
 
     private List<IStanding> createDummyStandings() {
-        IConference conference1 = new Conference();
-        IConference conference2 = new Conference();
-        IDivision division1 = new Division();
-        IDivision division2 = new Division();
-        IDivision division3 = new Division();
-        IDivision division4 = new Division();
-        ITeam team1 = new Team();
-        ITeam team2 = new Team();
-        ITeam team3 = new Team();
-        ITeam team4 = new Team();
-        ITeam team5 = new Team();
-        ITeam team6 = new Team();
-        ITeam team7 = new Team();
-        ITeam team8 = new Team();
+        IConference conference1 = leagueManagerFactory.createConference();
+        IConference conference2 = leagueManagerFactory.createConference();
+        IDivision division1 = leagueManagerFactory.createDivision();
+        IDivision division2 = leagueManagerFactory.createDivision();
+        IDivision division3 = leagueManagerFactory.createDivision();
+        IDivision division4 = leagueManagerFactory.createDivision();
+        ITeam team1 = leagueManagerFactory.createTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
+        ITeam team3 = leagueManagerFactory.createTeam();
+        ITeam team4 = leagueManagerFactory.createTeam();
+        ITeam team5 = leagueManagerFactory.createTeam();
+        ITeam team6 = leagueManagerFactory.createTeam();
+        ITeam team7 = leagueManagerFactory.createTeam();
+        ITeam team8 = leagueManagerFactory.createTeam();
 
-        IStanding standing1 = new Standing();
+        IStanding standing1 = leagueStandingsFactory.createStanding();
         standing1.setConference(conference1);
         standing1.setDivision(division1);
         standing1.setTeam(team1);
@@ -44,7 +53,7 @@ public class StandingSystemTest {
         standing1.setGamesWon(1);
         standing1.setPoints(2);
 
-        IStanding standing2 = new Standing();
+        IStanding standing2 = leagueStandingsFactory.createStanding();
         standing2.setConference(conference1);
         standing2.setDivision(division1);
         standing2.setTeam(team2);
@@ -52,7 +61,7 @@ public class StandingSystemTest {
         standing2.setGamesWon(3);
         standing2.setPoints(6);
 
-        IStanding standing3 = new Standing();
+        IStanding standing3 = leagueStandingsFactory.createStanding();
         standing3.setConference(conference1);
         standing3.setDivision(division2);
         standing3.setTeam(team3);
@@ -60,7 +69,7 @@ public class StandingSystemTest {
         standing3.setGamesWon(2);
         standing3.setPoints(4);
 
-        IStanding standing4 = new Standing();
+        IStanding standing4 = leagueStandingsFactory.createStanding();
         standing4.setConference(conference1);
         standing4.setDivision(division2);
         standing4.setTeam(team4);
@@ -68,7 +77,7 @@ public class StandingSystemTest {
         standing4.setGamesWon(2);
         standing4.setPoints(4);
 
-        IStanding standing5 = new Standing();
+        IStanding standing5 = leagueStandingsFactory.createStanding();
         standing5.setConference(conference2);
         standing5.setDivision(division3);
         standing5.setTeam(team5);
@@ -76,7 +85,7 @@ public class StandingSystemTest {
         standing5.setGamesWon(5);
         standing5.setPoints(12);
 
-        IStanding standing6 = new Standing();
+        IStanding standing6 = leagueStandingsFactory.createStanding();
         standing6.setConference(conference2);
         standing6.setDivision(division3);
         standing6.setTeam(team6);
@@ -84,7 +93,7 @@ public class StandingSystemTest {
         standing6.setGamesWon(4);
         standing6.setPoints(8);
 
-        IStanding standing7 = new Standing();
+        IStanding standing7 = leagueStandingsFactory.createStanding();
         standing7.setConference(conference2);
         standing7.setDivision(division4);
         standing7.setTeam(team7);
@@ -92,7 +101,7 @@ public class StandingSystemTest {
         standing7.setGamesWon(0);
         standing7.setPoints(0);
 
-        IStanding standing8 = new Standing();
+        IStanding standing8 = leagueStandingsFactory.createStanding();
         standing8.setConference(conference2);
         standing8.setDivision(division4);
         standing8.setTeam(team8);
@@ -114,31 +123,31 @@ public class StandingSystemTest {
     }
 
     private ILeague createDummyLeague() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
         league.setConferences(new ArrayList<>());
 
-        IConference conference1 = new Conference();
+        IConference conference1 = leagueManagerFactory.createConference();
         conference1.setDivisions(new ArrayList<>());
-        IConference conference2 = new Conference();
+        IConference conference2 = leagueManagerFactory.createConference();
         conference2.setDivisions(new ArrayList<>());
 
-        IDivision division1 = new Division();
+        IDivision division1 = leagueManagerFactory.createDivision();
         division1.setTeams(new ArrayList<>());
-        IDivision division2 = new Division();
+        IDivision division2 = leagueManagerFactory.createDivision();
         division2.setTeams(new ArrayList<>());
-        IDivision division3 = new Division();
+        IDivision division3 = leagueManagerFactory.createDivision();
         division3.setTeams(new ArrayList<>());
-        IDivision division4 = new Division();
+        IDivision division4 = leagueManagerFactory.createDivision();
         division4.setTeams(new ArrayList<>());
 
-        ITeam team1 = new Team();
-        ITeam team2 = new Team();
-        ITeam team3 = new Team();
-        ITeam team4 = new Team();
-        ITeam team5 = new Team();
-        ITeam team6 = new Team();
-        ITeam team7 = new Team();
-        ITeam team8 = new Team();
+        ITeam team1 = leagueManagerFactory.createTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
+        ITeam team3 = leagueManagerFactory.createTeam();
+        ITeam team4 = leagueManagerFactory.createTeam();
+        ITeam team5 = leagueManagerFactory.createTeam();
+        ITeam team6 = leagueManagerFactory.createTeam();
+        ITeam team7 = leagueManagerFactory.createTeam();
+        ITeam team8 = leagueManagerFactory.createTeam();
 
         league.addConference(conference1);
         league.addConference(conference2);
@@ -160,14 +169,14 @@ public class StandingSystemTest {
 
     @Test
     public void setStandingsTest() {
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = leagueStandingsFactory.createStandingSystem();
         standingSystem.setStandings(createDummyStandings());
         Assert.assertEquals(8, standingSystem.getStandings().size());
     }
 
     @Test
     public void initializeStandingsTest() {
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = leagueStandingsFactory.createStandingSystem();
         ILeague dummyLeague = createDummyLeague();
 
         standingSystem.initializeStandings(dummyLeague);
@@ -177,7 +186,7 @@ public class StandingSystemTest {
 
     @Test
     public void updateStatsForWinningTeamTest() {
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = leagueStandingsFactory.createStandingSystem();
         List<IStanding> standings = createDummyStandings();
         standingSystem.setStandings(standings);
 
@@ -191,7 +200,7 @@ public class StandingSystemTest {
 
     @Test
     public void updateStatsForLosingTeamTest() {
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = leagueStandingsFactory.createStandingSystem();
         List<IStanding> standings = createDummyStandings();
         standingSystem.setStandings(standings);
 
@@ -205,7 +214,7 @@ public class StandingSystemTest {
 
     @Test
     public void getStandingsInDivisionTest() {
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = leagueStandingsFactory.createStandingSystem();
         List<IStanding> standings = createDummyStandings();
         standingSystem.setStandings(standings);
 
@@ -219,7 +228,7 @@ public class StandingSystemTest {
 
     @Test
     public void getStandingsInConferenceTest() {
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = leagueStandingsFactory.createStandingSystem();
         List<IStanding> standings = createDummyStandings();
         standingSystem.setStandings(standings);
 
@@ -235,7 +244,7 @@ public class StandingSystemTest {
 
     @Test
     public void getTopStandingInConferenceTest() {
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = leagueStandingsFactory.createStandingSystem();
         List<IStanding> standings = createDummyStandings();
         standingSystem.setStandings(standings);
 

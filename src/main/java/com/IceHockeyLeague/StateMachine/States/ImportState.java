@@ -27,8 +27,8 @@ public class ImportState extends AbstractState {
     private static final String LEAGUE_SCHEMA_ERROR = "The provided json file violates below constraint(s):";
     private static final String TRANSITION_LOAD_TEAM = "Transitioning to Load Team State...";
 
-    private final ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+    private final ILeagueManagerFactory leagueManagerFactory;
+    private final IStateMachineFactory stateMachineFactory;
     private final IAppInput appInput;
     private final IAppOutput appOutput;
     private final ILeagueFileReader leagueFileReader;
@@ -46,6 +46,8 @@ public class ImportState extends AbstractState {
         this.leagueFileReader = leagueFileReader;
         this.jsonParser = jsonParser;
         this.leagueFileValidator = leagueFileValidator;
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override

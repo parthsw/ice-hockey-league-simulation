@@ -14,12 +14,17 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import java.time.LocalDate;
 
 public class AdvanceTimeState extends AbstractState {
+    private final ILeagueManagerFactory leagueManagerFactory;
+    private final IStateMachineFactory stateMachineFactory;
+
+    public AdvanceTimeState() {
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+    }
 
     @Override
     public AbstractState onRun() {
-        ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
-        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         AbstractState nextState;
         ILeague league = getLeague();
 

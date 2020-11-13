@@ -2,16 +2,13 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.IceHockeyLeague.LeagueStandings.ILeagueStandingsFactory;
 import com.IceHockeyLeague.LeagueStandings.IStanding;
-import com.IceHockeyLeague.LeagueStandings.Standing;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.TrainingState;
@@ -25,45 +22,47 @@ import java.util.List;
 
 public class GeneratePlayoffScheduleStateTest {
     private static IStateMachineFactory stateMachineFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ILeagueStandingsFactory leagueStandingsFactory;
 
     private ILeague createDummyLeague() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
         league.setConferences(new ArrayList<>());
 
-        IConference conference1 = new Conference();
+        IConference conference1 = leagueManagerFactory.createConference();
         conference1.setDivisions(new ArrayList<>());
-        IConference conference2 = new Conference();
+        IConference conference2 = leagueManagerFactory.createConference();
         conference2.setDivisions(new ArrayList<>());
 
-        IDivision division1 = new Division();
+        IDivision division1 = leagueManagerFactory.createDivision();
         division1.setTeams(new ArrayList<>());
-        IDivision division2 = new Division();
+        IDivision division2 = leagueManagerFactory.createDivision();
         division2.setTeams(new ArrayList<>());
-        IDivision division3 = new Division();
+        IDivision division3 = leagueManagerFactory.createDivision();
         division3.setTeams(new ArrayList<>());
-        IDivision division4 = new Division();
+        IDivision division4 = leagueManagerFactory.createDivision();
         division4.setTeams(new ArrayList<>());
 
-        ITeam team1 = new Team();
-        ITeam team2 = new Team();
-        ITeam team3 = new Team();
-        ITeam team4 = new Team();
-        ITeam team5 = new Team();
-        ITeam team6 = new Team();
-        ITeam team7 = new Team();
-        ITeam team8 = new Team();
-        ITeam team9 = new Team();
-        ITeam team10 = new Team();
-        ITeam team11 = new Team();
-        ITeam team12 = new Team();
-        ITeam team13 = new Team();
-        ITeam team14 = new Team();
-        ITeam team15 = new Team();
-        ITeam team16 = new Team();
-        ITeam team17 = new Team();
-        ITeam team18 = new Team();
-        ITeam team19 = new Team();
-        ITeam team20 = new Team();
+        ITeam team1 = leagueManagerFactory.createTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
+        ITeam team3 = leagueManagerFactory.createTeam();
+        ITeam team4 = leagueManagerFactory.createTeam();
+        ITeam team5 = leagueManagerFactory.createTeam();
+        ITeam team6 = leagueManagerFactory.createTeam();
+        ITeam team7 = leagueManagerFactory.createTeam();
+        ITeam team8 = leagueManagerFactory.createTeam();
+        ITeam team9 = leagueManagerFactory.createTeam();
+        ITeam team10 = leagueManagerFactory.createTeam();
+        ITeam team11 = leagueManagerFactory.createTeam();
+        ITeam team12 = leagueManagerFactory.createTeam();
+        ITeam team13 = leagueManagerFactory.createTeam();
+        ITeam team14 = leagueManagerFactory.createTeam();
+        ITeam team15 = leagueManagerFactory.createTeam();
+        ITeam team16 = leagueManagerFactory.createTeam();
+        ITeam team17 = leagueManagerFactory.createTeam();
+        ITeam team18 = leagueManagerFactory.createTeam();
+        ITeam team19 = leagueManagerFactory.createTeam();
+        ITeam team20 = leagueManagerFactory.createTeam();
 
         league.addConference(conference1);
         league.addConference(conference2);
@@ -123,7 +122,7 @@ public class GeneratePlayoffScheduleStateTest {
         ITeam team19 = division4.getTeams().get(3);
         ITeam team20 = division4.getTeams().get(4);
 
-        IStanding standing1 = new Standing();
+        IStanding standing1 = leagueStandingsFactory.createStanding();
         standing1.setConference(conference1);
         standing1.setDivision(division1);
         standing1.setTeam(team1);
@@ -131,7 +130,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing1.setGamesWon(2);
         standing1.setPoints(4);
 
-        IStanding standing2 = new Standing();
+        IStanding standing2 = leagueStandingsFactory.createStanding();
         standing2.setConference(conference1);
         standing2.setDivision(division1);
         standing2.setTeam(team2);
@@ -139,7 +138,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing2.setGamesWon(6);
         standing2.setPoints(12);
 
-        IStanding standing3 = new Standing();
+        IStanding standing3 = leagueStandingsFactory.createStanding();
         standing3.setConference(conference1);
         standing3.setDivision(division1);
         standing3.setTeam(team3);
@@ -147,7 +146,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing3.setGamesWon(4);
         standing3.setPoints(8);
 
-        IStanding standing4 = new Standing();
+        IStanding standing4 = leagueStandingsFactory.createStanding();
         standing4.setConference(conference1);
         standing4.setDivision(division1);
         standing4.setTeam(team4);
@@ -155,7 +154,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing4.setGamesWon(5);
         standing4.setPoints(11);
 
-        IStanding standing5 = new Standing();
+        IStanding standing5 = leagueStandingsFactory.createStanding();
         standing5.setConference(conference1);
         standing5.setDivision(division1);
         standing5.setTeam(team5);
@@ -163,7 +162,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing5.setGamesWon(4);
         standing5.setPoints(9);
 
-        IStanding standing6 = new Standing();
+        IStanding standing6 = leagueStandingsFactory.createStanding();
         standing6.setConference(conference1);
         standing6.setDivision(division2);
         standing6.setTeam(team6);
@@ -171,7 +170,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing6.setGamesWon(6);
         standing6.setPoints(12);
 
-        IStanding standing7 = new Standing();
+        IStanding standing7 = leagueStandingsFactory.createStanding();
         standing7.setConference(conference1);
         standing7.setDivision(division2);
         standing7.setTeam(team7);
@@ -179,7 +178,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing7.setGamesWon(5);
         standing7.setPoints(10);
 
-        IStanding standing8 = new Standing();
+        IStanding standing8 = leagueStandingsFactory.createStanding();
         standing8.setConference(conference1);
         standing8.setDivision(division2);
         standing8.setTeam(team8);
@@ -187,7 +186,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing8.setGamesWon(4);
         standing8.setPoints(9);
 
-        IStanding standing9 = new Standing();
+        IStanding standing9 = leagueStandingsFactory.createStanding();
         standing9.setConference(conference1);
         standing9.setDivision(division2);
         standing9.setTeam(team9);
@@ -195,7 +194,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing9.setGamesWon(2);
         standing9.setPoints(4);
 
-        IStanding standing10 = new Standing();
+        IStanding standing10 = leagueStandingsFactory.createStanding();
         standing10.setConference(conference1);
         standing10.setDivision(division2);
         standing10.setTeam(team10);
@@ -203,7 +202,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing10.setGamesWon(4);
         standing10.setPoints(8);
 
-        IStanding standing11 = new Standing();
+        IStanding standing11 = leagueStandingsFactory.createStanding();
         standing11.setConference(conference2);
         standing11.setDivision(division3);
         standing11.setTeam(team11);
@@ -211,7 +210,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing11.setGamesWon(3);
         standing11.setPoints(7);
 
-        IStanding standing12 = new Standing();
+        IStanding standing12 = leagueStandingsFactory.createStanding();
         standing12.setConference(conference2);
         standing12.setDivision(division3);
         standing12.setTeam(team12);
@@ -219,7 +218,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing12.setGamesWon(3);
         standing12.setPoints(6);
 
-        IStanding standing13 = new Standing();
+        IStanding standing13 = leagueStandingsFactory.createStanding();
         standing13.setConference(conference2);
         standing13.setDivision(division3);
         standing13.setTeam(team13);
@@ -227,7 +226,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing13.setGamesWon(5);
         standing13.setPoints(10);
 
-        IStanding standing14 = new Standing();
+        IStanding standing14 = leagueStandingsFactory.createStanding();
         standing14.setConference(conference2);
         standing14.setDivision(division3);
         standing14.setTeam(team14);
@@ -235,7 +234,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing14.setGamesWon(4);
         standing14.setPoints(8);
 
-        IStanding standing15 = new Standing();
+        IStanding standing15 = leagueStandingsFactory.createStanding();
         standing15.setConference(conference2);
         standing15.setDivision(division3);
         standing15.setTeam(team15);
@@ -243,7 +242,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing15.setGamesWon(6);
         standing15.setPoints(12);
 
-        IStanding standing16 = new Standing();
+        IStanding standing16 = leagueStandingsFactory.createStanding();
         standing16.setConference(conference2);
         standing16.setDivision(division4);
         standing16.setTeam(team16);
@@ -251,7 +250,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing16.setGamesWon(7);
         standing16.setPoints(14);
 
-        IStanding standing17 = new Standing();
+        IStanding standing17 = leagueStandingsFactory.createStanding();
         standing17.setConference(conference2);
         standing17.setDivision(division4);
         standing17.setTeam(team17);
@@ -259,7 +258,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing17.setGamesWon(4);
         standing17.setPoints(9);
 
-        IStanding standing18 = new Standing();
+        IStanding standing18 = leagueStandingsFactory.createStanding();
         standing18.setConference(conference2);
         standing18.setDivision(division4);
         standing18.setTeam(team18);
@@ -267,7 +266,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing18.setGamesWon(0);
         standing18.setPoints(1);
 
-        IStanding standing19 = new Standing();
+        IStanding standing19 = leagueStandingsFactory.createStanding();
         standing19.setConference(conference2);
         standing19.setDivision(division4);
         standing19.setTeam(team19);
@@ -275,7 +274,7 @@ public class GeneratePlayoffScheduleStateTest {
         standing19.setGamesWon(3);
         standing19.setPoints(6);
 
-        IStanding standing20 = new Standing();
+        IStanding standing20 = leagueStandingsFactory.createStanding();
         standing20.setConference(conference2);
         standing20.setDivision(division4);
         standing20.setTeam(team20);
@@ -313,6 +312,10 @@ public class GeneratePlayoffScheduleStateTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         stateMachineFactory = appFactory.createStateMachineFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        leagueStandingsFactory = AbstractAppFactory.getLeagueStandingsFactory();
     }
 
     @Test

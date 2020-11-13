@@ -9,13 +9,14 @@ public class PlayerChoiceState extends AbstractState {
     private static final String NUMBER_OF_SEASONS = "Please provide the number of seasons to simulate";
     private static final String INVALID_FORMAT = "Invalid format for a number";
 
-    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+    private final IStateMachineFactory stateMachineFactory;
     private final IAppInput appInput;
     private final IAppOutput appOutput;
 
     public PlayerChoiceState(IAppInput appInput, IAppOutput appOutput) {
         this.appInput = appInput;
         this.appOutput = appOutput;
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override

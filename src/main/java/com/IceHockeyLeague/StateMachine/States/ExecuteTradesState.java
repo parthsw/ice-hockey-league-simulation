@@ -6,10 +6,14 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.Trading.SimulateTrade;
 
 public class ExecuteTradesState extends AbstractState {
+    private final IStateMachineFactory stateMachineFactory;
+
+    public ExecuteTradesState() {
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+    }
 
     @Override
     public AbstractState onRun() {
-        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         ILeague league = getLeague();
         int lossPoint = league.getGamePlayConfig().getTradingConfig().getLossPoint();
         int maxPlayersPerTrade = league.getGamePlayConfig().getTradingConfig().getMaxPlayersPerTrade();

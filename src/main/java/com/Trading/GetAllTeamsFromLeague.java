@@ -17,7 +17,7 @@ public class GetAllTeamsFromLeague {
     private List<ITeam> allTeams;
 
     private void gatherTeams(ILeague league){
-        List<ITeam> teams = new ArrayList<ITeam>();
+        List<ITeam> teams = new ArrayList<>();
         List<IConference> conferences = this.getAllConferencesFromLeague(league);
         for(IConference conference : conferences){
             for(IDivision division : this.getAllDivisionsFromConference(conference)){

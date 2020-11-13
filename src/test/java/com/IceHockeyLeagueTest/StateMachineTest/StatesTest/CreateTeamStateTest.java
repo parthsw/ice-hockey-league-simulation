@@ -3,16 +3,12 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IOTest.IOMock;
-import com.IceHockeyLeague.LeagueManager.Coach.Coach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.CreateTeamState;
@@ -23,6 +19,7 @@ import org.junit.rules.TemporaryFolder;
 
 public class CreateTeamStateTest {
     private static IStateMachineFactory stateMachineFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
     private static IOMock ioMockInstance = null;
 
     @Rule
@@ -33,6 +30,7 @@ public class CreateTeamStateTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         stateMachineFactory = appFactory.createStateMachineFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
         ioMockInstance = IOMock.instance();
     }
 
@@ -63,11 +61,11 @@ public class CreateTeamStateTest {
 
     @Test
     public void isNullOrEmptyTest() {
-        Division division = new Division();
-        Conference conference = new Conference();
-        Team team = new Team();
-        Manager manager = new Manager();
-        Coach coach = new Coach();
+        IDivision division = leagueManagerFactory.createDivision();
+        IConference conference = leagueManagerFactory.createConference();
+        ITeam team = leagueManagerFactory.createTeam();
+        IManager manager = leagueManagerFactory.createManager();
+        ICoach coach = leagueManagerFactory.createCoach();
         boolean flag = division.isNullOrEmpty("");
         Assert.assertTrue("true", flag);
         flag = conference.isNullOrEmpty("");
@@ -84,16 +82,16 @@ public class CreateTeamStateTest {
     public void isConferenceNameExistTest() {
         List<IConference> conferences = new ArrayList<>();
         boolean flag;
-        Conference conference1 = new Conference();
+        IConference conference1 = leagueManagerFactory.createConference();
         conference1.setConferenceName("Eastern Conference");
-        Conference conference2 = new Conference();
+        IConference conference2 = leagueManagerFactory.createConference();
         conference2.setConferenceName("Eastern Conference 1");
-        Conference conference3 = new Conference();
+        IConference conference3 = leagueManagerFactory.createConference();
         conference3.setConferenceName("Eastern Conference 2");
         conferences.add(conference1);
         conferences.add(conference2);
         conferences.add(conference3);
-        Conference conference = new Conference();
+        IConference conference = leagueManagerFactory.createConference();
         flag = conference.isConferenceNameExist(conferences,"Eastern Conference 2");
         Assert.assertTrue("true",flag);
     }
@@ -102,16 +100,16 @@ public class CreateTeamStateTest {
     public void isDivisionNameExistTest(){
         List<IDivision> divisions = new ArrayList<>();
         boolean flag;
-        Division division1= new Division();
+        IDivision division1 = leagueManagerFactory.createDivision();
         division1.setDivisionName("Atlantic");
-        Division division2= new Division();
+        IDivision division2 = leagueManagerFactory.createDivision();
         division2.setDivisionName("Northern");
-        Division division3= new Division();
+        IDivision division3 = leagueManagerFactory.createDivision();
         division3.setDivisionName("Southern");
         divisions.add(division1);
         divisions.add(division2);
         divisions.add(division3);
-        Division division = new Division();
+        IDivision division = leagueManagerFactory.createDivision();
         flag = division.isDivisionNameExist(divisions, "Atlantic");
         Assert.assertTrue("true",flag);
     }
@@ -120,13 +118,13 @@ public class CreateTeamStateTest {
     public void isTeamNameExist(){
         List<ITeam> teams = new ArrayList<>();
         boolean flag;
-        ITeam team1= new Team();
+        ITeam team1 = leagueManagerFactory.createTeam();
         team1.setTeamName("Team 1");
-        ITeam team2= new Team();
+        ITeam team2 = leagueManagerFactory.createTeam();
         team2.setTeamName("Team 2");
-        ITeam team3= new Team();
+        ITeam team3 = leagueManagerFactory.createTeam();
         team3.setTeamName("Team 3");
-        Team team = new Team();
+        ITeam team = leagueManagerFactory.createTeam();
         teams.add(team1);
         teams.add(team2);
         teams.add(team3);
@@ -138,11 +136,11 @@ public class CreateTeamStateTest {
     public void isManagerNameExistTest(){
         List<IManager> managers = new ArrayList<>();
         boolean flag;
-        IManager manager1 = new Manager();
+        IManager manager1 = leagueManagerFactory.createManager();
         manager1.setManagerName("Parth Parmar");
-        IManager manager2 = new Manager();
+        IManager manager2 = leagueManagerFactory.createManager();
         manager2.setManagerName("Tejasvi Vig");
-        Manager manager = new Manager();
+        IManager manager = leagueManagerFactory.createManager();
         managers.add(manager1);
         managers.add(manager2);
         flag = manager.isManagerNameExist(managers,"Tejasvi Vig");
@@ -153,11 +151,11 @@ public class CreateTeamStateTest {
     public void isCoachNameExist(){
         List<ICoach> coaches = new ArrayList<>();
         boolean flag;
-        ICoach coach1 = new Coach();
+        ICoach coach1 = leagueManagerFactory.createCoach();
         coach1.setCoachName("Rajveen Singh Chandok");
-        ICoach coach2 = new Coach();
+        ICoach coach2 = leagueManagerFactory.createCoach();
         coach2.setCoachName("Sagar Moghe");
-        Coach coach = new Coach();
+        ICoach coach = leagueManagerFactory.createCoach();
         coaches.add(coach1);
         coaches.add(coach2);
         flag = coach.isCoachNameExist(coaches,"Sagar Moghe");

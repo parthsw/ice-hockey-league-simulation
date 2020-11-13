@@ -17,7 +17,7 @@ public class GetTradableTeams {
     private void setDefaults(List<ITeam> teams, int lossPoint) {
         this.allTeams = teams;
         this.lossPointValue = lossPoint;
-        this.reducedTeams = new ArrayList<ITeam>();
+        this.reducedTeams = new ArrayList<>();
     }
 
     public List<ITeam> getTeams() {
