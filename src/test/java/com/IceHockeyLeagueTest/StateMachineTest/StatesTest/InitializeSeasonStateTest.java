@@ -2,6 +2,7 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
@@ -13,17 +14,21 @@ import org.junit.Test;
 
 public class InitializeSeasonStateTest {
     private static IStateMachineFactory stateMachineFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         stateMachineFactory = appFactory.createStateMachineFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
     }
 
     @Test
     public void onRunTest() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
 
         AbstractState initializeSeasonState = stateMachineFactory.createInitializeSeasonState();
         initializeSeasonState.setLeague(league);

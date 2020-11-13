@@ -269,8 +269,8 @@ public class TeamTest {
         Random random = new Random();
         for (int i = 0; i < 18; i++) {
             String temp = positions[random.nextInt(positions.length)];
-            ITeamPlayer player = new TeamPlayer();
-            PlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
             stats.setStrength(random.nextInt(100));
             player.setPlayerStats(stats);
@@ -278,8 +278,8 @@ public class TeamTest {
         }
         for (int i = 0; i < 2; i++) {
             String temp = "goalie";
-            ITeamPlayer player = new TeamPlayer();
-            PlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
             stats.setStrength(random.nextInt(100));
             player.setPlayerStats(stats);

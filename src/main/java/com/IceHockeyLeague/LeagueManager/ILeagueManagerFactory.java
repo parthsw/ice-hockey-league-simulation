@@ -10,6 +10,7 @@ import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
+import com.IceHockeyLeague.LeagueManager.Team.ITeamTraining;
 
 
 public interface ILeagueManagerFactory {
@@ -25,6 +26,8 @@ public interface ILeagueManagerFactory {
     ITeam createTeam();
 
     ITeamStrengthCalculator createTeamStrengthCalculator();
+
+    ITeamTraining createTeamTraining();
 
     IPlayer createPlayer();
 

@@ -6,7 +6,6 @@ import com.IO.IAppOutput;
 
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
-import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.*;
@@ -20,8 +19,11 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import java.util.*;
 
 public class CreateTeamState extends AbstractState {
-
     private static final String TEAM_CREATION = "************Welcome to team creation************";
+
+    private final ILeagueManagerFactory leagueManagerFactory;
+    private final IStateMachineFactory stateMachineFactory;
+
     private IAppInput appInput;
     private IAppOutput appOutput;
     private ITeam newTeam;
@@ -32,16 +34,14 @@ public class CreateTeamState extends AbstractState {
     private ITeamPlayer player;
     private List<IFreeAgent> freeAgents;
 
-    private ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-
     public CreateTeamState(IAppInput appInput, IAppOutput appOutput) {
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         configureDefaults(appInput, appOutput);
     }
 
     @Override
     public AbstractState onRun() {
-        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
-
         try {
             this.initializeInMemoryLeague();
             welcomeMessage();
@@ -83,7 +83,7 @@ public class CreateTeamState extends AbstractState {
     }
 
     private IConference processConferenceName() {
-        IConference conference = new Conference();
+        IConference conference = leagueManagerFactory.createConference();
         String conferenceName;
         while (true) {
             appOutput.display("Please provide the name of the conference");
@@ -109,7 +109,7 @@ public class CreateTeamState extends AbstractState {
     }
 
     private IDivision processDivisionName(IConference matchedConference) {
-        IDivision division = new Division();
+        IDivision division = leagueManagerFactory.createDivision();
         String divisionName;
         while (true) {
             appOutput.display("Please provide the name of the division");
@@ -135,7 +135,7 @@ public class CreateTeamState extends AbstractState {
     }
 
     private ITeam processTeamName(IDivision matchedDivision) {
-        ITeam team = new Team();
+        ITeam team = leagueManagerFactory.createTeam();
         String teamName;
         while (true) {
             appOutput.display("Please provide the team name");
@@ -153,7 +153,7 @@ public class CreateTeamState extends AbstractState {
     }
 
     private IManager processManager(){
-        IManager manager = new Manager();
+        IManager manager = leagueManagerFactory.createManager();
         String managerName;
         List<IManager> managers = inMemoryLeague.getManagers();
         appOutput.display("Showing you the list of managers");
@@ -175,7 +175,7 @@ public class CreateTeamState extends AbstractState {
     }
 
     private ICoach processCoach(){
-        ICoach coach = new Coach();
+        ICoach coach = leagueManagerFactory.createCoach();
         String coachName;
         List<ICoach> coaches = inMemoryLeague.getCoaches();
         appOutput.display("Showing you the list of coaches along with their stats");
@@ -215,7 +215,7 @@ public class CreateTeamState extends AbstractState {
         List<ITeamPlayer> players = new ArrayList<>();
         appOutput.display("Please select 18 skaters and 2 goalies from the list of free agents");
         freeAgents = inMemoryLeague.getFreeAgents();
-        ITeam team = new Team();
+        ITeam team = leagueManagerFactory.createTeam();
         for(IFreeAgent f : freeAgents){
             appOutput.display("******************************************");
             appOutput.display(f.getPlayerName());
@@ -229,7 +229,7 @@ public class CreateTeamState extends AbstractState {
         while(true) {
             appOutput.display("select the players for your team from the list of free agents shown above");
             for (int count = 0; count < 20; count++) {
-                player = new TeamPlayer();
+                player = leagueManagerFactory.createTeamPlayer();
                 IPlayerStats stats = null;
                 String playerName = appInput.getInput();
                 player.setPlayerName(playerName);
@@ -245,7 +245,7 @@ public class CreateTeamState extends AbstractState {
                 players.add(player);
             }
             team.setPlayers(players);
-            ITeamStrengthCalculator calculator = new TeamStrengthCalculator();
+            ITeamStrengthCalculator calculator = leagueManagerFactory.createTeamStrengthCalculator();
             float teamStrength = team.calculateTeamStrength(calculator);
             team.setTeamStrength(teamStrength);
             flagCheck = team.checkTeamPlayers();

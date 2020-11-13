@@ -2,8 +2,8 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.TrainingState;
@@ -15,19 +15,23 @@ import java.time.LocalDate;
 
 public class AdvanceTimeStateTest {
     private static IStateMachineFactory stateMachineFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Test
     public void onRunTest() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
         league.setLeagueDate(LocalDate.now());
         league.getScheduleSystem().setRegularSeasonEndDate(LocalDate.now().plusDays(2));
 

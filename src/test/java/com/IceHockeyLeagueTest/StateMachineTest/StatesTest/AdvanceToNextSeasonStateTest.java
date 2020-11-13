@@ -4,19 +4,15 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfigPersistence;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.IceHockeyLeague.LeagueScheduler.ILeagueSchedulerFactory;
 import com.IceHockeyLeague.LeagueScheduler.ISchedule;
-import com.IceHockeyLeague.LeagueScheduler.Schedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.PersistState;
@@ -34,33 +30,35 @@ public class AdvanceToNextSeasonStateTest {
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
     private static IDatabaseFactory databaseFactory;
+    private static ILeagueSchedulerFactory leagueSchedulerFactory;
 
     @BeforeClass
     public static void setup() {
-        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
-        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory appFactory = AppFactoryTest.createAppFactory();
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
-        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        databaseFactory = appFactory.createDatabaseFactory();
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
+        leagueSchedulerFactory = AbstractAppFactory.getLeagueSchedulerFactory();
     }
 
     private ILeague createDummyLeague() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
         league.setConferences(new ArrayList<>());
-        IConference conference = new Conference();
+        IConference conference = leagueManagerFactory.createConference();
         conference.setDivisions(new ArrayList<>());
-        IDivision division = new Division();
+        IDivision division = leagueManagerFactory.createDivision();
         division.setTeams(new ArrayList<>());
-        ITeam team = new Team();
+        ITeam team = leagueManagerFactory.createTeam();
         team.setPlayers(new ArrayList<>());
-        ITeamPlayer player = new TeamPlayer();
+        ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
         player.setPlayerAge(100);
         player.setElapsedDaysFromLastBDay(364);
         league.setFreeAgents(new ArrayList<>());
-        IFreeAgent freeAgent = new FreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         freeAgent.setPlayerAge(50);
 
         league.addConference(conference);
@@ -82,8 +80,8 @@ public class AdvanceToNextSeasonStateTest {
         ILeague league = createDummyLeague();
         league.setLeagueDate(LocalDate.of(Year.now().getValue() + 1, Month.SEPTEMBER, 27));
         league.getScheduleSystem().setRegularSeasonStartDate(LocalDate.now());
-        ISchedule schedule = new Schedule();
-        schedule.setWinningTeam(new Team());
+        ISchedule schedule = leagueSchedulerFactory.createSchedule();
+        schedule.setWinningTeam(leagueManagerFactory.createTeam());
         List<ISchedule> playoffList = new ArrayList<>();
         playoffList.add(schedule);
         league.getScheduleSystem().setPlayoffSchedule(playoffList);

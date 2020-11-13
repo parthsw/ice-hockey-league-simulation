@@ -49,6 +49,11 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
     }
 
     @Override
+    public ITeamTraining createTeamTraining() {
+        return new TeamTraining();
+    }
+
+    @Override
     public IPlayer createPlayer() {
         return new Player();
     }

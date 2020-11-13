@@ -37,6 +37,8 @@ public class LeagueTest {
         AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
     }
 
     @Test

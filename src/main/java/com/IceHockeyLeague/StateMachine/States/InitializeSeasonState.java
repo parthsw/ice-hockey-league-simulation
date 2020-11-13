@@ -13,13 +13,10 @@ import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
 
 public class InitializeSeasonState extends AbstractState {
-    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
-    private final IAppInput appInput;
-    private final IAppOutput appOutput;
+    private final IStateMachineFactory stateMachineFactory;
 
     public InitializeSeasonState(IAppInput appInput, IAppOutput appOutput) {
-        this.appInput = appInput;
-        this.appOutput = appOutput;
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override

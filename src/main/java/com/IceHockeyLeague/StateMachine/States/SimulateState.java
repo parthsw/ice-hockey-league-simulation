@@ -7,15 +7,12 @@ import com.IceHockeyLeague.StateMachine.IStateMachine;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class SimulateState extends AbstractState {
-    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
-    private final IAppInput appInput;
-    private final IAppOutput appOutput;
+    private final IStateMachineFactory stateMachineFactory;
     private final int numberOfSeasons;
 
     public SimulateState(IAppInput appInput, IAppOutput appOutput, int noOfSeasons) {
-        this.appInput = appInput;
-        this.appOutput = appOutput;
         this.numberOfSeasons = noOfSeasons;
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override

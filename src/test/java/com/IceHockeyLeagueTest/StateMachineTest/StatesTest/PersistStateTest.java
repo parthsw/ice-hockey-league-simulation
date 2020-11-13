@@ -2,10 +2,10 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
+import com.IceHockeyLeague.LeagueScheduler.ILeagueSchedulerFactory;
 import com.IceHockeyLeague.LeagueScheduler.ISchedule;
-import com.IceHockeyLeague.LeagueScheduler.Schedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.AdvanceTimeState;
@@ -18,19 +18,25 @@ import java.util.List;
 
 public class PersistStateTest {
     private static IStateMachineFactory stateMachineFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ILeagueSchedulerFactory leagueSchedulerFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         stateMachineFactory = appFactory.createStateMachineFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
+        leagueSchedulerFactory = AbstractAppFactory.getLeagueSchedulerFactory();
     }
 
     @Test
     public void onRunTest() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
         List<ISchedule> playoffScheduleList = new ArrayList<>();
-        ISchedule schedule = new Schedule();
+        ISchedule schedule = leagueSchedulerFactory.createSchedule();
         schedule.setIsGamePlayed(true);
         playoffScheduleList.add(schedule);
         league.getScheduleSystem().setPlayoffSchedule(playoffScheduleList);
@@ -43,7 +49,7 @@ public class PersistStateTest {
 
     @Test
     public void onRunAlternateTest() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
 
         AbstractState persistState = stateMachineFactory.createPersistState();
         persistState.setLeague(league);

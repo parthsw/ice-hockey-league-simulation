@@ -7,9 +7,17 @@ import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueScheduler.ILeagueSchedulerFactory;
+import com.IceHockeyLeague.LeagueScheduler.LeagueSchedulerFactory;
+import com.IceHockeyLeague.LeagueStandings.ILeagueStandingsFactory;
+import com.IceHockeyLeague.LeagueStandings.LeagueStandingsFactory;
+import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializeLeagueObjectFactory;
+import com.IceHockeyLeague.SerializeDeserializeLeagueObject.SerializeDeserializeLeagueObjectFactory;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeagueTest.LeagueManagerTest.LeagueManagerFactoryTest;
+import com.Trading.ITradingFactory;
+import com.Trading.TradingFactory;
 
 public class AppFactoryTest extends AbstractAppFactory {
 
@@ -31,6 +39,26 @@ public class AppFactoryTest extends AbstractAppFactory {
     @Override
     public ILeagueManagerFactory createLeagueManagerFactory() {
         return new LeagueManagerFactoryTest();
+    }
+
+    @Override
+    public ILeagueSchedulerFactory createLeagueSchedulerFactory() {
+        return new LeagueSchedulerFactory();
+    }
+
+    @Override
+    public ILeagueStandingsFactory createLeagueStandingsFactory() {
+        return new LeagueStandingsFactory();
+    }
+
+    @Override
+    public ISerializeDeserializeLeagueObjectFactory createSerializeDeserializeLeagueObjectFactory() {
+        return new SerializeDeserializeLeagueObjectFactory();
+    }
+
+    @Override
+    public ITradingFactory createTradingFactory() {
+        return new TradingFactory();
     }
 
     @Override

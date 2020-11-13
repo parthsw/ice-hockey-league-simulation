@@ -46,6 +46,11 @@ public class LeagueManagerFactory implements ILeagueManagerFactory {
     }
 
     @Override
+    public ITeamTraining createTeamTraining() {
+        return new TeamTraining();
+    }
+
+    @Override
     public IPlayer createPlayer() {
         return new Player();
     }

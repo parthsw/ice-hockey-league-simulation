@@ -13,12 +13,14 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class SimulateGameState extends AbstractState {
 
-    private final IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
-    private final ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     private final IAppOutput appOutput;
+    private final IStateMachineFactory stateMachineFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
 
     public SimulateGameState(IAppOutput appOutput) {
         this.appOutput = appOutput;
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     @Override
