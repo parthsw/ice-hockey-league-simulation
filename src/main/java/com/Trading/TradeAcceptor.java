@@ -1,7 +1,8 @@
 package com.Trading;
 
-import com.IO.CommandLineOutput;
+import com.AbstractAppFactory;
 import com.IO.IAppOutput;
+import com.IO.IIOFactory;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TradeAcceptor {
+    private final IIOFactory ioFactory;
     private ITeam team1;
     private ITeam team2;
     private List<ITeamPlayer> fromTeam1;
@@ -20,7 +22,8 @@ public class TradeAcceptor {
         this.team2 = trade.getReceivingTeam();
         this.fromTeam1 = trade.getSendingPlayers();
         this.fromTeam2 = trade.getReceivingPlayers();
-        this.appOutput = new CommandLineOutput();
+        ioFactory = AbstractAppFactory.getIOFactory();
+        this.appOutput = ioFactory.createCommandLineOutput();
     }
 
 

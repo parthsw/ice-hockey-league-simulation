@@ -1,11 +1,13 @@
 package com.Trading;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 import java.util.List;
 
 public class GetBestPlayersFromAllTeams {
+    private ITradingFactory tradingFactory;
     private List<ITeam> teams;
     private List<ITeamPlayer> bestPlayersSet;
     private ITeam bestChoice;
@@ -16,6 +18,7 @@ public class GetBestPlayersFromAllTeams {
 
     private void setDefaults(List<ITeam> teams) {
         this.teams = teams;
+        tradingFactory = AbstractAppFactory.getTradingFactory();
     }
 
     public void getBestTradeOption(String position, int tradableNumber) {
@@ -23,7 +26,7 @@ public class GetBestPlayersFromAllTeams {
         this.bestPlayersSet = null;
         this.bestChoice = null;
         for (ITeam team : this.teams) {
-            GetTopNBestPlayersForGivenPosition object = new GetTopNBestPlayersForGivenPosition(team, tradableNumber, position);
+            GetTopNBestPlayersForGivenPosition object = tradingFactory.createGetTopNBestPlayersForGivenPosition(team, tradableNumber, position);
             List<ITeamPlayer> bestPlayers = object.getPlayers();
             float combinedStrength = object.getCombinedStrendth();
             if (totalStrength < combinedStrength) {

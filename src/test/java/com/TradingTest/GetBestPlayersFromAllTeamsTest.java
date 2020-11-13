@@ -1,12 +1,15 @@
 package com.TradingTest;
 
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
-import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.Trading.GetBestPlayersFromAllTeams;
+import com.Trading.ITradingFactory;
 import junit.framework.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,6 +17,17 @@ import java.util.List;
 import java.util.Random;
 
 public class GetBestPlayersFromAllTeamsTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ITradingFactory tradingFactory;
+
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        tradingFactory = appFactory.createTradingFactory();
+    }
 
     @Test
     public void getBestTradeOptionTest() {
@@ -22,15 +36,15 @@ public class GetBestPlayersFromAllTeamsTest {
 
         List<ITeam> teams = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            ITeam team = new Team();
+            ITeam team = leagueManagerFactory.createTeam();
             teams.add(team);
         }
 
         for (ITeam team : teams) {
             for (int i = 0; i < 20; i++) {
                 String temp = positions[random.nextInt(positions.length)];
-                ITeamPlayer player = new TeamPlayer();
-                PlayerStats stats = new PlayerStats();
+                ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+                IPlayerStats stats = leagueManagerFactory.createPlayerStats();
                 stats.setPosition(temp);
                 stats.setStrength(random.nextInt(100));
                 player.setPlayerStats(stats);
@@ -38,11 +52,11 @@ public class GetBestPlayersFromAllTeamsTest {
             }
         }
 
-        ITeam test = new Team();
+        ITeam test = leagueManagerFactory.createTeam();
         for (int i = 0; i < 20; i++) {
             String temp = positions[random.nextInt(positions.length)];
-            ITeamPlayer player = new TeamPlayer();
-            PlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
             stats.setStrength(random.nextInt(10000));
             player.setPlayerStats(stats);
@@ -51,7 +65,7 @@ public class GetBestPlayersFromAllTeamsTest {
         test.setTeamName("Best Team");
         teams.add(test);
 
-        GetBestPlayersFromAllTeams object = new GetBestPlayersFromAllTeams(teams);
+        GetBestPlayersFromAllTeams object = tradingFactory.createGetBestPlayersFromAllTeams(teams);
         object.getBestTradeOption("Forward", 1);
         ITeam bestTeam = object.getTeam();
         List<ITeamPlayer> players = object.getBestPlayersSet();

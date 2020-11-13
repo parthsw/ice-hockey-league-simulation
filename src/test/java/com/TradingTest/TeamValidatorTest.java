@@ -1,10 +1,14 @@
 package com.TradingTest;
 
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.Trading.ITradingFactory;
 import com.Trading.TeamValidator;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,10 +16,21 @@ import java.util.List;
 import java.util.Random;
 
 public class TeamValidatorTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ITradingFactory tradingFactory;
+
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        tradingFactory = appFactory.createTradingFactory();
+    }
 
     @Test
     public void validateTeamNumberTest() {
-        ITeam team = new Team();
+        ITeam team = leagueManagerFactory.createTeam();
         List<IFreeAgent> agents = new ArrayList<>();
         String[] positions = new String[]{"Goalie", "Forward", "Defence"};
         Random random = new Random();
@@ -24,8 +39,8 @@ public class TeamValidatorTest {
         String keeper = "Goalie";
         for (int i = 0; i < 20; i++) {
             String temp = positions[random.nextInt(positions.length)];
-            ITeamPlayer player = new TeamPlayer();
-            PlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
             stats.setStrength(random.nextInt(100));
             player.setPlayerStats(stats);
@@ -33,14 +48,14 @@ public class TeamValidatorTest {
         }
         for (int i = 0; i < 100; i++) {
             String temp = positions[random.nextInt(positions.length)];
-            IFreeAgent agent = new FreeAgent();
-            PlayerStats stats = new PlayerStats();
+            IFreeAgent agent = leagueManagerFactory.createFreeAgent();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
             stats.setStrength(random.nextInt(100));
             agent.setPlayerStats(stats);
             agents.add(agent);
         }
-        TeamValidator object = new TeamValidator(team, 1, agents);
+        TeamValidator object = tradingFactory.createTeamValidator(team, 1, agents);
         ITeam validatedTeam = object.validateTeam();
 
         for (ITeamPlayer player : validatedTeam.getPlayers()) {

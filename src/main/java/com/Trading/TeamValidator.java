@@ -1,5 +1,6 @@
 package com.Trading;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -8,24 +9,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamValidator {
+    private final ITradingFactory tradingFactory;
     private ITeam givenTeam;
     private List<ITeamPlayer> skaters;
     private List<ITeamPlayer> goalies;
     private List<IFreeAgent> availableAgents;
     private int leagueID;
-    GetBestAgent obj = new GetBestAgent();
-    ISwitchPlayer switchPlayer = new SwitchPlayer();
+    GetBestAgent obj;
+    ISwitchPlayer switchPlayer;
     private String goalie = "Goalie";
 
-
     public TeamValidator(ITeam team, int leagueID, List<IFreeAgent> agents){
+        tradingFactory = AbstractAppFactory.getTradingFactory();
         this.givenTeam = team;
         this.leagueID = leagueID;
         this.availableAgents = agents;
         skaters = new ArrayList<>();
         goalies = new ArrayList<>();
+        obj = tradingFactory.createGetBestAgent();
+        switchPlayer = tradingFactory.createSwitchPlayer();
     }
-
 
     public ITeam validateTeam() {
 

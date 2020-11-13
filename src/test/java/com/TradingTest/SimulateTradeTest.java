@@ -1,15 +1,15 @@
 package com.TradingTest;
 
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
 import com.IOTest.IOMock;
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.Trading.ITradingFactory;
 import com.Trading.SimulateTrade;
 import com.Trading.TeamValidator;
 import junit.framework.Assert;
@@ -21,21 +21,29 @@ import java.util.List;
 import java.util.Random;
 
 public class SimulateTradeTest {
-
     private static IOMock ioMockInstance = null;
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ITradingFactory tradingFactory;
 
     @BeforeClass
     public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        AbstractAppFactory.setTradingFactory(appFactory.createTradingFactory());
+        tradingFactory = AbstractAppFactory.getTradingFactory();
+        AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
         ioMockInstance = IOMock.instance();
     }
 
     @Test
     public void simulateTradeTest() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
         league.setLeagueID(1);
-        IConference conference = new Conference();
+        IConference conference = leagueManagerFactory.createConference();
         league.addConference(conference);
-        IDivision division = new Division();
+        IDivision division = leagueManagerFactory.createDivision();
         conference.addDivision(division);
         Random random = new Random();
         String[] positions = new String[]{"Forward", "Defence", "Goalie"};
@@ -65,7 +73,7 @@ public class SimulateTradeTest {
         division.addTeam(team1);
         division.addTeam(team2);
 
-        SimulateTrade simulation = new SimulateTrade();
+        SimulateTrade simulation = tradingFactory.createSimulateTrade();
         simulation.simulateTrade(league, 6, 5, 1);
         simulation.simulate();
 
@@ -88,8 +96,8 @@ public class SimulateTradeTest {
 
     private ITeamPlayer generatePlayer(String position) {
         Random random = new Random();
-        ITeamPlayer player = new TeamPlayer();
-        IPlayerStats stats = new PlayerStats();
+        ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setPosition(position);
         stats.setStrength(random.nextInt(100));
         player.setPlayerStats(stats);
@@ -97,7 +105,7 @@ public class SimulateTradeTest {
     }
 
     private ITeam generateTeam(List<ITeamPlayer> players, int lossPointValue) {
-        ITeam team = new Team();
+        ITeam team = leagueManagerFactory.createTeam();
         team.setPlayers(players);
         team.setLossPointValue(lossPointValue);
         return team;
@@ -122,9 +130,9 @@ public class SimulateTradeTest {
 
     private IFreeAgent generateAgent(String position) {
         Random random = new Random();
-        IFreeAgent player = new FreeAgent();
+        IFreeAgent player = leagueManagerFactory.createFreeAgent();
         player.setPlayerName("AgentPlayer");
-        IPlayerStats stats = new PlayerStats();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setStrength(random.nextInt(1000));
         stats.setPosition(position);
         player.setPlayerStats(stats);
@@ -136,11 +144,11 @@ public class SimulateTradeTest {
     @Test
     public void simulateTradeTest2() {
         ioMockInstance.commandLineInput("YES");
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
         league.setLeagueID(1);
-        IConference conference = new Conference();
+        IConference conference = leagueManagerFactory.createConference();
         league.addConference(conference);
-        IDivision division = new Division();
+        IDivision division = leagueManagerFactory.createDivision();
         conference.addDivision(division);
         Random random = new Random();
         String[] positions = new String[]{"Forward", "Defence", "Goalie"};
@@ -171,7 +179,7 @@ public class SimulateTradeTest {
         division.addTeam(team1);
         division.addTeam(team2);
 
-        SimulateTrade simulation = new SimulateTrade();
+        SimulateTrade simulation = tradingFactory.createSimulateTrade();
         simulation.simulateTrade(league, 6, 5, 1);
         simulation.simulate();
 
@@ -195,8 +203,8 @@ public class SimulateTradeTest {
 
     @Test
     public void validateTeamNumberTest() {
-        ITeam team = new Team();
-        List<IFreeAgent> agents = new ArrayList<IFreeAgent>();
+        ITeam team = leagueManagerFactory.createTeam();
+        List<IFreeAgent> agents = new ArrayList<>();
         String[] positions = new String[]{"Goalie", "Forward", "Defence"};
         Random random = new Random();
         int skater = 0;
@@ -204,8 +212,8 @@ public class SimulateTradeTest {
         String keeper = "Goalie";
         for (int i = 0; i < 20; i++) {
             String temp = positions[random.nextInt(positions.length)];
-            ITeamPlayer player = new TeamPlayer();
-            PlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
             stats.setStrength(random.nextInt(100));
             player.setPlayerStats(stats);
@@ -213,14 +221,14 @@ public class SimulateTradeTest {
         }
         for (int i = 0; i < 100; i++) {
             String temp = positions[random.nextInt(positions.length)];
-            IFreeAgent agent = new FreeAgent();
-            PlayerStats stats = new PlayerStats();
+            IFreeAgent agent = leagueManagerFactory.createFreeAgent();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
             stats.setStrength(random.nextInt(100));
             agent.setPlayerStats(stats);
             agents.add(agent);
         }
-        TeamValidator object = new TeamValidator(team, 1, agents);
+        TeamValidator object = tradingFactory.createTeamValidator(team, 1, agents);
         ITeam validatedTeam = object.validateTeam();
 
         for (ITeamPlayer player : validatedTeam.getPlayers()) {

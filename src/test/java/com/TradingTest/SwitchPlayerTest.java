@@ -1,21 +1,37 @@
 package com.TradingTest;
 
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
-import com.Trading.SwitchPlayer;
+import com.Trading.ISwitchPlayer;
+import com.Trading.ITradingFactory;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SwitchPlayerTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ITradingFactory tradingFactory;
+
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        tradingFactory = appFactory.createTradingFactory();
+    }
 
     @Test
     public void teamToFreeTradeTest() {
-        ITeamPlayer player = new TeamPlayer();
+        ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
         player.setPlayerName("Sagar");
-        PlayerStats stats = new PlayerStats();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setPosition("Defence");
         stats.setStrength(10);
         player.setPlayerStats(stats);
-        SwitchPlayer object = new SwitchPlayer();
+        ISwitchPlayer object = tradingFactory.createSwitchPlayer();
         IFreeAgent agent = object.teamToFreeTrade(player, 1);
 
         Assert.assertEquals("Sagar", agent.getPlayerName());
@@ -25,13 +41,13 @@ public class SwitchPlayerTest {
 
     @Test
     public void freeToTeamTradeTest() {
-        IFreeAgent agent = new FreeAgent();
+        IFreeAgent agent = leagueManagerFactory.createFreeAgent();
         agent.setPlayerName("Sagar");
-        PlayerStats stats = new PlayerStats();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setPosition("Defence");
         stats.setStrength(10);
         agent.setPlayerStats(stats);
-        SwitchPlayer object = new SwitchPlayer();
+        ISwitchPlayer object = tradingFactory.createSwitchPlayer();
         ITeamPlayer player = object.freeToTeamTrade(agent, 1);
 
         Assert.assertEquals("Sagar", player.getPlayerName());

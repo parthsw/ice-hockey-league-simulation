@@ -1,5 +1,6 @@
 package com.Trading;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -7,17 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenerateTrade {
+    private final ITradingFactory tradingFactory;
     private List<ITeam> resultTeams = new ArrayList<>();
     private boolean tradeResult;
     private Trade trade;
 
-    public void generateTrade(ITeam team1, int maxPlayersPerTrade, ITeam team2) {
-        this.trade = new Trade(maxPlayersPerTrade);
+    public GenerateTrade() {
+        tradingFactory = AbstractAppFactory.getTradingFactory();
+    }
 
-        GetWorsePlayersToTradeFromTeam getSendTeamPlayers = new GetWorsePlayersToTradeFromTeam();
+    public void generateTrade(ITeam team1, int maxPlayersPerTrade, ITeam team2) {
+        this.trade = tradingFactory.createTrade(maxPlayersPerTrade);
+
+        GetWorsePlayersToTradeFromTeam getSendTeamPlayers = tradingFactory.createGetWorsePlayersToTradeFromTeam();
         List<ITeamPlayer> toTradePlayers = getSendTeamPlayers.getPlayersToTrade(maxPlayersPerTrade, team1);
         String position = toTradePlayers.get(0).getPlayerStats().getPosition();
-        GetTopNBestPlayersForGivenPosition objectGetTeam2Players = new GetTopNBestPlayersForGivenPosition(team2, toTradePlayers.size(), position);
+        GetTopNBestPlayersForGivenPosition objectGetTeam2Players = tradingFactory.createGetTopNBestPlayersForGivenPosition(team2, toTradePlayers.size(), position);
         List<ITeamPlayer> team2Players = objectGetTeam2Players.getPlayers();
 
         trade.setSendingTeam(team1);
@@ -32,11 +38,11 @@ public class GenerateTrade {
     }
 
     public void decideTrade(float randomAcceptChance) {
-        TradeDecision decision = new TradeDecision(trade.getSendingPlayers(), trade.getReceivingPlayers(), randomAcceptChance);
+        TradeDecision decision = tradingFactory.createTradeDecision(trade.getSendingPlayers(), trade.getReceivingPlayers(), randomAcceptChance);
         boolean result = decision.tradeDecision();
         this.tradeResult = result;
         if (result) {
-            TradeAcceptor acceptTrade = new TradeAcceptor(trade);
+            TradeAcceptor acceptTrade = tradingFactory.createTradeAcceptor(trade);
             this.resultTeams = acceptTrade.acceptTrade();
         }
     }

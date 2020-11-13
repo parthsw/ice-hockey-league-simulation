@@ -1,4 +1,4 @@
-package com.IceHockeyLeagueTest.LeagueSchedulerTest;
+package com.IceHockeyLeagueTest.LeagueManagerTest.SchedulerTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;

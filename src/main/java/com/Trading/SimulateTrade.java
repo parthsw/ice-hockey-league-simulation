@@ -1,9 +1,7 @@
 package com.Trading;
 
-import com.IO.CommandLineInput;
-import com.IO.CommandLineOutput;
-import com.IO.IAppInput;
-import com.IO.IAppOutput;
+import com.AbstractAppFactory;
+import com.IO.*;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -12,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimulateTrade {
+    private final ITradingFactory tradingFactory;
+    private final IIOFactory ioFactory;
+
     private GetAllTeamsFromLeague getAllTeamsObject;
     private GetTradableTeams getTradableTeamsObject;
     private GetWorsePlayersToTradeFromTeam selectPlayersToTrade;
@@ -27,18 +28,22 @@ public class SimulateTrade {
     private String divider = "------------------------------------------------------------------------------------------------------------------";
     private String newTradeOffer = "                                          You have a new Trade offer";
 
+    public SimulateTrade() {
+        tradingFactory = AbstractAppFactory.getTradingFactory();
+        ioFactory = AbstractAppFactory.getIOFactory();
+    }
 
     public void simulateTrade(ILeague league, int lossPointValue, int maxPlayersPerTrade, float randomAcceptChance) {
         this.league = league;
-        this.getAllTeamsObject = new GetAllTeamsFromLeague(this.league);
+        this.getAllTeamsObject = tradingFactory.createGetAllTeamsFromLeague(this.league);
         this.allTeams = this.getAllTeamsObject.getTeams();
-        this.getTradableTeamsObject = new GetTradableTeams(allTeams, lossPointValue);
+        this.getTradableTeamsObject = tradingFactory.createGetTradableTeams(allTeams, lossPointValue);
         this.tradableTeams = this.getTradableTeamsObject.getTeams();
-        this.selectPlayersToTrade = new GetWorsePlayersToTradeFromTeam();
+        this.selectPlayersToTrade = tradingFactory.createGetWorsePlayersToTradeFromTeam();
         this.maxPlayerPerTrade = maxPlayersPerTrade;
         this.randomAcceptChance = randomAcceptChance;
-        this.appInput = new CommandLineInput();
-        this.appOutput = new CommandLineOutput();
+        this.appInput = ioFactory.createCommandLineInput();
+        this.appOutput = ioFactory.createCommandLineOutput();
     }
 
     public void simulate() {
@@ -47,7 +52,7 @@ public class SimulateTrade {
                 continue;
             } else {
                 ITeam selectedTeam = this.selectTeamToTrade(team);
-                GenerateTrade generateTrade = new GenerateTrade();
+                GenerateTrade generateTrade = tradingFactory.createGenerateTrade();
                 generateTrade.generateTrade(team, this.maxPlayerPerTrade, selectedTeam);
                 if (selectedTeam.getIsUserCreated()) {
                     this.userChoice(generateTrade.getGeneratedTrade(), generateTrade);
@@ -68,7 +73,7 @@ public class SimulateTrade {
         playerListToBeTraded = this.selectPlayersToTrade.getPlayersToTrade(this.maxPlayerPerTrade, team);
         this.tradeSize = playerListToBeTraded.size();
         String position = playerListToBeTraded.get(0).getPlayerStats().getPosition();
-        GetBestPlayersFromAllTeams getBestTeamChoice = new GetBestPlayersFromAllTeams(temp);
+        GetBestPlayersFromAllTeams getBestTeamChoice = tradingFactory.createGetBestPlayersFromAllTeams(temp);
         getBestTeamChoice.getBestTradeOption(position, tradeSize);
         ITeam bestChoice = getBestTeamChoice.getTeam();
         return bestChoice;
@@ -106,7 +111,7 @@ public class SimulateTrade {
         generateTrade.decideTrade(randomAcceptChance);
         List<ITeam> resultTeams = generateTrade.getResultTeams();
         for (ITeam modifiedTeam : resultTeams) {
-            TeamValidator validate = new TeamValidator(modifiedTeam, this.league.getLeagueID(), this.league.getFreeAgents());
+            TeamValidator validate = tradingFactory.createTeamValidator(modifiedTeam, this.league.getLeagueID(), this.league.getFreeAgents());
             validate.validateTeam();
         }
     }

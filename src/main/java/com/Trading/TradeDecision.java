@@ -10,13 +10,11 @@ public class TradeDecision {
     private List<ITeamPlayer> offered;
     private List<ITeamPlayer> requested;
 
-
     public TradeDecision(List<ITeamPlayer> offered, List<ITeamPlayer> requested, float randomAcceptChance) {
         this.offered = offered;
         this.requested = requested;
         this.randomAcceptChance = randomAcceptChance;
     }
-
 
     public boolean tradeDecision() {
         Random rand = new Random();
