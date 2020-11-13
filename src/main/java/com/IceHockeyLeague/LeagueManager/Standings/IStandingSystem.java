@@ -1,4 +1,4 @@
-package com.IceHockeyLeague.LeagueStandings;
+package com.IceHockeyLeague.LeagueManager.Standings;
 
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;

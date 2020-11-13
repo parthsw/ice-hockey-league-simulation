@@ -14,11 +14,9 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
+import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueScheduler.ILeagueSchedulerFactory;
-import com.IceHockeyLeague.LeagueScheduler.IScheduleSystem;
-import com.IceHockeyLeague.LeagueStandings.ILeagueStandingsFactory;
-import com.IceHockeyLeague.LeagueStandings.IStandingSystem;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,8 +25,6 @@ import java.util.List;
 public class League implements ILeague {
     private ILeagueManagerFactory leagueManagerFactory;
     private IDatabaseFactory databaseFactory;
-    private ILeagueSchedulerFactory leagueSchedulerFactory;
-    private ILeagueStandingsFactory leagueStandingsFactory;
 
     private int leagueID;
     private String leagueName;
@@ -58,10 +54,8 @@ public class League implements ILeague {
         this.retiredTeamPlayers = new ArrayList<>();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         databaseFactory = AbstractAppFactory.getDatabaseFactory();
-        leagueSchedulerFactory = AbstractAppFactory.getLeagueSchedulerFactory();
-        leagueStandingsFactory = AbstractAppFactory.getLeagueStandingsFactory();
-        this.scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
-        this.standingSystem = leagueStandingsFactory.createStandingSystem();
+        this.scheduleSystem = leagueManagerFactory.createScheduleSystem();
+        this.standingSystem = leagueManagerFactory.createStandingSystem();
     }
 
     @Override

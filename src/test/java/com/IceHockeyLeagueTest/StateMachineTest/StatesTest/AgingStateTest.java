@@ -8,9 +8,8 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueScheduler.ILeagueSchedulerFactory;
-import com.IceHockeyLeague.LeagueScheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.AdvanceToNextSeasonState;
@@ -25,7 +24,6 @@ import java.util.List;
 public class AgingStateTest {
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static ILeagueSchedulerFactory leagueSchedulerFactory;
 
     @BeforeClass
     public static void setup() {
@@ -34,9 +32,6 @@ public class AgingStateTest {
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
-        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
-        leagueSchedulerFactory = AbstractAppFactory.getLeagueSchedulerFactory();
     }
 
     private ILeague createDummyLeague() {
@@ -80,7 +75,7 @@ public class AgingStateTest {
     public void onRunAlternateTest() {
         ILeague league = createDummyLeague();
         List<ISchedule> playoffScheduleList = new ArrayList<>();
-        ISchedule schedule = leagueSchedulerFactory.createSchedule();
+        ISchedule schedule = leagueManagerFactory.createSchedule();
         schedule.setIsGamePlayed(true);
         playoffScheduleList.add(schedule);
         league.getScheduleSystem().setPlayoffSchedule(playoffScheduleList);

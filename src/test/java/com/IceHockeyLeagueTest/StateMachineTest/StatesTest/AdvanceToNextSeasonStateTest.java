@@ -10,9 +10,8 @@ import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfigPersistence;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueScheduler.ILeagueSchedulerFactory;
-import com.IceHockeyLeague.LeagueScheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.PersistState;
@@ -30,7 +29,6 @@ public class AdvanceToNextSeasonStateTest {
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
     private static IDatabaseFactory databaseFactory;
-    private static ILeagueSchedulerFactory leagueSchedulerFactory;
 
     @BeforeClass
     public static void setup() {
@@ -40,9 +38,6 @@ public class AdvanceToNextSeasonStateTest {
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         databaseFactory = appFactory.createDatabaseFactory();
-        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
-        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
-        leagueSchedulerFactory = AbstractAppFactory.getLeagueSchedulerFactory();
     }
 
     private ILeague createDummyLeague() {
@@ -80,7 +75,7 @@ public class AdvanceToNextSeasonStateTest {
         ILeague league = createDummyLeague();
         league.setLeagueDate(LocalDate.of(Year.now().getValue() + 1, Month.SEPTEMBER, 27));
         league.getScheduleSystem().setRegularSeasonStartDate(LocalDate.now());
-        ISchedule schedule = leagueSchedulerFactory.createSchedule();
+        ISchedule schedule = leagueManagerFactory.createSchedule();
         schedule.setWinningTeam(leagueManagerFactory.createTeam());
         List<ISchedule> playoffList = new ArrayList<>();
         playoffList.add(schedule);
