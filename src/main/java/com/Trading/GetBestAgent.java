@@ -6,18 +6,18 @@ import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import java.util.List;
 
 public class GetBestAgent {
-    private IFreeAgent bestFreeagent;
+    private IFreeAgent bestFreeAgent;
     private ITeamPlayer worseTeamPlayer;
 
     public IFreeAgent getBestAgentWithPosition(List<IFreeAgent> agents, String position){
         int bestStrength = -1;
         for (IFreeAgent agent : agents){
             if (agent.getPlayerStats().getPosition().equalsIgnoreCase(position) && bestStrength < agent.getPlayerStats().getStrength()) {
-                this.bestFreeagent = agent;
+                this.bestFreeAgent = agent;
                 bestStrength = (int) agent.getPlayerStats().getStrength();
             }
         }
-        return this.bestFreeagent;
+        return this.bestFreeAgent;
     }
 
     public ITeamPlayer getWorsePlayerInTeamWithPosition(List<ITeamPlayer> players, String position){
@@ -35,11 +35,11 @@ public class GetBestAgent {
         int bestStrength = -1;
         for (IFreeAgent agent : agents){
             if ((agent.getPlayerStats().getPosition().equalsIgnoreCase("Forward") || agent.getPlayerStats().getPosition().equalsIgnoreCase("Defence")) && bestStrength < agent.getPlayerStats().getStrength()) {
-                this.bestFreeagent = agent;
+                this.bestFreeAgent = agent;
                 bestStrength = (int) agent.getPlayerStats().getStrength();
             }
         }
-        return this.bestFreeagent;
+        return this.bestFreeAgent;
     }
 
     public ITeamPlayer getWorseSkaterInTeam(List<ITeamPlayer> players){

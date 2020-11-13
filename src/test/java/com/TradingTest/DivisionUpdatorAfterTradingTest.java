@@ -2,20 +2,15 @@ package com.TradingTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
-import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
-import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
+import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
-import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
 import com.Trading.DivisionUpdatorAfterTrading;
+import com.Trading.ITradingFactory;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,30 +19,33 @@ import java.util.Random;
 
 public class DivisionUpdatorAfterTradingTest {
     private static ILeagueManagerFactory leagueManagerFactory;
+    private static ITradingFactory tradingFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        tradingFactory = appFactory.createTradingFactory();
     }
 
     @Test
     public void divisionUpdatorAfterTradingTest() {
-        ILeague league = new League();
-        IConference conference = new Conference();
-        IDivision division = new Division();
-        ITeam team1 = new Team();
-        ITeam team2 = new Team();
+        ILeague league = leagueManagerFactory.createLeague();
+        IConference conference = leagueManagerFactory.createConference();
+        IDivision division = leagueManagerFactory.createDivision();
+        ITeam team1 = leagueManagerFactory.createTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
 
-        ITeam newteam1 = new Team();
-        ITeam newteam2 = new Team();
+        ITeam newteam1 = leagueManagerFactory.createTeam();
+        ITeam newteam2 = leagueManagerFactory.createTeam();
 
         Random random = new Random();
         String[] positions = new String[]{"Forward", "Defence", "Goalie"};
         for (int i = 0; i < 20; i++) {
-            ITeamPlayer player = new TeamPlayer();
-            IPlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setStrength(random.nextInt(100));
             String temp = positions[random.nextInt(positions.length)];
             stats.setPosition(temp);
@@ -56,8 +54,8 @@ public class DivisionUpdatorAfterTradingTest {
         }
 
         for (int i = 0; i < 20; i++) {
-            ITeamPlayer player = new TeamPlayer();
-            IPlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setStrength(random.nextInt(100));
             String temp = positions[random.nextInt(positions.length)];
             stats.setPosition(temp);
@@ -70,8 +68,8 @@ public class DivisionUpdatorAfterTradingTest {
         league.addConference(conference);
 
         for (int i = 0; i < 10; i++) {
-            ITeamPlayer player = new TeamPlayer();
-            IPlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setStrength(random.nextInt(100));
             String temp = positions[random.nextInt(positions.length)];
             stats.setPosition(temp);
@@ -80,8 +78,8 @@ public class DivisionUpdatorAfterTradingTest {
         }
 
         for (int i = 0; i < 10; i++) {
-            ITeamPlayer player = new TeamPlayer();
-            IPlayerStats stats = new PlayerStats();
+            ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+            IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setStrength(random.nextInt(100));
             String temp = positions[random.nextInt(positions.length)];
             stats.setPosition(temp);
@@ -89,11 +87,9 @@ public class DivisionUpdatorAfterTradingTest {
             newteam2.addPlayer(player);
         }
 
-        DivisionUpdatorAfterTrading testObj = new DivisionUpdatorAfterTrading(league, team1, newteam1, team2, newteam2);
+        DivisionUpdatorAfterTrading testObj = tradingFactory.createDivisionUpdatorAfterTrading(league, team1, newteam1, team2, newteam2);
         for (ITeam team : division.getTeams()) {
             Assert.assertEquals(10, team.getPlayers().size());
         }
-
     }
-
 }

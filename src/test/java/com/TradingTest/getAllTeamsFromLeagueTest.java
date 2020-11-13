@@ -8,6 +8,7 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.Trading.GetAllTeamsFromLeague;
+import com.Trading.ITradingFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,13 +18,17 @@ import java.util.List;
 
 public class getAllTeamsFromLeagueTest {
     private static ILeagueManagerFactory leagueManagerFactory;
+    private static ITradingFactory tradingFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        tradingFactory = appFactory.createTradingFactory();
     }
+
     @Test
     public void getAllTeamsFromLeagueTest(){
 
@@ -84,7 +89,7 @@ public class getAllTeamsFromLeagueTest {
         teams.add(team7);
         teams.add(team8);
 
-        GetAllTeamsFromLeague testObj = new GetAllTeamsFromLeague(league);
+        GetAllTeamsFromLeague testObj = tradingFactory.createGetAllTeamsFromLeague(league);
         List<ITeam> result = testObj.getTeams();
 
         Assert.assertEquals(result.get(0).getTeamName(),"team1");

@@ -1,7 +1,6 @@
 package com.Database;
 
 import com.AbstractAppFactory;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;

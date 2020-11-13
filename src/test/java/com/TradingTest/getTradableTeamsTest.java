@@ -5,6 +5,7 @@ import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.Trading.GetTradableTeams;
+import com.Trading.ITradingFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,12 +15,15 @@ import java.util.List;
 
 public class getTradableTeamsTest {
     private static ILeagueManagerFactory leagueManagerFactory;
+    private static ITradingFactory tradingFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        tradingFactory = appFactory.createTradingFactory();
     }
 
     @Test
@@ -51,7 +55,7 @@ public class getTradableTeamsTest {
         teams.add(team7);
         teams.add(team8);
 
-        GetTradableTeams testObj = new GetTradableTeams(teams,0);
+        GetTradableTeams testObj = tradingFactory.createGetTradableTeams(teams, 0);
         List<ITeam> result = testObj.getTeams();
         Assert.assertEquals(result.get(0).getTeamName(),"team1");
         Assert.assertEquals(result.get(1).getTeamName(),"team2");

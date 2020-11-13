@@ -5,7 +5,6 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
 
 import java.sql.CallableStatement;
 import java.sql.ResultSet;

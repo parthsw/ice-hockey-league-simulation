@@ -1,4 +1,4 @@
-package com.IceHockeyLeagueTest.LeagueStandingsTest;
+package com.IceHockeyLeagueTest.LeagueManagerTest.StandingsTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
