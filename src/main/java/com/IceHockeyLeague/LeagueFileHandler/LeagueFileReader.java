@@ -28,4 +28,5 @@ public class LeagueFileReader implements ILeagueFileReader {
         ClassLoader classLoader = getClass().getClassLoader();
         return classLoader.getResourceAsStream(resourceFileName);
     }
+
 }

@@ -1,11 +1,19 @@
 package com.Database;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 
 import java.sql.*;
 
 public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
+    private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public GamePlayConfigPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
 
     @Override
     public boolean saveGamePlayConfig(IGamePlayConfig gamePlayConfig) {
@@ -14,7 +22,7 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
         String gamePlayConfigID = null;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoGamePlayConfig(?,?,?,?,?,?,?,?,?,?,?,?,?)");
             myCall.setInt(1, gamePlayConfig.getLeagueID());
 
@@ -61,7 +69,7 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
         CallableStatement myCall;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadLeagueGamePlayConfig(?)");
 
             myCall.setInt(1, leagueId);
@@ -70,26 +78,26 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
                 gamePlayConfig.setGamePlayConfigID(result.getInt("gamePlayConfigID"));
                 gamePlayConfig.setLeagueID(leagueId);
 
-                IAgingConfig agingConfig = AbstractLeagueManagerFactory.getFactory().getAgingConfig();
+                IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
                 agingConfig.setAverageRetirementAge(result.getInt("averageRetirementAge"));
                 agingConfig.setMaximumAge(result.getInt("maximumAge"));
                 gamePlayConfig.setAgingConfig(agingConfig);
 
-                IGameResolverConfig gameResolverConfig = AbstractLeagueManagerFactory.getFactory().getGameResolverConfig();
+                IGameResolverConfig gameResolverConfig = leagueManagerFactory.createGameResolverConfig();
                 gameResolverConfig.setRandomWinChance(result.getFloat("randomWinChance"));
                 gamePlayConfig.setGameResolverConfig(gameResolverConfig);
 
-                IInjuryConfig injuryConfig = AbstractLeagueManagerFactory.getFactory().getInjuryConfig();
+                IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
                 injuryConfig.setRandomInjuryChance(result.getFloat("randomInjuryChance"));
                 injuryConfig.setInjuryDaysLow(result.getInt("injuryDaysLow"));
                 injuryConfig.setInjuryDaysHigh(result.getInt("injuryDaysHigh"));
                 gamePlayConfig.setInjuryConfig(injuryConfig);
 
-                ITrainingConfig trainingConfig = AbstractLeagueManagerFactory.getFactory().getTrainingConfig();
+                ITrainingConfig trainingConfig = leagueManagerFactory.createTrainingConfig();
                 trainingConfig.setDaysUntilStatIncreaseCheck(result.getInt("daysUntilStatIncreaseCheck"));
                 gamePlayConfig.setTrainingConfig(trainingConfig);
 
-                ITradingConfig tradingConfig = AbstractLeagueManagerFactory.getFactory().getTradingConfig();
+                ITradingConfig tradingConfig = leagueManagerFactory.createTradingConfig();
                 tradingConfig.setLossPoint(result.getInt("lossPoint"));
                 tradingConfig.setRandomTradeOfferChance(result.getFloat("randomTradeOfferChance"));
                 tradingConfig.setMaxPlayersPerTrade(result.getInt("maxPlayersPerTrade"));

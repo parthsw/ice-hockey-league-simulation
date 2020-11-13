@@ -1,16 +1,17 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.Database.IDatabaseFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
-import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,23 +23,28 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 public class PlayerCareerProgressionTest {
-    private static AbstractLeagueManagerFactory leagueManagerFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static IDatabaseFactory databaseFactory;
     private static IPlayerCareerProgression playerCareerProgression;
     private static IPlayer player;
     private static IRandomChance randomChanceMock;
 
     @BeforeClass
     public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
         randomChanceMock = Mockito.mock(RandomChance.class);
-        LeagueManagerFactory.setFactory(new TestLeagueManagerFactory());
-        leagueManagerFactory = AbstractLeagueManagerFactory.getFactory();
-        playerCareerProgression = new PlayerCareerProgression(randomChanceMock);
-        player = leagueManagerFactory.getPlayer();
+        playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChanceMock);
+        player = leagueManagerFactory.createPlayer();
     }
 
     @Test
     public void isInjuredTest() {
-        IInjuryConfig injuryConfig = leagueManagerFactory.getInjuryConfig();
+        IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
         injuryConfig.setInjuryDaysHigh(5);
         injuryConfig.setInjuryDaysLow(1);
         injuryConfig.setRandomInjuryChance(0.5f);
@@ -86,12 +92,12 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void isRetiredTest() {
-        IAgingConfig agingConfig = leagueManagerFactory.getAgingConfig();
+        IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setAverageRetirementAge(35);
         agingConfig.setMaximumAge(50);
         LocalDate currentDate = LocalDate.of(2020, 10, 30);
 
-        IPlayer player = leagueManagerFactory.getPlayer();
+        IPlayer player = leagueManagerFactory.createPlayer();
         player.setPlayerAge(50);
         player.setElapsedDaysFromLastBDay(1);
 
@@ -99,7 +105,7 @@ public class PlayerCareerProgressionTest {
         Assert.assertTrue(player.getRetiredStatus());
         Assert.assertEquals(currentDate, player.getRetirementDate());
 
-        IPlayer player1 = leagueManagerFactory.getPlayer();
+        IPlayer player1 = leagueManagerFactory.createPlayer();
         player1.setPlayerAge(20);
         player1.setElapsedDaysFromLastBDay(200);
 
@@ -108,7 +114,7 @@ public class PlayerCareerProgressionTest {
         Assert.assertFalse(player1.getRetiredStatus());
         Assert.assertNull(player1.getRetirementDate());
 
-        IPlayer player2 = leagueManagerFactory.getPlayer();
+        IPlayer player2 = leagueManagerFactory.createPlayer();
         player2.setPlayerAge(39);
         player2.setElapsedDaysFromLastBDay(344);
 
@@ -120,9 +126,9 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void handleFreeAgentRetirementTest() {
-        ILeaguePersistence leagueDB = leagueManagerFactory.getLeagueDB();
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
-        ILeague league = leagueManagerFactory.getLeague();
+        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+        ILeague league = leagueManagerFactory.createLeague();
         leagueDB.loadLeague(1, league);
 
         Assert.assertFalse(playerCareerProgression.handleFreeAgentRetirement(freeAgent, league));
@@ -134,9 +140,7 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void handleTeamPlayerRetirementTest() {
-        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.getPlayerCareerProgression();
-        ILeague league = leagueManagerFactory.getLeague();
-        ILeaguePersistence leagueDB = leagueManagerFactory.getLeagueDB();
+        ILeague league = leagueManagerFactory.createLeague();
         league.loadCompleteLeague(1);
 
         List<IConference> conferences = league.getConferences();
@@ -153,11 +157,11 @@ public class PlayerCareerProgressionTest {
         Assert.assertEquals(1, league.getRetiredTeamPlayers().size());
         Assert.assertEquals(2, league.getFreeAgents().size());
 
-        ITeamPlayer emptyPlayer = leagueManagerFactory.getTeamPlayer();
+        ITeamPlayer emptyPlayer = leagueManagerFactory.createTeamPlayer();
         Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(emptyPlayer, team, league));
 
         ITeamPlayer goalieTeamPlayer = teamPlayers.get(0);
-        IPlayerStats stats = leagueManagerFactory.getPlayerStats();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setPosition("goalie");
         goalieTeamPlayer.setPlayerStats(stats);
         Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(goalieTeamPlayer, team, league));

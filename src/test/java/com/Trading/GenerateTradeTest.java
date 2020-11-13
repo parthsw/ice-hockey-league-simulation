@@ -6,13 +6,15 @@ import com.IceHockeyLeague.LeagueManager.Player.PlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.TeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.Trading.GenerateTrade;
+import com.Trading.Trade;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Random;
 
-
 public class GenerateTradeTest {
+
     @Test
     public void generateTradeTest() {
         ITeam team1 = new Team();

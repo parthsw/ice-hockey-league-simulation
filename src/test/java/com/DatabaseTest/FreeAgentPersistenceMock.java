@@ -1,6 +1,8 @@
-package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
+package com.DatabaseTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
@@ -8,11 +10,13 @@ import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import java.time.LocalDate;
 import java.util.List;
 
-public class FreeAgentDBMock implements IFreeAgentPersistence {
-    private final AbstractLeagueManagerFactory leagueManagerFactory;
+public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
+    private final ILeagueManagerFactory leagueManagerFactory;
 
-    public FreeAgentDBMock() {
-        leagueManagerFactory = AbstractLeagueManagerFactory.getFactory();
+    public FreeAgentPersistenceMock() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 
     @Override
@@ -28,7 +32,7 @@ public class FreeAgentDBMock implements IFreeAgentPersistence {
         freeAgent.setRetiredStatus(false);
         freeAgent.setRetirementDate(null);
 
-        IPlayerStats stats = leagueManagerFactory.getPlayerStats();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setPosition("forward");
         stats.setShooting(10);
         stats.setChecking(2);
@@ -41,7 +45,7 @@ public class FreeAgentDBMock implements IFreeAgentPersistence {
 
     @Override
     public boolean loadFreeAgents(int leagueId, List<IFreeAgent> freeAgents) {
-        IFreeAgent freeAgent = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         freeAgent.setFreeAgentID(1);
         freeAgent.setLeagueID(1);
         freeAgent.setPlayerName("Fred One");
@@ -53,7 +57,7 @@ public class FreeAgentDBMock implements IFreeAgentPersistence {
         freeAgent.setRetiredStatus(false);
         freeAgent.setRetirementDate(null);
 
-        IPlayerStats stats = leagueManagerFactory.getPlayerStats();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setPosition("forward");
         stats.setShooting(10);
         stats.setChecking(2);
@@ -62,7 +66,7 @@ public class FreeAgentDBMock implements IFreeAgentPersistence {
         stats.setStrength(29);
         freeAgent.setPlayerStats(stats);
 
-        IFreeAgent freeAgent1 = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent1 = leagueManagerFactory.createFreeAgent();
         freeAgent1.setFreeAgentID(2);
         freeAgent1.setLeagueID(1);
         freeAgent1.setPlayerName("Mike One");
@@ -74,7 +78,7 @@ public class FreeAgentDBMock implements IFreeAgentPersistence {
         freeAgent1.setRetiredStatus(false);
         freeAgent1.setRetirementDate(null);
 
-        IPlayerStats stats1 = leagueManagerFactory.getPlayerStats();
+        IPlayerStats stats1 = leagueManagerFactory.createPlayerStats();
         stats1.setPosition("defense");
         stats1.setShooting(12);
         stats1.setChecking(18);
@@ -86,7 +90,7 @@ public class FreeAgentDBMock implements IFreeAgentPersistence {
         freeAgents.add(freeAgent);
         freeAgents.add(freeAgent1);
 
-        IFreeAgent freeAgent2 = leagueManagerFactory.getFreeAgent();
+        IFreeAgent freeAgent2 = leagueManagerFactory.createFreeAgent();
         freeAgent2.setFreeAgentID(3);
         freeAgent2.setLeagueID(1);
         freeAgent2.setPlayerName("Fred Two");
@@ -98,7 +102,7 @@ public class FreeAgentDBMock implements IFreeAgentPersistence {
         freeAgent2.setRetiredStatus(false);
         freeAgent2.setRetirementDate(null);
 
-        IPlayerStats stats2 = leagueManagerFactory.getPlayerStats();
+        IPlayerStats stats2 = leagueManagerFactory.createPlayerStats();
         stats2.setPosition("forward");
         stats2.setShooting(19);
         stats2.setChecking(13);

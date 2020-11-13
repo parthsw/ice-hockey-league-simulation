@@ -1,42 +1,35 @@
 package com;
 
-import com.Database.AbstractDatabaseFactory;
-import com.Database.DatabaseFactory;
-import com.IO.AbstractIOFactory;
-import com.IO.IOFactory;
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
-import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachine;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 
 public class HockeyLeagueSimulationApp {
+
     public static void main(String[] args) {
         initializeFactories();
         runApp();
     }
 
     private static void initializeFactories() {
-        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
-        AbstractIOFactory.setFactory(new IOFactory());
-        AbstractLeagueManagerFactory.setFactory(new LeagueManagerFactory());
+        AbstractAppFactory.setAppFactory(AppFactory.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
 
-        AbstractStateMachineFactory.setFactory(
-                new StateMachineFactory(
-                        AbstractIOFactory.getFactory().getCommandLineInput(),
-                        AbstractIOFactory.getFactory().getCommandLineOutput(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileReader(),
-                        LeagueFileHandlerFactory.getFactory().getJsonParser(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
-                )
-        );
-        AbstractDatabaseFactory.setFactory(new DatabaseFactory());
+        AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
+        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+        AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
+        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
     }
 
     private static void runApp() {
-        AbstractState importState = AbstractStateMachineFactory.getFactory().getImportState();
-        AbstractStateMachineFactory.getFactory().getStateMachine(importState).onExecution();
+        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+        AbstractState importState = stateMachineFactory.createImportState();
+
+        IStateMachine stateMachine = stateMachineFactory.createStateMachine(importState);
+        stateMachine.onExecution();
     }
+
 }

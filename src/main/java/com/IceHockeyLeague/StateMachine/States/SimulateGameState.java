@@ -1,15 +1,27 @@
 package com.IceHockeyLeague.StateMachine.States;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.IO.IAppOutput;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueScheduler.ISchedule;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class SimulateGameState extends AbstractState {
+
+    private final IAppOutput appOutput;
+    private final IStateMachineFactory stateMachineFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public SimulateGameState(IAppOutput appOutput) {
+        this.appOutput = appOutput;
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
 
     @Override
     public AbstractState onRun() {
@@ -25,6 +37,9 @@ public class SimulateGameState extends AbstractState {
         ITeam teamA = schedule.getFirstTeam();
         ITeam teamB = schedule.getSecondTeam();
 
+        appOutput.display("--------------------------------------------------------");
+        appOutput.display("Game: " + teamA.getTeamName() + " vs " + teamB.getTeamName());
+
         float teamAStrength = teamA.getTeamStrength();
         float teamBStrength = teamB.getTeamStrength();
 
@@ -38,7 +53,7 @@ public class SimulateGameState extends AbstractState {
         }
 
         boolean flipResult = false;
-        IRandomChance randomChance = AbstractLeagueManagerFactory.getFactory().getRandomChance();
+        IRandomChance randomChance = leagueManagerFactory.createRandomChance();
         float randomUpsetValue = randomChance.getRandomFloatNumber(0, 1);
 
         if (randomUpsetValue < league.getGamePlayConfig().getGameResolverConfig().getRandomWinChance()) {
@@ -76,6 +91,8 @@ public class SimulateGameState extends AbstractState {
         winningTeam.decrementLossPointValue();
         losingTeam.incrementLossPointValue();
 
-        return AbstractStateMachineFactory.getFactory().getInjuryCheckState(teamA, teamB);
+        appOutput.display("Winner: " + winningTeam.getTeamName());
+
+        return stateMachineFactory.createInjuryCheckState(teamA, teamB);
     }
 }

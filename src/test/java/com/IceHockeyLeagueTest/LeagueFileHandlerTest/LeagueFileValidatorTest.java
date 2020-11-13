@@ -1,8 +1,9 @@
 package com.IceHockeyLeagueTest.LeagueFileHandlerTest;
 
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
-import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
 
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -13,15 +14,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueFileValidatorTest {
+    private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
 
     @BeforeClass
     public static void setup() {
-        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
+        leagueFileHandlerFactory = AbstractAppFactory.getLeagueFileHandlerFactory();
     }
 
     @Test
     public void validateJsonSchemaTest() {
-        ILeagueFileValidator leagueFileValidator = AbstractLeagueFileHandlerFactory.getFactory().getLeagueFileValidator();
+        ILeagueFileValidator leagueFileValidator = leagueFileHandlerFactory.createLeagueFileValidator();
         JSONObject leagueSchema = LeagueJsonMock.getInstance().leagueSchema();
 
         JSONObject leagueJson = LeagueJsonMock.getInstance().validLeagueJson();

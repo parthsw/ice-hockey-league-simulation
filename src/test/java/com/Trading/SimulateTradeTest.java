@@ -10,6 +10,8 @@ import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.Trading.SimulateTrade;
+import com.Trading.TeamValidator;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,7 +19,6 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 
 public class SimulateTradeTest {
 
@@ -27,7 +28,6 @@ public class SimulateTradeTest {
     public static void setup() {
         ioMockInstance = IOMock.instance();
     }
-
 
     @Test
     public void simulateTradeTest() {
@@ -221,9 +221,9 @@ public class SimulateTradeTest {
             agents.add(agent);
         }
         TeamValidator object = new TeamValidator(team, 1, agents);
-        ITeam validatedteam = object.validateTeam();
+        ITeam validatedTeam = object.validateTeam();
 
-        for (ITeamPlayer player : validatedteam.getPlayers()) {
+        for (ITeamPlayer player : validatedTeam.getPlayers()) {
             if (player.getPlayerStats().getPosition().equals(keeper)) {
                 goalie++;
             } else {

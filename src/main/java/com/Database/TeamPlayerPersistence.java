@@ -1,20 +1,29 @@
 package com.Database;
 
+import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 
 import java.util.List;
 import java.sql.*;
 
 public class TeamPlayerPersistence implements ITeamPlayerPersistence {
+    private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public TeamPlayerPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
 
     @Override
     public boolean saveTeamPlayer(ITeamPlayer teamPlayer) {
-        IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
+        IDateConversion sqlDateConversion = databaseFactory.createSQLDateConversion();
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         String playerID = null;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             IPlayerStats teamPlayerStats = teamPlayer.getPlayerStats();
@@ -68,18 +77,18 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
 
     @Override
     public boolean loadTeamPlayers(int teamId, List<ITeamPlayer> teamPlayers) {
-        IDateConversion sqlDateConversion = AbstractDatabaseFactory.getFactory().getSQLDateConversion();
+        IDateConversion sqlDateConversion = databaseFactory.createSQLDateConversion();
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadTeamPlayers(?)");
 
             myCall.setInt(1, teamId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                ITeamPlayer player = new TeamPlayer();
-                IPlayerStats stats = new PlayerStats();
+                ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
+                IPlayerStats stats = leagueManagerFactory.createPlayerStats();
                 stats.setPosition(result.getString("position"));
                 stats.setSkating(result.getInt("skating"));
                 stats.setShooting(result.getInt("shooting"));

@@ -1,26 +1,34 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeagueTest.LeagueFileHandlerTest.LeagueJsonMock;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class LeagueCreatorTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
 
-    @Before
-    public void setup() {
-        AbstractLeagueManagerFactory.setFactory(new TestLeagueManagerFactory());
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     @Test
     public void createLeagueTest() {
         JSONObject leagueJson = LeagueJsonMock.getInstance().validLeagueJson();
-        ILeagueCreator leagueCreator = AbstractLeagueManagerFactory.getFactory().getLeagueCreator();
+        ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
 
         ILeague league = leagueCreator.createLeague(leagueJson);
         IConference conference = league.getConferences().get(0);

@@ -1,22 +1,16 @@
 package com.IceHockeyLeagueTest.LeagueSchedulerTest;
 
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.Team;
-import com.IceHockeyLeague.LeagueScheduler.ISchedule;
-import com.IceHockeyLeague.LeagueScheduler.IScheduleSystem;
-import com.IceHockeyLeague.LeagueScheduler.Schedule;
-import com.IceHockeyLeague.LeagueScheduler.ScheduleSystem;
-import com.IceHockeyLeague.LeagueStandings.IStanding;
-import com.IceHockeyLeague.LeagueStandings.IStandingSystem;
-import com.IceHockeyLeague.LeagueStandings.Standing;
-import com.IceHockeyLeague.LeagueStandings.StandingSystem;
+import com.IceHockeyLeague.LeagueScheduler.*;
+import com.IceHockeyLeague.LeagueStandings.*;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -24,45 +18,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScheduleSystemTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ILeagueSchedulerFactory leagueSchedulerFactory;
+    private static ILeagueStandingsFactory leagueStandingsFactory;
+
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
+        leagueSchedulerFactory = AbstractAppFactory.getLeagueSchedulerFactory();
+        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
+        leagueStandingsFactory = AbstractAppFactory.getLeagueStandingsFactory();
+    }
 
     private ILeague createDummyLeague() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
         league.setConferences(new ArrayList<>());
 
-        IConference conference1 = new Conference();
+        IConference conference1 = leagueManagerFactory.createConference();
         conference1.setDivisions(new ArrayList<>());
-        IConference conference2 = new Conference();
+        IConference conference2 = leagueManagerFactory.createConference();
         conference2.setDivisions(new ArrayList<>());
 
-        IDivision division1 = new Division();
+        IDivision division1 = leagueManagerFactory.createDivision();
         division1.setTeams(new ArrayList<>());
-        IDivision division2 = new Division();
+        IDivision division2 = leagueManagerFactory.createDivision();
         division2.setTeams(new ArrayList<>());
-        IDivision division3 = new Division();
+        IDivision division3 = leagueManagerFactory.createDivision();
         division3.setTeams(new ArrayList<>());
-        IDivision division4 = new Division();
+        IDivision division4 = leagueManagerFactory.createDivision();
         division4.setTeams(new ArrayList<>());
 
-        ITeam team1 = new Team();
-        ITeam team2 = new Team();
-        ITeam team3 = new Team();
-        ITeam team4 = new Team();
-        ITeam team5 = new Team();
-        ITeam team6 = new Team();
-        ITeam team7 = new Team();
-        ITeam team8 = new Team();
-        ITeam team9 = new Team();
-        ITeam team10 = new Team();
-        ITeam team11 = new Team();
-        ITeam team12 = new Team();
-        ITeam team13 = new Team();
-        ITeam team14 = new Team();
-        ITeam team15 = new Team();
-        ITeam team16 = new Team();
-        ITeam team17 = new Team();
-        ITeam team18 = new Team();
-        ITeam team19 = new Team();
-        ITeam team20 = new Team();
+        ITeam team1 = leagueManagerFactory.createTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
+        ITeam team3 = leagueManagerFactory.createTeam();
+        ITeam team4 = leagueManagerFactory.createTeam();
+        ITeam team5 = leagueManagerFactory.createTeam();
+        ITeam team6 = leagueManagerFactory.createTeam();
+        ITeam team7 = leagueManagerFactory.createTeam();
+        ITeam team8 = leagueManagerFactory.createTeam();
+        ITeam team9 = leagueManagerFactory.createTeam();
+        ITeam team10 = leagueManagerFactory.createTeam();
+        ITeam team11 = leagueManagerFactory.createTeam();
+        ITeam team12 = leagueManagerFactory.createTeam();
+        ITeam team13 = leagueManagerFactory.createTeam();
+        ITeam team14 = leagueManagerFactory.createTeam();
+        ITeam team15 = leagueManagerFactory.createTeam();
+        ITeam team16 = leagueManagerFactory.createTeam();
+        ITeam team17 = leagueManagerFactory.createTeam();
+        ITeam team18 = leagueManagerFactory.createTeam();
+        ITeam team19 = leagueManagerFactory.createTeam();
+        ITeam team20 = leagueManagerFactory.createTeam();
 
         league.addConference(conference1);
         league.addConference(conference2);
@@ -122,7 +131,7 @@ public class ScheduleSystemTest {
         ITeam team19 = division4.getTeams().get(3);
         ITeam team20 = division4.getTeams().get(4);
 
-        IStanding standing1 = new Standing();
+        IStanding standing1 = leagueStandingsFactory.createStanding();
         standing1.setConference(conference1);
         standing1.setDivision(division1);
         standing1.setTeam(team1);
@@ -130,7 +139,7 @@ public class ScheduleSystemTest {
         standing1.setGamesWon(2);
         standing1.setPoints(4);
 
-        IStanding standing2 = new Standing();
+        IStanding standing2 = leagueStandingsFactory.createStanding();
         standing2.setConference(conference1);
         standing2.setDivision(division1);
         standing2.setTeam(team2);
@@ -138,7 +147,7 @@ public class ScheduleSystemTest {
         standing2.setGamesWon(6);
         standing2.setPoints(12);
 
-        IStanding standing3 = new Standing();
+        IStanding standing3 = leagueStandingsFactory.createStanding();
         standing3.setConference(conference1);
         standing3.setDivision(division1);
         standing3.setTeam(team3);
@@ -146,7 +155,7 @@ public class ScheduleSystemTest {
         standing3.setGamesWon(4);
         standing3.setPoints(8);
 
-        IStanding standing4 = new Standing();
+        IStanding standing4 = leagueStandingsFactory.createStanding();
         standing4.setConference(conference1);
         standing4.setDivision(division1);
         standing4.setTeam(team4);
@@ -154,7 +163,7 @@ public class ScheduleSystemTest {
         standing4.setGamesWon(5);
         standing4.setPoints(11);
 
-        IStanding standing5 = new Standing();
+        IStanding standing5 = leagueStandingsFactory.createStanding();
         standing5.setConference(conference1);
         standing5.setDivision(division1);
         standing5.setTeam(team5);
@@ -162,7 +171,7 @@ public class ScheduleSystemTest {
         standing5.setGamesWon(4);
         standing5.setPoints(9);
 
-        IStanding standing6 = new Standing();
+        IStanding standing6 = leagueStandingsFactory.createStanding();
         standing6.setConference(conference1);
         standing6.setDivision(division2);
         standing6.setTeam(team6);
@@ -170,7 +179,7 @@ public class ScheduleSystemTest {
         standing6.setGamesWon(6);
         standing6.setPoints(12);
 
-        IStanding standing7 = new Standing();
+        IStanding standing7 = leagueStandingsFactory.createStanding();
         standing7.setConference(conference1);
         standing7.setDivision(division2);
         standing7.setTeam(team7);
@@ -178,7 +187,7 @@ public class ScheduleSystemTest {
         standing7.setGamesWon(5);
         standing7.setPoints(10);
 
-        IStanding standing8 = new Standing();
+        IStanding standing8 = leagueStandingsFactory.createStanding();
         standing8.setConference(conference1);
         standing8.setDivision(division2);
         standing8.setTeam(team8);
@@ -186,7 +195,7 @@ public class ScheduleSystemTest {
         standing8.setGamesWon(4);
         standing8.setPoints(9);
 
-        IStanding standing9 = new Standing();
+        IStanding standing9 = leagueStandingsFactory.createStanding();
         standing9.setConference(conference1);
         standing9.setDivision(division2);
         standing9.setTeam(team9);
@@ -194,7 +203,7 @@ public class ScheduleSystemTest {
         standing9.setGamesWon(2);
         standing9.setPoints(4);
 
-        IStanding standing10 = new Standing();
+        IStanding standing10 = leagueStandingsFactory.createStanding();
         standing10.setConference(conference1);
         standing10.setDivision(division2);
         standing10.setTeam(team10);
@@ -202,7 +211,7 @@ public class ScheduleSystemTest {
         standing10.setGamesWon(4);
         standing10.setPoints(8);
 
-        IStanding standing11 = new Standing();
+        IStanding standing11 = leagueStandingsFactory.createStanding();
         standing11.setConference(conference2);
         standing11.setDivision(division3);
         standing11.setTeam(team11);
@@ -210,7 +219,7 @@ public class ScheduleSystemTest {
         standing11.setGamesWon(3);
         standing11.setPoints(7);
 
-        IStanding standing12 = new Standing();
+        IStanding standing12 = leagueStandingsFactory.createStanding();
         standing12.setConference(conference2);
         standing12.setDivision(division3);
         standing12.setTeam(team12);
@@ -218,7 +227,7 @@ public class ScheduleSystemTest {
         standing12.setGamesWon(3);
         standing12.setPoints(6);
 
-        IStanding standing13 = new Standing();
+        IStanding standing13 = leagueStandingsFactory.createStanding();
         standing13.setConference(conference2);
         standing13.setDivision(division3);
         standing13.setTeam(team13);
@@ -226,7 +235,7 @@ public class ScheduleSystemTest {
         standing13.setGamesWon(5);
         standing13.setPoints(10);
 
-        IStanding standing14 = new Standing();
+        IStanding standing14 = leagueStandingsFactory.createStanding();
         standing14.setConference(conference2);
         standing14.setDivision(division3);
         standing14.setTeam(team14);
@@ -234,7 +243,7 @@ public class ScheduleSystemTest {
         standing14.setGamesWon(4);
         standing14.setPoints(8);
 
-        IStanding standing15 = new Standing();
+        IStanding standing15 = leagueStandingsFactory.createStanding();
         standing15.setConference(conference2);
         standing15.setDivision(division3);
         standing15.setTeam(team15);
@@ -242,7 +251,7 @@ public class ScheduleSystemTest {
         standing15.setGamesWon(6);
         standing15.setPoints(12);
 
-        IStanding standing16 = new Standing();
+        IStanding standing16 = leagueStandingsFactory.createStanding();
         standing16.setConference(conference2);
         standing16.setDivision(division4);
         standing16.setTeam(team16);
@@ -250,7 +259,7 @@ public class ScheduleSystemTest {
         standing16.setGamesWon(1);
         standing16.setPoints(2);
 
-        IStanding standing17 = new Standing();
+        IStanding standing17 = leagueStandingsFactory.createStanding();
         standing17.setConference(conference2);
         standing17.setDivision(division4);
         standing17.setTeam(team17);
@@ -258,7 +267,7 @@ public class ScheduleSystemTest {
         standing17.setGamesWon(4);
         standing17.setPoints(9);
 
-        IStanding standing18 = new Standing();
+        IStanding standing18 = leagueStandingsFactory.createStanding();
         standing18.setConference(conference2);
         standing18.setDivision(division4);
         standing18.setTeam(team18);
@@ -266,7 +275,7 @@ public class ScheduleSystemTest {
         standing18.setGamesWon(0);
         standing18.setPoints(1);
 
-        IStanding standing19 = new Standing();
+        IStanding standing19 = leagueStandingsFactory.createStanding();
         standing19.setConference(conference2);
         standing19.setDivision(division4);
         standing19.setTeam(team19);
@@ -274,7 +283,7 @@ public class ScheduleSystemTest {
         standing19.setGamesWon(3);
         standing19.setPoints(6);
 
-        IStanding standing20 = new Standing();
+        IStanding standing20 = leagueStandingsFactory.createStanding();
         standing20.setConference(conference2);
         standing20.setDivision(division4);
         standing20.setTeam(team20);
@@ -309,13 +318,13 @@ public class ScheduleSystemTest {
 
     @Test
     public void setRegularScheduleTest() {
-        ISchedule schedule1 = new Schedule();
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         List<ISchedule> scheduleList = new ArrayList<>();
         scheduleList.add(schedule1);
         scheduleList.add(schedule2);
 
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setRegularSchedule(scheduleList);
         Assert.assertEquals(scheduleList, scheduleSystem.getRegularSchedule());
         Assert.assertEquals(2, scheduleSystem.getRegularSchedule().size());
@@ -323,13 +332,13 @@ public class ScheduleSystemTest {
 
     @Test
     public void setPlayoffScheduleTest() {
-        ISchedule schedule1 = new Schedule();
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         List<ISchedule> scheduleList = new ArrayList<>();
         scheduleList.add(schedule1);
         scheduleList.add(schedule2);
 
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setPlayoffSchedule(scheduleList);
         Assert.assertEquals(scheduleList, scheduleSystem.getPlayoffSchedule());
         Assert.assertEquals(2, scheduleSystem.getPlayoffSchedule().size());
@@ -337,7 +346,7 @@ public class ScheduleSystemTest {
 
     @Test
     public void setRegularSeasonStartDateTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         LocalDate date = LocalDate.now();
         scheduleSystem.setRegularSeasonStartDate(date);
         Assert.assertEquals(date, scheduleSystem.getRegularSeasonStartDate());
@@ -345,7 +354,7 @@ public class ScheduleSystemTest {
 
     @Test
     public void setRegularSeasonEndDateTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         LocalDate date = LocalDate.now();
         scheduleSystem.setRegularSeasonEndDate(date);
         Assert.assertEquals(date, scheduleSystem.getRegularSeasonEndDate());
@@ -353,7 +362,7 @@ public class ScheduleSystemTest {
 
     @Test
     public void setPlayoffStartDateTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         LocalDate date = LocalDate.now();
         scheduleSystem.setPlayoffStartDate(date);
         Assert.assertEquals(date, scheduleSystem.getPlayoffStartDate());
@@ -361,7 +370,7 @@ public class ScheduleSystemTest {
 
     @Test
     public void setPlayoffEndDateTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         LocalDate date = LocalDate.now();
         scheduleSystem.setPlayoffEndDate(date);
         Assert.assertEquals(date, scheduleSystem.getPlayoffEndDate());
@@ -369,7 +378,7 @@ public class ScheduleSystemTest {
 
     @Test
     public void setTradeDeadline() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         LocalDate date = LocalDate.now();
         scheduleSystem.setTradeDeadline(date);
         Assert.assertEquals(date, scheduleSystem.getTradeDeadline());
@@ -377,13 +386,13 @@ public class ScheduleSystemTest {
 
     @Test
     public void generateRegularSeasonScheduleTest() {
-        ILeague league = new League();
-        IConference conference = new Conference();
+        ILeague league = leagueManagerFactory.createLeague();
+        IConference conference = leagueManagerFactory.createConference();
         List<IConference> conferences = new ArrayList<>();
-        IDivision division = new Division();
+        IDivision division = leagueManagerFactory.createDivision();
         List<IDivision> divisions = new ArrayList<>();
-        ITeam team1 = new Team();
-        ITeam team2 = new Team();
+        ITeam team1 = leagueManagerFactory.createTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
         List<ITeam> teams = new ArrayList<>();
         teams.add(team1);
         teams.add(team2);
@@ -394,7 +403,7 @@ public class ScheduleSystemTest {
         conferences.add(conference);
         league.setConferences(conferences);
 
-        ScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setRegularSeasonStartDate(LocalDate.now());
         scheduleSystem.setRegularSeasonEndDate(LocalDate.now().plusDays(2));
         scheduleSystem.generateRegularSeasonSchedule(league);
@@ -408,10 +417,10 @@ public class ScheduleSystemTest {
         ILeague league = createDummyLeague();
         List<IStanding> standingsList = createDummyStandings(league);
 
-        IStandingSystem standingSystem = new StandingSystem();
+        IStandingSystem standingSystem = leagueStandingsFactory.createStandingSystem();
         standingSystem.setStandings(standingsList);
 
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setPlayoffStartDate(LocalDate.now());
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(50));
         scheduleSystem.generatePlayoffSchedule(league, standingSystem);
@@ -484,17 +493,17 @@ public class ScheduleSystemTest {
 
     @Test
     public void unplayedGameOnThisDateInRegularSeasonTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setRegularSeasonStartDate(LocalDate.now());
         scheduleSystem.setRegularSeasonEndDate(LocalDate.now().plusDays(50));
         scheduleSystem.setPlayoffStartDate(LocalDate.now().plusDays(75));
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(100));
 
         List<ISchedule> regularSeasonSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setIsGamePlayed(true);
         schedule1.setDate(LocalDate.now().plusDays(5));
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setDate(LocalDate.now().plusDays(7));
         schedule2.setIsGamePlayed(false);
         regularSeasonSchedule.add(schedule1);
@@ -502,9 +511,9 @@ public class ScheduleSystemTest {
         scheduleSystem.setRegularSchedule(regularSeasonSchedule);
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule3 = new Schedule();
+        ISchedule schedule3 = leagueSchedulerFactory.createSchedule();
         schedule3.setIsGamePlayed(true);
-        ISchedule schedule4 = new Schedule();
+        ISchedule schedule4 = leagueSchedulerFactory.createSchedule();
         schedule4.setIsGamePlayed(true);
         playoffSchedule.add(schedule3);
         playoffSchedule.add(schedule4);
@@ -515,17 +524,17 @@ public class ScheduleSystemTest {
 
     @Test
     public void noUnplayedGameOnThisDateInRegularSeasonTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setRegularSeasonStartDate(LocalDate.now());
         scheduleSystem.setRegularSeasonEndDate(LocalDate.now().plusDays(50));
         scheduleSystem.setPlayoffStartDate(LocalDate.now().plusDays(75));
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(100));
 
         List<ISchedule> regularSeasonSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setIsGamePlayed(true);
         schedule1.setDate(LocalDate.now().plusDays(5));
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setDate(LocalDate.now().plusDays(7));
         schedule2.setIsGamePlayed(false);
         regularSeasonSchedule.add(schedule1);
@@ -533,9 +542,9 @@ public class ScheduleSystemTest {
         scheduleSystem.setRegularSchedule(regularSeasonSchedule);
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule3 = new Schedule();
+        ISchedule schedule3 = leagueSchedulerFactory.createSchedule();
         schedule3.setIsGamePlayed(true);
-        ISchedule schedule4 = new Schedule();
+        ISchedule schedule4 = leagueSchedulerFactory.createSchedule();
         schedule4.setIsGamePlayed(true);
         playoffSchedule.add(schedule3);
         playoffSchedule.add(schedule4);
@@ -546,26 +555,26 @@ public class ScheduleSystemTest {
 
     @Test
     public void unplayedGameOnThisDateInPlayoffSeasonTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setRegularSeasonStartDate(LocalDate.now());
         scheduleSystem.setRegularSeasonEndDate(LocalDate.now().plusDays(50));
         scheduleSystem.setPlayoffStartDate(LocalDate.now().plusDays(75));
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(100));
 
         List<ISchedule> regularSeasonSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setIsGamePlayed(true);
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setIsGamePlayed(false);
         regularSeasonSchedule.add(schedule1);
         regularSeasonSchedule.add(schedule2);
         scheduleSystem.setRegularSchedule(regularSeasonSchedule);
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule3 = new Schedule();
+        ISchedule schedule3 = leagueSchedulerFactory.createSchedule();
         schedule3.setDate(LocalDate.now().plusDays(82));
         schedule3.setIsGamePlayed(true);
-        ISchedule schedule4 = new Schedule();
+        ISchedule schedule4 = leagueSchedulerFactory.createSchedule();
         schedule4.setDate(LocalDate.now().plusDays(87));
         schedule4.setIsGamePlayed(false);
         playoffSchedule.add(schedule3);
@@ -577,26 +586,26 @@ public class ScheduleSystemTest {
 
     @Test
     public void noUnplayedGameOnThisDateInPlayoffSeasonTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setRegularSeasonStartDate(LocalDate.now());
         scheduleSystem.setRegularSeasonEndDate(LocalDate.now().plusDays(50));
         scheduleSystem.setPlayoffStartDate(LocalDate.now().plusDays(75));
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(100));
 
         List<ISchedule> regularSeasonSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setIsGamePlayed(true);
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setIsGamePlayed(false);
         regularSeasonSchedule.add(schedule1);
         regularSeasonSchedule.add(schedule2);
         scheduleSystem.setRegularSchedule(regularSeasonSchedule);
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule3 = new Schedule();
+        ISchedule schedule3 = leagueSchedulerFactory.createSchedule();
         schedule3.setDate(LocalDate.now().plusDays(82));
         schedule3.setIsGamePlayed(true);
-        ISchedule schedule4 = new Schedule();
+        ISchedule schedule4 = leagueSchedulerFactory.createSchedule();
         schedule4.setDate(LocalDate.now().plusDays(87));
         schedule4.setIsGamePlayed(false);
         playoffSchedule.add(schedule3);
@@ -608,17 +617,17 @@ public class ScheduleSystemTest {
 
     @Test
     public void getScheduledMatchOnThisDateInRegularSeasonTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setRegularSeasonStartDate(LocalDate.now());
         scheduleSystem.setRegularSeasonEndDate(LocalDate.now().plusDays(50));
         scheduleSystem.setPlayoffStartDate(LocalDate.now().plusDays(75));
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(100));
 
         List<ISchedule> regularSeasonSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setDate(LocalDate.now().plusDays(5));
         schedule1.setIsGamePlayed(true);
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setDate(LocalDate.now().plusDays(7));
         schedule2.setIsGamePlayed(false);
         regularSeasonSchedule.add(schedule1);
@@ -626,10 +635,10 @@ public class ScheduleSystemTest {
         scheduleSystem.setRegularSchedule(regularSeasonSchedule);
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule3 = new Schedule();
+        ISchedule schedule3 = leagueSchedulerFactory.createSchedule();
         schedule3.setDate(LocalDate.now().plusDays(52));
         schedule3.setIsGamePlayed(true);
-        ISchedule schedule4 = new Schedule();
+        ISchedule schedule4 = leagueSchedulerFactory.createSchedule();
         schedule4.setDate(LocalDate.now().plusDays(57));
         schedule4.setIsGamePlayed(false);
         playoffSchedule.add(schedule3);
@@ -643,17 +652,17 @@ public class ScheduleSystemTest {
 
     @Test
     public void getScheduledMatchOnThisDateInPlayoffSeasonTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setRegularSeasonStartDate(LocalDate.now());
         scheduleSystem.setRegularSeasonEndDate(LocalDate.now().plusDays(50));
         scheduleSystem.setPlayoffStartDate(LocalDate.now().plusDays(75));
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(100));
 
         List<ISchedule> regularSeasonSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setDate(LocalDate.now().plusDays(5));
         schedule1.setIsGamePlayed(true);
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setDate(LocalDate.now().plusDays(7));
         schedule2.setIsGamePlayed(false);
         regularSeasonSchedule.add(schedule1);
@@ -661,10 +670,10 @@ public class ScheduleSystemTest {
         scheduleSystem.setRegularSchedule(regularSeasonSchedule);
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule3 = new Schedule();
+        ISchedule schedule3 = leagueSchedulerFactory.createSchedule();
         schedule3.setDate(LocalDate.now().plusDays(52));
         schedule3.setIsGamePlayed(true);
-        ISchedule schedule4 = new Schedule();
+        ISchedule schedule4 = leagueSchedulerFactory.createSchedule();
         schedule4.setDate(LocalDate.now().plusDays(57));
         schedule4.setIsGamePlayed(false);
         playoffSchedule.add(schedule3);
@@ -678,12 +687,12 @@ public class ScheduleSystemTest {
 
     @Test
     public void isStanleyCupWinnerDeterminedTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setIsGamePlayed(true);
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setIsGamePlayed(false);
         playoffSchedule.add(schedule1);
         playoffSchedule.add(schedule2);
@@ -694,25 +703,25 @@ public class ScheduleSystemTest {
 
     @Test
     public void isStanleyCupWinnerDeterminedNoPlayoffGeneratedTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         Assert.assertFalse(scheduleSystem.isStanleyCupWinnerDetermined());
     }
 
     @Test
     public void updateScheduleAfterFirstPlayoffGamePlayedTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setPlayoffStartDate(LocalDate.now());
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(10));
 
-        IConference conference1 = new Conference();
-        IConference conference2 = new Conference();
-        IDivision division1 = new Division();
-        IDivision division2 = new Division();
-        ITeam team1 = new Team();
-        ITeam team2 = new Team();
+        IConference conference1 = leagueManagerFactory.createConference();
+        IConference conference2 = leagueManagerFactory.createConference();
+        IDivision division1 = leagueManagerFactory.createDivision();
+        IDivision division2 = leagueManagerFactory.createDivision();
+        ITeam team1 = leagueManagerFactory.createTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setFirstConference(conference1);
         schedule1.setFirstDivision(division1);
         schedule1.setFirstTeam(team1);
@@ -722,7 +731,7 @@ public class ScheduleSystemTest {
         schedule1.setDate(LocalDate.now());
         schedule1.setIsGamePlayed(false);
 
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setDate(LocalDate.now().plusDays(1));
 
         playoffSchedule.add(schedule1);
@@ -749,25 +758,25 @@ public class ScheduleSystemTest {
 
     @Test
     public void updateScheduleAfterSecondPlayoffGamePlayedTest() {
-        IScheduleSystem scheduleSystem = new ScheduleSystem();
+        IScheduleSystem scheduleSystem = leagueSchedulerFactory.createScheduleSystem();
         scheduleSystem.setPlayoffStartDate(LocalDate.now());
         scheduleSystem.setPlayoffEndDate(LocalDate.now().plusDays(10));
 
-        IConference conference1 = new Conference();
-        IConference conference2 = new Conference();
-        IConference conference3 = new Conference();
-        IConference conference4 = new Conference();
-        IDivision division1 = new Division();
-        IDivision division2 = new Division();
-        IDivision division3 = new Division();
-        IDivision division4 = new Division();
-        ITeam team1 = new Team();
-        ITeam team2 = new Team();
-        ITeam team3 = new Team();
-        ITeam team4 = new Team();
+        IConference conference1 = leagueManagerFactory.createConference();
+        IConference conference2 = leagueManagerFactory.createConference();
+        IConference conference3 = leagueManagerFactory.createConference();
+        IConference conference4 = leagueManagerFactory.createConference();
+        IDivision division1 = leagueManagerFactory.createDivision();
+        IDivision division2 = leagueManagerFactory.createDivision();
+        IDivision division3 = leagueManagerFactory.createDivision();
+        IDivision division4 = leagueManagerFactory.createDivision();
+        ITeam team1 = leagueManagerFactory.createTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
+        ITeam team3 = leagueManagerFactory.createTeam();
+        ITeam team4 = leagueManagerFactory.createTeam();
 
         List<ISchedule> playoffSchedule = new ArrayList<>();
-        ISchedule schedule1 = new Schedule();
+        ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
         schedule1.setFirstConference(conference1);
         schedule1.setFirstDivision(division1);
         schedule1.setFirstTeam(team1);
@@ -778,7 +787,7 @@ public class ScheduleSystemTest {
         schedule1.setIsGamePlayed(true);
         schedule1.setWinningTeam(team1);
 
-        ISchedule schedule2 = new Schedule();
+        ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
         schedule2.setFirstConference(conference3);
         schedule2.setFirstDivision(division3);
         schedule2.setFirstTeam(team3);
@@ -788,7 +797,7 @@ public class ScheduleSystemTest {
         schedule2.setDate(LocalDate.now().plusDays(1));
         schedule2.setIsGamePlayed(false);
 
-        ISchedule schedule3 = new Schedule();
+        ISchedule schedule3 = leagueSchedulerFactory.createSchedule();
         schedule3.setFirstConference(conference1);
         schedule3.setFirstDivision(division1);
         schedule3.setFirstTeam(team1);

@@ -1,13 +1,22 @@
 package com.Database;
 
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 
 import java.sql.*;
 import java.util.List;
 
 public class ConferencePersistence implements IConferencePersistence {
+    private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public ConferencePersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
+
     @Override
     public boolean saveConference(IConference conference) {
         String conferenceID = null;
@@ -15,7 +24,7 @@ public class ConferencePersistence implements IConferencePersistence {
         CallableStatement myCall;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoConference(?,?,?)");
             myCall.setInt(1, conference.getLeagueID());
             myCall.setString(2, conference.getConferenceName());
@@ -41,12 +50,12 @@ public class ConferencePersistence implements IConferencePersistence {
         CallableStatement myCall;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadConferences(?)");
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                IConference conference = new Conference();
+                IConference conference = leagueManagerFactory.createConference();
                 conference.setConferenceID(result.getInt("conferenceID"));
                 conference.setLeagueID(result.getInt("leagueID"));
                 conference.setConferenceName(result.getString("name"));

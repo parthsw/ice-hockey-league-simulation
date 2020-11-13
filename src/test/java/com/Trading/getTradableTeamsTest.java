@@ -1,8 +1,10 @@
 package com.Trading;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
+import com.Trading.GetTradableTeams;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,32 +13,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class getTradableTeamsTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
 
     @BeforeClass
     public static void setup() {
-        AbstractLeagueManagerFactory.setFactory(new TestLeagueManagerFactory());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 
     @Test
     public void getTradableTeamsTest(){
-        ITeam team1 = AbstractLeagueManagerFactory.getFactory().getTeam();
+        ITeam team1 = leagueManagerFactory.createTeam();
         team1.setTeamName("team1");
-        ITeam team2 =AbstractLeagueManagerFactory.getFactory().getTeam();
+        ITeam team2 = leagueManagerFactory.createTeam();
         team2.setTeamName("team2");
-        ITeam team3 =AbstractLeagueManagerFactory.getFactory().getTeam();
+        ITeam team3 = leagueManagerFactory.createTeam();
         team3.setTeamName("team3");
-        ITeam team4 =AbstractLeagueManagerFactory.getFactory().getTeam();
+        ITeam team4 = leagueManagerFactory.createTeam();
         team4.setTeamName("team4");
-        ITeam team5 =AbstractLeagueManagerFactory.getFactory().getTeam();
+        ITeam team5 = leagueManagerFactory.createTeam();
         team5.setTeamName("team5");
-        ITeam team6 =AbstractLeagueManagerFactory.getFactory().getTeam();
+        ITeam team6 = leagueManagerFactory.createTeam();
         team6.setTeamName("team6");
-        ITeam team7 =AbstractLeagueManagerFactory.getFactory().getTeam();
+        ITeam team7 = leagueManagerFactory.createTeam();
         team7.setTeamName("team7");
-        ITeam team8 =AbstractLeagueManagerFactory.getFactory().getTeam();
+        ITeam team8 = leagueManagerFactory.createTeam();
         team8.setTeamName("team8");
 
-        List<ITeam> teams = new ArrayList<ITeam>();
+        List<ITeam> teams = new ArrayList<>();
         teams.add(team1);
         teams.add(team2);
         teams.add(team3);

@@ -1,46 +1,58 @@
 package com.IceHockeyLeague.StateMachine.States;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.IO.IAppOutput;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class InjuryCheckState extends AbstractState {
-
+    private final IStateMachineFactory stateMachineFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
     private final ITeam teamA;
     private final ITeam teamB;
+    private final IAppOutput appOutput;
 
-    public InjuryCheckState(ITeam teamA, ITeam teamB) {
+    public InjuryCheckState(IAppOutput appOutput, ITeam teamA, ITeam teamB) {
         this.teamA = teamA;
         this.teamB = teamB;
+        this.appOutput = appOutput;
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     @Override
     public AbstractState onRun() {
         AbstractState nextState;
         ILeague league = getLeague();
-        IPlayerCareerProgression playerCareerProgression = AbstractLeagueManagerFactory.getFactory().getPlayerCareerProgression();
+        IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
         IInjuryConfig injuryConfig = league.getGamePlayConfig().getInjuryConfig();
 
+        appOutput.display("Players injured during game: ");
         for (ITeamPlayer teamPlayer: teamA.getPlayers()) {
-            teamPlayer.isInjured(playerCareerProgression, injuryConfig, league.getLeagueDate());
+            if (teamPlayer.isInjured(playerCareerProgression, injuryConfig, league.getLeagueDate())) {
+                appOutput.display(teamPlayer.getPlayerName() + " injured for " + teamPlayer.getDaysInjured() + " days");
+            }
         }
 
         for (ITeamPlayer teamPlayer: teamB.getPlayers()) {
-            teamPlayer.isInjured(playerCareerProgression, injuryConfig, league.getLeagueDate());
+            if (teamPlayer.isInjured(playerCareerProgression, injuryConfig, league.getLeagueDate())) {
+                appOutput.display(teamPlayer.getPlayerName() + " injured for " + teamPlayer.getDaysInjured() + " days");
+            }
         }
 
         if (league.getScheduleSystem().anyUnplayedGamesOnThisDate(league.getLeagueDate())) {
-            nextState = AbstractStateMachineFactory.getFactory().getSimulateGameState();
+            nextState = stateMachineFactory.createSimulateGameState();
         }
         else if (league.getLeagueDate().isAfter(league.getScheduleSystem().getTradeDeadline())) {
-            nextState = AbstractStateMachineFactory.getFactory().getAgingState();
+            nextState = stateMachineFactory.createAgingState();
         }
         else {
-            nextState = AbstractStateMachineFactory.getFactory().getExecuteTradesState();
+            nextState = stateMachineFactory.createExecuteTradesState();
         }
 
         return nextState;

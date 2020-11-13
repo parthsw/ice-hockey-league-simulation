@@ -1,12 +1,22 @@
-package com.IceHockeyLeagueTest.LeagueManagerTest.ManagerTest;
+package com.DatabaseTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 
 import java.util.List;
 
-public class ManagerDBMock implements IManagerPersistence  {
+public class ManagerPersistenceMock implements IManagerPersistence  {
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public ManagerPersistenceMock() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+    }
+
     @Override
     public boolean saveTeamManager(IManager manager) {
         manager.setLeagueID(2);
@@ -36,21 +46,21 @@ public class ManagerDBMock implements IManagerPersistence  {
 
     @Override
     public boolean loadLeagueManagers(int leagueId, List<IManager> managers) {
-        IManager manager = AbstractLeagueManagerFactory.getFactory().getManager();
+        IManager manager = leagueManagerFactory.createManager();
         manager.setLeagueID(leagueId);
         manager.setTeamID(-1);
         manager.setManagerName("Fred One");
         manager.setManagerID(1);
         managers.add(manager);
 
-        IManager manager1 = AbstractLeagueManagerFactory.getFactory().getManager();
+        IManager manager1 = leagueManagerFactory.createManager();
         manager1.setLeagueID(leagueId);
         manager1.setTeamID(-1);
         manager1.setManagerName("Mike One");
         manager1.setManagerID(2);
         managers.add(manager1);
 
-        IManager manager2 = AbstractLeagueManagerFactory.getFactory().getManager();
+        IManager manager2 = leagueManagerFactory.createManager();
         manager2.setLeagueID(leagueId);
         manager2.setTeamID(-1);
         manager2.setManagerName("Mike Two");

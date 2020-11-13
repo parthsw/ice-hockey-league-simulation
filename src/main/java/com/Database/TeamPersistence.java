@@ -1,6 +1,7 @@
 package com.Database;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
@@ -13,13 +14,21 @@ import java.sql.Types;
 import java.util.List;
 
 public class TeamPersistence implements ITeamPersistence {
+    private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public TeamPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
+
     @Override
     public boolean saveTeam(ITeam team) {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         String teamID = null;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoTeam(?,?,?,?,?)");
 
             myCall.setInt(1, team.getDivisionID());
@@ -47,13 +56,13 @@ public class TeamPersistence implements ITeamPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadTeams(?)");
 
             myCall.setInt(1, divisionId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                ITeam team = new Team();
+                ITeam team = leagueManagerFactory.createTeam();
                 team.setTeamID(result.getInt("teamID"));
                 team.setDivisionID(result.getInt("divisionID"));
                 team.setTeamName(result.getString("teamName"));
@@ -76,13 +85,13 @@ public class TeamPersistence implements ITeamPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("checkIfTeamNameExists(?)");
 
             myCall.setString(1, teamName);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                ILeague league = AbstractLeagueManagerFactory.getFactory().getLeague();
+                ILeague league = leagueManagerFactory.createLeague();
                 league.setLeagueID(result.getInt("leagueID"));
                 league.setLeagueName(result.getString("name"));
                 leagues.add(league);

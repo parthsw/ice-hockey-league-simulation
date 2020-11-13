@@ -3,6 +3,7 @@ package com.Trading;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Team;
+import com.Trading.TeamValidator;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,11 +13,10 @@ import java.util.Random;
 
 public class TeamValidatorTest {
 
-
     @Test
     public void validateTeamNumberTest() {
         ITeam team = new Team();
-        List<IFreeAgent> agents = new ArrayList<IFreeAgent>();
+        List<IFreeAgent> agents = new ArrayList<>();
         String[] positions = new String[]{"Goalie", "Forward", "Defence"};
         Random random = new Random();
         int skater = 0;
@@ -41,9 +41,9 @@ public class TeamValidatorTest {
             agents.add(agent);
         }
         TeamValidator object = new TeamValidator(team, 1, agents);
-        ITeam validatedteam = object.validateTeam();
+        ITeam validatedTeam = object.validateTeam();
 
-        for (ITeamPlayer player : validatedteam.getPlayers()) {
+        for (ITeamPlayer player : validatedTeam.getPlayers()) {
             if (player.getPlayerStats().getPosition().equals(keeper)) {
                 goalie++;
             } else {

@@ -1,13 +1,19 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class AgingState extends AbstractState {
+    private final IStateMachineFactory stateMachineFactory;
+
+    public AgingState() {
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+    }
 
     @Override
     public AbstractState onRun() {
@@ -37,10 +43,10 @@ public class AgingState extends AbstractState {
         }
 
         if (league.getScheduleSystem().isStanleyCupWinnerDetermined()) {
-            nextState = AbstractStateMachineFactory.getFactory().getAdvanceToNextSeasonState();
+            nextState = stateMachineFactory.createAdvanceToNextSeasonState();
         }
         else {
-            nextState = AbstractStateMachineFactory.getFactory().getPersistState();
+            nextState = stateMachineFactory.createPersistState();
         }
         return nextState;
     }

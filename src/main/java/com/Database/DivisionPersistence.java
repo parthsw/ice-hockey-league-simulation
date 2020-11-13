@@ -1,13 +1,23 @@
 package com.Database;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Division.Division;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 
 import java.sql.*;
 import java.util.List;
 
 public class DivisionPersistence implements IDivisionPersistence {
+    private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public DivisionPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
+
     @Override
     public boolean saveDivision(IDivision division) {
         IStoredProcedure storedProcedure = null;
@@ -15,7 +25,7 @@ public class DivisionPersistence implements IDivisionPersistence {
         String divisionID = null;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoDivision(?,?,?)");
             myCall.setInt(1, division.getConferenceID());
             myCall.setString(2, division.getDivisionName());
@@ -41,12 +51,12 @@ public class DivisionPersistence implements IDivisionPersistence {
         CallableStatement myCall;
 
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadDivisions(?)");
             myCall.setInt(1, conferenceId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                IDivision division = new Division();
+                IDivision division = leagueManagerFactory.createDivision();
                 division.setDivisionID(result.getInt("divisionID"));
                 division.setConferenceID(result.getInt("ConferenceID"));
                 division.setDivisionName(result.getString("name"));

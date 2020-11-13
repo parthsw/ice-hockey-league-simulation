@@ -1,14 +1,15 @@
 package com.IO;
 
-public class IOFactory extends AbstractIOFactory {
+public class IOFactory implements IIOFactory {
 
     @Override
-    public IAppInput getCommandLineInput() {
+    public IAppInput createCommandLineInput() {
         return new CommandLineInput();
     }
 
     @Override
-    public IAppOutput getCommandLineOutput() {
+    public IAppOutput createCommandLineOutput() {
         return new CommandLineOutput();
     }
+
 }

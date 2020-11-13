@@ -9,7 +9,7 @@ import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.States.*;
 
-public class StateMachineFactory extends AbstractStateMachineFactory {
+public class StateMachineFactory implements IStateMachineFactory {
     private final IAppInput appInput;
     private final IAppOutput appOutput;
     private final ILeagueFileReader leagueFileReader;
@@ -30,82 +30,82 @@ public class StateMachineFactory extends AbstractStateMachineFactory {
     }
 
     @Override
-    public IStateMachine getStateMachine(AbstractState abstractState) {
+    public IStateMachine createStateMachine(AbstractState abstractState) {
         return new StateMachine(abstractState);
     }
 
     @Override
-    public AbstractState getImportState() {
+    public AbstractState createImportState() {
         return new ImportState(appInput, appOutput, leagueFileReader, jsonParser, leagueFileValidator);
     }
 
     @Override
-    public AbstractState getCreateTeamState() {
+    public AbstractState createCreateTeamState() {
         return new CreateTeamState(appInput, appOutput);
     }
 
     @Override
-    public AbstractState getLoadTeamState() {
+    public AbstractState createLoadTeamState() {
         return new LoadTeamState(appInput, appOutput);
     }
 
     @Override
-    public AbstractState getPlayerChoiceState() {
+    public AbstractState createPlayerChoiceState() {
         return new PlayerChoiceState(appInput, appOutput);
     }
 
     @Override
-    public AbstractState getSimulateState(int numberOfSeasons) {
+    public AbstractState createSimulateState(int numberOfSeasons) {
         return new SimulateState(appInput, appOutput, numberOfSeasons);
     }
 
     @Override
-    public AbstractState getInitializeSeasonState() {
+    public AbstractState createInitializeSeasonState() {
         return new InitializeSeasonState(appInput, appOutput);
     }
 
     @Override
-    public AbstractState getAdvanceTimeState() {
+    public AbstractState createAdvanceTimeState() {
         return new AdvanceTimeState();
     }
 
     @Override
-    public AbstractState getGeneratePlayoffScheduleState() {
+    public AbstractState createGeneratePlayoffScheduleState() {
         return new GeneratePlayoffScheduleState();
     }
 
     @Override
-    public AbstractState getTrainingState() {
+    public AbstractState createTrainingState() {
         return new TrainingState();
     }
 
     @Override
-    public AbstractState getSimulateGameState() {
-        return new SimulateGameState();
+    public AbstractState createSimulateGameState() {
+        return new SimulateGameState(appOutput);
     }
 
     @Override
-    public AbstractState getInjuryCheckState(ITeam teamA, ITeam teamB) {
-        return new InjuryCheckState(teamA, teamB);
+    public AbstractState createInjuryCheckState(ITeam teamA, ITeam teamB) {
+        return new InjuryCheckState(appOutput, teamA, teamB);
     }
 
     @Override
-    public AbstractState getExecuteTradesState() {
+    public AbstractState createExecuteTradesState() {
         return new ExecuteTradesState();
     }
 
     @Override
-    public AbstractState getAgingState() {
+    public AbstractState createAgingState() {
         return new AgingState();
     }
 
     @Override
-    public AbstractState getAdvanceToNextSeasonState() {
-        return new AdvanceToNextSeasonState();
+    public AbstractState createAdvanceToNextSeasonState() {
+        return new AdvanceToNextSeasonState(appOutput);
     }
 
     @Override
-    public AbstractState getPersistState() {
+    public AbstractState createPersistState() {
         return new PersistState();
     }
 }

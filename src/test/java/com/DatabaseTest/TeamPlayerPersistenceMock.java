@@ -1,6 +1,8 @@
-package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
+package com.DatabaseTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
@@ -8,11 +10,13 @@ import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 import java.time.LocalDate;
 import java.util.List;
 
-public class TeamPlayerDBMock implements ITeamPlayerPersistence {
-    private final AbstractLeagueManagerFactory leagueManagerFactory;
+public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
+    private final ILeagueManagerFactory leagueManagerFactory;
 
-    public TeamPlayerDBMock() {
-        leagueManagerFactory = AbstractLeagueManagerFactory.getFactory();
+    public TeamPlayerPersistenceMock() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 
     @Override
@@ -29,7 +33,7 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
         teamPlayer.setRetiredStatus(false);
         teamPlayer.setRetirementDate(null);
 
-        IPlayerStats stats = leagueManagerFactory.getPlayerStats();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setPosition("forward");
         stats.setShooting(10);
         stats.setChecking(2);
@@ -43,7 +47,7 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
     @Override
     public boolean loadTeamPlayers(int teamId, List<ITeamPlayer> teamPlayers) {
 
-        ITeamPlayer teamPlayer = leagueManagerFactory.getTeamPlayer();
+        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
         teamPlayer.setTeamPlayerID(1);
         teamPlayer.setTeamID(1);
         teamPlayer.setPlayerName("Fred One");
@@ -56,7 +60,7 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
         teamPlayer.setRetiredStatus(false);
         teamPlayer.setRetirementDate(null);
 
-        IPlayerStats stats = leagueManagerFactory.getPlayerStats();
+        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         stats.setPosition("forward");
         stats.setShooting(10);
         stats.setChecking(2);
@@ -65,7 +69,7 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
         stats.setStrength(29);
         teamPlayer.setPlayerStats(stats);
 
-        ITeamPlayer teamPlayer1 = leagueManagerFactory.getTeamPlayer();
+        ITeamPlayer teamPlayer1 = leagueManagerFactory.createTeamPlayer();
         teamPlayer1.setTeamPlayerID(2);
         teamPlayer1.setTeamID(1);
         teamPlayer1.setPlayerName("Mike One");
@@ -78,7 +82,7 @@ public class TeamPlayerDBMock implements ITeamPlayerPersistence {
         teamPlayer1.setRetiredStatus(false);
         teamPlayer1.setRetirementDate(null);
 
-        IPlayerStats stats1 = leagueManagerFactory.getPlayerStats();
+        IPlayerStats stats1 = leagueManagerFactory.createPlayerStats();
         stats1.setPosition("defense");
         stats1.setShooting(12);
         stats1.setChecking(18);

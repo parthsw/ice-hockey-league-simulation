@@ -1,6 +1,7 @@
 package com.Database;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
 
 import java.sql.CallableStatement;
@@ -10,6 +11,13 @@ import java.sql.Types;
 import java.util.List;
 
 public class CoachPersistence implements ICoachPersistence {
+    private final IDatabaseFactory databaseFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public CoachPersistence() {
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
 
     private boolean saveBaseCoach(ICoach coach, CallableStatement myCall) throws SQLException {
         String coachID = null;
@@ -33,7 +41,7 @@ public class CoachPersistence implements ICoachPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoCoach(?,?,?,?,?,?,?,?)");
             myCall.setInt(1, coach.getTeamID());
             return saveBaseCoach(coach, myCall);
@@ -51,7 +59,7 @@ public class CoachPersistence implements ICoachPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoCoach(?,?,?,?,?,?,?,?)");
             myCall.setNull(1, Types.INTEGER);
             return saveBaseCoach(coach, myCall);
@@ -69,7 +77,7 @@ public class CoachPersistence implements ICoachPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadTeamCoach(?)");
             myCall.setInt(1, teamId);
 
@@ -92,13 +100,13 @@ public class CoachPersistence implements ICoachPersistence {
         IStoredProcedure storedProcedure = null;
         CallableStatement myCall;
         try {
-            storedProcedure = AbstractDatabaseFactory.getFactory().getStoredProcedure();
+            storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("loadLeagueCoaches(?)");
             myCall.setInt(1, leagueId);
 
             ResultSet result = myCall.executeQuery();
             while (result.next()) {
-                ICoach coach = AbstractLeagueManagerFactory.getFactory().getCoach();
+                ICoach coach = leagueManagerFactory.createCoach();
                 loadBaseCoach(result, coach);
                 coaches.add(coach);
             }
@@ -118,7 +126,7 @@ public class CoachPersistence implements ICoachPersistence {
         coach.setLeagueID(result.getInt("leagueID"));
         coach.setCoachName(result.getString("name"));
 
-        ICoachStats stats = AbstractLeagueManagerFactory.getFactory().getCoachStats();
+        ICoachStats stats = leagueManagerFactory.createCoachStats();
         stats.setSkating(result.getFloat("skating"));
         stats.setShooting(result.getFloat("shooting"));
         stats.setChecking(result.getFloat("checking"));

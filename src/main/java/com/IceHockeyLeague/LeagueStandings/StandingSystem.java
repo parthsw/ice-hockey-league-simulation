@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueStandings;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
@@ -9,7 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StandingSystem implements IStandingSystem{
+    private final ILeagueStandingsFactory leagueStandingsFactory;
     private List<IStanding> standings;
+
+    public StandingSystem() {
+        this.leagueStandingsFactory = AbstractAppFactory.getLeagueStandingsFactory();
+    }
 
     public List<IStanding> getStandings() {
         return standings;
@@ -25,7 +31,7 @@ public class StandingSystem implements IStandingSystem{
         for (IConference conference: league.getConferences()) {
             for (IDivision division: conference.getDivisions()) {
                 for (ITeam team: division.getTeams()) {
-                    IStanding standing = new Standing();
+                    IStanding standing = leagueStandingsFactory.createStanding();
                     standing.setConference(conference);
                     standing.setDivision(division);
                     standing.setTeam(team);

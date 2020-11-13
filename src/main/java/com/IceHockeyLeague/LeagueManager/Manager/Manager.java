@@ -75,12 +75,7 @@ public class Manager implements IManager {
 
     @Override
     public boolean isNullOrEmpty(String managerName) {
-        if(managerName == null || managerName.equals("")){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (managerName == null || managerName.equals(""));
     }
 
     @Override

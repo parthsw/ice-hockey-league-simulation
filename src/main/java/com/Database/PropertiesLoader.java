@@ -3,11 +3,9 @@ package com.Database;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Properties;
 
 public class PropertiesLoader {
-
     FileInputStream fileInputStream;
     public static String Url;
     public static String Username;
@@ -15,7 +13,7 @@ public class PropertiesLoader {
     public static String Driver;
 
     public String[] getProperties(){
-        String properties[] = new String[4];
+        String[] properties = new String[4];
         try {
             this.fileInputStream = new FileInputStream("../../application.properties");
         } catch (FileNotFoundException fileNotFoundException) {

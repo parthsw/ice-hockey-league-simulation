@@ -1,59 +1,64 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.GamePlayConfigTest;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.Database.IDatabaseFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
-import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class GamePlayConfigTest {
-    private static AbstractLeagueManagerFactory leagueManagerFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
-        AbstractLeagueManagerFactory.setFactory(new TestLeagueManagerFactory());
-        leagueManagerFactory = AbstractLeagueManagerFactory.getFactory();
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        databaseFactory = appFactory.createDatabaseFactory();
     }
 
     @Test
     public void ConstructorTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         Assert.assertEquals(-1, gamePlayConfig.getGamePlayConfigID());
         Assert.assertEquals(-1, gamePlayConfig.getLeagueID());
     }
 
     @Test
     public void getGamePlayConfigIDTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setGamePlayConfigID(7);
         Assert.assertEquals(7, gamePlayConfig.getGamePlayConfigID());
     }
 
     @Test
     public void setGamePlayConfigIDTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setGamePlayConfigID(12);
         Assert.assertEquals(12, gamePlayConfig.getGamePlayConfigID());
     }
 
     @Test
     public void getLeagueIDTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setLeagueID(12);
         Assert.assertEquals(12, gamePlayConfig.getLeagueID());
     }
 
     @Test
     public void setLeagueIDTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setLeagueID(23);
         Assert.assertEquals(23, gamePlayConfig.getLeagueID());
     }
 
     @Test
     public void setAgingConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setAgingConfig(createAgingConfig());
 
         IAgingConfig actualAgeConfig = gamePlayConfig.getAgingConfig();
@@ -62,7 +67,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void getAgingConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setAgingConfig(createAgingConfig());
 
         IAgingConfig actualAgeConfig = gamePlayConfig.getAgingConfig();
@@ -71,7 +76,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void setGameResolverConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setGameResolverConfig(createGameResolverConfig());
 
         IGameResolverConfig actualGameResolverConfig = gamePlayConfig.getGameResolverConfig();
@@ -80,7 +85,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void getGameResolverConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setGameResolverConfig(createGameResolverConfig());
 
         IGameResolverConfig actualGameResolverConfig = gamePlayConfig.getGameResolverConfig();
@@ -89,7 +94,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void setInjuryConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setInjuryConfig(createInjuryConfig());
 
         IInjuryConfig actualInjuryConfig = gamePlayConfig.getInjuryConfig();
@@ -98,7 +103,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void getInjuryConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setInjuryConfig(createInjuryConfig());
 
         IInjuryConfig actualInjuryConfig = gamePlayConfig.getInjuryConfig();
@@ -107,7 +112,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void setTrainingConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setTrainingConfig(createTrainingConfig());
 
         ITrainingConfig actualTrainingConfig = gamePlayConfig.getTrainingConfig();
@@ -116,7 +121,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void getTrainingConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setTrainingConfig(createTrainingConfig());
 
         ITrainingConfig actualTrainingConfig = gamePlayConfig.getTrainingConfig();
@@ -125,7 +130,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void setTradingConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setTradingConfig(createTradingConfig());
 
         ITradingConfig actualTradingConfig = gamePlayConfig.getTradingConfig();
@@ -134,7 +139,7 @@ public class GamePlayConfigTest {
 
     @Test
     public void getTradingConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setTradingConfig(createTradingConfig());
 
         ITradingConfig actualTradingConfig = gamePlayConfig.getTradingConfig();
@@ -143,18 +148,18 @@ public class GamePlayConfigTest {
 
     @Test
     public void saveGamePlayConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setLeagueID(2);
-        gamePlayConfig.saveGamePlayConfig(leagueManagerFactory.getGamePlayConfigDB());
+        gamePlayConfig.saveGamePlayConfig(databaseFactory.createGamePlayConfigPersistence());
         Assert.assertEquals(2, gamePlayConfig.getGamePlayConfigID());
         Assert.assertEquals(2, gamePlayConfig.getLeagueID());
     }
 
     @Test
     public void loadGamePlayConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.getGamePlayConfig();
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setLeagueID(1);
-        gamePlayConfig.loadGamePlayConfig(leagueManagerFactory.getGamePlayConfigDB(), gamePlayConfig);
+        gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
 
         Assert.assertEquals(1, gamePlayConfig.getGamePlayConfigID());
         Assert.assertEquals(1, gamePlayConfig.getLeagueID());
@@ -163,20 +168,20 @@ public class GamePlayConfigTest {
     }
 
     private IAgingConfig createAgingConfig() {
-        IAgingConfig agingConfig = leagueManagerFactory.getAgingConfig();
+        IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setMaximumAge(50);
         agingConfig.setAverageRetirementAge(35);
         return agingConfig;
     }
 
     private IGameResolverConfig createGameResolverConfig() {
-        IGameResolverConfig resolverConfig = leagueManagerFactory.getGameResolverConfig();
+        IGameResolverConfig resolverConfig = leagueManagerFactory.createGameResolverConfig();
         resolverConfig.setRandomWinChance(0.03f);
         return resolverConfig;
     }
 
     private IInjuryConfig createInjuryConfig() {
-        IInjuryConfig injuryConfig = leagueManagerFactory.getInjuryConfig();
+        IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
         injuryConfig.setInjuryDaysHigh(230);
         injuryConfig.setInjuryDaysLow(3);
         injuryConfig.setRandomInjuryChance(0.03f);
@@ -184,7 +189,7 @@ public class GamePlayConfigTest {
     }
 
     private ITradingConfig createTradingConfig() {
-        ITradingConfig tradingConfig = leagueManagerFactory.getTradingConfig();
+        ITradingConfig tradingConfig = leagueManagerFactory.createTradingConfig();
         tradingConfig.setRandomAcceptanceChance(0.05f);
         tradingConfig.setMaxPlayersPerTrade(23);
         tradingConfig.setLossPoint(6);
@@ -193,7 +198,7 @@ public class GamePlayConfigTest {
     }
 
     private ITrainingConfig createTrainingConfig() {
-        ITrainingConfig trainingConfig = leagueManagerFactory.getTrainingConfig();
+        ITrainingConfig trainingConfig = leagueManagerFactory.createTrainingConfig();
         trainingConfig.setDaysUntilStatIncreaseCheck(111);
         return trainingConfig;
     }

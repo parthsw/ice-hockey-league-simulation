@@ -1,8 +1,9 @@
 package com.IOTest;
 
-import com.IO.AbstractIOFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IO.IIOFactory;
 import com.IO.IAppInput;
-import com.IO.IOFactory;
 import org.junit.*;
 
 import java.io.ByteArrayInputStream;
@@ -13,7 +14,9 @@ public class CommandLineInputTest {
 
     @BeforeClass
     public static void setup() {
-        AbstractIOFactory.setFactory(new IOFactory());
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
     }
 
     private void commandLineInput(String data) {
@@ -28,8 +31,10 @@ public class CommandLineInputTest {
 
     @Test
     public void getInputTest() {
+        IIOFactory ioFactory = AbstractAppFactory.getIOFactory();
+        IAppInput appInput = ioFactory.createCommandLineInput();
+
         commandLineInput("Hockey League Simulation");
-        IAppInput appInput = AbstractIOFactory.getFactory().getCommandLineInput();
         Assert.assertEquals("Hockey League Simulation", appInput.getInput());
     }
 }

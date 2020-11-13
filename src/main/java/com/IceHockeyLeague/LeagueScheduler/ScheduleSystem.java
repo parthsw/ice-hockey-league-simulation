@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueScheduler;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
@@ -15,6 +16,7 @@ import java.util.List;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class ScheduleSystem implements IScheduleSystem {
+    private final ILeagueSchedulerFactory leagueSchedulerFactory;
     private List<ISchedule> regularSchedule;
     private List<ISchedule> playoffSchedule;
     private LocalDate regularSeasonStartDate;
@@ -22,6 +24,10 @@ public class ScheduleSystem implements IScheduleSystem {
     private LocalDate playoffStartDate;
     private LocalDate playoffEndDate;
     private LocalDate tradeDeadline;
+
+    public ScheduleSystem() {
+        leagueSchedulerFactory = AbstractAppFactory.getLeagueSchedulerFactory();
+    }
 
     @Override
     public List<ISchedule> getRegularSchedule() {
@@ -119,7 +125,7 @@ public class ScheduleSystem implements IScheduleSystem {
         totalTeams = allTeams.size();
         for (int i = 0; i < totalTeams - 1; i++) {
             for (int j = i + 1; j < totalTeams; j++) {
-                ISchedule schedule = new Schedule();
+                ISchedule schedule = leagueSchedulerFactory.createSchedule();
 
                 schedule.setFirstConference(allConferences.get(i));
                 schedule.setFirstDivision(allDivisions.get(i));
@@ -188,17 +194,17 @@ public class ScheduleSystem implements IScheduleSystem {
                 allDivisionStandings.add(divisionStandings);
             }
 
-            ISchedule schedule1 = new Schedule();
+            ISchedule schedule1 = leagueSchedulerFactory.createSchedule();
             schedule1.setFirstConference(allDivisionStandings.get(0).get(0).getConference());
             schedule1.setFirstDivision(allDivisionStandings.get(0).get(0).getDivision());
             schedule1.setFirstTeam(allDivisionStandings.get(0).get(0).getTeam());
 
-            ISchedule schedule2 = new Schedule();
+            ISchedule schedule2 = leagueSchedulerFactory.createSchedule();
             schedule2.setFirstConference(allDivisionStandings.get(1).get(0).getConference());
             schedule2.setFirstDivision(allDivisionStandings.get(1).get(0).getDivision());
             schedule2.setFirstTeam(allDivisionStandings.get(1).get(0).getTeam());
 
-            ISchedule schedule3 = new Schedule();
+            ISchedule schedule3 = leagueSchedulerFactory.createSchedule();
             schedule3.setFirstConference(allDivisionStandings.get(0).get(1).getConference());
             schedule3.setFirstDivision(allDivisionStandings.get(0).get(1).getDivision());
             schedule3.setFirstTeam(allDivisionStandings.get(0).get(1).getTeam());
@@ -206,7 +212,7 @@ public class ScheduleSystem implements IScheduleSystem {
             schedule3.setSecondDivision(allDivisionStandings.get(0).get(2).getDivision());
             schedule3.setSecondTeam(allDivisionStandings.get(0).get(2).getTeam());
 
-            ISchedule schedule4 = new Schedule();
+            ISchedule schedule4 = leagueSchedulerFactory.createSchedule();
             schedule4.setFirstConference(allDivisionStandings.get(1).get(1).getConference());
             schedule4.setFirstDivision(allDivisionStandings.get(1).get(1).getDivision());
             schedule4.setFirstTeam(allDivisionStandings.get(1).get(1).getTeam());
@@ -321,7 +327,7 @@ public class ScheduleSystem implements IScheduleSystem {
             int index = playoffSchedule.indexOf(schedule);
             if (index < playoffSchedule.size() - 1) {
                 if (index % 2 == 0) {
-                    ISchedule newSchedule = new Schedule();
+                    ISchedule newSchedule = leagueSchedulerFactory.createSchedule();
                     if (schedule.getWinningTeam() == schedule.getFirstTeam()) {
                         newSchedule.setFirstConference(schedule.getFirstConference());
                         newSchedule.setFirstDivision(schedule.getFirstDivision());
@@ -354,4 +360,8 @@ public class ScheduleSystem implements IScheduleSystem {
         }
     }
 
+    public ITeam getStanleyCupWinner() {
+        int lastMatch = playoffSchedule.size() - 1;
+        return playoffSchedule.get(lastMatch).getWinningTeam();
+    }
 }

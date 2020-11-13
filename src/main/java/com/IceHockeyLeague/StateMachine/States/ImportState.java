@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
@@ -7,10 +8,10 @@ import com.IceHockeyLeague.LeagueFileHandler.IJsonParser;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileReader;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
@@ -18,7 +19,6 @@ import java.io.InputStream;
 import java.util.List;
 
 public class ImportState extends AbstractState {
-
     private static final String IMPORT_STATE = "*****Import State*****";
     private static final String FILEPATH = "Please provide full filepath to the league JSON file:";
     private static final String FILEPATH_ERROR = "The provided filepath is incorrect.";
@@ -27,6 +27,8 @@ public class ImportState extends AbstractState {
     private static final String LEAGUE_SCHEMA_ERROR = "The provided json file violates below constraint(s):";
     private static final String TRANSITION_LOAD_TEAM = "Transitioning to Load Team State...";
 
+    private final ILeagueManagerFactory leagueManagerFactory;
+    private final IStateMachineFactory stateMachineFactory;
     private final IAppInput appInput;
     private final IAppOutput appOutput;
     private final ILeagueFileReader leagueFileReader;
@@ -44,6 +46,8 @@ public class ImportState extends AbstractState {
         this.leagueFileReader = leagueFileReader;
         this.jsonParser = jsonParser;
         this.leagueFileValidator = leagueFileValidator;
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override
@@ -68,11 +72,11 @@ public class ImportState extends AbstractState {
 
             boolean isValidStructure = isStructureValid(leagueJson, leagueSchema);
             if(isValidStructure) {
-                ILeagueCreator leagueCreator = AbstractLeagueManagerFactory.getFactory().getLeagueCreator();
+                ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
                 ILeague league = leagueCreator.createLeague(leagueJson);
 
                 this.setLeague(league);
-                return AbstractStateMachineFactory.getFactory().getCreateTeamState();
+                return stateMachineFactory.createCreateTeamState();
             } else {
                 return null;
             }
@@ -80,7 +84,7 @@ public class ImportState extends AbstractState {
         } catch (FileNotFoundException fileNotFoundException) {
             appOutput.displayError(FILEPATH_ERROR);
             appOutput.display(TRANSITION_LOAD_TEAM);
-            return AbstractStateMachineFactory.getFactory().getLoadTeamState();
+            return stateMachineFactory.createLoadTeamState();
         }
     }
 
