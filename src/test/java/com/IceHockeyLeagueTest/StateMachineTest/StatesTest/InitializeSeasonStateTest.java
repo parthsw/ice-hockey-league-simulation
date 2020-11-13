@@ -4,7 +4,6 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.AdvanceTimeState;
@@ -22,8 +21,6 @@ public class InitializeSeasonStateTest {
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         stateMachineFactory = appFactory.createStateMachineFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
-        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
     }
 
     @Test

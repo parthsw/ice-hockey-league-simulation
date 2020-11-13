@@ -27,8 +27,6 @@ public class FreeAgentTest {
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
         databaseFactory = appFactory.createDatabaseFactory();
-        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
-        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
     }
     @Test
     public void ConstructorTest() {

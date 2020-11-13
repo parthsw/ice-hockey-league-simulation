@@ -7,16 +7,16 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 public class DivisionUpdatorAfterTrading {
 
-    public DivisionUpdatorAfterTrading(ILeague league, ITeam oldSendingTeam, ITeam newSendingTeam, ITeam oldRecievingTeam, ITeam newRecievingTeam) {
+    public DivisionUpdatorAfterTrading(ILeague league, ITeam oldSendingTeam, ITeam newSendingTeam, ITeam oldReceivingTeam, ITeam newReceivingTeam) {
         for (IConference conference : league.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 if (division.getTeams().contains(oldSendingTeam)) {
                     division.getTeams().remove(oldSendingTeam);
                     division.getTeams().add(newSendingTeam);
                 }
-                if (division.getTeams().contains(oldRecievingTeam)) {
-                    division.getTeams().remove(oldRecievingTeam);
-                    division.getTeams().add(newRecievingTeam);
+                if (division.getTeams().contains(oldReceivingTeam)) {
+                    division.getTeams().remove(oldReceivingTeam);
+                    division.getTeams().add(newReceivingTeam);
                 }
             }
         }

@@ -11,8 +11,8 @@ import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueScheduler.IScheduleSystem;
-import com.IceHockeyLeague.LeagueStandings.IStandingSystem;
+import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
+import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 
 import java.time.LocalDate;
 import java.util.List;

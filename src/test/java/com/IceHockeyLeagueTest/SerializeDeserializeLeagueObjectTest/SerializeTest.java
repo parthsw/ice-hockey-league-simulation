@@ -19,8 +19,6 @@ public class SerializeTest {
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
-        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
         leagueSerializationFactory = appFactory.createSerializeDeserializeLeagueObjectFactory();
     }

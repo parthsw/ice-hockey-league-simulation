@@ -7,8 +7,8 @@ import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueScheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 public class SimulateGameState extends AbstractState {

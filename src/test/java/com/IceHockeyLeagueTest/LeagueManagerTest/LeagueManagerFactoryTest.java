@@ -10,6 +10,14 @@ import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.LeagueCreator;
 import com.IceHockeyLeague.LeagueManager.Manager.*;
 import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
+import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
+import com.IceHockeyLeague.LeagueManager.Scheduler.Schedule;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ScheduleSystem;
+import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
+import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
+import com.IceHockeyLeague.LeagueManager.Standings.Standing;
+import com.IceHockeyLeague.LeagueManager.Standings.StandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.*;
 import org.mockito.Mockito;
 
@@ -130,5 +138,25 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
             randomChanceGenerator = new RandomChance(randomMock);
         }
         return randomChanceGenerator;
+    }
+
+    @Override
+    public ISchedule createSchedule() {
+        return new Schedule();
+    }
+
+    @Override
+    public IScheduleSystem createScheduleSystem() {
+        return new ScheduleSystem();
+    }
+
+    @Override
+    public IStanding createStanding() {
+        return new Standing();
+    }
+
+    @Override
+    public IStandingSystem createStandingSystem() {
+        return new StandingSystem();
     }
 }

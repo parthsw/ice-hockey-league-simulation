@@ -21,8 +21,6 @@ public class AdvanceTimeStateTest {
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-        AbstractAppFactory.setLeagueSchedulerFactory(appFactory.createLeagueSchedulerFactory());
-        AbstractAppFactory.setLeagueStandingsFactory(appFactory.createLeagueStandingsFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();

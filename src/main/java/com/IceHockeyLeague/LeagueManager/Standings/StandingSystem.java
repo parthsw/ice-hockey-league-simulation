@@ -1,8 +1,9 @@
-package com.IceHockeyLeague.LeagueStandings;
+package com.IceHockeyLeague.LeagueManager.Standings;
 
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -10,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StandingSystem implements IStandingSystem{
-    private final ILeagueStandingsFactory leagueStandingsFactory;
+    private final ILeagueManagerFactory leagueManagerFactory;
     private List<IStanding> standings;
 
     public StandingSystem() {
-        this.leagueStandingsFactory = AbstractAppFactory.getLeagueStandingsFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     public List<IStanding> getStandings() {
@@ -31,7 +32,7 @@ public class StandingSystem implements IStandingSystem{
         for (IConference conference: league.getConferences()) {
             for (IDivision division: conference.getDivisions()) {
                 for (ITeam team: division.getTeams()) {
-                    IStanding standing = leagueStandingsFactory.createStanding();
+                    IStanding standing = leagueManagerFactory.createStanding();
                     standing.setConference(conference);
                     standing.setDivision(division);
                     standing.setTeam(team);

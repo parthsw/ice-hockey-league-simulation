@@ -1,4 +1,4 @@
-package com.IceHockeyLeague.LeagueScheduler;
+package com.IceHockeyLeague.LeagueManager.Scheduler;
 
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;

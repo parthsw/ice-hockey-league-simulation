@@ -4,6 +4,10 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
+import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
+import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
+import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import com.IceHockeyLeague.LeagueManager.Player.*;
@@ -11,7 +15,6 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamTraining;
-
 
 public interface ILeagueManagerFactory {
 
@@ -58,4 +61,12 @@ public interface ILeagueManagerFactory {
     ITradingConfig createTradingConfig();
 
     IRandomChance createRandomChance();
+
+    ISchedule createSchedule();
+
+    IScheduleSystem createScheduleSystem();
+
+    IStanding createStanding();
+
+    IStandingSystem createStandingSystem();
 }

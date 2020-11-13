@@ -1,8 +1,8 @@
-package com.IceHockeyLeague.LeagueScheduler;
+package com.IceHockeyLeague.LeagueManager.Scheduler;
 
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueStandings.IStandingSystem;
 
 import java.time.LocalDate;
 import java.util.List;
