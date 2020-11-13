@@ -1,4 +1,4 @@
-package com.TradingTest;
+package com.Trading;
 
 import com.IOTest.IOMock;
 import com.IceHockeyLeague.LeagueManager.Conference.Conference;
