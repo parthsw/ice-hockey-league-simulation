@@ -27,7 +27,9 @@ public class ImportStateTest {
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-        stateMachineFactory = appFactory.createStateMachineFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         ioMockInstance = IOMock.instance();
     }
 

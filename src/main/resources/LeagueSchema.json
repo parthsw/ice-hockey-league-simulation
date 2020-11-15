@@ -28,12 +28,14 @@
       "type": "string",
       "minLength": 1
     },
+
     "gameplayConfiguration": {
       "type": "object",
       "description": "Configuration about the gameplay for current league",
       "required": ["aging", "gameResolver", "injuries", "training", "trading"],
       "properties": {
         "aging": { "$ref": "#/definitions/agingConfig" },
+        "gameResolver": { "$ref": "#/definitions/gameResolverConfig" },
         "injuries": { "$ref": "#/definitions/injuriesConfig" },
         "training": { "$ref": "#/definitions/trainingConfig" },
         "trading": { "$ref": "#/definitions/tradingConfig" }
@@ -41,15 +43,21 @@
     },
     "agingConfig": {
       "type": "object",
-      "required": ["averageRetirementAge", "maximumAge", "statDecayChance"],
+      "required": ["averageRetirementAge", "maximumAge"],
       "properties": {
         "averageRetirementAge": {
           "type": "number"
         },
         "maximumAge": {
           "type": "number"
-        },
-        "statDecayChance": {
+        }
+      }
+    },
+    "gameResolverConfig": {
+      "type": "object",
+      "required": ["randomWinChance"],
+      "properties": {
+        "randomWinChance": {
           "type": "number"
         }
       }
@@ -80,7 +88,7 @@
     },
     "tradingConfig": {
       "type": "object",
-      "required": ["lossPoint", "randomTradeOfferChance", "maxPlayersPerTrade", "randomAcceptanceChance", "gmTable"],
+      "required": ["lossPoint", "randomTradeOfferChance", "maxPlayersPerTrade", "randomAcceptanceChance"],
       "properties": {
         "lossPoint": {
           "type": "number"
@@ -93,27 +101,10 @@
         },
         "randomAcceptanceChance": {
           "type": "number"
-        },
-        "gmTable": {
-          "$ref": "#/definitions/gmTableConfig"
         }
       }
     },
-    "gmTableConfig": {
-      "type": "object",
-      "required": ["shrewd", "gambler", "normal"],
-      "properties": {
-        "shrewd" : {
-          "type": "number"
-        },
-        "gambler": {
-          "type": "number"
-        },
-        "normal": {
-          "type": "number"
-        }
-      }
-    },
+
     "conference": {
       "type": "object",
       "description": "Representation of a conference in Ice Hockey League",
@@ -144,7 +135,7 @@
       "required": ["teamName", "generalManager", "headCoach", "players"],
       "properties": {
         "teamName": { "$ref": "#/definitions/nonEmptyString" },
-        "generalManager": { "$ref": "#/definitions/generalManager" },
+        "generalManager": { "$ref": "#/definitions/nonEmptyString" },
         "headCoach": { "$ref": "#/definitions/coach" },
         "players": {
           "type": "array",
@@ -155,7 +146,7 @@
     "player": {
       "type": "object",
       "description": "Representation of a player in Ice Hockey League",
-      "required": ["playerName", "position", "captain", "skating", "shooting", "checking", "saving", "birthDay", "birthMonth", "birthYear"],
+      "required": ["playerName", "position", "captain", "age", "skating", "shooting", "checking", "saving"],
       "properties": {
         "playerName": { "$ref": "#/definitions/nonEmptyString" },
         "position": {
@@ -165,6 +156,9 @@
         "captain": {
           "type": "boolean"
         },
+        "age": {
+          "type": "number"
+        },
         "skating": {
           "type": "number",
           "minimum": 1,
@@ -184,31 +178,21 @@
           "type": "number",
           "minimum": 1,
           "maximum": 20
-        },
-        "birthDay": {
-          "type": "number",
-          "minimum": 1,
-          "maximum": 31
-        },
-        "birthMonth": {
-          "type": "number",
-          "minimum": 1,
-          "maximum": 12
-        },
-        "birthYear": {
-          "type": "number"
         }
       }
     },
     "freeAgent": {
       "type": "object",
       "description": "Representation of a free agent in Ice Hockey League",
-      "required": ["playerName", "position", "skating", "shooting", "checking", "saving", "birthDay", "birthMonth", "birthYear"],
+      "required": ["playerName", "position", "age", "skating", "shooting", "checking", "saving"],
       "properties": {
         "playerName": { "$ref": "#/definitions/nonEmptyString" },
         "position": {
           "type": "string",
           "enum": ["forward", "defense", "goalie"]
+        },
+        "age": {
+          "type": "number"
         },
         "skating": {
           "type": "number",
@@ -229,19 +213,6 @@
           "type": "number",
           "minimum": 1,
           "maximum": 20
-        },
-        "birthDay": {
-          "type": "number",
-          "minimum": 1,
-          "maximum": 31
-        },
-        "birthMonth": {
-          "type": "number",
-          "minimum": 1,
-          "maximum": 12
-        },
-        "birthYear": {
-          "type": "number"
         }
       }
     },
@@ -270,17 +241,6 @@
           "type": "number",
           "minimum": 0.0,
           "maximum": 1.0
-        }
-      }
-    },
-    "generalManager": {
-      "type": "object",
-      "required": ["name", "personality"],
-      "properties": {
-        "name": { "$ref": "#/definitions/nonEmptyString" },
-        "personality": {
-          "type": "string",
-          "enum": ["shrewd", "gambler", "normal"]
         }
       }
     }
