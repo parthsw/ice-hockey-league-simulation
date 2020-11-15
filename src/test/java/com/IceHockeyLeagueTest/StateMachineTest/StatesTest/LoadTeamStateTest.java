@@ -21,7 +21,10 @@ public class LoadTeamStateTest {
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-        stateMachineFactory = appFactory.createStateMachineFactory();
+        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         ioMockInstance = IOMock.instance();
     }
 
