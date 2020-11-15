@@ -171,6 +171,7 @@ public class GamePlayConfigTest {
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setMaximumAge(50);
         agingConfig.setAverageRetirementAge(35);
+        agingConfig.setStatDecayChance(0.05f);
         return agingConfig;
     }
 

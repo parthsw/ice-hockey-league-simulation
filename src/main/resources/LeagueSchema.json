@@ -43,12 +43,15 @@
     },
     "agingConfig": {
       "type": "object",
-      "required": ["averageRetirementAge", "maximumAge"],
+      "required": ["averageRetirementAge", "maximumAge", "statDecayChance"],
       "properties": {
         "averageRetirementAge": {
           "type": "number"
         },
         "maximumAge": {
+          "type": "number"
+        },
+        "statDecayChance": {
           "type": "number"
         }
       }

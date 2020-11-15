@@ -117,6 +117,7 @@ public class LeagueJsonMock {
         JSONObject aging = new JSONObject();
         aging.put("averageRetirementAge", 35);
         aging.put("maximumAge", 50);
+        aging.put("statDecayChance", 0.05);
 
         JSONObject gameResolver = new JSONObject();
         gameResolver.put("randomWinChance", 0.1);
