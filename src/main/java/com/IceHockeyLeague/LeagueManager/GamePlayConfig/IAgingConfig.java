@@ -6,4 +6,7 @@ public interface IAgingConfig {
 
     void setMaximumAge(int age);
     int getMaximumAge();
+
+    void setStatDecayChance(float statDecayChance);
+    float getStatDecayChance();
 }

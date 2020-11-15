@@ -45,4 +45,18 @@ public class AgingConfigTest {
         agingConfig.setMaximumAge(56);
         Assert.assertEquals(56, agingConfig.getMaximumAge());
     }
+
+    @Test
+    public void setStatDecayChanceTest() {
+        IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
+        agingConfig.setStatDecayChance(0.05f);
+        Assert.assertEquals(0.05f, agingConfig.getStatDecayChance(), 0.0);
+    }
+
+    @Test
+    public void getStatDecayChanceTest() {
+        IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
+        agingConfig.setStatDecayChance(1.23f);
+        Assert.assertEquals(1.23f, agingConfig.getStatDecayChance(), 0.0);
+    }
 }
