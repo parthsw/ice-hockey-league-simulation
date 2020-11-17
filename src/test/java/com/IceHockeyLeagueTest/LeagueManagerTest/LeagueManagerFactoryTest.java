@@ -72,6 +72,11 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
     }
 
     @Override
+    public IPlayerAgeInfo createPlayerAgeInfo() {
+        return new PlayerAgeInfo();
+    }
+
+    @Override
     public IPlayerCareerProgression createPlayerCareerProgression(IRandomChance randomChance) {
         return new PlayerCareerProgression(randomChance);
     }

@@ -6,10 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
@@ -18,10 +15,13 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueCreator implements ILeagueCreator {
+    private static final LocalDate LEAGUE_START_DATE = LocalDate.of(LocalDate.now().getYear(), Month.SEPTEMBER, 30);
 
     private static final String LEAGUE_NAME = "leagueName";
     private static final String CONFERENCES = "conferences";
@@ -31,7 +31,6 @@ public class LeagueCreator implements ILeagueCreator {
     private static final String DIVISIONS = "divisions";
     private static final String TEAMS = "teams";
     private static final String PLAYERS = "players";
-
 
     private static final String CONFERENCE_NAME = "conferenceName";
     private static final String DIVISION_NAME = "divisionName";
@@ -44,11 +43,13 @@ public class LeagueCreator implements ILeagueCreator {
 
     private static final String PLAYER_NAME = "playerName";
     private static final String POSITION = "position";
-    private static final String AGE = "age";
     private static final String SKATING = "skating";
     private static final String SHOOTING = "shooting";
     private static final String CHECKING = "checking";
     private static final String SAVING = "saving";
+    private static final String BIRTH_DAY = "birthDay";
+    private static final String BIRTH_MONTH = "birthMonth";
+    private static final String BIRTH_YEAR = "birthYear";
 
     private static final String CAPTAIN = "captain";
 
@@ -56,6 +57,7 @@ public class LeagueCreator implements ILeagueCreator {
     private static final String AGING = "aging";
     private static final String AVERAGE_RETIREMENT_AGE = "averageRetirementAge";
     private static final String MAXIMUM_AGE = "maximumAge";
+    private static final String STAT_DECAY_CHANCE = "statDecayChance";
     private static final String GAME_RESOLVER = "gameResolver";
     private static final String RANDOM_WIN_CHANCE = "randomWinChance";
     private static final String INJURIES = "injuries";
@@ -136,7 +138,15 @@ public class LeagueCreator implements ILeagueCreator {
     private IPlayer createPlayer(Object playerJson) {
         IPlayer player = leagueManagerFactory.createPlayer();
         player.setPlayerName(((JSONObject) playerJson).getString(PLAYER_NAME));
-        player.setPlayerAge(((JSONObject) playerJson).getInt(AGE));
+
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+        int birthDay = ((JSONObject) playerJson).getInt(BIRTH_DAY);
+        int birthMonth = ((JSONObject) playerJson).getInt(BIRTH_MONTH);
+        int birthYear = ((JSONObject) playerJson).getInt(BIRTH_YEAR);
+        playerAgeInfo.setBirthDate(LocalDate.of(birthYear, birthMonth, birthDay));
+        playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(LEAGUE_START_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(LEAGUE_START_DATE));
+        player.setPlayerAgeInfo(playerAgeInfo);
 
         IPlayerStats playerStats = leagueManagerFactory.createPlayerStats();
         playerStats.setPosition(((JSONObject) playerJson).getString(POSITION));
@@ -155,9 +165,9 @@ public class LeagueCreator implements ILeagueCreator {
         teamPlayer.setIsCaptain(((JSONObject) playerJson).getBoolean(CAPTAIN));
 
         IPlayer player = createPlayer(playerJson);
-        teamPlayer.setPlayerAge(player.getPlayerAge());
         teamPlayer.setPlayerName(player.getPlayerName());
         teamPlayer.setPlayerStats(player.getPlayerStats());
+        teamPlayer.setPlayerAgeInfo(player.getPlayerAgeInfo());
 
         return teamPlayer;
     }
@@ -174,7 +184,7 @@ public class LeagueCreator implements ILeagueCreator {
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
 
         IPlayer player = createPlayer(playerJson);
-        freeAgent.setPlayerAge(player.getPlayerAge());
+        freeAgent.setPlayerAgeInfo(player.getPlayerAgeInfo());
         freeAgent.setPlayerName(player.getPlayerName());
         freeAgent.setPlayerStats(player.getPlayerStats());
         return freeAgent;
@@ -240,6 +250,7 @@ public class LeagueCreator implements ILeagueCreator {
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setAverageRetirementAge(agingConfigJson.getInt(AVERAGE_RETIREMENT_AGE));
         agingConfig.setMaximumAge(agingConfigJson.getInt(MAXIMUM_AGE));
+        agingConfig.setStatDecayChance(agingConfigJson.getFloat(STAT_DECAY_CHANCE));
         return agingConfig;
     }
 

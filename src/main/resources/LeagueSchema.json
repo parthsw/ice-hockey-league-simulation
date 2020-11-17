@@ -149,7 +149,7 @@
     "player": {
       "type": "object",
       "description": "Representation of a player in Ice Hockey League",
-      "required": ["playerName", "position", "captain", "age", "skating", "shooting", "checking", "saving"],
+      "required": ["playerName", "position", "captain", "skating", "shooting", "checking", "saving", "birthDay", "birthMonth", "birthYear"],
       "properties": {
         "playerName": { "$ref": "#/definitions/nonEmptyString" },
         "position": {
@@ -159,9 +159,6 @@
         "captain": {
           "type": "boolean"
         },
-        "age": {
-          "type": "number"
-        },
         "skating": {
           "type": "number",
           "minimum": 1,
@@ -181,21 +178,31 @@
           "type": "number",
           "minimum": 1,
           "maximum": 20
+        },
+        "birthDay": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 31
+        },
+        "birthMonth": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "birthYear": {
+          "type": "number"
         }
       }
     },
     "freeAgent": {
       "type": "object",
       "description": "Representation of a free agent in Ice Hockey League",
-      "required": ["playerName", "position", "age", "skating", "shooting", "checking", "saving"],
+      "required": ["playerName", "position", "skating", "shooting", "checking", "saving", "birthDay", "birthMonth", "birthYear"],
       "properties": {
         "playerName": { "$ref": "#/definitions/nonEmptyString" },
         "position": {
           "type": "string",
           "enum": ["forward", "defense", "goalie"]
-        },
-        "age": {
-          "type": "number"
         },
         "skating": {
           "type": "number",
@@ -216,6 +223,19 @@
           "type": "number",
           "minimum": 1,
           "maximum": 20
+        },
+        "birthDay": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 31
+        },
+        "birthMonth": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "birthYear": {
+          "type": "number"
         }
       }
     },

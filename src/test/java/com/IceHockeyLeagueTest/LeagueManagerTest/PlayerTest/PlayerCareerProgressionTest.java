@@ -18,11 +18,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
 
 public class PlayerCareerProgressionTest {
+    private static final LocalDate CURRENT_DATE = LocalDate.of(2020, Month.NOVEMBER, 17);
     private static ILeagueManagerFactory leagueManagerFactory;
     private static IDatabaseFactory databaseFactory;
     private static IPlayerCareerProgression playerCareerProgression;
@@ -98,16 +100,23 @@ public class PlayerCareerProgressionTest {
         LocalDate currentDate = LocalDate.of(2020, 10, 30);
 
         IPlayer player = leagueManagerFactory.createPlayer();
-        player.setPlayerAge(50);
-        player.setElapsedDaysFromLastBDay(1);
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+
+        playerAgeInfo.setBirthDate(LocalDate.of(1970, Month.NOVEMBER, 15));
+        playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        player.setPlayerAgeInfo(playerAgeInfo);
 
         player.isRetired(playerCareerProgression, agingConfig, currentDate);
         Assert.assertTrue(player.getRetiredStatus());
         Assert.assertEquals(currentDate, player.getRetirementDate());
 
         IPlayer player1 = leagueManagerFactory.createPlayer();
-        player1.setPlayerAge(20);
-        player1.setElapsedDaysFromLastBDay(200);
+        IPlayerAgeInfo playerAgeInfo1 = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo1.setBirthDate(LocalDate.of(2000, Month.APRIL, 30));
+        playerAgeInfo1.setAgeInYears(playerAgeInfo1.calculatePlayerAgeInYears(CURRENT_DATE));
+        playerAgeInfo1.setElapsedDaysFromLastBDay(playerAgeInfo1.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        player1.setPlayerAgeInfo(playerAgeInfo1);
 
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(11.4f);
         player1.isRetired(playerCareerProgression, agingConfig, currentDate);
@@ -115,8 +124,11 @@ public class PlayerCareerProgressionTest {
         Assert.assertNull(player1.getRetirementDate());
 
         IPlayer player2 = leagueManagerFactory.createPlayer();
-        player2.setPlayerAge(39);
-        player2.setElapsedDaysFromLastBDay(344);
+        IPlayerAgeInfo playerAgeInfo2 = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo2.setBirthDate(LocalDate.of(1980, Month.DECEMBER, 7));
+        playerAgeInfo2.setAgeInYears(playerAgeInfo2.calculatePlayerAgeInYears(CURRENT_DATE));
+        playerAgeInfo2.setElapsedDaysFromLastBDay(playerAgeInfo2.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        player2.setPlayerAgeInfo(playerAgeInfo2);
 
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.4f);
         player2.isRetired(playerCareerProgression, agingConfig, currentDate);
@@ -162,7 +174,7 @@ public class PlayerCareerProgressionTest {
 
         ITeamPlayer goalieTeamPlayer = teamPlayers.get(0);
         IPlayerStats stats = leagueManagerFactory.createPlayerStats();
-        stats.setPosition("goalie");
+        stats.setPosition(PlayerPosition.GOALIE.toString());
         goalieTeamPlayer.setPlayerStats(stats);
         Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(goalieTeamPlayer, team, league));
     }

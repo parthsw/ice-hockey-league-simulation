@@ -20,7 +20,7 @@ public class SwitchPlayer implements ISwitchPlayer {
         agent.setInjuredStatus(player.getInjuredStatus());
         agent.setRetiredStatus(player.getRetiredStatus());
         agent.setPlayerStats(player.getPlayerStats());
-        agent.setPlayerAge(player.getPlayerAge());
+        agent.setPlayerAgeInfo(player.getPlayerAgeInfo());
         return agent;
     }
 
@@ -33,7 +33,7 @@ public class SwitchPlayer implements ISwitchPlayer {
         player.setInjuredStatus(freeAgent.getInjuredStatus());
         player.setRetiredStatus(freeAgent.getRetiredStatus());
         player.setPlayerStats(freeAgent.getPlayerStats());
-        player.setPlayerAge(freeAgent.getPlayerAge());
+        player.setPlayerAgeInfo(freeAgent.getPlayerAgeInfo());
         return player;
     }
 }

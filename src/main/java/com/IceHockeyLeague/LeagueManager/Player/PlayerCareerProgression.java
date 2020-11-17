@@ -58,7 +58,8 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
     @Override
     public boolean isRetired(IPlayer player, IAgingConfig agingConfig, LocalDate currentDate) {
         int DAYS_IN_YEAR = 365;
-        int currentAgeInDays = (player.getPlayerAge() * DAYS_IN_YEAR) + player.getElapsedDaysFromLastBDay();
+        IPlayerAgeInfo playerAgeInfo = player.getPlayerAgeInfo();
+        long currentAgeInDays = ChronoUnit.DAYS.between(playerAgeInfo.getBirthDate(), currentDate);
         int maximumAgeInDays = (agingConfig.getMaximumAge() * DAYS_IN_YEAR);
 
         if(currentAgeInDays >= maximumAgeInDays) {

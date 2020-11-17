@@ -98,9 +98,11 @@ public class SimulateTradeTest {
         Random random = new Random();
         ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
         IPlayerStats stats = leagueManagerFactory.createPlayerStats();
+        IPlayerAgeInfo ageInfo = leagueManagerFactory.createPlayerAgeInfo();
         stats.setPosition(position);
         stats.setStrength(random.nextInt(100));
         player.setPlayerStats(stats);
+        player.setPlayerAgeInfo(ageInfo);
         return player;
     }
 
@@ -131,11 +133,13 @@ public class SimulateTradeTest {
     private IFreeAgent generateAgent(String position) {
         Random random = new Random();
         IFreeAgent player = leagueManagerFactory.createFreeAgent();
-        player.setPlayerName("AgentPlayer");
         IPlayerStats stats = leagueManagerFactory.createPlayerStats();
+        IPlayerAgeInfo ageInfo = leagueManagerFactory.createPlayerAgeInfo();
+        player.setPlayerName("AgentPlayer");
         stats.setStrength(random.nextInt(1000));
         stats.setPosition(position);
         player.setPlayerStats(stats);
+        player.setPlayerAgeInfo(ageInfo);
         player.setLeagueID(1);
 
         return player;

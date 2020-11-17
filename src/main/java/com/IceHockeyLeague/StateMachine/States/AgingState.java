@@ -24,22 +24,22 @@ public class AgingState extends AbstractState {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
                     for (IPlayer teamPlayer : team.getPlayers()) {
-                        teamPlayer.agePlayerByDays(1);
+                        teamPlayer.agePlayerByDays(1, league.getLeagueDate());
                     }
                 }
             }
         }
 
         for (IPlayer freeAgent : league.getFreeAgents()) {
-            freeAgent.agePlayerByDays(1);
+            freeAgent.agePlayerByDays(1, league.getLeagueDate());
         }
 
         for (IPlayer retiredFreeAgent : league.getRetiredFreeAgents()) {
-            retiredFreeAgent.agePlayerByDays(1);
+            retiredFreeAgent.agePlayerByDays(1, league.getLeagueDate());
         }
 
         for (IPlayer retiredTeamPlayer : league.getRetiredTeamPlayers()) {
-            retiredTeamPlayer.agePlayerByDays(1);
+            retiredTeamPlayer.agePlayerByDays(1, league.getLeagueDate());
         }
 
         if (league.getScheduleSystem().isStanleyCupWinnerDetermined()) {
