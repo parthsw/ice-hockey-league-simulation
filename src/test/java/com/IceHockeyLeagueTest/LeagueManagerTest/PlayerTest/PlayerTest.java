@@ -11,9 +11,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 public class PlayerTest {
     private static final String FORWARD = "forward";
+    private static final LocalDate CURRENT_DATE = LocalDate.of(2020, Month.NOVEMBER, 16);
     private static ILeagueManagerFactory leagueManagerFactory;
 
     @BeforeClass
@@ -42,34 +44,6 @@ public class PlayerTest {
         IPlayer player = leagueManagerFactory.createPlayer();
         player.setPlayerName("John");
         Assert.assertEquals("John", player.getPlayerName());
-    }
-
-    @Test
-    public void getPlayerAgeTest() {
-        IPlayer player = leagueManagerFactory.createPlayer();
-        player.setPlayerAge(20);
-        Assert.assertEquals(20, player.getPlayerAge());
-    }
-
-    @Test
-    public void setPlayerAgeTest() {
-        IPlayer player = leagueManagerFactory.createPlayer();
-        player.setPlayerAge(46);
-        Assert.assertEquals(46, player.getPlayerAge());
-    }
-
-    @Test
-    public void getElapsedDaysFromLastBDayTest() {
-        IPlayer player = leagueManagerFactory.createPlayer();
-        player.setElapsedDaysFromLastBDay(12);
-        Assert.assertEquals(12, player.getElapsedDaysFromLastBDay());
-    }
-
-    @Test
-    public void setElapsedDaysFromLastBDayTest() {
-        IPlayer player = leagueManagerFactory.createPlayer();
-        player.setElapsedDaysFromLastBDay(-1);
-        Assert.assertEquals(0, player.getElapsedDaysFromLastBDay());
     }
 
     @Test
@@ -162,12 +136,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void isValidTest() {
-        IPlayer player = leagueManagerFactory.createPlayer();
-        Assert.assertFalse(player.isValid());
-    }
-
-    @Test
     public void isInjuredTest() {
         IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
         IPlayer player = leagueManagerFactory.createPlayer();
@@ -191,35 +159,31 @@ public class PlayerTest {
     public void isRetiredTest() {
         IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
         IPlayer player = leagueManagerFactory.createPlayer();
-        player.setPlayerAge(51);
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+
+        playerAgeInfo.setBirthDate(LocalDate.of(1969, Month.NOVEMBER, 16));
+        playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        player.setPlayerAgeInfo(playerAgeInfo);
 
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setMaximumAge(50);
         agingConfig.setAverageRetirementAge(35);
 
         Assert.assertTrue(playerCareerProgression.isRetired(player, agingConfig, LocalDate.of(2020, 10, 29)));
-
     }
 
     @Test
     public void agePlayerByDaysTest() {
-        IPlayer player1 = leagueManagerFactory.createPlayer();
-        player1.setPlayerAge(30);
-        player1.agePlayerByDays(40);
-        Assert.assertEquals(30, player1.getPlayerAge());
-        Assert.assertEquals(40, player1.getElapsedDaysFromLastBDay());
+        IPlayer player = leagueManagerFactory.createPlayer();
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo.setBirthDate(LocalDate.of(2000, Month.NOVEMBER, 17));
+        playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        player.setPlayerAgeInfo(playerAgeInfo);
 
-        IPlayer player2 = leagueManagerFactory.createPlayer();
-        player2.setPlayerAge(32);
-        player2.agePlayerByDays(397);
-        Assert.assertEquals(33, player2.getPlayerAge());
-        Assert.assertEquals(32, player2.getElapsedDaysFromLastBDay());
-
-        IPlayer player3 = leagueManagerFactory.createPlayer();
-        player3.setPlayerAge(26);
-        player3.agePlayerByDays(365);
-        Assert.assertEquals(27, player3.getPlayerAge());
-        Assert.assertEquals(0, player3.getElapsedDaysFromLastBDay());
+        player.agePlayerByDays(245, CURRENT_DATE);
+        Assert.assertEquals(245, playerAgeInfo.getElapsedDaysFromLastBDay());
     }
 
     private IPlayerStats createPlayerStats() {

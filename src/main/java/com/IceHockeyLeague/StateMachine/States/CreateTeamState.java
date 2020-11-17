@@ -5,7 +5,6 @@ import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.*;
@@ -230,18 +229,15 @@ public class CreateTeamState extends AbstractState {
             appOutput.display("select the players for your team from the list of free agents shown above");
             for (int count = 0; count < 20; count++) {
                 player = leagueManagerFactory.createTeamPlayer();
-                IPlayerStats stats = null;
                 String playerName = appInput.getInput();
                 player.setPlayerName(playerName);
-                for(IFreeAgent f : freeAgents){
-                    if(playerName.equalsIgnoreCase(f.getPlayerName())){
-                        int age = f.getPlayerAge();
-                        player.setPlayerAge(age);
-                        stats = f.getPlayerStats();
+                for(IFreeAgent freeAgent : freeAgents){
+                    if(playerName.equalsIgnoreCase(freeAgent.getPlayerName())) {
+                        player.setPlayerAgeInfo(freeAgent.getPlayerAgeInfo());
+                        player.setPlayerStats(freeAgent.getPlayerStats());
                         break;
                     }
                 }
-                player.setPlayerStats(stats);
                 players.add(player);
             }
             team.setPlayers(players);

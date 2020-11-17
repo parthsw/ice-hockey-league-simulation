@@ -119,7 +119,7 @@ public class SimulateTrade {
     private void displayPlayers(ITeamPlayer player) {
         this.appOutput.display("**************************************************************************");
         this.appOutput.display("Name: " + player.getPlayerName());
-        this.appOutput.display("Age: " + player.getPlayerAge());
+        this.appOutput.display("Age: " + player.getPlayerAgeInfo().getAgeInYears());
         this.appOutput.display("Position: " + player.getPlayerStats().getPosition());
         this.appOutput.display("Strength: " + player.getPlayerStats().getStrength());
         this.appOutput.display("Shooting: " + player.getPlayerStats().getShooting());

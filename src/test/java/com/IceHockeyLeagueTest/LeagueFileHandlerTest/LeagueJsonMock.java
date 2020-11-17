@@ -42,13 +42,15 @@ public class LeagueJsonMock {
         for (int i=0; i<20; i++) {
             JSONObject player = new JSONObject();
             player.put("playerName", "Player One");
-            player.put("age", 34);
             player.put("position", "forward");
             player.put("captain", true);
             player.put("skating", 1+i);
             player.put("shooting", 9);
             player.put("checking", 11);
             player.put("saving", 12);
+            player.put("birthDay", 6);
+            player.put("birthMonth", 11);
+            player.put("birthYear", 2000);
             players.put(player);
         }
 
@@ -90,11 +92,13 @@ public class LeagueJsonMock {
             JSONObject freeAgent = new JSONObject();
             freeAgent.put("playerName", "FreeAgent One");
             freeAgent.put("position", "forward");
-            freeAgent.put("age", 25);
             freeAgent.put("skating", 10);
             freeAgent.put("shooting", 10);
             freeAgent.put("checking", 10);
             freeAgent.put("saving", 1);
+            freeAgent.put("birthDay", 6);
+            freeAgent.put("birthMonth", 11);
+            freeAgent.put("birthYear", 2000);
             freeAgents.put(freeAgent);
         }
 

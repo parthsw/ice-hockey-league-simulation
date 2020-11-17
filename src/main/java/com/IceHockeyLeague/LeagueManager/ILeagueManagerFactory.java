@@ -36,6 +36,8 @@ public interface ILeagueManagerFactory {
 
     IPlayerStats createPlayerStats();
 
+    IPlayerAgeInfo createPlayerAgeInfo();
+
     IPlayerCareerProgression createPlayerCareerProgression(IRandomChance randomChance);
 
     ITeamPlayer createTeamPlayer();

@@ -4,14 +4,9 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
-import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfigPersistence;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
-import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.PersistState;
@@ -40,39 +35,12 @@ public class AdvanceToNextSeasonStateTest {
         databaseFactory = appFactory.createDatabaseFactory();
     }
 
-    private ILeague createDummyLeague() {
-        ILeague league = leagueManagerFactory.createLeague();
-        league.setConferences(new ArrayList<>());
-        IConference conference = leagueManagerFactory.createConference();
-        conference.setDivisions(new ArrayList<>());
-        IDivision division = leagueManagerFactory.createDivision();
-        division.setTeams(new ArrayList<>());
-        ITeam team = leagueManagerFactory.createTeam();
-        team.setPlayers(new ArrayList<>());
-        ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
-        player.setPlayerAge(100);
-        player.setElapsedDaysFromLastBDay(364);
-        league.setFreeAgents(new ArrayList<>());
-        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
-        freeAgent.setPlayerAge(50);
-
-        league.addConference(conference);
-        conference.addDivision(division);
-        division.addTeam(team);
-        team.addPlayer(player);
-        league.addFreeAgent(freeAgent);
-
-        IGamePlayConfigPersistence gamePlayConfigDB = databaseFactory.createGamePlayConfigPersistence();
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfigDB.loadGamePlayConfig(1, gamePlayConfig);
-        league.setGamePlayConfig(gamePlayConfig);
-
-        return league;
-    }
-
     @Test
     public void onRunTest() {
-        ILeague league = createDummyLeague();
+        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        leagueDB.loadLeague(1, league);
+
         league.setLeagueDate(LocalDate.of(Year.now().getValue() + 1, Month.SEPTEMBER, 27));
         league.getScheduleSystem().setRegularSeasonStartDate(LocalDate.now());
         ISchedule schedule = leagueManagerFactory.createSchedule();
@@ -85,7 +53,7 @@ public class AdvanceToNextSeasonStateTest {
         advanceToNextSeasonState.setLeague(league);
 
         Assert.assertTrue(advanceToNextSeasonState.onRun() instanceof PersistState);
-        Assert.assertEquals(101, league.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerAge());
-        Assert.assertEquals(2, league.getFreeAgents().get(0).getElapsedDaysFromLastBDay());
+        Assert.assertEquals(19, league.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerAgeInfo().getAgeInYears());
+        Assert.assertEquals(332, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
     }
 }

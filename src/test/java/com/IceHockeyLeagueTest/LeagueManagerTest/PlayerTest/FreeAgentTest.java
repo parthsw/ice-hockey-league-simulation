@@ -64,12 +64,6 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void isValidTest() {
-        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
-        Assert.assertFalse(freeAgent.isValid());
-    }
-
-    @Test
     public void convertToTeamPlayerTest() {
         IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
         List<IFreeAgent> freeAgents = new ArrayList<>();

@@ -4,6 +4,7 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
+import com.IceHockeyLeague.LeagueManager.Player.PlayerPosition;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,15 +32,15 @@ public class PlayerStatsTest {
     @Test
     public void getPositionTest() {
         IPlayerStats playerStats = leagueManagerFactory.createPlayerStats();
-        playerStats.setPosition("defense");
-        Assert.assertTrue(playerStats.getPosition().equalsIgnoreCase("defense"));
+        playerStats.setPosition(PlayerPosition.DEFENSE.toString());
+        Assert.assertTrue(playerStats.getPosition().equalsIgnoreCase(PlayerPosition.DEFENSE.toString()));
     }
 
     @Test
     public void setPositionTest() {
         IPlayerStats playerStats = leagueManagerFactory.createPlayerStats();
-        playerStats.setPosition("goalie");
-        Assert.assertTrue(playerStats.getPosition().equalsIgnoreCase("goalie"));
+        playerStats.setPosition(PlayerPosition.GOALIE.toString());
+        Assert.assertTrue(playerStats.getPosition().equalsIgnoreCase(PlayerPosition.GOALIE.toString()));
     }
 
     @Test
@@ -125,20 +126,20 @@ public class PlayerStatsTest {
     }
 
     @Test
-    public void calculateStrengthTest() {
+    public void calculateStrengthGoalieTest() {
         IPlayerStats playerStats = leagueManagerFactory.createPlayerStats();
         playerStats.setSkating(11);
         playerStats.setShooting(3);
         playerStats.setChecking(15);
         playerStats.setSaving(19);
 
-        playerStats.setPosition("goalie");
+        playerStats.setPosition(PlayerPosition.GOALIE.toString());
         Assert.assertEquals(30.0f, playerStats.calculateStrength(), 0.0);
 
-        playerStats.setPosition("defense");
+        playerStats.setPosition(PlayerPosition.DEFENSE.toString());
         Assert.assertEquals(27.5f, playerStats.calculateStrength(), 0.0);
 
-        playerStats.setPosition("forward");
+        playerStats.setPosition(PlayerPosition.FORWARD.toString());
         Assert.assertEquals(21.5f, playerStats.calculateStrength(), 0.0);
 
         playerStats.setPosition("invalidPosition");

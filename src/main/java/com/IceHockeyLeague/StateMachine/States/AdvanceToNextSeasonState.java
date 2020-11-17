@@ -43,7 +43,7 @@ public class AdvanceToNextSeasonState extends AbstractState {
             for (IDivision division : conference.getDivisions()) {
                 for (ITeam team : division.getTeams()) {
                     for (IPlayer teamPlayer : team.getPlayers()) {
-                        teamPlayer.agePlayerByDays(numberOfDaysElapsed);
+                        teamPlayer.agePlayerByDays(numberOfDaysElapsed, league.getLeagueDate());
                         boolean isRetired = teamPlayer.isRetired(playerCareerProgression, league.getGamePlayConfig().getAgingConfig(), league.getLeagueDate());
                         if (isRetired) {
                             appOutput.display(teamPlayer.getPlayerName());
@@ -59,15 +59,15 @@ public class AdvanceToNextSeasonState extends AbstractState {
         appOutput.display("******************************************");
 
         for (IPlayer freeAgent : league.getFreeAgents()) {
-            freeAgent.agePlayerByDays(numberOfDaysElapsed);
+            freeAgent.agePlayerByDays(numberOfDaysElapsed, league.getLeagueDate());
         }
 
         for (IPlayer retiredFreeAgent : league.getRetiredFreeAgents()) {
-            retiredFreeAgent.agePlayerByDays(numberOfDaysElapsed);
+            retiredFreeAgent.agePlayerByDays(numberOfDaysElapsed, league.getLeagueDate());
         }
 
         for (IPlayer retiredTeamPlayer : league.getRetiredTeamPlayers()) {
-            retiredTeamPlayer.agePlayerByDays(numberOfDaysElapsed);
+            retiredTeamPlayer.agePlayerByDays(numberOfDaysElapsed, league.getLeagueDate());
         }
 
         return stateMachineFactory.createPersistState();

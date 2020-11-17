@@ -6,12 +6,9 @@ import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import java.time.LocalDate;
 
 public class Player implements IPlayer {
-    private final static int DAYS_IN_YEAR = 365;
-
     private String name;
-    private int age;
-    private int elapsedDaysFromLastBDay;
     private IPlayerStats playerStats;
+    private IPlayerAgeInfo playerAgeInfo;
     private boolean isInjured;
     private int daysInjured;
     private LocalDate injuryDate;
@@ -35,28 +32,6 @@ public class Player implements IPlayer {
     @Override
     public void setPlayerName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public int getPlayerAge() {
-        return age;
-    }
-
-    @Override
-    public void setPlayerAge(int age) {
-        this.age = age;
-    }
-
-    @Override
-    public int getElapsedDaysFromLastBDay() {
-        return elapsedDaysFromLastBDay;
-    }
-
-    @Override
-    public void setElapsedDaysFromLastBDay(int days) {
-        if(days > 0) {
-          elapsedDaysFromLastBDay = days;
-        }
     }
 
     @Override
@@ -120,26 +95,30 @@ public class Player implements IPlayer {
     }
 
     @Override
+    public IPlayerAgeInfo getPlayerAgeInfo() {
+        return playerAgeInfo;
+    }
+
+    @Override
+    public void setPlayerAgeInfo(IPlayerAgeInfo playerAgeInfo) {
+        this.playerAgeInfo = playerAgeInfo;
+    }
+
+    @Override
     public void convertBetweenPlayerTypes(IPlayer player) {
         player.setPlayerName(this.getPlayerName());
-        player.setPlayerAge(this.getPlayerAge());
-        player.setElapsedDaysFromLastBDay(this.getElapsedDaysFromLastBDay());
         player.setInjuredStatus(this.getInjuredStatus());
         player.setDaysInjured(this.getDaysInjured());
         player.setInjuryDate(this.getInjuryDate());
         player.setRetiredStatus(this.getRetiredStatus());
         player.setRetirementDate(this.getRetirementDate());
         player.setPlayerStats(this.getPlayerStats());
+        player.setPlayerAgeInfo(this.getPlayerAgeInfo());
     }
 
     @Override
     public float calculateStrength(IPlayerStats stats) {
         return stats.calculateStrength();
-    }
-
-    @Override
-    public boolean isValid() {
-        return false;
     }
 
     @Override
@@ -158,24 +137,7 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public void agePlayerByDays(int days) {
-        if(days > 0) {
-           elapsedDaysFromLastBDay += days;
-           handlePlayerAgingInYears();
-        }
-    }
-
-    private void handlePlayerAgingInYears() {
-        if(elapsedDaysFromLastBDay >= DAYS_IN_YEAR) {
-            int remainderDays = elapsedDaysFromLastBDay % DAYS_IN_YEAR;
-
-            if(remainderDays == 0) {
-                age += 1;
-                elapsedDaysFromLastBDay = 0;
-            } else {
-                age += (elapsedDaysFromLastBDay / DAYS_IN_YEAR);
-                elapsedDaysFromLastBDay = remainderDays;
-            }
-        }
+    public void agePlayerByDays(int daysToIncrement, LocalDate currentDate) {
+        playerAgeInfo.agePlayerByDays(daysToIncrement, currentDate);
     }
 }

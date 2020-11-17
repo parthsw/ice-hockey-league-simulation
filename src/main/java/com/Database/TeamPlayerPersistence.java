@@ -24,41 +24,43 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
         String playerID = null;
         try {
             storedProcedure = databaseFactory.createStoredProcedure();
-            myCall = storedProcedure.setup("insertIntoPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            myCall = storedProcedure.setup("insertIntoPlayer(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
             IPlayerStats teamPlayerStats = teamPlayer.getPlayerStats();
+            IPlayerAgeInfo teamPlayerAgeInfo = teamPlayer.getPlayerAgeInfo();
 
             myCall.setInt(1, teamPlayer.getTeamID());
             myCall.setString(2, teamPlayer.getPlayerName());
             myCall.setBoolean(3, teamPlayer.isCaptain());
-            myCall.setInt(4, teamPlayer.getPlayerAge());
-            myCall.setInt(5, teamPlayer.getElapsedDaysFromLastBDay());
-            myCall.setBoolean(6, teamPlayer.getInjuredStatus());
-            myCall.setInt(7, teamPlayer.getDaysInjured());
+            myCall.setDate(4, sqlDateConversion.convertLocalDateToSQLDate(teamPlayerAgeInfo.getBirthDate()));
+            myCall.setInt(5, teamPlayerAgeInfo.getAgeInYears());
+            myCall.setInt(6, teamPlayerAgeInfo.getElapsedDaysFromLastBDay());
+            myCall.setBoolean(7, teamPlayer.getInjuredStatus());
+            myCall.setInt(8, teamPlayer.getDaysInjured());
 
             Date sqlInjuryDate = sqlDateConversion.convertLocalDateToSQLDate(teamPlayer.getInjuryDate());
             if (sqlInjuryDate == null) {
-                myCall.setNull(8, Types.DATE);
+                myCall.setNull(9, Types.DATE);
             } else {
-                myCall.setDate(8, sqlInjuryDate);
+                myCall.setDate(9, sqlInjuryDate);
             }
 
-            myCall.setBoolean(9, teamPlayer.getRetiredStatus());
+            myCall.setBoolean(10, teamPlayer.getRetiredStatus());
 
             Date sqlRetirementDate = sqlDateConversion.convertLocalDateToSQLDate(teamPlayer.getRetirementDate());
             if (sqlRetirementDate == null) {
-                myCall.setNull(10, Types.DATE);
+                myCall.setNull(11, Types.DATE);
             } else {
-                myCall.setDate(10, sqlRetirementDate);
+                myCall.setDate(11, sqlRetirementDate);
             }
 
-            myCall.setString(11, teamPlayerStats.getPosition());
-            myCall.setInt(12, teamPlayerStats.getSkating());
-            myCall.setInt(13, teamPlayerStats.getShooting());
-            myCall.setInt(14, teamPlayerStats.getChecking());
-            myCall.setInt(15, teamPlayerStats.getSaving());
-            myCall.setFloat(16, teamPlayerStats.getStrength());
-            myCall.registerOutParameter(17, Types.INTEGER);
+            myCall.setString(12, teamPlayerStats.getPosition());
+            myCall.setInt(13, teamPlayerStats.getSkating());
+            myCall.setInt(14, teamPlayerStats.getShooting());
+            myCall.setInt(15, teamPlayerStats.getChecking());
+            myCall.setInt(16, teamPlayerStats.getSaving());
+            myCall.setFloat(17, teamPlayerStats.getStrength());
+            myCall.registerOutParameter(18, Types.INTEGER);
 
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
@@ -96,18 +98,22 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
                 stats.setSaving(result.getInt("saving"));
                 stats.setStrength(result.getInt("strength"));
 
+                IPlayerAgeInfo teamPlayerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+                teamPlayerAgeInfo.setAgeInYears(result.getInt("age"));
+                teamPlayerAgeInfo.setElapsedDaysFromLastBDay(result.getInt("elapsedDaysFromLastBDay"));
+                teamPlayerAgeInfo.setBirthDate(sqlDateConversion.convertSQLDateToLocalDate(result.getDate("birthDate")));
+
                 player.setTeamPlayerID(result.getInt("playerID"));
                 player.setTeamID(result.getInt("teamID"));
                 player.setPlayerName(result.getString("name"));
                 player.setIsCaptain(result.getBoolean("captain"));
-                player.setPlayerAge(result.getInt("age"));
-                player.setElapsedDaysFromLastBDay(result.getInt("elapsedDaysFromLastBDay"));
                 player.setInjuredStatus(result.getBoolean("isInjured"));
                 player.setDaysInjured(result.getInt("daysInjured"));
                 player.setInjuryDate(sqlDateConversion.convertSQLDateToLocalDate(result.getDate("injuryDate")));
                 player.setRetiredStatus(result.getBoolean("isRetired"));
                 player.setRetirementDate(sqlDateConversion.convertSQLDateToLocalDate(result.getDate("retirementDate")));
                 player.setPlayerStats(stats);
+                player.setPlayerAgeInfo(teamPlayerAgeInfo);
 
                 teamPlayers.add(player);
             }
