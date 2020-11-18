@@ -28,9 +28,11 @@ public interface IPlayer {
     IPlayerStats getPlayerStats();
     void setPlayerStats(IPlayerStats playerStats);
     float calculateStrength(IPlayerStats stats);
+    void performStatDecay(IAgingConfig agingConfig, IRandomChance randomChance);
 
     IPlayerAgeInfo getPlayerAgeInfo();
     void setPlayerAgeInfo(IPlayerAgeInfo playerAgeInfo);
+    boolean isBirthDay(LocalDate currentDate);
 
     void convertBetweenPlayerTypes(IPlayer player);
     void agePlayerByDays(int daysToIncrement, LocalDate currentDate);

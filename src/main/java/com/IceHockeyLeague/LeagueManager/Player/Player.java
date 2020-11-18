@@ -105,6 +105,11 @@ public class Player implements IPlayer {
     }
 
     @Override
+    public boolean isBirthDay(LocalDate currentDate) {
+        return playerAgeInfo.isPlayerBirthDay(currentDate);
+    }
+
+    @Override
     public void convertBetweenPlayerTypes(IPlayer player) {
         player.setPlayerName(this.getPlayerName());
         player.setInjuredStatus(this.getInjuredStatus());
@@ -119,6 +124,11 @@ public class Player implements IPlayer {
     @Override
     public float calculateStrength(IPlayerStats stats) {
         return stats.calculateStrength();
+    }
+
+    @Override
+    public void performStatDecay(IAgingConfig agingConfig, IRandomChance randomChance) {
+        playerStats.performStatDecay(agingConfig, randomChance);
     }
 
     @Override

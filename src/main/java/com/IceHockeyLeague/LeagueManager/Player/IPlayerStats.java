@@ -1,5 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
+
 public interface IPlayerStats {
     String getPosition();
     void setPosition(String position);
@@ -19,4 +21,6 @@ public interface IPlayerStats {
     void setStrength(float strength);
     float getStrength();
     float calculateStrength();
+
+    void performStatDecay(IAgingConfig agingConfig, IRandomChance randomChance);
 }

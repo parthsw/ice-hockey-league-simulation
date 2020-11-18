@@ -9,12 +9,14 @@ import com.IceHockeyLeague.LeagueManager.Player.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.Month;
 
+import static org.mockito.Mockito.when;
+
 public class PlayerTest {
-    private static final String FORWARD = "forward";
     private static final LocalDate CURRENT_DATE = LocalDate.of(2020, Month.NOVEMBER, 16);
     private static ILeagueManagerFactory leagueManagerFactory;
 
@@ -128,11 +130,45 @@ public class PlayerTest {
     }
 
     @Test
+    public void getPlayerAgeInfoTest() {
+        IPlayer player = leagueManagerFactory.createPlayer();
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo.setAgeInYears(22);
+        player.setPlayerAgeInfo(playerAgeInfo);
+
+        Assert.assertEquals(22, player.getPlayerAgeInfo().getAgeInYears());
+    }
+
+    @Test
+    public void isBirthDayTest() {
+        IPlayer player = leagueManagerFactory.createPlayer();
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo.setBirthDate(CURRENT_DATE);
+        player.setPlayerAgeInfo(playerAgeInfo);
+
+        Assert.assertTrue(player.isBirthDay(CURRENT_DATE));
+    }
+
+    @Test
     public void calculateStrength() {
         IPlayer player = leagueManagerFactory.createPlayer();
         IPlayerStats forwardStats = createPlayerStats();
 
         Assert.assertEquals(21.5, player.calculateStrength(forwardStats), 0.0);
+    }
+
+    @Test
+    public void performStatDecayTest() {
+        IPlayer player = leagueManagerFactory.createPlayer();
+        IPlayerStats playerStats = createPlayerStats();
+        player.setPlayerStats(playerStats);
+        IRandomChance randomChanceMock = Mockito.mock(RandomChance.class);
+        IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
+        agingConfig.setStatDecayChance(0.05f);
+
+        when(randomChanceMock.getRandomFloatNumber(0, 1)).thenReturn(0.01f);
+        player.performStatDecay(agingConfig, randomChanceMock);
+        Assert.assertEquals(7, playerStats.getSkating());
     }
 
     @Test
@@ -192,7 +228,7 @@ public class PlayerTest {
         stats.setChecking(11);
         stats.setShooting(8);
         stats.setSkating(8);
-        stats.setPosition(FORWARD);
+        stats.setPosition(PlayerPosition.FORWARD.toString());
         return stats;
     }
 }

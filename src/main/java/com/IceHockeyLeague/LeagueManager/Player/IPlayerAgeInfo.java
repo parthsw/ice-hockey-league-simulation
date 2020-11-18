@@ -11,6 +11,7 @@ public interface IPlayerAgeInfo {
 
     LocalDate getBirthDate();
     void setBirthDate(LocalDate birthDate);
+    boolean isPlayerBirthDay(LocalDate currentDate);
 
     int calculatePlayerAgeInYears(LocalDate currentDate);
     int calculateElapsedDaysFromLastBDay(LocalDate currentDate);
