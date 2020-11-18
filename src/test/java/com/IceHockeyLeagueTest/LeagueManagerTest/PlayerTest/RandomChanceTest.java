@@ -24,8 +24,12 @@ public class RandomChanceTest {
     public void getRandomFloatNumberTest() {
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
         float randomNumber = randomChance.getRandomFloatNumber(0, 30);
-
         Assert.assertTrue(randomNumber >= 0 && randomNumber <= 30);
+    }
+
+    @Test
+    public void getRandomFloatNumberInvalidInputTest() {
+        IRandomChance randomChance = leagueManagerFactory.createRandomChance();
         Assert.assertEquals(-1, randomChance.getRandomFloatNumber(23, 20), 0.0);
     }
 
@@ -33,7 +37,6 @@ public class RandomChanceTest {
     public void roundFloatNumberTest() {
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
         float roundedNumber = randomChance.roundFloatNumber(23.4567f, 3);
-
         BigDecimal bigDecimal = new BigDecimal(Float.toString(roundedNumber));
         Assert.assertEquals(3, bigDecimal.stripTrailingZeros().scale());
     }
@@ -43,10 +46,13 @@ public class RandomChanceTest {
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
         int randomNumber = randomChance.getRandomIntegerNumber(3, 56);
         Assert.assertTrue(randomNumber >= 3 && randomNumber <= 56);
-
         randomNumber = randomChance.getRandomIntegerNumber(1,2);
         Assert.assertTrue(randomNumber >= 1 && randomNumber <= 2);
+    }
 
+    @Test
+    public void getRandomIntegerNumberInvalidInputTest() {
+        IRandomChance randomChance = leagueManagerFactory.createRandomChance();
         Assert.assertEquals(-1, randomChance.getRandomIntegerNumber(4, 1), 0.0);
     }
 }

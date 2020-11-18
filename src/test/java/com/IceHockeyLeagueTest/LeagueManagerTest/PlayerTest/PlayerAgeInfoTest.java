@@ -57,12 +57,25 @@ public class PlayerAgeInfoTest {
         Assert.assertEquals(1995, playerAgeInfo.getBirthDate().getYear());
     }
 
-
     @Test
     public void setBirthDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2001, Month.NOVEMBER, 12));
         Assert.assertEquals(12, playerAgeInfo.getBirthDate().getDayOfMonth());
+    }
+
+    @Test
+    public void isPlayerBirthDayTrueTest() {
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo.setBirthDate(CURRENT_DATE);
+        Assert.assertTrue(playerAgeInfo.isPlayerBirthDay(CURRENT_DATE));
+    }
+
+    @Test
+    public void isPlayerBirthDayFalseTest() {
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo.setBirthDate(LocalDate.of(2013, Month.OCTOBER, 6));
+        Assert.assertFalse(playerAgeInfo.isPlayerBirthDay(CURRENT_DATE));
     }
 
     @Test

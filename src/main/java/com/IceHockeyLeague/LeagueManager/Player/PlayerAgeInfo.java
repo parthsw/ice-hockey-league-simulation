@@ -44,6 +44,11 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
     }
 
     @Override
+    public boolean isPlayerBirthDay(LocalDate currentDate) {
+        return ((currentDate.getDayOfMonth() == birthDate.getDayOfMonth()) && (currentDate.getMonth() == birthDate.getMonth()));
+    }
+
+    @Override
     public int calculatePlayerAgeInYears(LocalDate currentDate) {
         Period timePeriod = Period.between(birthDate, currentDate);
         return timePeriod.getYears();
