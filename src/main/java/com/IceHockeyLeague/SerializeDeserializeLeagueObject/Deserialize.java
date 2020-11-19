@@ -6,7 +6,7 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.League;
 import com.google.gson.Gson;
 
-import java.io.*;
+import java.io.File;
 import java.util.Scanner;
 
 public class Deserialize implements IDeserialize {

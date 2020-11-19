@@ -13,9 +13,10 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.CreateTeamState;
 import org.junit.*;
-
-import java.util.*;
 import org.junit.rules.TemporaryFolder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateTeamStateTest {
     private static IStateMachineFactory stateMachineFactory;

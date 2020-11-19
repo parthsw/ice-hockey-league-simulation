@@ -29,39 +29,39 @@ public class TeamTraining implements ITeamTraining {
             double randomSkating = generateRandomNumber();
             double randomShooting = generateRandomNumber();
             double randomSaving = generateRandomNumber();
-
-            if (randomChecking < coachStats.getChecking()) {
+            if (randomChecking < coachStats.getChecking()){
                 IPlayerStats stat = teamPlayer.getPlayerStats();
                 stat.setChecking(stat.getChecking() + 1);
                 appOutput.display("Stats for checking has been increased");
-            } else {
+            }
+            else {
                 IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChance);
                 teamPlayer.isInjured(playerCareerProgression, league.getGamePlayConfig().getInjuryConfig(), league.getLeagueDate());
             }
-
-            if (randomSkating < coachStats.getSkating()) {
+            if (randomSkating < coachStats.getSkating()){
                 IPlayerStats stat = teamPlayer.getPlayerStats();
                 stat.setSkating(stat.getSkating() + 1);
                 appOutput.display("Stats for skating has been increased");
-            } else {
+            }
+            else{
                 IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChance);
                 teamPlayer.isInjured(playerCareerProgression, league.getGamePlayConfig().getInjuryConfig(), league.getLeagueDate());
             }
-
-            if (randomShooting < coachStats.getShooting()) {
+            if (randomShooting < coachStats.getShooting()){
                 IPlayerStats stat = teamPlayer.getPlayerStats();
                 stat.setShooting(stat.getShooting() + 1);
                 appOutput.display("Stats for shooting has been increased");
-            } else {
+            }
+            else{
                 IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChance);
                 teamPlayer.isInjured(playerCareerProgression, league.getGamePlayConfig().getInjuryConfig(), league.getLeagueDate());
             }
-
-            if (randomSaving < coachStats.getSaving()) {
+            if (randomSaving < coachStats.getSaving()){
                 IPlayerStats stat = teamPlayer.getPlayerStats();
                 stat.setSaving(stat.getSaving() + 1);
                 appOutput.display("Stats for saving has been increased");
-            } else {
+            }
+            else{
                 IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChance);
                 teamPlayer.isInjured(playerCareerProgression, league.getGamePlayConfig().getInjuryConfig(), league.getLeagueDate());
             }

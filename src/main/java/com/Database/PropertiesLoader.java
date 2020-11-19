@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertiesLoader {
-    FileInputStream fileInputStream;
     public static String Url;
     public static String Username;
     public static String Password;
     public static String Driver;
+    FileInputStream fileInputStream;
 
     public String[] getProperties(){
         String[] properties = new String[4];

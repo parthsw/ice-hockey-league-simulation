@@ -3,19 +3,21 @@ package com.IceHockeyLeague.StateMachine.States;
 import com.AbstractAppFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
-
+import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
+import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
+import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Team.*;
-import com.IceHockeyLeague.LeagueManager.Conference.*;
-import com.IceHockeyLeague.LeagueManager.Division.*;
-import com.IceHockeyLeague.LeagueManager.League.*;
-import com.IceHockeyLeague.LeagueManager.Manager.*;
-import com.IceHockeyLeague.LeagueManager.Coach.*;
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateTeamState extends AbstractState {
     private static final String TEAM_CREATION = "************Welcome to team creation************";
@@ -136,10 +138,10 @@ public class CreateTeamState extends AbstractState {
     private ITeam processTeamName(IDivision matchedDivision) {
         ITeam team = leagueManagerFactory.createTeam();
         String teamName;
-        while (true) {
+        while(true){
             appOutput.display("Please provide the team name");
             teamName = appInput.getInput();
-           if (team.isNullOrEmpty(teamName)) {
+            if (team.isNullOrEmpty(teamName)) {
                 appOutput.displayError("The team name cannot be empty");
             } else if (team.isTeamNameExist(matchedDivision.getTeams(),teamName)) {
                 appOutput.displayError("The team name already exists");
@@ -251,7 +253,6 @@ public class CreateTeamState extends AbstractState {
         }
         return players;
     }
-
     private void addTeamToMemoryLeague(IConference conference,IDivision division, ITeam team){
         for(IConference matchedConference: inMemoryLeague.getConferences()){
             if(matchedConference.getConferenceName().equalsIgnoreCase(conference.getConferenceName())){

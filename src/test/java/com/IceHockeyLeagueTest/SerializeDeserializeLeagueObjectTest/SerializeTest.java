@@ -9,7 +9,8 @@ import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializ
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import java.io.*;
+
+import java.io.File;
 
 public class SerializeTest {
     private static ILeagueManagerFactory leagueManagerFactory;
