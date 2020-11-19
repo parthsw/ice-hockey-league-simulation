@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
@@ -49,6 +50,18 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
     }
 
     @Override
+    public LocalDate getBirthDateForGivenYear(int year) {
+        LocalDate currentYearDate = LocalDate.of(year, Month.JANUARY, 1);
+        if(currentYearDate.isLeapYear()) {
+            return LocalDate.of(year, birthDate.getMonth(), birthDate.getDayOfMonth());
+        }
+        if(birthDate.getMonth() == Month.FEBRUARY && birthDate.getDayOfMonth() == 29) {
+            return LocalDate.of(year, birthDate.getMonth(), birthDate.getDayOfMonth() - 1);
+        }
+        return LocalDate.of(year, birthDate.getMonth(), birthDate.getDayOfMonth());
+    }
+
+    @Override
     public int calculatePlayerAgeInYears(LocalDate currentDate) {
         Period timePeriod = Period.between(birthDate, currentDate);
         return timePeriod.getYears();
@@ -66,7 +79,8 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
 
         if(currentYearBirthDate.isBefore(currentDate)) {
             elapsedDays = (int) ChronoUnit.DAYS.between(currentYearBirthDate, currentDate);
-        } else {
+        }
+        else {
             elapsedDays = (int) ChronoUnit.DAYS.between(lastYearBirthDate, currentDate);
         }
         // Adding 1 as the end date is exclusive in ChronoUnit.DAYS.between
@@ -93,14 +107,11 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
             if(remainderDays == 0) {
                 ageInYears += 1;
                 elapsedDaysFromLastBDay = 0;
-            } else {
+            }
+            else {
                 ageInYears += (elapsedDaysFromLastBDay / daysBetweenBirthDates);
                 elapsedDaysFromLastBDay = remainderDays;
             }
         }
-    }
-
-    private LocalDate getBirthDateForGivenYear(int year) {
-        return LocalDate.of(year, birthDate.getMonth(), birthDate.getDayOfMonth());
     }
 }
