@@ -67,6 +67,11 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
     }
 
     @Override
+    public IRandomPlayersGenerator createRandomPlayersGenerator(IRandomChance randomChance) {
+        return new RandomPlayersGenerator(randomChance);
+    }
+
+    @Override
     public IPlayerStats createPlayerStats() {
         return new PlayerStats();
     }

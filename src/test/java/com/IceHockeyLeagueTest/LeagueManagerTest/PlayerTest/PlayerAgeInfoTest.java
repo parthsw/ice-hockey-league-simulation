@@ -140,4 +140,22 @@ public class PlayerAgeInfoTest {
         Assert.assertEquals(20, playerAgeInfo.getAgeInYears());
         Assert.assertEquals(0, playerAgeInfo.getElapsedDaysFromLastBDay());
     }
+
+    @Test
+    public void getBirthDateForGivenYearLeapYearTest() {
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo.setBirthDate(LocalDate.of(1996, Month.OCTOBER, 31));
+
+        LocalDate givenYearBirthDay = playerAgeInfo.getBirthDateForGivenYear(2012);
+        Assert.assertEquals(2012, givenYearBirthDay.getYear());
+    }
+
+    @Test
+    public void getBirthDateForGivenYearLeapYearFebruaryTest() {
+        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
+        playerAgeInfo.setBirthDate(LocalDate.of(1996, Month.FEBRUARY, 29));
+
+        LocalDate givenYearBirthDay = playerAgeInfo.getBirthDateForGivenYear(2013);
+        Assert.assertEquals(28, givenYearBirthDay.getDayOfMonth());
+    }
 }
