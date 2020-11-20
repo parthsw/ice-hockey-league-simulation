@@ -13,7 +13,7 @@ public class TeamValidator {
     private List<ITeamPlayer> goalies;
     private List<IFreeAgent> availableAgents;
     private int leagueID;
-    GetBestAgent obj = new GetBestAgent();
+    GetBestChoiceAgentAndPlayer obj = new GetBestChoiceAgentAndPlayer();
     ISwitchPlayer switchPlayer = new SwitchPlayer();
     private String goalie = "Goalie";
 
