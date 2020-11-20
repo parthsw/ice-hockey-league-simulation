@@ -4,6 +4,7 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.Trading.GetBestChoiceAgentAndPlayer;
 import com.Trading.GetBestAgent;
 import com.Trading.ITradingFactory;
 import org.junit.Assert;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+public class GetBestChoiceAgentAndPlayerTest {
 public class GetBestAgentTest {
     private static ILeagueManagerFactory leagueManagerFactory;
     private static ITradingFactory tradingFactory;

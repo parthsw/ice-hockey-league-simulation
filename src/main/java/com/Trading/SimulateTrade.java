@@ -9,7 +9,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimulateTrade {
+public class SimulateTrade implements ISimulateTrade{
     private final ITradingFactory tradingFactory;
     private final IIOFactory ioFactory;
 
