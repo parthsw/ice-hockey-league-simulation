@@ -6,6 +6,7 @@ import com.IO.IAppOutput;
 import com.IceHockeyLeague.LeagueFileHandler.IJsonParser;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileReader;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
+import com.IceHockeyLeague.LeagueManager.Player.IRandomPlayersGenerator;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.States.*;
 
@@ -97,6 +98,11 @@ public class StateMachineFactory implements IStateMachineFactory {
     @Override
     public AbstractState createAgingState() {
         return new AgingState();
+    }
+
+    @Override
+    public AbstractState createDraftingState(IRandomPlayersGenerator randomPlayersGenerator) {
+        return new DraftingState(randomPlayersGenerator);
     }
 
     @Override
