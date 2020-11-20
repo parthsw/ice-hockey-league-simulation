@@ -6,7 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import java.util.List;
 
 public class GetBestChoiceAgentAndPlayer {
-    private IFreeAgent bestFreeagent;
+    private IFreeAgent bestFreeAgent;
     private ITeamPlayer worseTeamPlayer;
 
     public IFreeAgent getBestAgentWithPosition(List<IFreeAgent> agents, String position) {

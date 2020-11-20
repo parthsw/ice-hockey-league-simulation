@@ -14,7 +14,7 @@ public interface ITradingFactory {
 
     GetAllTeamsFromLeague createGetAllTeamsFromLeague(ILeague league);
 
-    GetBestAgent createGetBestAgent();
+    GetBestChoiceAgentAndPlayer createGetBestAgent();
 
     GetBestPlayersFromAllTeams createGetBestPlayersFromAllTeams(List<ITeam> teams);
 

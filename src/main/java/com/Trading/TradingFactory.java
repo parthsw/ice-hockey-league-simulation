@@ -25,8 +25,8 @@ public class TradingFactory implements ITradingFactory {
     }
 
     @Override
-    public GetBestAgent createGetBestAgent() {
-        return new GetBestAgent();
+    public GetBestChoiceAgentAndPlayer createGetBestAgent() {
+        return new GetBestChoiceAgentAndPlayer();
     }
 
     @Override
