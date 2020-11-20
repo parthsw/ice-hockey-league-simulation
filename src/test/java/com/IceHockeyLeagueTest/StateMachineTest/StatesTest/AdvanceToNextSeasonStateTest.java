@@ -7,6 +7,7 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
+import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.PersistState;
@@ -39,11 +40,16 @@ public class AdvanceToNextSeasonStateTest {
     public void onRunTest() {
         ILeague league = leagueManagerFactory.createLeague();
         ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        List<IStanding> standings = new ArrayList<>();
+        ISchedule schedule = leagueManagerFactory.createSchedule();
+        schedule.setFirstTeam(leagueManagerFactory.createTeam());
+        schedule.setSecondTeam(leagueManagerFactory.createTeam());
         leagueDB.loadLeague(1, league);
 
+        league.getStandingSystem().setStandings(standings);
         league.setLeagueDate(LocalDate.of(Year.now().getValue() + 1, Month.SEPTEMBER, 27));
         league.getScheduleSystem().setRegularSeasonStartDate(LocalDate.now());
-        ISchedule schedule = leagueManagerFactory.createSchedule();
+
         schedule.setWinningTeam(leagueManagerFactory.createTeam());
         List<ISchedule> playoffList = new ArrayList<>();
         playoffList.add(schedule);
@@ -53,7 +59,5 @@ public class AdvanceToNextSeasonStateTest {
         advanceToNextSeasonState.setLeague(league);
 
         Assert.assertTrue(advanceToNextSeasonState.onRun() instanceof PersistState);
-        Assert.assertEquals(19, league.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerAgeInfo().getAgeInYears());
-        Assert.assertEquals(332, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
     }
 }

@@ -5,9 +5,11 @@ import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class StandingSystem implements IStandingSystem{
@@ -88,5 +90,47 @@ public class StandingSystem implements IStandingSystem{
 
     public IStanding getTopStandingInConference(IConference conference) {
         return getStandingsInConference(conference).get(0);
+    }
+
+    public List<IStanding> getRegularSeasonStandingsInReverse() {
+        standings.sort(Standing.standingComparator.reversed());
+        return standings;
+    }
+
+    public List<IStanding> getPlayOffSeasonStandingsInReverse(List<ISchedule> playoffSchedule) {
+        playoffSchedule.sort(Comparator.comparing(ISchedule::getDate));
+        List<IStanding> playOffStandings = new ArrayList<>();
+        int numberOfSchedules = playoffSchedule.size();
+
+        for(int i = 0; i < numberOfSchedules; i++) {
+            IStanding standing, lastStanding;
+            ISchedule currentSchedule = playoffSchedule.get(i);
+            if(currentSchedule.getWinningTeam() == currentSchedule.getFirstTeam()) {
+                standing = setStanding(currentSchedule.getSecondConference(), currentSchedule.getSecondDivision(), currentSchedule.getSecondTeam());
+            }
+            else {
+                standing = setStanding(currentSchedule.getFirstConference(), currentSchedule.getFirstDivision(), currentSchedule.getFirstTeam());
+            }
+            playOffStandings.add(standing);
+
+            if(i == numberOfSchedules - 1) {
+                if ((currentSchedule.getWinningTeam() == currentSchedule.getFirstTeam())) {
+                    lastStanding = setStanding(currentSchedule.getFirstConference(), currentSchedule.getFirstDivision(), currentSchedule.getFirstTeam());
+                }
+                else {
+                    lastStanding = setStanding(currentSchedule.getSecondConference(), currentSchedule.getSecondDivision(), currentSchedule.getSecondTeam());
+                }
+                playOffStandings.add(lastStanding);
+            }
+        }
+        return playOffStandings;
+    }
+
+    private IStanding setStanding(IConference conference, IDivision division, ITeam team) {
+        IStanding standing = leagueManagerFactory.createStanding();
+        standing.setConference(conference);
+        standing.setDivision(division);
+        standing.setTeam(team);
+        return standing;
     }
 }
