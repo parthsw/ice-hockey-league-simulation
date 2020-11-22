@@ -1,7 +1,7 @@
 package com.IceHockeyLeague.StateMachine.States;
 
 import com.AbstractAppFactory;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
@@ -21,7 +21,7 @@ public class LoadTeamState extends AbstractState {
     private static final String LEAGUE_SELECTION_PROMPT = "Please enter the ID of a league that you want to load";
 
     private final ILeagueManagerFactory leagueManagerFactory;
-    private final IDatabaseFactory databaseFactory;
+  //  private final IDatabaseFactory databaseFactory;
     private final IStateMachineFactory stateMachineFactory;
     private final IAppInput appInput;
     private final IAppOutput appOutput;
@@ -30,7 +30,7 @@ public class LoadTeamState extends AbstractState {
         this.appInput = appInput;
         this.appOutput = appOutput;
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+    //    databaseFactory = AbstractAppFactory.getDatabaseFactory();
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
@@ -56,9 +56,9 @@ public class LoadTeamState extends AbstractState {
                 appOutput.displayError(TEAM_NAME_EMPTY);
                 continue;
             }
-            ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
+          //  ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
             List<ILeague> leagueList = new ArrayList<>();
-            if(team.checkIfTeamNameExists(teamDB, teamName, leagueList)) {
+       //     if(team.checkIfTeamNameExists(teamDB, teamName, leagueList)) {
                 if(leagueList.size() == 0) {
                     appOutput.displayError(TEAM_NOT_EXIST);
                     return null;
@@ -80,7 +80,7 @@ public class LoadTeamState extends AbstractState {
                 }
                 break;
             }
-        }
+   //     }
 
         return stateMachineFactory.createPlayerChoiceState();
     }
