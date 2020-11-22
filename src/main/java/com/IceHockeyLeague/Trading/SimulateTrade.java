@@ -1,7 +1,9 @@
-package com.Trading;
+package com.IceHockeyLeague.Trading;
 
 import com.AbstractAppFactory;
-import com.IO.*;
+import com.IO.IAppInput;
+import com.IO.IAppOutput;
+import com.IO.IIOFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
