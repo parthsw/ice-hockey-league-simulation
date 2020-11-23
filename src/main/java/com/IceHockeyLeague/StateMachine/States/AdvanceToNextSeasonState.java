@@ -2,7 +2,7 @@ package com.IceHockeyLeague.StateMachine.States;
 
 import com.AbstractAppFactory;
 import com.IO.IAppOutput;
-import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
+import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
@@ -15,7 +15,6 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.List;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -42,6 +41,7 @@ public class AdvanceToNextSeasonState extends AbstractState {
             ILeague league = getLeague();
             IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChance);
             IRandomPlayersGenerator randomPlayersGenerator = leagueManagerFactory.createRandomPlayersGenerator(randomChance);
+            IDraftManager draftManager = leagueManagerFactory.createDraftManager();
 
             IScheduleSystem scheduleSystem = league.getScheduleSystem();
             LocalDate regularSeasonStartDate = scheduleSystem.getRegularSeasonStartDate();
@@ -50,13 +50,17 @@ public class AdvanceToNextSeasonState extends AbstractState {
             LocalDate retirementCheckingDate = LocalDate.of(nextSeasonStartYear, Month.MAY, 20);
             adjustLeaguePlayersAge(league, retirementCheckingDate);
             league.setLeagueDate(retirementCheckingDate);
-            performLeaguePlayersRetirement(league, playerCareerProgression);
+
+            appOutput.display(RETIRED_PLAYERS_START);
+            playerCareerProgression.performLeaguePlayersRetirement(league);
+            // Show retired players
+            appOutput.display(RETIRED_PLAYERS_END);
 
             LocalDate draftingDate = LocalDate.of(nextSeasonStartYear, Month.JULY, 15);
             adjustLeaguePlayersAge(league, draftingDate);
             league.setLeagueDate(draftingDate);
 
-            AbstractState draftingState = stateMachineFactory.createDraftingState(randomPlayersGenerator);
+            AbstractState draftingState = stateMachineFactory.createDraftingState(randomPlayersGenerator, draftManager);
             IStateMachine draftingSimulation = stateMachineFactory.createStateMachine(draftingState);
             draftingSimulation.onExecution();
 
@@ -102,44 +106,4 @@ public class AdvanceToNextSeasonState extends AbstractState {
             retiredFreeAgent.agePlayerByDays(numberOfDaysElapsed, currentLeagueDate);
         }
     }
-
-    private void performLeaguePlayersRetirement(ILeague league, IPlayerCareerProgression playerCareerProgression) {
-        IGamePlayConfig gamePlayConfig = league.getGamePlayConfig();
-
-        appOutput.display(RETIRED_PLAYERS_START);
-        for(IConference conference : league.getConferences()) {
-            for(IDivision division : conference.getDivisions()) {
-                for(ITeam team : division.getTeams()) {
-                    List<ITeamPlayer> teamPlayers = team.getPlayers();
-                    // using simple for loop instead of enhanced as I need to modify ArrayList during the iteration
-                    for(int l = 0; l < teamPlayers.size(); l++) {
-                        ITeamPlayer currentTeamPlayer = teamPlayers.get(l);
-                        boolean isRetired = currentTeamPlayer.isRetired(playerCareerProgression, gamePlayConfig.getAgingConfig(), league.getLeagueDate());
-                        if(isRetired) {
-                            playerCareerProgression.handleTeamPlayerRetirement(currentTeamPlayer, team, league);
-                            appOutput.display(currentTeamPlayer.getPlayerName());
-                            if(l > 0) {
-                                l--;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        List<IFreeAgent> freeAgents = league.getFreeAgents();
-        for(int i = 0; i < freeAgents.size(); i++) {
-            IFreeAgent currentFreeAgent = freeAgents.get(i);
-            boolean isRetired = currentFreeAgent.isRetired(playerCareerProgression, gamePlayConfig.getAgingConfig(), league.getLeagueDate());
-            if(isRetired) {
-                playerCareerProgression.handleFreeAgentRetirement(currentFreeAgent, league);
-                appOutput.display(currentFreeAgent.getPlayerName());
-                if(i > 0) {
-                    i--;
-                }
-            }
-        }
-        appOutput.display(RETIRED_PLAYERS_END);
-    }
-
 }

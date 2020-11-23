@@ -13,6 +13,7 @@ public interface IFreeAgent extends IPlayer {
     void setLeagueID(int leagueID);
 
     ITeamPlayer convertToTeamPlayer(ITeamPlayer teamPlayer);
+    void generateFreeAgent(IPlayer player);
 
     IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgentList, String position);
 

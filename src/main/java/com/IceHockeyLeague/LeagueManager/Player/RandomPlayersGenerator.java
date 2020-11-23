@@ -252,6 +252,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         forwardPlayerStats.setShooting(randomChance.getRandomIntegerNumber(12, 20));
         forwardPlayerStats.setChecking(randomChance.getRandomIntegerNumber(9, 18));
         forwardPlayerStats.setSaving(randomChance.getRandomIntegerNumber(1, 7));
+        forwardPlayerStats.setStrength(forwardPlayerStats.calculateStrength());
         return forwardPlayerStats;
     }
 
@@ -262,6 +263,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         defensePlayerStats.setShooting(randomChance.getRandomIntegerNumber(9, 18));
         defensePlayerStats.setChecking(randomChance.getRandomIntegerNumber(12, 20));
         defensePlayerStats.setSaving(randomChance.getRandomIntegerNumber(1, 12));
+        defensePlayerStats.setStrength(defensePlayerStats.calculateStrength());
         return defensePlayerStats;
     }
 
@@ -272,6 +274,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         goaliePlayerStats.setShooting(randomChance.getRandomIntegerNumber(1, 10));
         goaliePlayerStats.setChecking(randomChance.getRandomIntegerNumber(1, 12));
         goaliePlayerStats.setSaving(randomChance.getRandomIntegerNumber(12, 20));
+        goaliePlayerStats.setStrength(goaliePlayerStats.calculateStrength());
         return goaliePlayerStats;
     }
 }

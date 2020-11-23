@@ -56,6 +56,14 @@ public class TeamPlayer extends Player implements ITeamPlayer {
     }
 
     @Override
+    public void generateTeamPlayer(IPlayer player) {
+        this.setPlayerName(player.getPlayerName());
+        this.setPlayerStats(player.getPlayerStats());
+        this.setPlayerAgeInfo(player.getPlayerAgeInfo());
+        this.setIsCaptain(false);
+    }
+
+    @Override
     public boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB) {
         return teamPlayerDB.saveTeamPlayer(this);
     }

@@ -3,6 +3,12 @@ package com.IceHockeyLeague.LeagueManager;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftManager;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.DraftPick;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.DraftPickManager;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPickManager;
+import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.League.*;
 import com.IceHockeyLeague.LeagueManager.Manager.*;
@@ -164,5 +170,20 @@ public class LeagueManagerFactory implements ILeagueManagerFactory {
     @Override
     public IStandingSystem createStandingSystem() {
         return new StandingSystem();
+    }
+
+    @Override
+    public IDraftManager createDraftManager() {
+        return new DraftManager();
+    }
+
+    @Override
+    public IDraftPick createDraftPick(ITeam teamTradingAway, ITeam teamReceiving, int roundNumber, ITeamPlayer player) {
+        return new DraftPick(teamTradingAway, teamReceiving, roundNumber, player);
+    }
+
+    @Override
+    public IDraftPickManager createDraftPickManager() {
+        return new DraftPickManager();
     }
 }

@@ -14,6 +14,7 @@ public interface ITeamPlayer extends IPlayer {
     void setTeamID(int teamID);
 
     IFreeAgent convertToFreeAgent(IFreeAgent freeAgent);
+    void generateTeamPlayer(IPlayer player);
 
     boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB);
 
