@@ -2,15 +2,15 @@ package com.TradingTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.Trading.DivisionUpdatorAfterTrading;
-import com.Trading.ITradingFactory;
+import com.IceHockeyLeague.Trading.DivisionUpdatorAfterTrading;
+import com.IceHockeyLeague.Trading.ITradingFactory;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

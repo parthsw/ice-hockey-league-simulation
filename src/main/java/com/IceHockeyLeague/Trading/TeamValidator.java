@@ -1,4 +1,4 @@
-package com.Trading;
+package com.IceHockeyLeague.Trading;
 
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
@@ -15,7 +15,7 @@ public class TeamValidator {
     private List<ITeamPlayer> goalies;
     private List<IFreeAgent> availableAgents;
     private int leagueID;
-    GetBestAgent obj;
+    GetBestChoiceAgentAndPlayer obj;
     ISwitchPlayer switchPlayer;
     private String goalie = "Goalie";
 

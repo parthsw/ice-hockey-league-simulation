@@ -1,17 +1,17 @@
-package com.Trading;
+package com.IceHockeyLeague.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 
 import java.util.List;
 
-public class GetBestAgent {
+public class GetBestChoiceAgentAndPlayer {
     private IFreeAgent bestFreeAgent;
     private ITeamPlayer worseTeamPlayer;
 
-    public IFreeAgent getBestAgentWithPosition(List<IFreeAgent> agents, String position){
+    public IFreeAgent getBestAgentWithPosition(List<IFreeAgent> agents, String position) {
         int bestStrength = -1;
-        for (IFreeAgent agent : agents){
+        for (IFreeAgent agent : agents) {
             if (agent.getPlayerStats().getPosition().equalsIgnoreCase(position) && bestStrength < agent.getPlayerStats().getStrength()) {
                 this.bestFreeAgent = agent;
                 bestStrength = (int) agent.getPlayerStats().getStrength();

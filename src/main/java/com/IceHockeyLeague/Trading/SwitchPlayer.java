@@ -1,4 +1,4 @@
-package com.Trading;
+package com.IceHockeyLeague.Trading;
 
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
