@@ -5,7 +5,7 @@ import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.*;
 import com.IceHockeyLeague.LeagueManager.Conference.*;

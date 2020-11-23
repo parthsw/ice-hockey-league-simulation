@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.StateMachine.States;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;

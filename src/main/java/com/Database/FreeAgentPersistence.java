@@ -1,6 +1,8 @@
 package com.Database;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 

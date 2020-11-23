@@ -3,6 +3,7 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.Database.IDatabaseFactory;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;

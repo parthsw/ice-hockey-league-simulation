@@ -1,6 +1,9 @@
-package com.IceHockeyLeague.LeagueManager.Player;
+package com.IceHockeyLeague.LeagueManager.FreeAgent;
 
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 
 import java.util.List;
 

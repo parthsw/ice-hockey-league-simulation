@@ -1,6 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 
 import java.util.List;
