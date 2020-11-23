@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.StateMachine;
 
+import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
 import com.IceHockeyLeague.LeagueManager.Player.IRandomPlayersGenerator;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
@@ -33,7 +34,7 @@ public interface IStateMachineFactory {
 
     AbstractState createAgingState();
 
-    AbstractState createDraftingState(IRandomPlayersGenerator randomPlayersGenerator);
+    AbstractState createDraftingState(IRandomPlayersGenerator randomPlayersGenerator, IDraftManager draftManager);
 
     AbstractState createAdvanceToNextSeasonState();
 

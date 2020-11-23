@@ -17,4 +17,6 @@ public interface IPlayerCareerProgression {
     boolean handleFreeAgentRetirement(IFreeAgent freeAgent, ILeague league);
 
     boolean handleTeamPlayerRetirement(ITeamPlayer teamPlayer, ITeam team, ILeague league);
+
+    void performLeaguePlayersRetirement(ILeague league);
 }

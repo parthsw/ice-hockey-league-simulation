@@ -1,5 +1,8 @@
 package com.IceHockeyLeague.LeagueManager;
 
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPickManager;
+import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
@@ -73,4 +76,10 @@ public interface ILeagueManagerFactory {
     IStanding createStanding();
 
     IStandingSystem createStandingSystem();
+
+    IDraftManager createDraftManager();
+
+    IDraftPick createDraftPick(ITeam teamTradingAway, ITeam teamReceiving, int roundNumber, ITeamPlayer player);
+
+    IDraftPickManager createDraftPickManager();
 }

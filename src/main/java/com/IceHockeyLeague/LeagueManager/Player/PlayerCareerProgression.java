@@ -1,6 +1,9 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
+import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
@@ -9,6 +12,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class PlayerCareerProgression implements IPlayerCareerProgression {
     private final IRandomChance randomChanceGenerator;
@@ -118,6 +122,42 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
             }
         }
         return team.checkTeamPlayers();
+    }
+
+    @Override
+    public void performLeaguePlayersRetirement(ILeague league) {
+        IGamePlayConfig gamePlayConfig = league.getGamePlayConfig();
+
+        for(IConference conference : league.getConferences()) {
+            for(IDivision division : conference.getDivisions()) {
+                for(ITeam team : division.getTeams()) {
+                    List<ITeamPlayer> teamPlayers = team.getPlayers();
+                    // using simple for loop instead of enhanced as I need to modify ArrayList during the iteration
+                    for(int l = 0; l < teamPlayers.size(); l++) {
+                        ITeamPlayer currentTeamPlayer = teamPlayers.get(l);
+                        boolean isRetired = currentTeamPlayer.isRetired(this, gamePlayConfig.getAgingConfig(), league.getLeagueDate());
+                        if(isRetired) {
+                            this.handleTeamPlayerRetirement(currentTeamPlayer, team, league);
+                            if(l > 0) {
+                                l--;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        List<IFreeAgent> freeAgents = league.getFreeAgents();
+        for(int i = 0; i < freeAgents.size(); i++) {
+            IFreeAgent currentFreeAgent = freeAgents.get(i);
+            boolean isRetired = currentFreeAgent.isRetired(this, gamePlayConfig.getAgingConfig(), league.getLeagueDate());
+            if(isRetired) {
+                this.handleFreeAgentRetirement(currentFreeAgent, league);
+                if(i > 0) {
+                    i--;
+                }
+            }
+        }
     }
 
     private void resetInjuryStatus(IPlayer player) {

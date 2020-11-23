@@ -1,69 +1,62 @@
 package com.IceHockeyLeague.StateMachine.States;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
+import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.*;
-import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
-import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
-import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DraftingState extends AbstractState {
     private static final int DRAFT_ROUNDS = 7;
     private final ILeagueManagerFactory leagueManagerFactory;
     private final IRandomPlayersGenerator randomPlayersGenerator;
+    private final IDraftManager draftManager;
 
-    public DraftingState(IRandomPlayersGenerator randomPlayersGenerator) {
+    public DraftingState(IRandomPlayersGenerator randomPlayersGenerator, IDraftManager draftManager) {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         this.randomPlayersGenerator = randomPlayersGenerator;
+        this.draftManager = draftManager;
     }
 
     @Override
     public AbstractState onRun() {
         ILeague league = getLeague();
-        List<ITeam> teamsForDraftRounds = generateTeamOrderForDraftSelection(league);
+        List<IDraftPick> draftPicks =  leagueManagerFactory.createDraftPickManager().getDraftPicks(); // league.getDraftPicks();
+        List<ITeam> teamsForDraftRounds = draftManager.generateTeamOrderForDraftSelection(league);
         int numberOfDrafteesPerRound = teamsForDraftRounds.size();
+        int numberOfDrafteesToGenerate = numberOfDrafteesPerRound * DRAFT_ROUNDS;
 
-        for(int i = 0; i < DRAFT_ROUNDS; i++) {
-            List<IPlayer> generatedPlayers = randomPlayersGenerator.generateRandomPlayers(league.getLeagueDate(), numberOfDrafteesPerRound);
-        }
+        List<IPlayer> generatedPlayers = randomPlayersGenerator.generateRandomPlayers(league.getLeagueDate(), numberOfDrafteesToGenerate);
 
-        for(ITeam teamPickingDraftees: teamsForDraftRounds) {
-            ITeamStrengthCalculator teamStrengthCalculator = leagueManagerFactory.createTeamStrengthCalculator();
-            List<ITeamPlayer> teamPlayers = teamPickingDraftees.getPlayers();
-
-            teamPickingDraftees.setTeamStrength(teamStrengthCalculator.calculate(teamPlayers));
-
-            for(ITeamPlayer teamPlayer: teamPlayers) {
-                float strength = teamPlayer.calculateStrength(teamPlayer.getPlayerStats());
-                IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+        // Drafting of 7 rounds
+        for(int i = 1; i <= DRAFT_ROUNDS; i++) {
+            List<ITeam> teamsForCurrentRound = draftManager.generateTeamOrderForDraftSelection(teamsForDraftRounds, draftPicks, i);
+            for(ITeam teamPickingDraftee: teamsForCurrentRound) {
+                draftManager.performDraftSelectionForTeam(teamPickingDraftee, generatedPlayers);
             }
         }
+
+        // clear list of draftPicks
+
+        // verification of roster & drop excess players to freeAgents
+        for (ITeam currentTeam : teamsForDraftRounds) {
+            currentTeam.checkTeamPlayers();
+        }
+
+        // Add remaining draftees, if any, to freeAgents
+        if(generatedPlayers.size() > 0) {
+            for(IPlayer player: generatedPlayers) {
+                IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+                freeAgent.generateFreeAgent(player);
+                league.addFreeAgent(freeAgent);
+            }
+        }
+
         return null;
     }
 
-    private List<ITeam> generateTeamOrderForDraftSelection(ILeague league) {
-        List<ITeam> teamsForDraftRounds = new ArrayList<>();
-        IStandingSystem standingSystem = league.getStandingSystem();
-        List<IStanding> regularSeasonStandings = standingSystem.getRegularSeasonStandingsInReverse();
-        int regularSeasonEliminatedTeamsCount = (regularSeasonStandings.size() / 2);
-
-        IScheduleSystem scheduleSystem = league.getScheduleSystem();
-        List<IStanding> playOffSeasonStandings = standingSystem.getPlayOffSeasonStandingsInReverse(scheduleSystem.getPlayoffSchedule());
-
-        for(int i = 0; i < regularSeasonEliminatedTeamsCount; i++) {
-            IStanding standing = regularSeasonStandings.get(i);
-            teamsForDraftRounds.add(standing.getTeam());
-        }
-
-        for(IStanding standing : playOffSeasonStandings) {
-            teamsForDraftRounds.add(standing.getTeam());
-        }
-        return teamsForDraftRounds;
-    }
 }

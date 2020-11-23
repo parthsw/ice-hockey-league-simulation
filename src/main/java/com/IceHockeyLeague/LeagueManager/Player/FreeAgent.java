@@ -47,6 +47,13 @@ public class FreeAgent extends Player implements IFreeAgent {
     }
 
     @Override
+    public void generateFreeAgent(IPlayer player) {
+        this.setPlayerName(player.getPlayerName());
+        this.setPlayerStats(player.getPlayerStats());
+        this.setPlayerAgeInfo(player.getPlayerAgeInfo());
+    }
+
+    @Override
     public IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgents, String position) {
         float bestStrength = 0;
         IFreeAgent bestFreeAgent = null;
