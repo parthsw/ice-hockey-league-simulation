@@ -1,4 +1,4 @@
-package com.IceHockeyLeague.LeagueManager.Player;
+package com.IceHockeyLeague.LeagueManager.FreeAgent;
 
 import java.util.List;
 

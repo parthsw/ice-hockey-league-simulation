@@ -5,6 +5,7 @@ import com.Database.*;
 import com.IceHockeyLeague.LeagueManager.Coach.*;
 import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;

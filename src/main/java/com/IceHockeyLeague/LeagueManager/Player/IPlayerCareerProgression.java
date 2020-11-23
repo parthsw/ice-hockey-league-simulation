@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;

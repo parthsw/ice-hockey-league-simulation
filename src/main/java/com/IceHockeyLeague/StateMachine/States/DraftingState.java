@@ -3,6 +3,7 @@ package com.IceHockeyLeague.StateMachine.States;
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.*;

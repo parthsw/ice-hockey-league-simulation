@@ -3,6 +3,7 @@ package com.IceHockeyLeague.LeagueManager;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPickManager;
 import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
