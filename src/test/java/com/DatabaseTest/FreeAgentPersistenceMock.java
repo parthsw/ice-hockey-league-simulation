@@ -125,9 +125,10 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
         stats2.setStrength(43.5f);
         freeAgent2.setPlayerStats(stats2);
 
-        freeAgentAgeInfo.setBirthDate(LocalDate.of(1991, Month.APRIL, 18));
+        freeAgentAgeInfo2.setBirthDate(LocalDate.of(1991, Month.APRIL, 18));
         freeAgentAgeInfo2.setAgeInYears(29);
         freeAgentAgeInfo2.setElapsedDaysFromLastBDay(212);
+        freeAgent2.setPlayerAgeInfo(freeAgentAgeInfo2);
 
         freeAgents.add(freeAgent);
         freeAgents.add(freeAgent1);
