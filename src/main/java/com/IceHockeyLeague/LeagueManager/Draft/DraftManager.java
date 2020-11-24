@@ -24,6 +24,10 @@ public class DraftManager implements IDraftManager {
     }
 
     public IPlayer findBestDraftee(List<IPlayer> players) {
+        if(players.size() <= 0) {
+            return leagueManagerFactory.createPlayer();
+        }
+
         IPlayer bestPlayer = players.get(0);
         IPlayerStats bestPlayerStats = bestPlayer.getPlayerStats();
         float bestStrength = bestPlayerStats.getStrength();
@@ -72,17 +76,18 @@ public class DraftManager implements IDraftManager {
     }
 
     public List<ITeam> generateTeamOrderForDraftSelection(List<ITeam> teams, List<IDraftPick> draftPicks, int roundNumber) {
-        List<ITeam> teamsForCurrentRound = new ArrayList<>();
         List<IDraftPick> currentRoundDraftPicks = draftPicks.stream()
                 .filter(draftPick -> draftPick.getDraftPickRoundNumber() == roundNumber).collect(Collectors.toList());
+
+        List<ITeam> teamsForCurrentRound = new ArrayList<>(teams);
 
         for(IDraftPick draftPick: currentRoundDraftPicks) {
             ITeam teamTradedAwayTheirPick = draftPick.getSendingTeam();
             ITeam teamDoingAdditionalPick = draftPick.getReceivingTeam();
 
-            int indexOfTeamToRemove = teams.indexOf(teamTradedAwayTheirPick);
-            teams.remove(indexOfTeamToRemove);
-            teams.add(indexOfTeamToRemove, teamDoingAdditionalPick);
+            int indexOfTeamToRemove = teamsForCurrentRound.indexOf(teamTradedAwayTheirPick);
+            teamsForCurrentRound.remove(indexOfTeamToRemove);
+            teamsForCurrentRound.add(indexOfTeamToRemove, teamDoingAdditionalPick);
         }
 
         return teamsForCurrentRound;

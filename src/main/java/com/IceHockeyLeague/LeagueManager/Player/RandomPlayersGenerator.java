@@ -210,10 +210,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     }
 
     private int numberOfPlayersToGenerate(int totalPlayers, int percentage) {
-        if(totalPlayers > 0) {
-            return ((100 * percentage) / totalPlayers);
-        }
-        return 0;
+        return ((100 * percentage) / totalPlayers);
     }
 
     private String generateRandomPlayerName() {
