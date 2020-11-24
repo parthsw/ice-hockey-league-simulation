@@ -283,4 +283,5 @@ public class LeagueCreator implements ILeagueCreator {
         tradingConfig.setRandomTradeOfferChance(tradingConfigJson.getFloat(RANDOM_TRADE_OFFER_CHANCE));
         return tradingConfig;
     }
+
 }

@@ -8,7 +8,6 @@ import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import java.util.List;
 
 public interface IFreeAgent extends IPlayer {
-
     int getFreeAgentID();
     void setFreeAgentID(int freeAgentID);
 

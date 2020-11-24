@@ -81,4 +81,5 @@ public class FreeAgent extends Player implements IFreeAgent {
     public boolean handleFreeAgentRetirement(IPlayerCareerProgression playerCareerProgression, ILeague league) {
         return playerCareerProgression.handleFreeAgentRetirement(this, league);
     }
+
 }

@@ -6,7 +6,6 @@ import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import java.time.LocalDate;
 
 public interface IPlayer {
-
     String getPlayerName();
     void setPlayerName(String name);
 

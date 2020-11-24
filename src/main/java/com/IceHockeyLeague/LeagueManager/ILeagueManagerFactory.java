@@ -21,7 +21,6 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamTraining;
 
 public interface ILeagueManagerFactory {
-
     ILeagueCreator createLeagueCreator();
 
     ILeague createLeague();

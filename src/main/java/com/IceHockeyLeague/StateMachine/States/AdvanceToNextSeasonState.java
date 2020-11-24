@@ -107,4 +107,5 @@ public class AdvanceToNextSeasonState extends AbstractState {
             retiredFreeAgent.agePlayerByDays(numberOfDaysElapsed, currentLeagueDate);
         }
     }
+
 }

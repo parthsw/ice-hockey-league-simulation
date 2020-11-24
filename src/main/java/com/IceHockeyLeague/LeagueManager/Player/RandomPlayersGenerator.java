@@ -277,4 +277,5 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         goaliePlayerStats.setStrength(goaliePlayerStats.calculateStrength());
         return goaliePlayerStats;
     }
+
 }
