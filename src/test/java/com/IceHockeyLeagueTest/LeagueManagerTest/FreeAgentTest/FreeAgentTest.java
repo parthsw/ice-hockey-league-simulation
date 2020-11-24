@@ -67,11 +67,10 @@ public class FreeAgentTest {
     @Test
     public void convertToTeamPlayerTest() {
         IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
         List<IFreeAgent> freeAgents = new ArrayList<>();
         freeAgentDB.loadFreeAgents(1, freeAgents);
-
         IFreeAgent freeAgent = freeAgents.get(1);
-        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
 
         freeAgent.convertToTeamPlayer(teamPlayer);
 
@@ -81,13 +80,21 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void bestFreeAgentForPosition() {
+    public void bestFreeAgentForPositionNotFoundTest() {
         List<IFreeAgent> freeAgents = new ArrayList<>();
         IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
 
         freeAgentDB.loadFreeAgents(1, freeAgents);
         Assert.assertNull(freeAgent.bestFreeAgentForPosition(freeAgents, "goalie"));
+    }
+
+    @Test
+    public void bestFreeAgentForPositionFoundTest() {
+        List<IFreeAgent> freeAgents = new ArrayList<>();
+        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+        freeAgentDB.loadFreeAgents(1, freeAgents);
 
         IFreeAgent bestFreeAgent = freeAgent.bestFreeAgentForPosition(freeAgents, "forward");
         Assert.assertEquals("Fred Two", bestFreeAgent.getPlayerName());
@@ -112,7 +119,7 @@ public class FreeAgentTest {
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         ILeague league = leagueManagerFactory.createLeague();
         leagueDB.loadLeague(1, league);
-
         Assert.assertFalse(freeAgent.handleFreeAgentRetirement(playerCareerProgression, league));
     }
+
 }

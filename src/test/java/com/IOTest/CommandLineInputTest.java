@@ -37,4 +37,5 @@ public class CommandLineInputTest {
         commandLineInput("Hockey League Simulation");
         Assert.assertEquals("Hockey League Simulation", appInput.getInput());
     }
+
 }

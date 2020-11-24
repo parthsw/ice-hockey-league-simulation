@@ -160,10 +160,10 @@ public class GamePlayConfigTest {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setLeagueID(1);
         gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
+        ITrainingConfig trainingConfig = gamePlayConfig.getTrainingConfig();
 
         Assert.assertEquals(1, gamePlayConfig.getGamePlayConfigID());
         Assert.assertEquals(1, gamePlayConfig.getLeagueID());
-        ITrainingConfig trainingConfig = gamePlayConfig.getTrainingConfig();
         Assert.assertEquals(100, trainingConfig.getDaysUntilStatIncreaseCheck());
     }
 
@@ -203,4 +203,5 @@ public class GamePlayConfigTest {
         trainingConfig.setDaysUntilStatIncreaseCheck(111);
         return trainingConfig;
     }
+
 }

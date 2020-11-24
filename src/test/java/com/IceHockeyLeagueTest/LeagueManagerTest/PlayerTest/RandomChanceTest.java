@@ -46,7 +46,12 @@ public class RandomChanceTest {
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
         int randomNumber = randomChance.getRandomIntegerNumber(3, 56);
         Assert.assertTrue(randomNumber >= 3 && randomNumber <= 56);
-        randomNumber = randomChance.getRandomIntegerNumber(1,2);
+    }
+
+    @Test
+    public void getRandomIntegerNumberBoundaryTest() {
+        IRandomChance randomChance = leagueManagerFactory.createRandomChance();
+        int randomNumber = randomChance.getRandomIntegerNumber(1,2);
         Assert.assertTrue(randomNumber >= 1 && randomNumber <= 2);
     }
 
@@ -55,4 +60,5 @@ public class RandomChanceTest {
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
         Assert.assertEquals(-1, randomChance.getRandomIntegerNumber(4, 1), 0.0);
     }
+
 }
