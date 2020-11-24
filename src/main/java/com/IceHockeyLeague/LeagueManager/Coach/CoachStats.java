@@ -72,4 +72,5 @@ public class CoachStats implements ICoachStats {
     private boolean isStatValid(float statValue) {
         return (statValue >= STATS_LOWER_VALUE && statValue <= STATS_HIGHER_VALUE);
     }
+
 }

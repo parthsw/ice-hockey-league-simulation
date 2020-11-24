@@ -62,4 +62,5 @@ public class AppFactory extends AbstractAppFactory {
     public static AbstractAppFactory createAppFactory() {
         return new AppFactory();
     }
+
 }

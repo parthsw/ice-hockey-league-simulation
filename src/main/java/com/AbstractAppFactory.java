@@ -9,7 +9,6 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.Trading.ITradingFactory;
 
 public abstract class AbstractAppFactory {
-
     private static AbstractAppFactory appFactory;
     private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
     private static IDatabaseFactory databaseFactory;

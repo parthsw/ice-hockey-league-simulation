@@ -93,4 +93,5 @@ public class GamePlayConfig implements IGamePlayConfig {
     public boolean loadGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDB, IGamePlayConfig gamePlayConfig) {
         return gamePlayConfigDB.loadGamePlayConfig(leagueID, gamePlayConfig);
     }
+
 }

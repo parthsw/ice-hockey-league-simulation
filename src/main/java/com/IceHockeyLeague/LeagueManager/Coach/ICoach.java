@@ -25,6 +25,5 @@ public interface ICoach {
     boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach);
 
     boolean isNullOrEmpty(String coachName);
-
     boolean isCoachNameExist(List<ICoach> coaches, String coachName);
 }

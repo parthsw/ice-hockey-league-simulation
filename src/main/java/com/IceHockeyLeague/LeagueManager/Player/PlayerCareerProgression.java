@@ -171,4 +171,5 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
         player.setRetiredStatus(true);
         player.setRetirementDate(currentDate);
     }
+
 }

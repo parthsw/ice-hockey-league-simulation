@@ -28,7 +28,6 @@ import com.IceHockeyLeague.LeagueManager.Team.*;
 import java.util.Random;
 
 public class LeagueManagerFactory implements ILeagueManagerFactory {
-
     private IRandomChance randomChance = null;
 
     @Override
@@ -188,4 +187,5 @@ public class LeagueManagerFactory implements ILeagueManagerFactory {
     public IDraftPickManager createDraftPickManager() {
         return new DraftPickManager();
     }
+
 }
