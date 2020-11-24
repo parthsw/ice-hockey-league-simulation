@@ -25,17 +25,21 @@ public class LeagueFileValidatorTest {
     }
 
     @Test
-    public void validateJsonSchemaTest() {
+    public void validateJsonSchemaValidTest() {
         ILeagueFileValidator leagueFileValidator = leagueFileHandlerFactory.createLeagueFileValidator();
-        JSONObject leagueSchema = LeagueJsonMock.getInstance().leagueSchema();
-
-        JSONObject leagueJson = LeagueJsonMock.getInstance().validLeagueJson();
+        JSONObject leagueSchema = LeagueJsonMock.instance().leagueSchema();
+        JSONObject leagueJson = LeagueJsonMock.instance().validLeagueJson();
         Assert.assertNull(leagueFileValidator.validateJsonSchema(leagueJson, leagueSchema));
+    }
 
-        JSONObject invalidLeagueJson = LeagueJsonMock.getInstance().invalidLeagueJson();
+    @Test
+    public void validateJsonSchemaInvalidTest() {
+        ILeagueFileValidator leagueFileValidator = leagueFileHandlerFactory.createLeagueFileValidator();
+        JSONObject leagueSchema = LeagueJsonMock.instance().leagueSchema();
+        JSONObject invalidLeagueJson = LeagueJsonMock.instance().invalidLeagueJson();
         List<String> expectedError = new ArrayList<>();
         expectedError.add("#/leagueName: expected minLength: 1, actual: 0");
-
         Assert.assertEquals(expectedError, leagueFileValidator.validateJsonSchema(invalidLeagueJson, leagueSchema));
     }
+
 }

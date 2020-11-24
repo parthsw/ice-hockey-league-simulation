@@ -192,4 +192,5 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
     public IDraftPickManager createDraftPickManager() {
         return new DraftPickManager();
     }
+
 }

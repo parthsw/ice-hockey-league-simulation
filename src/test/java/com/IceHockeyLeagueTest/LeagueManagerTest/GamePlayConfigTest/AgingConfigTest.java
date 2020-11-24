@@ -59,4 +59,5 @@ public class AgingConfigTest {
         agingConfig.setStatDecayChance(1.23f);
         Assert.assertEquals(1.23f, agingConfig.getStatDecayChance(), 0.0);
     }
+
 }

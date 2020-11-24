@@ -39,9 +39,13 @@ public class CoachStatsTest {
         ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setSkating(0.8f);
         Assert.assertEquals(0.8f, coachStats.getSkating(), 0.0);
+    }
 
+    @Test
+    public void setSkatingInvalidTest() {
+        ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setSkating(1.1f);
-        Assert.assertEquals(0.8f, coachStats.getSkating(), 0.0);
+        Assert.assertEquals(0.0f, coachStats.getSkating(), 0.0);
     }
 
     @Test
@@ -57,8 +61,13 @@ public class CoachStatsTest {
         coachStats.setShooting(1.0f);
         Assert.assertEquals(1.0f, coachStats.getShooting(), 0.0);
 
+    }
+
+    @Test
+    public void setShootingInvalidTest() {
+        ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setShooting(1.9f);
-        Assert.assertEquals(1.0f, coachStats.getShooting(), 0.0);
+        Assert.assertEquals(0.0f, coachStats.getShooting(), 0.0);
     }
 
     @Test
@@ -73,9 +82,13 @@ public class CoachStatsTest {
         ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setChecking(0.1f);
         Assert.assertEquals(0.1f, coachStats.getChecking(), 0.0);
+    }
 
+    @Test
+    public void setCheckingInvalidTest() {
+        ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setChecking(2.3f);
-        Assert.assertEquals(0.1f, coachStats.getChecking(), 0.0);
+        Assert.assertEquals(0.0f, coachStats.getChecking(), 0.0);
     }
 
     @Test
@@ -86,12 +99,16 @@ public class CoachStatsTest {
     }
 
     @Test
+    public void setSavingInvalidTest() {
+        ICoachStats coachStats = leagueManagerFactory.createCoachStats();
+        coachStats.setSaving(9);
+        Assert.assertEquals(0.0f, coachStats.getSaving(), 0.0);
+    }
+
+    @Test
     public void setSavingTest() {
         ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setSaving(0.5f);
-        Assert.assertEquals(0.5f, coachStats.getSaving(), 0.0);
-
-        coachStats.setSaving(9);
         Assert.assertEquals(0.5f, coachStats.getSaving(), 0.0);
     }
 

@@ -62,4 +62,5 @@ public class AppFactoryTest extends AbstractAppFactory {
     public static AbstractAppFactory createAppFactory() {
         return new AppFactoryTest();
     }
+    
 }

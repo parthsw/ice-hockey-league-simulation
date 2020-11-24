@@ -111,4 +111,5 @@ public class TeamPlayerTest {
 
         Assert.assertFalse(player.handleTeamPlayerRetirement(playerCareerProgression, team, league));
     }
+
 }

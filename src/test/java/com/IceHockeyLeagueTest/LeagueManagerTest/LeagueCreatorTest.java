@@ -25,7 +25,7 @@ public class LeagueCreatorTest {
 
     @Test
     public void createLeagueTest() {
-        JSONObject leagueJson = LeagueJsonMock.getInstance().validLeagueJson();
+        JSONObject leagueJson = LeagueJsonMock.instance().validLeagueJson();
         ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
 
         ILeague league = leagueCreator.createLeague(leagueJson);
@@ -38,4 +38,5 @@ public class LeagueCreatorTest {
         Assert.assertEquals(3, league.getCoaches().size());
         Assert.assertEquals(3, league.getManagers().size());
     }
+
 }

@@ -20,6 +20,8 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamTraining;
 
+import java.time.LocalDate;
+
 public interface ILeagueManagerFactory {
     ILeagueCreator createLeagueCreator();
 

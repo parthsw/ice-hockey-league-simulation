@@ -21,7 +21,7 @@ public class LeaguePersistenceMock implements ILeaguePersistence {
 
     @Override
     public boolean saveLeague(ILeague league) {
-        LeagueJsonMock leagueJsonMock = LeagueJsonMock.getInstance();
+        LeagueJsonMock leagueJsonMock = LeagueJsonMock.instance();
         ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
         ILeague createdLeague = leagueCreator.createLeague(leagueJsonMock.validLeagueJson());
 
@@ -38,7 +38,7 @@ public class LeaguePersistenceMock implements ILeaguePersistence {
 
     @Override
     public boolean loadLeague(int leagueId, ILeague league) {
-        LeagueJsonMock leagueJsonMock = LeagueJsonMock.getInstance();
+        LeagueJsonMock leagueJsonMock = LeagueJsonMock.instance();
         ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
         ILeague createdLeague = leagueCreator.createLeague(leagueJsonMock.validLeagueJson());
 

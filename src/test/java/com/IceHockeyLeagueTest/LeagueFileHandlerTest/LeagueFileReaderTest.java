@@ -23,19 +23,28 @@ public class LeagueFileReaderTest {
     }
 
     @Test
-    public void isFileExistTest() throws IOException {
+    public void isFileExistFalseTest() {
         ILeagueFileReader leagueFileReader = leagueFileHandlerFactory.createLeagueFileReader();
         Assert.assertFalse(leagueFileReader.isFileExist(new File("")));
+    }
+
+    @Test
+    public void isFileExistTrueTest() throws IOException {
+        ILeagueFileReader leagueFileReader = leagueFileHandlerFactory.createLeagueFileReader();
         File tempFile = folder.newFile("test.json");
         Assert.assertTrue(leagueFileReader.isFileExist(tempFile));
     }
 
     @Test
-    public void readSystemFileTest() throws IOException {
+    public void readSystemFileFalseTest() throws IOException {
+        ILeagueFileReader leagueFileReader = leagueFileHandlerFactory.createLeagueFileReader();
+        Assert.assertNull(leagueFileReader.readSystemFile(""));
+    }
+
+    @Test
+    public void readSystemFileTrueTest() throws IOException {
         ILeagueFileReader leagueFileReader = leagueFileHandlerFactory.createLeagueFileReader();
         File systemFile = folder.newFile("systemFile.txt");
-
-        Assert.assertNull(leagueFileReader.readSystemFile(""));
         Assert.assertTrue(leagueFileReader.readSystemFile(systemFile.getAbsolutePath()) instanceof FileInputStream);
     }
 
@@ -45,4 +54,5 @@ public class LeagueFileReaderTest {
         Assert.assertNull(leagueFileReader.readAppResourceFile(""));
         Assert.assertNull(leagueFileReader.readAppResourceFile("LeagueFile"));
     }
+
 }

@@ -103,39 +103,45 @@ public class CoachTest {
 
         ICoachStats coachStats = coach.getCoachStats();
         Assert.assertEquals(0.7f, coachStats.getSaving(), 0.0);
-        Assert.assertEquals(0.3f, coachStats.getShooting(), 0.0);
     }
 
     @Test
-    public void isValidTest() {
+    public void isValidTrueTest() {
         ICoach coach = leagueManagerFactory.createCoach();
-
         coach.setCoachName("Raj K");
         Assert.assertTrue(coach.isValid());
+    }
 
+    @Test
+    public void isValidFalseTest() {
+        ICoach coach = leagueManagerFactory.createCoach();
         coach.setCoachName("");
         Assert.assertFalse(coach.isValid());
     }
 
     @Test
-    public void isCoachNameExistTest() {
+    public void isCoachNameExistTrueTest() {
         ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
         ICoach coach = leagueManagerFactory.createCoach();
         List<ICoach> coaches = new ArrayList<>();
-
         coachDB.loadLeagueCoaches(1, coaches);
-
-        Assert.assertFalse(coach.isCoachNameExist(coaches, ""));
         Assert.assertTrue(coach.isCoachNameExist(coaches, "joe doe"));
+    }
+
+    @Test
+    public void isCoachNameExistFalseTest() {
+        ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
+        ICoach coach = leagueManagerFactory.createCoach();
+        List<ICoach> coaches = new ArrayList<>();
+        coachDB.loadLeagueCoaches(1, coaches);
+        Assert.assertFalse(coach.isCoachNameExist(coaches, ""));
     }
 
     @Test
     public void saveTeamCoachTest() {
         ICoach coach = leagueManagerFactory.createCoach();
         ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
-
         coach.saveTeamCoach(coachDB);
-
         Assert.assertEquals(2, coach.getTeamID());
         Assert.assertEquals("Jonathan", coach.getCoachName());
     }
@@ -144,9 +150,7 @@ public class CoachTest {
     public void saveLeagueCoachTest() {
         ICoach coach = leagueManagerFactory.createCoach();
         ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
-
         coach.saveLeagueCoach(coachDB);
-
         Assert.assertEquals(-1, coach.getTeamID());
         Assert.assertEquals("Ronald", coach.getCoachName());
         Assert.assertEquals(4, coach.getCoachID());
@@ -156,11 +160,10 @@ public class CoachTest {
     public void loadTeamCoachTest() {
         ICoach coach = leagueManagerFactory.createCoach();
         ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
-
         coach.loadTeamCoach(coachDB, coach);
-
         Assert.assertEquals(1, coach.getTeamID());
         Assert.assertEquals("Joe Doe", coach.getCoachName());
         Assert.assertEquals(1, coach.getCoachID());
     }
+
 }

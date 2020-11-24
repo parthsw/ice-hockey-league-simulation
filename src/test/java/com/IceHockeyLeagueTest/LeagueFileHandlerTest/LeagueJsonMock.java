@@ -6,10 +6,9 @@ import org.json.JSONObject;
 import java.io.*;
 
 public class LeagueJsonMock {
-
     private static LeagueJsonMock leagueJsonMock;
 
-    public static LeagueJsonMock getInstance() {
+    public static LeagueJsonMock instance() {
         if (leagueJsonMock == null) {
             leagueJsonMock = new LeagueJsonMock();
         }
@@ -37,7 +36,6 @@ public class LeagueJsonMock {
     }
 
     public JSONObject validLeagueJson() {
-
         JSONArray players = new JSONArray();
         for (int i=0; i<20; i++) {
             JSONObject player = new JSONObject();
@@ -162,7 +160,6 @@ public class LeagueJsonMock {
     public JSONObject invalidLeagueJson() {
         JSONObject invalidLeagueJson = new JSONObject();
         invalidLeagueJson.put("leagueName", "");
-
         return invalidLeagueJson;
     }
 
@@ -172,10 +169,9 @@ public class LeagueJsonMock {
             writer.write(jsonObject.toString());
             writer.flush();
             return file.getPath();
-
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             return "";
         }
     }
+
 }
