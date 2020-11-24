@@ -4,6 +4,7 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
@@ -20,6 +21,7 @@ import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -193,6 +195,34 @@ public class PlayerCareerProgressionTest {
         stats.setPosition(PlayerPosition.GOALIE.toString());
         goalieTeamPlayer.setPlayerStats(stats);
         Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(goalieTeamPlayer, team, league));
+    }
+
+    @Test
+    public void performLeaguePlayersRetirementTeamPlayersTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        league.loadCompleteLeague(1);
+        IGamePlayConfig gamePlayConfig = league.getGamePlayConfig();
+        IAgingConfig agingConfig = gamePlayConfig.getAgingConfig();
+        league.setLeagueDate(CURRENT_DATE);
+
+        when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.01f);
+        playerCareerProgression.performLeaguePlayersRetirement(league);
+        Assert.assertEquals(185, league.getRetiredTeamPlayers().size());
+    }
+
+    @Test
+    public void performLeaguePlayersRetirementFreeAgentsTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        league.loadCompleteLeague(1);
+        IGamePlayConfig gamePlayConfig = league.getGamePlayConfig();
+        IAgingConfig agingConfig = gamePlayConfig.getAgingConfig();
+        List<IConference> emptyConferences = new ArrayList<>();
+        league.setConferences(emptyConferences);
+        league.setLeagueDate(CURRENT_DATE);
+
+        when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.01f);
+        playerCareerProgression.performLeaguePlayersRetirement(league);
+        Assert.assertEquals(3, league.getRetiredFreeAgents().size());
     }
 
     private IInjuryConfig createInjuryConfig() {

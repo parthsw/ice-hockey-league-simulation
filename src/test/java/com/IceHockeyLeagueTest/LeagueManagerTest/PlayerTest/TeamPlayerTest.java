@@ -6,6 +6,7 @@ import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
@@ -90,6 +91,16 @@ public class TeamPlayerTest {
 
         Assert.assertEquals(-1, freeAgent.getLeagueID());
         Assert.assertEquals("Fred One", freeAgent.getPlayerName());
+    }
+
+    @Test
+    public void generateTeamPlayerTest() {
+        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
+        IPlayer player = leagueManagerFactory.createPlayer();
+        player.setPlayerName("Rhea");
+
+        teamPlayer.generateTeamPlayer(player);
+        Assert.assertEquals("Rhea", teamPlayer.getPlayerName());
     }
 
     @Test

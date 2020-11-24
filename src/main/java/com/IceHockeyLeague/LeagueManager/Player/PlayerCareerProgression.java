@@ -139,9 +139,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
                         boolean isRetired = currentTeamPlayer.isRetired(this, gamePlayConfig.getAgingConfig(), league.getLeagueDate());
                         if(isRetired) {
                             this.handleTeamPlayerRetirement(currentTeamPlayer, team, league);
-                            if(l > 0) {
-                                l--;
-                            }
+                            l--;
                         }
                     }
                 }
@@ -154,9 +152,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
             boolean isRetired = currentFreeAgent.isRetired(this, gamePlayConfig.getAgingConfig(), league.getLeagueDate());
             if(isRetired) {
                 this.handleFreeAgentRetirement(currentFreeAgent, league);
-                if(i > 0) {
-                    i--;
-                }
+                i--;
             }
         }
     }

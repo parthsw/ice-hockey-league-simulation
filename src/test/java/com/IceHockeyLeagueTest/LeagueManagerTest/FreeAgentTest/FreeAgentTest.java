@@ -8,6 +8,7 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgentPersistence;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import org.junit.Assert;
@@ -77,6 +78,16 @@ public class FreeAgentTest {
         Assert.assertFalse(teamPlayer.isCaptain());
         Assert.assertEquals(-1, teamPlayer.getTeamID());
         Assert.assertEquals(-1, teamPlayer.getTeamPlayerID());
+    }
+
+    @Test
+    public void generateFreeAgentTest() {
+        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+        IPlayer player = leagueManagerFactory.createPlayer();
+        player.setPlayerName("Joey");
+
+        freeAgent.generateFreeAgent(player);
+        Assert.assertEquals("Joey", freeAgent.getPlayerName());
     }
 
     @Test
