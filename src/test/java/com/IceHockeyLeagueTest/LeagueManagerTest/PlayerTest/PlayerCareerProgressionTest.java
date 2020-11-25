@@ -171,7 +171,7 @@ public class PlayerCareerProgressionTest {
 
         playerCareerProgression.handleTeamPlayerRetirement(teamPlayer, team, league);
         Assert.assertEquals(20, teamPlayers.size());
-        Assert.assertEquals(1, league.getRetiredTeamPlayers().size());
+        Assert.assertEquals(2, league.getRetiredTeamPlayers().size());
         Assert.assertEquals(2, league.getFreeAgents().size());
     }
 
@@ -207,7 +207,7 @@ public class PlayerCareerProgressionTest {
 
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.01f);
         playerCareerProgression.performLeaguePlayersRetirement(league);
-        Assert.assertEquals(185, league.getRetiredTeamPlayers().size());
+        Assert.assertEquals(186, league.getRetiredTeamPlayers().size());
     }
 
     @Test
@@ -222,7 +222,21 @@ public class PlayerCareerProgressionTest {
 
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.01f);
         playerCareerProgression.performLeaguePlayersRetirement(league);
-        Assert.assertEquals(3, league.getRetiredFreeAgents().size());
+        Assert.assertEquals(4, league.getRetiredFreeAgents().size());
+    }
+
+    @Test
+    public void adjustLeaguePlayersAgeTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
+        leaguePersistence.loadLeague(1, league);
+
+        playerCareerProgression.adjustLeaguePlayersAge(league, LocalDate.of(2021, Month.SEPTEMBER, 20));
+
+        IFreeAgent firstAgent = league.getFreeAgents().get(1);
+        IPlayerAgeInfo firstAgentAgeInfo = firstAgent.getPlayerAgeInfo();
+        Assert.assertEquals(20, firstAgentAgeInfo.getAgeInYears());
+        Assert.assertEquals(319, firstAgentAgeInfo.getElapsedDaysFromLastBDay());
     }
 
     private IInjuryConfig createInjuryConfig() {

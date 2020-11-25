@@ -1,13 +1,14 @@
 package com.IceHockeyLeague.StateMachine;
 
+import com.AbstractAppFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
 import com.IceHockeyLeague.LeagueFileHandler.IJsonParser;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileReader;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
-import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
-import com.IceHockeyLeague.LeagueManager.Player.IRandomPlayersGenerator;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.States.*;
 
@@ -17,6 +18,7 @@ public class StateMachineFactory implements IStateMachineFactory {
     private final ILeagueFileReader leagueFileReader;
     private final IJsonParser jsonParser;
     private final ILeagueFileValidator leagueFileValidator;
+    private final ILeagueManagerFactory leagueManagerFactory;
 
     public StateMachineFactory(
             IAppInput appInput,
@@ -29,6 +31,7 @@ public class StateMachineFactory implements IStateMachineFactory {
         this.leagueFileReader = leagueFileReader;
         this.jsonParser = jsonParser;
         this.leagueFileValidator = leagueFileValidator;
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
     @Override
@@ -102,13 +105,15 @@ public class StateMachineFactory implements IStateMachineFactory {
     }
 
     @Override
-    public AbstractState createDraftingState(IRandomPlayersGenerator randomPlayersGenerator, IDraftManager draftManager) {
-        return new DraftingState(randomPlayersGenerator, draftManager);
+    public AbstractState createDraftingState() {
+        IRandomChance randomChance = leagueManagerFactory.createRandomChance();
+        return new DraftingState(leagueManagerFactory.createRandomPlayersGenerator(randomChance), leagueManagerFactory.createDraftManager());
     }
 
     @Override
     public AbstractState createAdvanceToNextSeasonState() {
-        return new AdvanceToNextSeasonState(appOutput);
+        IRandomChance randomChance = leagueManagerFactory.createRandomChance();
+        return new AdvanceToNextSeasonState(appOutput, leagueManagerFactory.createPlayerCareerProgression(randomChance));
     }
 
     @Override

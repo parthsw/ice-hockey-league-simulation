@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class PlayerCareerProgression implements IPlayerCareerProgression {
     private final IRandomChance randomChanceGenerator;
 
@@ -154,6 +156,34 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
                 this.handleFreeAgentRetirement(currentFreeAgent, league);
                 i--;
             }
+        }
+    }
+
+    @Override
+    public void adjustLeaguePlayersAge(ILeague league, LocalDate newDate) {
+        LocalDate currentLeagueDate = league.getLeagueDate();
+        int numberOfDaysElapsed = (int)DAYS.between(currentLeagueDate, newDate);
+
+        for(IConference conference : league.getConferences()) {
+            for(IDivision division : conference.getDivisions()) {
+                for(ITeam team : division.getTeams()) {
+                    for(ITeamPlayer teamPlayer : team.getPlayers()) {
+                        teamPlayer.agePlayerByDays(numberOfDaysElapsed, currentLeagueDate);
+                    }
+                }
+            }
+        }
+
+        for(IFreeAgent freeAgent : league.getFreeAgents()) {
+            freeAgent.agePlayerByDays(numberOfDaysElapsed, currentLeagueDate);
+        }
+
+        for(ITeamPlayer retiredTeamPlayer : league.getRetiredTeamPlayers()) {
+            retiredTeamPlayer.agePlayerByDays(numberOfDaysElapsed, currentLeagueDate);
+        }
+
+        for(IFreeAgent retiredFreeAgent : league.getRetiredFreeAgents()) {
+            retiredFreeAgent.agePlayerByDays(numberOfDaysElapsed, currentLeagueDate);
         }
     }
 

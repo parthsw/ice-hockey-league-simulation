@@ -25,8 +25,9 @@ public class GetBestPlayersFromAllTeamsTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setTradingFactory(appFactory.createTradingFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        tradingFactory = appFactory.createTradingFactory();
+        tradingFactory = AbstractAppFactory.getTradingFactory();
     }
 
     @Test

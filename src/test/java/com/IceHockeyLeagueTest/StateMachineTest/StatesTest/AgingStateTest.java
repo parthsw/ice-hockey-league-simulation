@@ -45,7 +45,7 @@ public class AgingStateTest {
 
         Assert.assertTrue(agingState.onRun() instanceof AdvanceToNextSeasonState);
         Assert.assertEquals(19, league.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerAgeInfo().getAgeInYears());
-        Assert.assertEquals(331, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
+        Assert.assertEquals(333, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
     }
 
     @Test
@@ -60,6 +60,6 @@ public class AgingStateTest {
 
         Assert.assertTrue(agingState.onRun() instanceof PersistState);
         Assert.assertEquals(19, league.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerAgeInfo().getAgeInYears());
-        Assert.assertEquals(331, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
+        Assert.assertEquals(333, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
     }
 }
