@@ -6,6 +6,7 @@ import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
 import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import org.junit.Assert;
@@ -64,8 +65,8 @@ public class StandingSystemTest {
         standingSystem.updateStatsForWinningTeam(standing.getConference(), standing.getDivision(), standing.getTeam());
 
         Assert.assertEquals(8, standing.getGamesPlayed());
-        Assert.assertEquals(2, standing.getGamesWon());
-        Assert.assertEquals(4, standing.getPoints());
+        Assert.assertEquals(5, standing.getGamesWon());
+        Assert.assertEquals(10, standing.getPoints());
     }
 
     @Test
@@ -78,8 +79,8 @@ public class StandingSystemTest {
         standingSystem.updateStatsForLosingTeam(standing.getConference(), standing.getDivision(), standing.getTeam());
 
         Assert.assertEquals(8, standing.getGamesPlayed());
-        Assert.assertEquals(1, standing.getGamesWon());
-        Assert.assertEquals(2, standing.getPoints());
+        Assert.assertEquals(4, standing.getGamesWon());
+        Assert.assertEquals(8, standing.getPoints());
     }
 
     @Test
@@ -92,8 +93,8 @@ public class StandingSystemTest {
         List<IStanding> divisionStandings = standingSystem.getStandingsInDivision(standing.getDivision());
 
         Assert.assertEquals(2, divisionStandings.size());
-        Assert.assertEquals(standings.get(0), divisionStandings.get(1));
-        Assert.assertEquals(standings.get(1), divisionStandings.get(0));
+        Assert.assertEquals(standings.get(1), divisionStandings.get(1));
+        Assert.assertEquals(standings.get(0), divisionStandings.get(0));
     }
 
     @Test
@@ -106,10 +107,10 @@ public class StandingSystemTest {
         List<IStanding> conferenceStandings = standingSystem.getStandingsInConference(standing.getConference());
 
         Assert.assertEquals(4, conferenceStandings.size());
-        Assert.assertEquals(standings.get(0), conferenceStandings.get(3));
-        Assert.assertEquals(standings.get(1), conferenceStandings.get(0));
-        Assert.assertEquals(standings.get(2), conferenceStandings.get(2));
-        Assert.assertEquals(standings.get(3), conferenceStandings.get(1));
+        Assert.assertEquals(standings.get(0), conferenceStandings.get(0));
+        Assert.assertEquals(standings.get(1), conferenceStandings.get(1));
+        Assert.assertEquals(standings.get(2), conferenceStandings.get(3));
+        Assert.assertEquals(standings.get(3), conferenceStandings.get(2));
     }
 
     @Test
@@ -118,7 +119,7 @@ public class StandingSystemTest {
         List<IStanding> standings = leagueStandingSystem.getStandings();
         standingSystem.setStandings(standings);
 
-        IStanding standing = standings.get(7);
+        IStanding standing = standings.get(4);
         IStanding topStandingInConference = standingSystem.getTopStandingInConference(standing.getConference());
 
         Assert.assertEquals(standing, topStandingInConference);
@@ -129,12 +130,23 @@ public class StandingSystemTest {
         IStandingSystem standingSystem = leagueManagerFactory.createStandingSystem();
         List<IStanding> standings = leagueStandingSystem.getStandings();
         standingSystem.setStandings(standings);
-        Assert.assertEquals(2, standings.get(0).getPoints());
+        standingSystem.getRegularSeasonStandingsInReverse();
+        Assert.assertEquals(0, standings.get(0).getPoints());
     }
 
     @Test
     public void getPlayOffSeasonStandingsInReverseTest() {
         IStandingSystem standingSystem = leagueManagerFactory.createStandingSystem();
+        List<IStanding> playOffStandingsInReverse = standingSystem.getPlayOffSeasonStandingsInReverse(league.getScheduleSystem().getPlayoffSchedule());
+        Assert.assertEquals(4, playOffStandingsInReverse.size());
+    }
+
+    @Test
+    public void getPlayOffSeasonStandingsInReverseSecondTeamTest() {
+        IStandingSystem standingSystem = leagueManagerFactory.createStandingSystem();
+        List<ISchedule> playOffSchedule = league.getScheduleSystem().getPlayoffSchedule();
+        ISchedule lastSchedule = playOffSchedule.get(2);
+        lastSchedule.setWinningTeam(lastSchedule.getSecondTeam());
         List<IStanding> playOffStandingsInReverse = standingSystem.getPlayOffSeasonStandingsInReverse(league.getScheduleSystem().getPlayoffSchedule());
         Assert.assertEquals(4, playOffStandingsInReverse.size());
     }

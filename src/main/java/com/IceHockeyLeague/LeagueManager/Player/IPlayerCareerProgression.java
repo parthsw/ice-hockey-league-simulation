@@ -20,4 +20,6 @@ public interface IPlayerCareerProgression {
     boolean handleTeamPlayerRetirement(ITeamPlayer teamPlayer, ITeam team, ILeague league);
 
     void performLeaguePlayersRetirement(ILeague league);
+
+    void adjustLeaguePlayersAge(ILeague league, LocalDate newDate);
 }

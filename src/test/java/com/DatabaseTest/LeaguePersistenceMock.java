@@ -4,10 +4,13 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
+import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -48,10 +51,12 @@ public class LeaguePersistenceMock implements ILeaguePersistence {
     public boolean loadLeague(int leagueId, ILeague league) {
         LeagueJsonMock leagueJsonMock = LeagueJsonMock.instance();
         ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
+        ITeamPlayer retiredTeamPlayer = leagueManagerFactory.createTeamPlayer();
         ILeague createdLeague = leagueCreator.createLeague(leagueJsonMock.validLeagueJson());
 
         league.setLeagueName(createdLeague.getLeagueName());
         league.setLeagueID(leagueId);
+        league.setLeagueDate(LocalDate.of(2020, Month.SEPTEMBER, 30));
         league.setGamePlayConfig(createdLeague.getGamePlayConfig());
         league.setConferences(createdLeague.getConferences());
         league.setFreeAgents(createdLeague.getFreeAgents());
@@ -59,6 +64,18 @@ public class LeaguePersistenceMock implements ILeaguePersistence {
         league.setCoaches(createdLeague.getCoaches());
         league.getStandingSystem().setStandings(mockStandings(league));
         league.getScheduleSystem().setPlayoffSchedule(mockSchedules(league));
+        league.getScheduleSystem().setRegularSeasonStartDate(LocalDate.of(2020, Month.SEPTEMBER, 30));
+        league.setDraftPicks(mockDrafting(league.getStandingSystem().getStandings()));
+        IFreeAgent retiredAgent = createdLeague.getFreeAgents().get(0);
+        retiredAgent.setRetiredStatus(true);
+        retiredAgent.setRetirementDate(league.getLeagueDate());
+
+        retiredAgent.convertToTeamPlayer(retiredTeamPlayer);
+        retiredTeamPlayer.setRetiredStatus(true);
+        retiredTeamPlayer.setRetirementDate(league.getLeagueDate());
+
+        league.addRetiredFreeAgent(retiredAgent);
+        league.addRetiredTeamPlayer(retiredTeamPlayer);
         return true;
     }
 
@@ -101,8 +118,8 @@ public class LeaguePersistenceMock implements ILeaguePersistence {
         standing1.setDivision(conference1Division1);
         standing1.setTeam(conference1Division1Team1);
         standing1.setGamesPlayed(7);
-        standing1.setGamesWon(1);
-        standing1.setPoints(2);
+        standing1.setGamesWon(4);
+        standing1.setPoints(8);
 
         IStanding standing2 = leagueManagerFactory.createStanding();
         standing2.setConference(conference1);
@@ -117,16 +134,16 @@ public class LeaguePersistenceMock implements ILeaguePersistence {
         standing3.setDivision(conference1Division2);
         standing3.setTeam(conference1Division2Team1);
         standing3.setGamesPlayed(7);
-        standing3.setGamesWon(2);
-        standing3.setPoints(4);
+        standing3.setGamesWon(0);
+        standing3.setPoints(0);
 
         IStanding standing4 = leagueManagerFactory.createStanding();
         standing4.setConference(conference1);
         standing4.setDivision(conference1Division2);
         standing4.setTeam(conference1Division2Team2);
         standing4.setGamesPlayed(6);
-        standing4.setGamesWon(2);
-        standing4.setPoints(4);
+        standing4.setGamesWon(1);
+        standing4.setPoints(2);
 
         IStanding standing5 = leagueManagerFactory.createStanding();
         standing5.setConference(conference2);
@@ -157,8 +174,8 @@ public class LeaguePersistenceMock implements ILeaguePersistence {
         standing8.setDivision(conference2Division2);
         standing8.setTeam(conference2Division2Team2);
         standing8.setGamesPlayed(7);
-        standing8.setGamesWon(6);
-        standing8.setPoints(12);
+        standing8.setGamesWon(2);
+        standing8.setPoints(4);
 
         List<IStanding> standings = new ArrayList<>();
         standings.add(standing1);
@@ -233,4 +250,16 @@ public class LeaguePersistenceMock implements ILeaguePersistence {
 
         return mockSchedules;
     }
+
+    private List<IDraftPick> mockDrafting(List<IStanding> standings) {
+        List<IDraftPick> draftPicks = new ArrayList<>();
+
+        ITeam teamTradingAway = standings.get(0).getTeam();
+        ITeam teamReceiving = standings.get(1).getTeam();
+        IDraftPick simplePick = leagueManagerFactory.createDraftPick(teamTradingAway, teamReceiving, 1, leagueManagerFactory.createTeamPlayer());
+        draftPicks.add(simplePick);
+
+        return draftPicks;
+    }
+
 }
