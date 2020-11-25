@@ -376,7 +376,22 @@ public class League implements ILeague {
     @Override
     public String getUserCreatedTeam() {
         String teamName = "";
-
+        List<IConference> conferences;
+        List<IDivision> divisions;
+        List<ITeam> teams;
+        conferences = this.getConferences();
+        for(IConference c : conferences){
+            divisions = c.getDivisions();
+            for(IDivision d : divisions){
+                teams = d.getTeams();
+                for(ITeam t : teams){
+                    if(t.getIsUserCreated()){
+                        teamName = t.getTeamName();
+                        break;
+                    }
+                }
+            }
+        }
         return teamName;
     }
 
