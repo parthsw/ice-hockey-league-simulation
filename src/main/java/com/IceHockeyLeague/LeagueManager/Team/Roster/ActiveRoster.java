@@ -1,4 +1,4 @@
-package com.IceHockeyLeague.LeagueManager.Team.TeamRoster;
+package com.IceHockeyLeague.LeagueManager.Team.Roster;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 
