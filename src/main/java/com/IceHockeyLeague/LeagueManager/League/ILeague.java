@@ -70,8 +70,5 @@ public interface ILeague {
     boolean saveLeague();
     boolean loadLeague();
     String getUserCreatedTeam();
-   // boolean loadConferences(IConferencePersistence conferenceDB, List<IConference> conferences);
-    //boolean loadLeagueManagers(IManagerPersistence managerDB, List<IManager> managers);
-    //boolean loadLeagueCoaches(ICoachPersistence coachDB, List<ICoach> coaches);
-    //boolean loadLeagueFreeAgents(IFreeAgentPersistence freeAgentDB, List<IFreeAgent> freeAgents);
+
 }

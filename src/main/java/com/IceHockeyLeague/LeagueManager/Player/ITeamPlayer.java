@@ -15,7 +15,5 @@ public interface ITeamPlayer extends IPlayer {
 
     IFreeAgent convertToFreeAgent(IFreeAgent freeAgent);
 
-   // boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB);
-
     boolean handleTeamPlayerRetirement(IPlayerCareerProgression playerCareerProgression, ITeam team, ILeague league);
 }

@@ -72,16 +72,6 @@ public class Conference implements IConference {
         this.divisions = divisions;
     }
 
-   /* @Override
-    public boolean saveConference(IConferencePersistence conferenceDB) {
-        return conferenceDB.saveConference(this);
-    }
-
-    @Override
-    public boolean loadDivisions(IDivisionPersistence divisionDB, List<IDivision> divisions) {
-        return divisionDB.loadDivisions(conferenceID, divisions);
-    }*/
-
     @Override
     public boolean isNullOrEmpty(String conferenceName) {
         return (conferenceName == null || conferenceName.equals(""));

@@ -20,9 +20,6 @@ public interface IConference {
     List<IDivision> getDivisions();
     void setDivisions(List<IDivision> divisions);
 
-//    boolean saveConference(IConferencePersistence conferenceDB);
-  //  boolean loadDivisions(IDivisionPersistence divisionDB, List<IDivision> divisions);
-
     boolean isNullOrEmpty(String conferenceName);
 
     boolean isConferenceNameExist(List<IConference> conferences,String conferenceName);

@@ -369,7 +369,6 @@ public class League implements ILeague {
 
     @Override
     public boolean loadLeague() {
-        //return leagueDB.loadLeague(leagueID, this);
         return true;
     }
 
@@ -394,24 +393,4 @@ public class League implements ILeague {
         }
         return teamName;
     }
-
-    /* @Override
-    public boolean loadConferences(IConferencePersistence conferenceDB, List<IConference> conferences) {
-        return conferenceDB.loadConferences(leagueID, conferences);
-    }
-
-    @Override
-    public boolean loadLeagueManagers(IManagerPersistence managerDB, List<IManager> managers) {
-        return managerDB.loadLeagueManagers(leagueID, managers);
-    }
-
-    @Override
-    public boolean loadLeagueCoaches(ICoachPersistence coachDB, List<ICoach> coaches) {
-        return coachDB.loadLeagueCoaches(leagueID, coaches);
-    }
-
-    @Override
-    public boolean loadLeagueFreeAgents(IFreeAgentPersistence freeAgentDB, List<IFreeAgent> freeAgents) {
-        return freeAgentDB.loadFreeAgents(leagueID, freeAgents);
-    }*/
 }

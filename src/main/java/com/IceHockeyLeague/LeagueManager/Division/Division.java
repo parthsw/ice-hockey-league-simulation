@@ -72,16 +72,6 @@ public class Division implements IDivision {
         this.teams = teams;
     }
 
-  /*  @Override
-    public boolean saveDivision(IDivisionPersistence divisionDB) {
-        return divisionDB.saveDivision(this);
-    }
-
-    @Override
-    public boolean loadTeams(ITeamPersistence teamDB, List<ITeam> teams) {
-        return teamDB.loadTeams(divisionID, teams);
-    }*/
-
     @Override
     public boolean isNullOrEmpty(String divisionName) {
         return (divisionName == null || divisionName.equals(""));
