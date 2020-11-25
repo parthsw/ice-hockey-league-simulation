@@ -15,7 +15,6 @@ public class PersistState extends AbstractState {
     public AbstractState onRun() {
         AbstractState nextState;
         ILeague league = getLeague();
-
         if (league.getScheduleSystem().isStanleyCupWinnerDetermined()) {
             league.saveCompleteLeague();
             nextState = null;
@@ -23,7 +22,6 @@ public class PersistState extends AbstractState {
         else {
             nextState = stateMachineFactory.createAdvanceTimeState();
         }
-
         return nextState;
     }
 }

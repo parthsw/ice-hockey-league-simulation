@@ -59,6 +59,8 @@ public class LoadTeamState extends AbstractState {
           //  ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
             List<ILeague> leagueList = new ArrayList<>();
        //     if(team.checkIfTeamNameExists(teamDB, teamName, leagueList)) {
+
+            //if the name of the file with team name exists or not
                 if(leagueList.size() == 0) {
                     appOutput.displayError(TEAM_NOT_EXIST);
                     return null;

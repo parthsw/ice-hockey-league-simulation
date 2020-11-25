@@ -11,7 +11,7 @@ public class Serialize implements ISerialize {
     private String jsonOutput;
 
     @Override
-    public String serializeLeagueObject(ILeague league) {
+    public String serializeLeagueObject(ILeague league, String fileName) {
         Gson gson = new Gson();
         jsonOutput = gson.toJson(league);
         FileWriter myWriter = null;

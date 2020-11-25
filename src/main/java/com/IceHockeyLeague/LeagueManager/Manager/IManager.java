@@ -15,9 +15,9 @@ public interface IManager {
     int getLeagueID();
     void setLeagueID(int id);
 
-    boolean saveTeamManager(IManagerPersistence managerDB);
-    boolean saveLeagueManager(IManagerPersistence managerDB);
-    boolean loadTeamManager(IManagerPersistence managerDB, IManager manager);
+    //boolean saveTeamManager(IManagerPersistence managerDB);
+    //boolean saveLeagueManager(IManagerPersistence managerDB);
+    //boolean loadTeamManager(IManagerPersistence managerDB, IManager manager);
 
     boolean isNullOrEmpty(String managerName);
     boolean isManagerNameExist(List<IManager> managers, String managerName);

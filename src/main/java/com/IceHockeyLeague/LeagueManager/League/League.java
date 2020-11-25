@@ -1,22 +1,24 @@
 package com.IceHockeyLeague.LeagueManager.League;
 
 import com.AbstractAppFactory;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
+//import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
+//import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
+//import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
+//import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
 import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerialize;
+import com.IceHockeyLeague.SerializeDeserializeLeagueObject.Serialize;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,8 +26,6 @@ import java.util.List;
 
 public class League implements ILeague {
     private ILeagueManagerFactory leagueManagerFactory;
-    private IDatabaseFactory databaseFactory;
-
     private int leagueID;
     private String leagueName;
     private LocalDate leagueDate;
@@ -53,7 +53,6 @@ public class League implements ILeague {
         this.retiredFreeAgents = new ArrayList<>();
         this.retiredTeamPlayers = new ArrayList<>();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        databaseFactory = AbstractAppFactory.getDatabaseFactory();
         this.scheduleSystem = leagueManagerFactory.createScheduleSystem();
         this.standingSystem = leagueManagerFactory.createStandingSystem();
     }
@@ -243,9 +242,9 @@ public class League implements ILeague {
 
     @Override
     public boolean saveCompleteLeague() {
-        this.saveLeague(databaseFactory.createLeaguePersistence());
+        this.saveLeague();
 
-        gamePlayConfig.setLeagueID(leagueID);
+       /* gamePlayConfig.setLeagueID(leagueID);
         gamePlayConfig.saveGamePlayConfig(databaseFactory.createGamePlayConfigPersistence());
 
         for(IConference conference: conferences) {
@@ -291,14 +290,14 @@ public class League implements ILeague {
         for(ICoach coach: coaches) {
             coach.setLeagueID(leagueID);
             coach.saveLeagueCoach(databaseFactory.createCoachPersistence());
-        }
+        }*/
 
         return true;
     }
 
     @Override
     public boolean loadCompleteLeague(int id) {
-        leagueID = id;
+    /*    leagueID = id;
         this.loadLeague(databaseFactory.createLeaguePersistence());
 
         List<IConference> conferences = new ArrayList<>();
@@ -356,21 +355,32 @@ public class League implements ILeague {
         gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setLeagueID(leagueID);
         gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
-
+*/
         return true;
     }
 
     @Override
-    public boolean saveLeague(ILeaguePersistence leagueDB) {
-        return leagueDB.saveLeague(this);
+    public boolean saveLeague() {
+        ISerialize s = new Serialize();
+        String fileName = getUserCreatedTeam();
+        s.serializeLeagueObject(this,fileName);
+        return true;
     }
 
     @Override
-    public boolean loadLeague(ILeaguePersistence leagueDB) {
-        return leagueDB.loadLeague(leagueID, this);
+    public boolean loadLeague() {
+        //return leagueDB.loadLeague(leagueID, this);
+        return true;
     }
 
     @Override
+    public String getUserCreatedTeam() {
+        String teamName = "";
+
+        return teamName;
+    }
+
+    /* @Override
     public boolean loadConferences(IConferencePersistence conferenceDB, List<IConference> conferences) {
         return conferenceDB.loadConferences(leagueID, conferences);
     }
@@ -388,5 +398,5 @@ public class League implements ILeague {
     @Override
     public boolean loadLeagueFreeAgents(IFreeAgentPersistence freeAgentDB, List<IFreeAgent> freeAgents) {
         return freeAgentDB.loadFreeAgents(leagueID, freeAgents);
-    }
+    }*/
 }

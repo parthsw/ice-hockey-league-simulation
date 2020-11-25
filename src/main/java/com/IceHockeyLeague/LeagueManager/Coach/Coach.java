@@ -95,9 +95,9 @@ public class Coach implements ICoach {
         return (coachName == null || coachName.equals(""));
     }
 
-    @Override
+ /*  @Override
     public boolean saveTeamCoach(ICoachPersistence coachDB) {
-        return coachDB.saveTeamCoach(this);
+       return coachDB.saveTeamCoach(this);
     }
 
     @Override
@@ -108,5 +108,5 @@ public class Coach implements ICoach {
     @Override
     public boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach) {
         return coachDB.loadTeamCoach(teamID, this);
-    }
+    }*/
 }

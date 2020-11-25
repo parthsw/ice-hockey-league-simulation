@@ -58,7 +58,7 @@ public class Manager implements IManager {
         leagueID = id;
     }
 
-    @Override
+ /*   @Override
     public boolean saveTeamManager(IManagerPersistence managerDB) {
         return managerDB.saveTeamManager(this);
     }
@@ -71,7 +71,7 @@ public class Manager implements IManager {
     @Override
     public boolean loadTeamManager(IManagerPersistence managerDB, IManager manager) {
         return managerDB.loadTeamManager( teamID,this);
-    }
+    }*/
 
     @Override
     public boolean isNullOrEmpty(String managerName) {

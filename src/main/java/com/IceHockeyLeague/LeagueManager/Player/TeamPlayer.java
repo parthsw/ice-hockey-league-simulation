@@ -55,10 +55,10 @@ public class TeamPlayer extends Player implements ITeamPlayer {
         return freeAgent;
     }
 
-    @Override
+   /* @Override
     public boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB) {
         return teamPlayerDB.saveTeamPlayer(this);
-    }
+    }*/
 
     @Override
     public boolean handleTeamPlayerRetirement(IPlayerCareerProgression playerCareerProgression, ITeam team, ILeague league) {

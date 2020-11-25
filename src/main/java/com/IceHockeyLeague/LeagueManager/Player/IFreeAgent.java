@@ -16,7 +16,7 @@ public interface IFreeAgent extends IPlayer {
 
     IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgentList, String position);
 
-    boolean saveFreeAgent(IFreeAgentPersistence freeAgentDB);
+   // boolean saveFreeAgent(IFreeAgentPersistence freeAgentDB);
 
-    boolean handleFreeAgentRetirement(IPlayerCareerProgression playerCareerProgression, ILeague league);
+    //boolean handleFreeAgentRetirement(IPlayerCareerProgression playerCareerProgression, ILeague league);
 }
