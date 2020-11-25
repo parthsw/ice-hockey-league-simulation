@@ -2,7 +2,7 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.GamePlayConfigTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import org.junit.Assert;
@@ -11,14 +11,14 @@ import org.junit.Test;
 
 public class GamePlayConfigTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+    //private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+        //databaseFactory = appFactory.createDatabaseFactory();
     }
 
     @Test
@@ -150,7 +150,7 @@ public class GamePlayConfigTest {
     public void saveGamePlayConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setLeagueID(2);
-        gamePlayConfig.saveGamePlayConfig(databaseFactory.createGamePlayConfigPersistence());
+       // gamePlayConfig.saveGamePlayConfig(databaseFactory.createGamePlayConfigPersistence());
         Assert.assertEquals(2, gamePlayConfig.getGamePlayConfigID());
         Assert.assertEquals(2, gamePlayConfig.getLeagueID());
     }
@@ -159,7 +159,7 @@ public class GamePlayConfigTest {
     public void loadGamePlayConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setLeagueID(1);
-        gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
+       // gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
 
         Assert.assertEquals(1, gamePlayConfig.getGamePlayConfigID());
         Assert.assertEquals(1, gamePlayConfig.getLeagueID());

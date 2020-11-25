@@ -2,16 +2,16 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.TeamTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
+//import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
+//import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
+//import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -23,14 +23,14 @@ import java.util.Random;
 
 public class TeamTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+  //  private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+    //    databaseFactory = appFactory.createDatabaseFactory();
     }
 
     @Test
@@ -169,9 +169,9 @@ public class TeamTest {
     @Test
     public void removePlayerTest() {
         ITeam team = leagueManagerFactory.createTeam();
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
+      //  ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
+        //teamPlayerDB.loadTeamPlayers(1, teamPlayers);
         team.setPlayers(teamPlayers);
 
         team.removePlayer(teamPlayers.get(0));
@@ -189,8 +189,8 @@ public class TeamTest {
         ITeam team = leagueManagerFactory.createTeam();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
 
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
-        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
+     //   ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
+       // teamPlayerDB.loadTeamPlayers(1, teamPlayers);
 
         team.setPlayers(teamPlayers);
         Assert.assertEquals(2, team.getPlayers().size());
@@ -202,8 +202,8 @@ public class TeamTest {
         ITeam team = leagueManagerFactory.createTeam();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
 
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
-        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
+     //   ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
+       // teamPlayerDB.loadTeamPlayers(1, teamPlayers);
 
         team.setPlayers(teamPlayers);
         Assert.assertEquals(2, team.getPlayers().size());
@@ -214,8 +214,8 @@ public class TeamTest {
         ITeam team = leagueManagerFactory.createTeam();
         ICoach coach = leagueManagerFactory.createCoach();
 
-        ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
-        coachDB.loadTeamCoach(1, coach);
+      //  ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
+        //coachDB.loadTeamCoach(1, coach);
 
         Assert.assertNull(team.getCoach());
         team.setCoach(coach);
@@ -227,8 +227,8 @@ public class TeamTest {
         ITeam team = leagueManagerFactory.createTeam();
         ICoach coach = leagueManagerFactory.createCoach();
 
-        ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
-        coachDB.loadTeamCoach(1, coach);
+    //    ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
+      //  coachDB.loadTeamCoach(1, coach);
 
         Assert.assertNull(team.getCoach());
         team.setCoach(coach);
@@ -240,8 +240,8 @@ public class TeamTest {
         ITeam team = leagueManagerFactory.createTeam();
         IManager manager = leagueManagerFactory.createManager();
 
-        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
-        managerDB.loadTeamManager(1, manager);
+   //     IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
+     //   managerDB.loadTeamManager(1, manager);
 
         Assert.assertNull(team.getManager());
         team.setManager(manager);
@@ -253,8 +253,8 @@ public class TeamTest {
         ITeam team = leagueManagerFactory.createTeam();
         IManager manager = leagueManagerFactory.createManager();
 
-        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
-        managerDB.loadTeamManager(1, manager);
+    //    IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
+      //  managerDB.loadTeamManager(1, manager);
 
         Assert.assertNull(team.getManager());
         team.setManager(manager);
@@ -292,8 +292,8 @@ public class TeamTest {
     @Test
     public void saveTeamTest() {
         ITeam team = leagueManagerFactory.createTeam();
-        ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
-        team.saveTeam(teamDB);
+     //   ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
+       // team.saveTeam(teamDB);
 
         Assert.assertEquals("Halifax", team.getTeamName());
         Assert.assertEquals(89.5f, team.getTeamStrength(), 0.0);
@@ -301,21 +301,21 @@ public class TeamTest {
 
     @Test
     public void loadPlayersTest() {
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
+     //   ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
         ITeam team = leagueManagerFactory.createTeam();
 
-        Assert.assertTrue(team.loadPlayers(teamPlayerDB, teamPlayers));
+      //  Assert.assertTrue(team.loadPlayers(teamPlayerDB, teamPlayers));
         Assert.assertEquals(2, teamPlayers.size());
     }
 
     @Test
     public void checkIfTeamNameExistsTest() {
-        ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
+        //ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
         List<ILeague> leagues = new ArrayList<>();
         ITeam team = leagueManagerFactory.createTeam();
 
-        team.checkIfTeamNameExists(teamDB, "Halifax", leagues);
+        //team.checkIfTeamNameExists(teamDB, "Halifax", leagues);
         Assert.assertEquals(1, leagues.size());
     }
 
@@ -329,9 +329,9 @@ public class TeamTest {
 
     @Test
     public void isTeamNameExistTest() {
-        ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
+    //    ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
         List<ITeam> teams = new ArrayList<>();
-        teamDB.loadTeams(1, teams);
+      //  teamDB.loadTeams(1, teams);
         ITeam team = leagueManagerFactory.createTeam();
         Assert.assertTrue(team.isTeamNameExist(teams,"Boston"));
         Assert.assertFalse(team.isTeamNameExist(teams,"Halifax"));
@@ -342,10 +342,10 @@ public class TeamTest {
         ITeamStrengthCalculator teamStrength = leagueManagerFactory.createTeamStrengthCalculator();
         ITeam team = leagueManagerFactory.createTeam();
 
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
+      //  ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
 
-        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
+        //teamPlayerDB.loadTeamPlayers(1, teamPlayers);
         team.setPlayers(teamPlayers);
 
         Assert.assertEquals(46.5f, team.calculateTeamStrength(teamStrength), 0.0);

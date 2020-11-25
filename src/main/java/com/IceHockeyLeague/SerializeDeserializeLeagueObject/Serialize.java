@@ -14,10 +14,11 @@ public class Serialize implements ISerialize {
     public String serializeLeagueObject(ILeague league, String fileName) {
         Gson gson = new Gson();
         jsonOutput = gson.toJson(league);
+        String file = fileName+".json";
         FileWriter myWriter = null;
         try{
-            myWriter = new FileWriter("jsonOutput");
-            File obj = new File("jsonOutput");
+            myWriter = new FileWriter(file);
+            File obj = new File(file);
             path = obj.getAbsolutePath();
             myWriter.write(jsonOutput);
             myWriter.flush();

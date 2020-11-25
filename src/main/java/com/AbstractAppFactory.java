@@ -1,7 +1,7 @@
 package com;
 
 import com.IO.IIOFactory;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializeLeagueObjectFactory;
@@ -12,7 +12,7 @@ public abstract class AbstractAppFactory {
 
     private static AbstractAppFactory appFactory;
     private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
-    private static IDatabaseFactory databaseFactory;
+    //private static IDatabaseFactory databaseFactory;
     private static IIOFactory ioFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
     private static ISerializeDeserializeLeagueObjectFactory leagueSerializationFactory;
@@ -20,7 +20,7 @@ public abstract class AbstractAppFactory {
     private static IStateMachineFactory stateMachineFactory;
 
     public abstract ILeagueFileHandlerFactory createLeagueFileHandlerFactory();
-    public abstract IDatabaseFactory createDatabaseFactory();
+    //public abstract IDatabaseFactory createDatabaseFactory();
     public abstract IIOFactory createIOFactory();
     public abstract ILeagueManagerFactory createLeagueManagerFactory();
     public abstract ISerializeDeserializeLeagueObjectFactory createSerializeDeserializeLeagueObjectFactory();
@@ -43,13 +43,13 @@ public abstract class AbstractAppFactory {
         AbstractAppFactory.leagueFileHandlerFactory = leagueFileHandlerFactory;
     }
 
-    public static IDatabaseFactory getDatabaseFactory() {
+  /*  public static IDatabaseFactory getDatabaseFactory() {
         return databaseFactory;
     }
 
     public static void setDatabaseFactory(IDatabaseFactory databaseFactory) {
         AbstractAppFactory.databaseFactory = databaseFactory;
-    }
+    }*/
 
     public static IIOFactory getIOFactory() {
         return ioFactory;

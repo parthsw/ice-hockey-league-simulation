@@ -5,7 +5,7 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+//import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 
 import java.util.List;
 
@@ -48,11 +48,11 @@ public interface ITeam {
 
     boolean isTeamNameExist(List<ITeam> teams, String teamName);
 
-    boolean saveTeam(ITeamPersistence teamDB);
+    //boolean saveTeam(ITeamPersistence teamDB);
 
-    boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
+    //boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
 
-    boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues);
+    //boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues);
 
     float calculateTeamStrength(ITeamStrengthCalculator teamStrengthCalculator);
 

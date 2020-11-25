@@ -1,7 +1,7 @@
 package com;
 
-import com.Database.IDatabaseFactory;
-import com.DatabaseTest.DatabaseFactoryTest;
+//import com.Database.IDatabaseFactory;
+//import com.DatabaseTest.DatabaseFactoryTest;
 import com.IO.IIOFactory;
 import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
@@ -22,10 +22,10 @@ public class AppFactoryTest extends AbstractAppFactory {
         return new LeagueFileHandlerFactory();
     }
 
-    @Override
+  /*  @Override
     public IDatabaseFactory createDatabaseFactory() {
         return new DatabaseFactoryTest();
-    }
+    }*/
 
     @Override
     public IIOFactory createIOFactory() {

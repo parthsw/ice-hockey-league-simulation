@@ -2,12 +2,12 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.ConferenceTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
+//import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+//import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,14 +17,14 @@ import java.util.List;
 
 public class ConferenceTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+  //  private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+      //  databaseFactory = appFactory.createDatabaseFactory();
     }
 
     @Test
@@ -95,9 +95,9 @@ public class ConferenceTest {
     @Test
     public void setDivisionsTest() {
         IConference conference = leagueManagerFactory.createConference();
-        IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
+      //  IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
         List<IDivision> divisions = new ArrayList<>();
-        conference.loadDivisions(divisionDB, divisions);
+        //conference.loadDivisions(divisionDB, divisions);
         conference.setDivisions(divisions);
 
         List<IDivision> conferenceDivisions = conference.getDivisions();
@@ -107,9 +107,9 @@ public class ConferenceTest {
     @Test
     public void saveConferenceTest() {
         IConference conference = leagueManagerFactory.createConference();
-        IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
+        //IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
 
-        Assert.assertTrue(conference.saveConference(conferenceDB));
+        //Assert.assertTrue(conference.saveConference(conferenceDB));
         Assert.assertEquals(1, conference.getConferenceID());
         Assert.assertEquals(1, conference.getLeagueID());
         Assert.assertEquals("Eastern Conference", conference.getConferenceName());
@@ -118,10 +118,10 @@ public class ConferenceTest {
     @Test
     public void loadDivisionsTest() {
         IConference conference = leagueManagerFactory.createConference();
-        IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
+       // IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
         List<IDivision> divisions = new ArrayList<>();
 
-        conference.loadDivisions(divisionDB, divisions);
+        //conference.loadDivisions(divisionDB, divisions);
         Assert.assertEquals(2, divisions.size());
     }
 
@@ -135,9 +135,9 @@ public class ConferenceTest {
     @Test
     public void isConferenceNameExistTest() {
         IConference conference = leagueManagerFactory.createConference();
-        IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
+      //  IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
         List<IConference> conferences = new ArrayList<>();
-        conferenceDB.loadConferences(1, conferences);
+        //conferenceDB.loadConferences(1, conferences);
 
         Assert.assertFalse(conference.isConferenceNameExist(conferences, "central"));
         Assert.assertTrue(conference.isConferenceNameExist(conferences, "Eastern Conference"));

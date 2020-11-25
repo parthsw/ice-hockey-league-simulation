@@ -16,7 +16,7 @@ public class HockeyLeagueSimulationApp {
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
 
         AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
-        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+        //AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
         AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());

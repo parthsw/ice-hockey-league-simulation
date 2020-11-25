@@ -2,13 +2,13 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+//import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -19,14 +19,14 @@ import java.util.List;
 
 public class TeamPlayerTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+    //private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+        //databaseFactory = appFactory.createDatabaseFactory();
     }
 
     @Test
@@ -80,9 +80,9 @@ public class TeamPlayerTest {
 
     @Test
     public void convertToFreeAgentTest() {
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
+       // ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
+        //teamPlayerDB.loadTeamPlayers(1, teamPlayers);
         ITeamPlayer teamPlayer = teamPlayers.get(0);
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
 
@@ -94,9 +94,9 @@ public class TeamPlayerTest {
 
     @Test
     public void saveTeamPlayerTest() {
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
+        //ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        teamPlayer.saveTeamPlayer(teamPlayerDB);
+        //teamPlayer.saveTeamPlayer(teamPlayerDB);
 
         Assert.assertEquals(1, teamPlayer.getTeamPlayerID());
         Assert.assertEquals(1, teamPlayer.getTeamID());

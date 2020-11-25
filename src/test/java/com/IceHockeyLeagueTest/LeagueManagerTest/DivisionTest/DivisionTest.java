@@ -2,12 +2,12 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.DivisionTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+//import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
+//import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,14 +17,14 @@ import java.util.List;
 
 public class DivisionTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+    //private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+      //  databaseFactory = appFactory.createDatabaseFactory();
     }
     @Test
     public void ConstructorTest() {
@@ -96,8 +96,8 @@ public class DivisionTest {
     public void setTeamsTest() {
         IDivision division = leagueManagerFactory.createDivision();
         List<ITeam> teams = new ArrayList<>();
-        ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
-        division.loadTeams(teamDB, teams);
+     //   ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
+       // division.loadTeams(teamDB, teams);
 
         division.setTeams(teams);
 
@@ -108,9 +108,9 @@ public class DivisionTest {
     @Test
     public void saveDivisionTest() {
         IDivision division = leagueManagerFactory.createDivision();
-        IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
+     //   IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
 
-        Assert.assertTrue(division.saveDivision(divisionDB));
+       // Assert.assertTrue(division.saveDivision(divisionDB));
         Assert.assertEquals(1, division.getDivisionID());
         Assert.assertEquals(1, division.getConferenceID());
         Assert.assertEquals("Atlantic", division.getDivisionName());
@@ -119,10 +119,10 @@ public class DivisionTest {
     @Test
     public void loadTeamsTest() {
         IDivision division = leagueManagerFactory.createDivision();
-        ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
+       // ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
         List<ITeam> teams = new ArrayList<>();
 
-        division.loadTeams(teamDB, teams);
+        //division.loadTeams(teamDB, teams);
         Assert.assertEquals(1, teams.size());
     }
 
@@ -136,9 +136,9 @@ public class DivisionTest {
     @Test
     public void isDivisionNameExistTest() {
         IDivision division = leagueManagerFactory.createDivision();
-        IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
+    //    IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
         List<IDivision> divisions = new ArrayList<>();
-        divisionDB.loadDivisions(1, divisions);
+      //  divisionDB.loadDivisions(1, divisions);
 
         Assert.assertFalse(division.isDivisionNameExist(divisions, "central"));
         Assert.assertTrue(division.isDivisionNameExist(divisions, "atlantic"));

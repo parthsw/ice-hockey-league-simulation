@@ -2,10 +2,10 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
+//import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
@@ -23,7 +23,7 @@ import java.util.List;
 public class AdvanceToNextSeasonStateTest {
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+    //private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
@@ -32,14 +32,14 @@ public class AdvanceToNextSeasonStateTest {
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+      //  databaseFactory = appFactory.createDatabaseFactory();
     }
 
     @Test
     public void onRunTest() {
         ILeague league = leagueManagerFactory.createLeague();
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
-        leagueDB.loadLeague(1, league);
+     //   ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+       // leagueDB.loadLeague(1, league);
 
         league.setLeagueDate(LocalDate.of(Year.now().getValue() + 1, Month.SEPTEMBER, 27));
         league.getScheduleSystem().setRegularSeasonStartDate(LocalDate.now());

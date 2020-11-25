@@ -2,10 +2,10 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.ManagerTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
+//import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,14 +15,14 @@ import java.util.List;
 
 public class ManagerTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+    //private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+      //  databaseFactory = appFactory.createDatabaseFactory();
     }
     @Test
     public void ConstructorTest() {
@@ -91,9 +91,9 @@ public class ManagerTest {
     @Test
     public void saveTeamManagerTest() {
         IManager manager = leagueManagerFactory.createManager();
-        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
+        //IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
 
-        Assert.assertTrue(manager.saveTeamManager(managerDB));
+        //Assert.assertTrue(manager.saveTeamManager(managerDB));
         Assert.assertEquals(1, manager.getTeamID());
         Assert.assertEquals("Joseph Hans", manager.getManagerName());
     }
@@ -101,9 +101,9 @@ public class ManagerTest {
     @Test
     public void saveLeagueManagerTest() {
         IManager manager = leagueManagerFactory.createManager();
-        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
+        //IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
 
-        Assert.assertTrue(manager.saveLeagueManager(managerDB));
+        //Assert.assertTrue(manager.saveLeagueManager(managerDB));
         Assert.assertEquals(-1, manager.getTeamID());
         Assert.assertEquals("Roy K", manager.getManagerName());
     }
@@ -111,9 +111,9 @@ public class ManagerTest {
     @Test
     public void loadTeamManagerTest() {
         IManager manager = leagueManagerFactory.createManager();
-        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
+      //  IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
 
-        Assert.assertTrue(manager.loadTeamManager(managerDB, manager));
+        //Assert.assertTrue(manager.loadTeamManager(managerDB, manager));
         Assert.assertEquals(1, manager.getTeamID());
         Assert.assertEquals(1, manager.getManagerID());
         Assert.assertEquals("Joseph Spaghetti", manager.getManagerName());
@@ -129,9 +129,9 @@ public class ManagerTest {
     @Test
     public void isManagerNameExistTest() {
         IManager manager = leagueManagerFactory.createManager();
-        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
+        //IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
         List<IManager> managers = new ArrayList<>();
-        managerDB.loadLeagueManagers(1, managers);
+        //managerDB.loadLeagueManagers(1, managers);
 
         Assert.assertFalse(manager.isManagerNameExist(managers, "Harry P"));
         Assert.assertTrue(manager.isManagerNameExist(managers, "Fred one"));

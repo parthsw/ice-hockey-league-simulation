@@ -2,12 +2,12 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
+//import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
+//import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import org.junit.Assert;
@@ -19,14 +19,14 @@ import java.util.List;
 
 public class FreeAgentTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+   // private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+     //   databaseFactory = appFactory.createDatabaseFactory();
     }
     @Test
     public void ConstructorTest() {
@@ -65,9 +65,9 @@ public class FreeAgentTest {
 
     @Test
     public void convertToTeamPlayerTest() {
-        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+      //  IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
         List<IFreeAgent> freeAgents = new ArrayList<>();
-        freeAgentDB.loadFreeAgents(1, freeAgents);
+        //freeAgentDB.loadFreeAgents(1, freeAgents);
 
         IFreeAgent freeAgent = freeAgents.get(1);
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
@@ -82,10 +82,10 @@ public class FreeAgentTest {
     @Test
     public void bestFreeAgentForPosition() {
         List<IFreeAgent> freeAgents = new ArrayList<>();
-        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+    //    IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
 
-        freeAgentDB.loadFreeAgents(1, freeAgents);
+      //  freeAgentDB.loadFreeAgents(1, freeAgents);
         Assert.assertNull(freeAgent.bestFreeAgentForPosition(freeAgents, "goalie"));
 
         IFreeAgent bestFreeAgent = freeAgent.bestFreeAgentForPosition(freeAgents, "forward");
@@ -95,10 +95,10 @@ public class FreeAgentTest {
 
     @Test
     public void saveFreeAgentTest() {
-        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        //IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
 
-        freeAgent.saveFreeAgent(freeAgentDB);
+        //freeAgent.saveFreeAgent(freeAgentDB);
 
         Assert.assertEquals(1, freeAgent.getLeagueID());
         Assert.assertEquals(1, freeAgent.getFreeAgentID());
@@ -107,11 +107,11 @@ public class FreeAgentTest {
     @Test
     public void handleFreeAgentRetirementTest() {
         IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+       // ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         ILeague league = leagueManagerFactory.createLeague();
-        leagueDB.loadLeague(1, league);
+        //leagueDB.loadLeague(1, league);
 
-        Assert.assertFalse(freeAgent.handleFreeAgentRetirement(playerCareerProgression, league));
+        //Assert.assertFalse(freeAgent.handleFreeAgentRetirement(playerCareerProgression, league));
     }
 }

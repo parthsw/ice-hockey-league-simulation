@@ -2,10 +2,10 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
+//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
+//import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
@@ -23,24 +23,24 @@ import java.util.List;
 public class AgingStateTest {
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+  //  private static IDatabaseFactory databaseFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory appFactory = AppFactoryTest.createAppFactory();
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
-        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+    //    AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+      //  databaseFactory = AbstractAppFactory.getDatabaseFactory();
     }
 
     @Test
     public void onRunTest() {
         ILeague league = leagueManagerFactory.createLeague();
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
-        leagueDB.loadLeague(1, league);
+      //  ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        //leagueDB.loadLeague(1, league);
         league.setLeagueDate(LocalDate.of(2020, Month.NOVEMBER, 17));
 
         AbstractState agingState = stateMachineFactory.createAgingState();
@@ -54,8 +54,8 @@ public class AgingStateTest {
     @Test
     public void onRunAlternateTest() {
         ILeague league = leagueManagerFactory.createLeague();
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
-        leagueDB.loadLeague(1, league);
+    //    ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+      //  leagueDB.loadLeague(1, league);
         league.setLeagueDate(LocalDate.of(2020, Month.NOVEMBER, 17));
 
         List<ISchedule> playoffScheduleList = new ArrayList<>();
