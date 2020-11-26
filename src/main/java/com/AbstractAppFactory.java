@@ -1,15 +1,14 @@
 package com;
 
-import com.IO.IIOFactory;
 import com.Database.IDatabaseFactory;
+import com.IO.IIOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializeLeagueObjectFactory;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
-import com.Trading.ITradingFactory;
+import com.IceHockeyLeague.Trading.ITradingFactory;
 
 public abstract class AbstractAppFactory {
-
     private static AbstractAppFactory appFactory;
     private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
     private static IDatabaseFactory databaseFactory;

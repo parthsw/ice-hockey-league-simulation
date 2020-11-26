@@ -41,4 +41,5 @@ public class RandomChance implements IRandomChance {
 
         return randomNumber;
     }
+
 }

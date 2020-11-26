@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -14,6 +15,8 @@ public interface ITeamPlayer extends IPlayer {
     void setTeamID(int teamID);
 
     IFreeAgent convertToFreeAgent(IFreeAgent freeAgent);
+    void generateTeamPlayer(IPlayer player);
+    void generatePlayer(IPlayer player);
 
     boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB);
 

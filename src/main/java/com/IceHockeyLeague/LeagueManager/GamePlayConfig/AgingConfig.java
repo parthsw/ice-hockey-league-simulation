@@ -34,4 +34,5 @@ public class AgingConfig implements IAgingConfig {
     public float getStatDecayChance() {
         return statDecayChance;
     }
+
 }

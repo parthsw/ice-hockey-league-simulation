@@ -2,6 +2,8 @@ package com.DatabaseTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 
@@ -123,9 +125,10 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
         stats2.setStrength(43.5f);
         freeAgent2.setPlayerStats(stats2);
 
-        freeAgentAgeInfo.setBirthDate(LocalDate.of(1991, Month.APRIL, 18));
+        freeAgentAgeInfo2.setBirthDate(LocalDate.of(1991, Month.APRIL, 18));
         freeAgentAgeInfo2.setAgeInYears(29);
         freeAgentAgeInfo2.setElapsedDaysFromLastBDay(212);
+        freeAgent2.setPlayerAgeInfo(freeAgentAgeInfo2);
 
         freeAgents.add(freeAgent);
         freeAgents.add(freeAgent1);

@@ -2,6 +2,7 @@ package com.IceHockeyLeague.LeagueManager.League;
 
 import com.AbstractAppFactory;
 import com.Database.IDatabaseFactory;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
@@ -11,8 +12,8 @@ import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
 import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
@@ -39,6 +40,7 @@ public class League implements ILeague {
     private List<IFreeAgent> retiredFreeAgents;
     private IScheduleSystem scheduleSystem;
     private IStandingSystem standingSystem;
+    private List<IDraftPick> draftPicks;
 
     public League() {
         setDefaults();
@@ -52,6 +54,7 @@ public class League implements ILeague {
         this.managers = new ArrayList<>();
         this.retiredFreeAgents = new ArrayList<>();
         this.retiredTeamPlayers = new ArrayList<>();
+        this.draftPicks = new ArrayList<>();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         databaseFactory = AbstractAppFactory.getDatabaseFactory();
         this.scheduleSystem = leagueManagerFactory.createScheduleSystem();
@@ -239,6 +242,21 @@ public class League implements ILeague {
     @Override
     public IStandingSystem getStandingSystem() {
         return standingSystem;
+    }
+
+    @Override
+    public void addDraftPick(IDraftPick draftPick) {
+        draftPicks.add(draftPick);
+    }
+
+    @Override
+    public void setDraftPicks(List<IDraftPick> draftPicks) {
+        this.draftPicks = draftPicks;
+    }
+
+    @Override
+    public List<IDraftPick> getDraftPicks() {
+        return draftPicks;
     }
 
     @Override

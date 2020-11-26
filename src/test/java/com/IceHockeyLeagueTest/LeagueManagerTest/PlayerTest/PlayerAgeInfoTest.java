@@ -158,4 +158,5 @@ public class PlayerAgeInfoTest {
         LocalDate givenYearBirthDay = playerAgeInfo.getBirthDateForGivenYear(2013);
         Assert.assertEquals(28, givenYearBirthDay.getDayOfMonth());
     }
+
 }

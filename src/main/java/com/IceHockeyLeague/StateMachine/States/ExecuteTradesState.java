@@ -3,8 +3,8 @@ package com.IceHockeyLeague.StateMachine.States;
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
-import com.Trading.ITradingFactory;
-import com.Trading.SimulateTrade;
+import com.IceHockeyLeague.Trading.ITradingFactory;
+import com.IceHockeyLeague.Trading.SimulateTrade;
 
 public class ExecuteTradesState extends AbstractState {
     private final IStateMachineFactory stateMachineFactory;

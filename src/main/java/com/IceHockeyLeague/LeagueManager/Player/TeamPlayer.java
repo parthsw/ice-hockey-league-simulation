@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -56,6 +57,21 @@ public class TeamPlayer extends Player implements ITeamPlayer {
     }
 
     @Override
+    public void generateTeamPlayer(IPlayer player) {
+        this.setPlayerName(player.getPlayerName());
+        this.setPlayerStats(player.getPlayerStats());
+        this.setPlayerAgeInfo(player.getPlayerAgeInfo());
+        this.setIsCaptain(false);
+    }
+
+    @Override
+    public void generatePlayer(IPlayer player) {
+        player.setPlayerName(this.getPlayerName());
+        player.setPlayerStats(this.getPlayerStats());
+        player.setPlayerAgeInfo(this.getPlayerAgeInfo());
+    }
+
+    @Override
     public boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB) {
         return teamPlayerDB.saveTeamPlayer(this);
     }
@@ -64,4 +80,5 @@ public class TeamPlayer extends Player implements ITeamPlayer {
     public boolean handleTeamPlayerRetirement(IPlayerCareerProgression playerCareerProgression, ITeam team, ILeague league) {
         return playerCareerProgression.handleTeamPlayerRetirement(this, team, league);
     }
+
 }

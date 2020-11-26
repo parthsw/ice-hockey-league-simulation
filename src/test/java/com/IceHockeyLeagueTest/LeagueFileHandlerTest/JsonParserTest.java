@@ -26,4 +26,5 @@ public class JsonParserTest {
         IJsonParser jsonParser = leagueFileHandlerFactory.createJsonParser();
         Assert.assertEquals(jsonParser.parse(inputStream).getString("leagueName"), "DHL");
     }
+
 }

@@ -12,8 +12,8 @@ import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializ
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.SerializeDeserializeLeagueObjectFactory;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
-import com.Trading.ITradingFactory;
-import com.Trading.TradingFactory;
+import com.IceHockeyLeague.Trading.ITradingFactory;
+import com.IceHockeyLeague.Trading.TradingFactory;
 
 public class AppFactory extends AbstractAppFactory {
 
@@ -62,4 +62,5 @@ public class AppFactory extends AbstractAppFactory {
     public static AbstractAppFactory createAppFactory() {
         return new AppFactory();
     }
+
 }

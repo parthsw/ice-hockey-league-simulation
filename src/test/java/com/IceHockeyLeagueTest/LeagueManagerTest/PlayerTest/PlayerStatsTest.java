@@ -234,4 +234,5 @@ public class PlayerStatsTest {
         agingConfig.setStatDecayChance(0.05f);
         return agingConfig;
     }
+
 }

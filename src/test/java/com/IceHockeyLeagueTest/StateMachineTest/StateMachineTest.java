@@ -53,4 +53,5 @@ public class StateMachineTest {
         stateMachine.onExecution();
         Assert.assertNull(stateMachine.getCurrentState());
     }
+
 }

@@ -109,4 +109,5 @@ public class Coach implements ICoach {
     public boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach) {
         return coachDB.loadTeamCoach(teamID, this);
     }
+
 }

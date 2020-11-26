@@ -48,7 +48,6 @@ public class ImportStateTest {
     public void welcomeMessageTest() {
         ImportState importState = (ImportState) stateMachineFactory.createImportState();
         importState.welcomeMessage();
-
         Assert.assertTrue(ioMockInstance.getOutput().contains("*****Import State*****"));
     }
 
@@ -56,7 +55,6 @@ public class ImportStateTest {
     public void onRunTest() {
         AbstractState importState = stateMachineFactory.createImportState();
         ioMockInstance.commandLineInput("empty");
-
         Assert.assertTrue(importState.onRun() instanceof LoadTeamState);
     }
 
@@ -64,10 +62,8 @@ public class ImportStateTest {
     public void onRunAlternateValidTest() throws IOException {
         AbstractState importState = stateMachineFactory.createImportState();
         File leagueFile = folder.newFile("validLeague.json");
-        JSONObject validLeague = LeagueJsonMock.getInstance().validLeagueJson();
-
-        ioMockInstance.commandLineInput(LeagueJsonMock.getInstance().createLeagueJsonFile(leagueFile, validLeague));
-
+        JSONObject validLeague = LeagueJsonMock.instance().validLeagueJson();
+        ioMockInstance.commandLineInput(LeagueJsonMock.instance().createLeagueJsonFile(leagueFile, validLeague));
         Assert.assertTrue(importState.onRun() instanceof CreateTeamState);
     }
 
@@ -75,11 +71,10 @@ public class ImportStateTest {
     public void onRunAlternateInvalidTest() throws IOException {
         AbstractState importState = stateMachineFactory.createImportState();
         File leagueFile = folder.newFile("invalidLeague.json");
-        JSONObject invalidLeague = LeagueJsonMock.getInstance().invalidLeagueJson();
-
-        ioMockInstance.commandLineInput(LeagueJsonMock.getInstance().createLeagueJsonFile(leagueFile, invalidLeague));
-
+        JSONObject invalidLeague = LeagueJsonMock.instance().invalidLeagueJson();
+        ioMockInstance.commandLineInput(LeagueJsonMock.instance().createLeagueJsonFile(leagueFile, invalidLeague));
         Assert.assertNull(importState.onRun());
         Assert.assertTrue(ioMockInstance.getOutput().contains("#: required key [gameplayConfig] not found"));
     }
+
 }

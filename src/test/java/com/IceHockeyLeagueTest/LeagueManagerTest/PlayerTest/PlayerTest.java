@@ -176,7 +176,6 @@ public class PlayerTest {
         IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
         IPlayer player = leagueManagerFactory.createPlayer();
         IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
-
         Assert.assertFalse(player.isInjured(playerCareerProgression, injuryConfig, LocalDate.now()));
     }
 
@@ -231,4 +230,5 @@ public class PlayerTest {
         stats.setPosition(PlayerPosition.FORWARD.toString());
         return stats;
     }
+
 }

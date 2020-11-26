@@ -6,7 +6,6 @@ import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
-import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.AdvanceToNextSeasonState;
@@ -17,8 +16,6 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AgingStateTest {
     private static IStateMachineFactory stateMachineFactory;
@@ -46,9 +43,9 @@ public class AgingStateTest {
         AbstractState agingState = stateMachineFactory.createAgingState();
         agingState.setLeague(league);
 
-        Assert.assertTrue(agingState.onRun() instanceof PersistState);
+        Assert.assertTrue(agingState.onRun() instanceof AdvanceToNextSeasonState);
         Assert.assertEquals(19, league.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerAgeInfo().getAgeInYears());
-        Assert.assertEquals(331, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
+        Assert.assertEquals(333, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
     }
 
     @Test
@@ -57,18 +54,12 @@ public class AgingStateTest {
         ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
         leagueDB.loadLeague(1, league);
         league.setLeagueDate(LocalDate.of(2020, Month.NOVEMBER, 17));
-
-        List<ISchedule> playoffScheduleList = new ArrayList<>();
-        ISchedule schedule = leagueManagerFactory.createSchedule();
-        schedule.setIsGamePlayed(true);
-        playoffScheduleList.add(schedule);
-        league.getScheduleSystem().setPlayoffSchedule(playoffScheduleList);
-
+        league.getScheduleSystem().setPlayoffSchedule(null);
         AbstractState agingState = stateMachineFactory.createAgingState();
         agingState.setLeague(league);
 
-        Assert.assertTrue(agingState.onRun() instanceof AdvanceToNextSeasonState);
+        Assert.assertTrue(agingState.onRun() instanceof PersistState);
         Assert.assertEquals(19, league.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerAgeInfo().getAgeInYears());
-        Assert.assertEquals(331, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
+        Assert.assertEquals(333, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
     }
 }

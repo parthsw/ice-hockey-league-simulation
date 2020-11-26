@@ -144,4 +144,5 @@ public class RandomPlayersGeneratorTest {
         });
         return positionSpecificPlayers;
     }
+
 }

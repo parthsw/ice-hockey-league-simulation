@@ -35,4 +35,5 @@ public class TeamStrengthCalculatorTest {
         ITeamStrengthCalculator teamStrength = leagueManagerFactory.createTeamStrengthCalculator();
         Assert.assertEquals(46.5f, teamStrength.calculate(teamPlayers), 0.0);
     }
+
 }

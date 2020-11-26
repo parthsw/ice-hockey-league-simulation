@@ -52,4 +52,5 @@ public class CommandLineOutputTest {
         String expectedErrorOutput = "\033[0;31m" + "Error in hockey league simulation" + "\033[0m";
         Assert.assertTrue(getOutput().contains(expectedErrorOutput));
     }
+
 }
