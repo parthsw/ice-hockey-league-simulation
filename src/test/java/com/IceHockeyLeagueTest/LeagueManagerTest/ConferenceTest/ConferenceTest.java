@@ -105,27 +105,6 @@ public class ConferenceTest {
     }
 
     @Test
-    public void saveConferenceTest() {
-        IConference conference = leagueManagerFactory.createConference();
-        //IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
-
-        //Assert.assertTrue(conference.saveConference(conferenceDB));
-        Assert.assertEquals(1, conference.getConferenceID());
-        Assert.assertEquals(1, conference.getLeagueID());
-        Assert.assertEquals("Eastern Conference", conference.getConferenceName());
-    }
-
-    @Test
-    public void loadDivisionsTest() {
-        IConference conference = leagueManagerFactory.createConference();
-       // IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
-        List<IDivision> divisions = new ArrayList<>();
-
-        //conference.loadDivisions(divisionDB, divisions);
-        Assert.assertEquals(2, divisions.size());
-    }
-
-    @Test
     public void isNullOrEmptyTest() {
         IConference conference = leagueManagerFactory.createConference();
         Assert.assertTrue(conference.isNullOrEmpty(null));

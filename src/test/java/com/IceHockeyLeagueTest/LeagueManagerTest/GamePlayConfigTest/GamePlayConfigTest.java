@@ -146,27 +146,6 @@ public class GamePlayConfigTest {
         Assert.assertEquals(23, actualTradingConfig.getMaxPlayersPerTrade());
     }
 
-    @Test
-    public void saveGamePlayConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setLeagueID(2);
-       // gamePlayConfig.saveGamePlayConfig(databaseFactory.createGamePlayConfigPersistence());
-        Assert.assertEquals(2, gamePlayConfig.getGamePlayConfigID());
-        Assert.assertEquals(2, gamePlayConfig.getLeagueID());
-    }
-
-    @Test
-    public void loadGamePlayConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setLeagueID(1);
-       // gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
-
-        Assert.assertEquals(1, gamePlayConfig.getGamePlayConfigID());
-        Assert.assertEquals(1, gamePlayConfig.getLeagueID());
-        ITrainingConfig trainingConfig = gamePlayConfig.getTrainingConfig();
-        Assert.assertEquals(100, trainingConfig.getDaysUntilStatIncreaseCheck());
-    }
-
     private IAgingConfig createAgingConfig() {
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setMaximumAge(50);

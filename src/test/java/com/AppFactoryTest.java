@@ -1,7 +1,5 @@
 package com;
 
-//import com.Database.IDatabaseFactory;
-//import com.DatabaseTest.DatabaseFactoryTest;
 import com.IO.IIOFactory;
 import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
@@ -12,6 +10,9 @@ import com.IceHockeyLeague.SerializeDeserializeLeagueObject.SerializeDeserialize
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeagueTest.LeagueManagerTest.LeagueManagerFactoryTest;
+import com.Persistence.IPersistenceFactory;
+import com.Persistence.PersistenceFactory;
+import com.PersistenceTest.PersistenceFactoryTest;
 import com.Trading.ITradingFactory;
 import com.Trading.TradingFactory;
 
@@ -21,11 +22,6 @@ public class AppFactoryTest extends AbstractAppFactory {
     public ILeagueFileHandlerFactory createLeagueFileHandlerFactory() {
         return new LeagueFileHandlerFactory();
     }
-
-  /*  @Override
-    public IDatabaseFactory createDatabaseFactory() {
-        return new DatabaseFactoryTest();
-    }*/
 
     @Override
     public IIOFactory createIOFactory() {
@@ -61,5 +57,9 @@ public class AppFactoryTest extends AbstractAppFactory {
 
     public static AbstractAppFactory createAppFactory() {
         return new AppFactoryTest();
+    }
+
+    public static PersistenceFactoryTest createPersistenceFactory() {
+        return new PersistenceFactoryTest();
     }
 }

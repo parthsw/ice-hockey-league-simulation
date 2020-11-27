@@ -93,16 +93,6 @@ public class TeamPlayerTest {
     }
 
     @Test
-    public void saveTeamPlayerTest() {
-        //ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
-        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        //teamPlayer.saveTeamPlayer(teamPlayerDB);
-
-        Assert.assertEquals(1, teamPlayer.getTeamPlayerID());
-        Assert.assertEquals(1, teamPlayer.getTeamID());
-    }
-
-    @Test
     public void handleTeamPlayerRetirementTest() {
         IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
         ITeam team = leagueManagerFactory.createTeam();

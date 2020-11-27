@@ -290,26 +290,6 @@ public class TeamTest {
     }
 
     @Test
-    public void saveTeamTest() {
-        ITeam team = leagueManagerFactory.createTeam();
-     //   ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
-       // team.saveTeam(teamDB);
-
-        Assert.assertEquals("Halifax", team.getTeamName());
-        Assert.assertEquals(89.5f, team.getTeamStrength(), 0.0);
-    }
-
-    @Test
-    public void loadPlayersTest() {
-     //   ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
-        List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        ITeam team = leagueManagerFactory.createTeam();
-
-      //  Assert.assertTrue(team.loadPlayers(teamPlayerDB, teamPlayers));
-        Assert.assertEquals(2, teamPlayers.size());
-    }
-
-    @Test
     public void checkIfTeamNameExistsTest() {
         //ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
         List<ILeague> leagues = new ArrayList<>();

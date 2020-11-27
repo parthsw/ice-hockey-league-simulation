@@ -153,18 +153,6 @@ public class Team implements ITeam {
         return listIsPerfect;
     }
 
-
-
-   /* @Override
-    public boolean saveTeam(ITeamPersistence teamDB) {
-        return teamDB.saveTeam(this);
-    }
-
-    @Override
-    public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
-        return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
-    }*/
-
     @Override
     public int getLossPointValue() {
         return this.lossPoint;
@@ -186,11 +174,6 @@ public class Team implements ITeam {
             this.lossPoint = this.lossPoint - 1;
         }
     }
-
-  /*  @Override
-    public boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues) {
-        return teamDB.checkIfTeamNameExists(teamName, leagues);
-    }*/
 
     @Override
     public boolean isNullOrEmpty(String teamName) {

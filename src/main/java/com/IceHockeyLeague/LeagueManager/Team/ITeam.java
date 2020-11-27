@@ -48,12 +48,6 @@ public interface ITeam {
 
     boolean isTeamNameExist(List<ITeam> teams, String teamName);
 
-    //boolean saveTeam(ITeamPersistence teamDB);
-
-    //boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers);
-
-    //boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues);
-
     float calculateTeamStrength(ITeamStrengthCalculator teamStrengthCalculator);
 
 }

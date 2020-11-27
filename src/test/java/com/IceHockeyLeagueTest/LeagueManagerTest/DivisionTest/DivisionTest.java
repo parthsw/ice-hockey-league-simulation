@@ -106,27 +106,6 @@ public class DivisionTest {
     }
 
     @Test
-    public void saveDivisionTest() {
-        IDivision division = leagueManagerFactory.createDivision();
-     //   IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
-
-       // Assert.assertTrue(division.saveDivision(divisionDB));
-        Assert.assertEquals(1, division.getDivisionID());
-        Assert.assertEquals(1, division.getConferenceID());
-        Assert.assertEquals("Atlantic", division.getDivisionName());
-    }
-
-    @Test
-    public void loadTeamsTest() {
-        IDivision division = leagueManagerFactory.createDivision();
-       // ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
-        List<ITeam> teams = new ArrayList<>();
-
-        //division.loadTeams(teamDB, teams);
-        Assert.assertEquals(1, teams.size());
-    }
-
-    @Test
     public void isNullOrEmptyTest() {
         IDivision division = leagueManagerFactory.createDivision();
         Assert.assertTrue(division.isNullOrEmpty(""));

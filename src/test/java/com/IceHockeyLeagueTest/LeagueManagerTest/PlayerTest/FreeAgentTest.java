@@ -94,17 +94,6 @@ public class FreeAgentTest {
     }
 
     @Test
-    public void saveFreeAgentTest() {
-        //IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
-        IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
-
-        //freeAgent.saveFreeAgent(freeAgentDB);
-
-        Assert.assertEquals(1, freeAgent.getLeagueID());
-        Assert.assertEquals(1, freeAgent.getFreeAgentID());
-    }
-
-    @Test
     public void handleFreeAgentRetirementTest() {
         IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
        // ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
