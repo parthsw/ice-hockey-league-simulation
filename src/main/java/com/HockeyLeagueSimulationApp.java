@@ -3,10 +3,18 @@ package com;
 import com.IceHockeyLeague.StateMachine.IStateMachine;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class HockeyLeagueSimulationApp {
 
     public static void main(String[] args) {
+        GlobalHandler handler = new GlobalHandler();
+        Thread.setDefaultUncaughtExceptionHandler(handler);
+
+        Logger logger = LogManager.getLogger(HockeyLeagueSimulationApp.class);
+        logger.info("Starting the app");
+
         initializeFactories();
         runApp();
     }
