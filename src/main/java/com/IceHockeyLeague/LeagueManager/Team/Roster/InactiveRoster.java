@@ -13,7 +13,7 @@ public class InactiveRoster implements IInactiveRoster {
     private List<ITeamPlayer> inactivePlayers;
     private List<IFreeAgent> agents;
 
-    public List<ITeamPlayer> getInactivePlayers() {
+    public List<ITeamPlayer> getInactiveRoster() {
         return inactivePlayers;
     }
 
@@ -45,6 +45,7 @@ public class InactiveRoster implements IInactiveRoster {
                     bestReplacement = inactivePlayer;
                 }
             }
+
         }
 
         if (needAgent) {
@@ -72,10 +73,17 @@ public class InactiveRoster implements IInactiveRoster {
             agent.setPlayerStats(playerStats);
             agent = player.convertToFreeAgent(agent);
             agents.add(agent);
+
         } else {
             inactivePlayers.remove(bestReplacement);
+            inactivePlayers.add(player);
         }
         return bestReplacement;
+    }
+
+    @Override
+    public List<ITeamPlayer> getInactivePlayers() {
+        return inactivePlayers;
     }
 
 }
