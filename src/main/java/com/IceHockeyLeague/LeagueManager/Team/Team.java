@@ -24,6 +24,7 @@ public class Team implements ITeam {
     private ICoach coach;
     private int lossPoint;
     private ITeamRoster teamRoster;
+    private ILeagueManagerFactory leagueManagerFactory;
 
     public Team() {
         setDefaults();
