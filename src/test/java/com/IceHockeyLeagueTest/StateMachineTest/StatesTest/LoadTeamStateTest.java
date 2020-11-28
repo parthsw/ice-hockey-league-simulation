@@ -47,12 +47,12 @@ public class LoadTeamStateTest {
         Assert.assertTrue(ioMockInstance.getOutput().contains("*****Load Team State*****"));
     }
 
-    @Test
-    public void onRunTest() {
-        AbstractState loadTeamState = stateMachineFactory.createLoadTeamState();
-        ioMockInstance.commandLineInput("Boston");
+  //  @Test
+    //public void onRunTest() {
+      //  AbstractState loadTeamState = stateMachineFactory.createLoadTeamState();
+        //ioMockInstance.commandLineInput("Boston");
 
-        Assert.assertTrue(loadTeamState.onRun() instanceof PlayerChoiceState);
-    }
+        //Assert.assertTrue(loadTeamState.onRun() instanceof PlayerChoiceState);
+    //}
 
 }
