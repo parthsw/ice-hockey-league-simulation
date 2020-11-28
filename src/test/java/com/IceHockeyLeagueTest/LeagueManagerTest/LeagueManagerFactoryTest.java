@@ -34,10 +34,7 @@ import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Standings.Standing;
 import com.IceHockeyLeague.LeagueManager.Standings.StandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.*;
-import com.IceHockeyLeague.LeagueManager.Team.Roster.IActiveRoster;
-import com.IceHockeyLeague.LeagueManager.Team.Roster.IInactiveRoster;
-import com.IceHockeyLeague.LeagueManager.Team.Roster.ITeamRoster;
-import com.IceHockeyLeague.LeagueManager.Team.Roster.TeamRoster;
+import com.IceHockeyLeague.LeagueManager.Team.Roster.*;
 import org.mockito.Mockito;
 
 import java.util.Random;
@@ -211,12 +208,12 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
 
     @Override
     public IActiveRoster createActiveRoster() {
-        return null;
+        return new ActiveRoster();
     }
 
     @Override
     public IInactiveRoster createInactiveRoster() {
-        return null;
+        return new InactiveRoster();
     }
 
 }
