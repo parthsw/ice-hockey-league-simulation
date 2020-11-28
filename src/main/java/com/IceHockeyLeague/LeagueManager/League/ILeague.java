@@ -66,9 +66,5 @@ public interface ILeague {
     IStandingSystem getStandingSystem();
 
     boolean saveCompleteLeague();
-    boolean loadCompleteLeague(int leagueId);
-    boolean saveLeague();
-    boolean loadLeague();
-    String getUserCreatedTeam();
-
+    boolean loadCompleteLeague();
 }

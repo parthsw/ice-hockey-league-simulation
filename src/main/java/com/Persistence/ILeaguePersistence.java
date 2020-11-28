@@ -1,5 +1,8 @@
 package com.Persistence;
-interface ILeaguePersistence {
-    void saveLeague();
-    void loadLeague();
+
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
+
+public interface ILeaguePersistence {
+    boolean saveLeague(ILeague league);
+    boolean loadLeague();
 }

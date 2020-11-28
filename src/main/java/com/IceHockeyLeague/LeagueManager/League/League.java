@@ -1,24 +1,21 @@
 package com.IceHockeyLeague.LeagueManager.League;
 
 import com.AbstractAppFactory;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-//import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-//import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-//import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
-//import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
 import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerialize;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.Serialize;
+import com.Persistence.ILeaguePersistence;
+import com.Persistence.PersistenceFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,6 +36,7 @@ public class League implements ILeague {
     private List<IFreeAgent> retiredFreeAgents;
     private IScheduleSystem scheduleSystem;
     private IStandingSystem standingSystem;
+    private static PersistenceFactory persistenceFactory;
 
     public League() {
         setDefaults();
@@ -242,155 +240,15 @@ public class League implements ILeague {
 
     @Override
     public boolean saveCompleteLeague() {
-        this.saveLeague();
-
-       /* gamePlayConfig.setLeagueID(leagueID);
-        gamePlayConfig.saveGamePlayConfig(databaseFactory.createGamePlayConfigPersistence());
-
-        for(IConference conference: conferences) {
-            conference.setLeagueID(leagueID);
-            conference.saveConference(databaseFactory.createConferencePersistence());
-
-            for(IDivision division: conference.getDivisions()) {
-                division.setConferenceID(conference.getConferenceID());
-                division.saveDivision(databaseFactory.createDivisionPersistence());
-
-                for(ITeam team: division.getTeams()) {
-                    team.setDivisionID(division.getDivisionID());
-                    team.saveTeam(databaseFactory.createTeamPersistence());
-
-                    for(ITeamPlayer player: team.getPlayers()) {
-                        player.setTeamID(team.getTeamID());
-                        player.saveTeamPlayer(databaseFactory.createTeamPlayerPersistence());
-                    }
-
-                    IManager manager = team.getManager();
-                    manager.setTeamID(team.getTeamID());
-                    manager.setLeagueID(leagueID);
-                    manager.saveTeamManager(databaseFactory.createManagerPersistence());
-
-                    ICoach coach = team.getCoach();
-                    coach.setTeamID(team.getTeamID());
-                    coach.setLeagueID(leagueID);
-                    coach.saveTeamCoach(databaseFactory.createCoachPersistence());
-                }
-            }
-        }
-
-        for(IFreeAgent freeAgent: freeAgents) {
-            freeAgent.setLeagueID(leagueID);
-            freeAgent.saveFreeAgent(databaseFactory.createFreeAgentPersistence());
-        }
-
-        for(IManager manager: managers) {
-            manager.setLeagueID(leagueID);
-            manager.saveLeagueManager(databaseFactory.createManagerPersistence());
-        }
-
-        for(ICoach coach: coaches) {
-            coach.setLeagueID(leagueID);
-            coach.saveLeagueCoach(databaseFactory.createCoachPersistence());
-        }*/
-
+        ILeaguePersistence leaguePersistence = persistenceFactory.createLeaguePersistence();
+        leaguePersistence.saveLeague(this);
         return true;
     }
 
     @Override
-    public boolean loadCompleteLeague(int id) {
-    /*    leagueID = id;
-        this.loadLeague(databaseFactory.createLeaguePersistence());
-
-        List<IConference> conferences = new ArrayList<>();
-        this.loadConferences(databaseFactory.createConferencePersistence(), conferences);
-
-        for(IConference conference: conferences) {
-            this.addConference(conference);
-
-            List<IDivision> divisions = new ArrayList<>();
-            conference.loadDivisions(databaseFactory.createDivisionPersistence(), divisions);
-
-            for(IDivision division: divisions) {
-                conference.addDivision(division);
-
-                List<ITeam> teams = new ArrayList<>();
-                division.loadTeams(databaseFactory.createTeamPersistence(), teams);
-
-                for(ITeam team: teams) {
-                    division.addTeam(team);
-
-                    List<ITeamPlayer> teamPlayers = new ArrayList<>();
-                    team.loadPlayers(databaseFactory.createTeamPlayerPersistence(), teamPlayers);
-
-                    for(ITeamPlayer teamPlayer: teamPlayers) {
-                        team.addPlayer(teamPlayer);
-                    }
-
-                    IManager manager = leagueManagerFactory.createManager();
-                    manager.setLeagueID(leagueID);
-                    manager.setTeamID(team.getTeamID());
-                    manager.loadTeamManager(databaseFactory.createManagerPersistence(), manager);
-                    team.setManager(manager);
-
-                    ICoach coach = leagueManagerFactory.createCoach();
-                    coach.setLeagueID(leagueID);
-                    coach.setTeamID(team.getTeamID());
-                    coach.loadTeamCoach(databaseFactory.createCoachPersistence(), coach);
-                    team.setCoach(coach);
-                }
-            }
-        }
-
-        List<IFreeAgent> freeAgents = new ArrayList<>();
-        this.loadLeagueFreeAgents(databaseFactory.createFreeAgentPersistence(), freeAgents);
-        this.setFreeAgents(freeAgents);
-
-        List<IManager> managers = new ArrayList<>();
-        this.loadLeagueManagers(databaseFactory.createManagerPersistence(), managers);
-        this.setManagers(managers);
-
-        List<ICoach> coaches = new ArrayList<>();
-        this.loadLeagueCoaches(databaseFactory.createCoachPersistence(), coaches);
-        this.setCoaches(coaches);
-
-        gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setLeagueID(leagueID);
-        gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
-*/
+    public boolean loadCompleteLeague() {
+        ILeaguePersistence leaguePersistence = persistenceFactory.createLeaguePersistence();
+        leaguePersistence.loadLeague();
         return true;
-    }
-
-    @Override
-    public boolean saveLeague() {
-        ISerialize s = new Serialize();
-        String fileName = getUserCreatedTeam();
-        s.serializeLeagueObject(this,fileName);
-        return true;
-    }
-
-    @Override
-    public boolean loadLeague() {
-        return true;
-    }
-
-    @Override
-    public String getUserCreatedTeam() {
-        String teamName = "";
-        List<IConference> conferences;
-        List<IDivision> divisions;
-        List<ITeam> teams;
-        conferences = this.getConferences();
-        for(IConference c : conferences){
-            divisions = c.getDivisions();
-            for(IDivision d : divisions){
-                teams = d.getTeams();
-                for(ITeam t : teams){
-                    if(t.getIsUserCreated()){
-                        teamName = t.getTeamName();
-                        break;
-                    }
-                }
-            }
-        }
-        return teamName;
     }
 }

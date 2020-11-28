@@ -64,7 +64,7 @@ public class LoadTeamState extends AbstractState {
                 }
                 if(leagueList.size() == 1) {
                     ILeague leagueToLoad = leagueList.get(0);
-                    leagueToLoad.loadCompleteLeague(leagueToLoad.getLeagueID());
+                    leagueToLoad.loadCompleteLeague();
                     this.setLeague(leagueToLoad);
                 }
                 else {
@@ -74,7 +74,7 @@ public class LoadTeamState extends AbstractState {
                     }
                     int leagueId = Integer.parseInt(appInput.getInput());
                     ILeague leagueToLoad = leagueManagerFactory.createLeague();
-                    leagueToLoad.loadCompleteLeague(leagueId);
+                    leagueToLoad.loadCompleteLeague();
                     this.setLeague(leagueToLoad);
                 }
                 break;
