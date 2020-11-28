@@ -1,5 +1,5 @@
 package com.Persistence;
 
 public interface IPersistenceFactory{
-    ILeaguePersistece createLeaguePersistence();
+    ILeaguePersistence createLeaguePersistence();
 }

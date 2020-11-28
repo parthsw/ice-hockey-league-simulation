@@ -12,7 +12,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DivisionPersistenceMock implements IDivisionPersistence {
+public class DivisionPersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
     private final IDatabaseFactory databaseFactory;
 
@@ -23,20 +23,6 @@ public class DivisionPersistenceMock implements IDivisionPersistence {
         databaseFactory = appFactory.createDatabaseFactory();
     }
 
-    @Override
-    public boolean saveDivision(IDivision division) {
-        division.setDivisionID(1);
-        division.setDivisionName("Atlantic");
-        division.setConferenceID(1);
-
-        ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
-        List<ITeam> teams = new ArrayList<>();
-        teamDB.loadTeams(1, teams);
-        division.setTeams(teams);
-        return true;
-    }
-
-    @Override
     public boolean loadDivisions(int conferenceId, List<IDivision> divisions) {
         IDivision division = leagueManagerFactory.createDivision();
         division.setDivisionID(1);

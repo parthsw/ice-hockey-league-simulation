@@ -2,17 +2,15 @@ package com.PersistenceTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConferencePersistenceMock implements IConferencePersistence {
+public class ConferencePersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
     private final IDatabaseFactory databaseFactory;
 
@@ -23,20 +21,6 @@ public class ConferencePersistenceMock implements IConferencePersistence {
         databaseFactory = appFactory.createDatabaseFactory();
     }
 
-    @Override
-    public boolean saveConference(IConference conference) {
-        conference.setLeagueID(1);
-        conference.setConferenceID(1);
-        conference.setConferenceName("Eastern Conference");
-
-        IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
-        List<IDivision> divisions = new ArrayList<>();
-        divisionDB.loadDivisions(1, divisions);
-        conference.setDivisions(divisions);
-        return true;
-    }
-
-    @Override
     public boolean loadConferences(int leagueId, List<IConference> conferences) {
         IConference conference = leagueManagerFactory.createConference();
         conference.setLeagueID(1);

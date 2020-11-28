@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
-public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
+public class TeamPlayerPersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public TeamPlayerPersistenceMock() {
@@ -21,38 +21,6 @@ public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 
-    @Override
-    public boolean saveTeamPlayer(ITeamPlayer teamPlayer) {
-        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
-        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
-
-        teamPlayer.setTeamPlayerID(1);
-        teamPlayer.setTeamID(1);
-        teamPlayer.setPlayerName("Fred One");
-        teamPlayer.setIsCaptain(true);
-        teamPlayer.setInjuredStatus(false);
-        teamPlayer.setDaysInjured(0);
-        teamPlayer.setInjuryDate(null);
-        teamPlayer.setRetiredStatus(false);
-        teamPlayer.setRetirementDate(null);
-
-        stats.setPosition("forward");
-        stats.setShooting(10);
-        stats.setChecking(2);
-        stats.setSaving(14);
-        stats.setSkating(18);
-        stats.setStrength(29);
-        teamPlayer.setPlayerStats(stats);
-
-        playerAgeInfo.setBirthDate(LocalDate.of(1997, Month.APRIL, 18));
-        playerAgeInfo.setAgeInYears(23);
-        playerAgeInfo.setElapsedDaysFromLastBDay(212);
-        teamPlayer.setPlayerAgeInfo(playerAgeInfo);
-
-        return true;
-    }
-
-    @Override
     public boolean loadTeamPlayers(int teamId, List<ITeamPlayer> teamPlayers) {
 
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();

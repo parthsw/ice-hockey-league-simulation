@@ -8,6 +8,10 @@ import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 //import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 //import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+import com.Persistence.PersistenceFactory;
+import com.PersistenceTest.ConferencePersistenceMock;
+import com.PersistenceTest.DivisionPersistenceMock;
+import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,14 +21,14 @@ import java.util.List;
 
 public class ConferenceTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-  //  private static IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-      //  databaseFactory = appFactory.createDatabaseFactory();
+        persistenceFactory =AppFactoryTest.createPersistenceFactory();
     }
 
     @Test
@@ -95,11 +99,10 @@ public class ConferenceTest {
     @Test
     public void setDivisionsTest() {
         IConference conference = leagueManagerFactory.createConference();
-      //  IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
+        DivisionPersistenceMock divisionPersistenceMock = persistenceFactory.createDivisionPersistence();
         List<IDivision> divisions = new ArrayList<>();
-        //conference.loadDivisions(divisionDB, divisions);
+        divisionPersistenceMock.loadDivisions(conference.getConferenceID(),divisions);
         conference.setDivisions(divisions);
-
         List<IDivision> conferenceDivisions = conference.getDivisions();
         Assert.assertEquals(2, conferenceDivisions.size());
     }
@@ -113,13 +116,11 @@ public class ConferenceTest {
 
     @Test
     public void isConferenceNameExistTest() {
+        ConferencePersistenceMock conferencePersistenceMock = persistenceFactory.createConferencePersistence();
         IConference conference = leagueManagerFactory.createConference();
-      //  IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
         List<IConference> conferences = new ArrayList<>();
-        //conferenceDB.loadConferences(1, conferences);
-
+        conferencePersistenceMock.loadConferences(1, conferences);
         Assert.assertFalse(conference.isConferenceNameExist(conferences, "central"));
         Assert.assertTrue(conference.isConferenceNameExist(conferences, "Eastern Conference"));
     }
-
 }

@@ -8,7 +8,7 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 
 import java.util.List;
 
-public class ManagerPersistenceMock implements IManagerPersistence  {
+public class ManagerPersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public ManagerPersistenceMock() {
@@ -17,25 +17,6 @@ public class ManagerPersistenceMock implements IManagerPersistence  {
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 
-    @Override
-    public boolean saveTeamManager(IManager manager) {
-        manager.setLeagueID(2);
-        manager.setTeamID(1);
-        manager.setManagerID(2);
-        manager.setManagerName("Joseph Hans");
-        return true;
-    }
-
-    @Override
-    public boolean saveLeagueManager(IManager manager) {
-        manager.setLeagueID(3);
-        manager.setTeamID(-1);
-        manager.setManagerID(3);
-        manager.setManagerName("Roy K");
-        return true;
-    }
-
-    @Override
     public boolean loadTeamManager(int teamId, IManager manager) {
         manager.setLeagueID(1);
         manager.setTeamID(1);
@@ -44,7 +25,6 @@ public class ManagerPersistenceMock implements IManagerPersistence  {
         return true;
     }
 
-    @Override
     public boolean loadLeagueManagers(int leagueId, List<IManager> managers) {
         IManager manager = leagueManagerFactory.createManager();
         manager.setLeagueID(leagueId);

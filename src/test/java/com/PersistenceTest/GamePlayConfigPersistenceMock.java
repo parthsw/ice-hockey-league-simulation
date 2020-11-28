@@ -5,7 +5,7 @@ import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 
-public class GamePlayConfigPersistenceMock implements IGamePlayConfigPersistence {
+public class GamePlayConfigPersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public GamePlayConfigPersistenceMock() {
@@ -14,41 +14,6 @@ public class GamePlayConfigPersistenceMock implements IGamePlayConfigPersistence
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 
-    @Override
-    public boolean saveGamePlayConfig(IGamePlayConfig gamePlayConfig) {
-        gamePlayConfig.setGamePlayConfigID(2);
-        gamePlayConfig.setLeagueID(2);
-
-        IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
-        agingConfig.setAverageRetirementAge(33);
-        agingConfig.setMaximumAge(57);
-        gamePlayConfig.setAgingConfig(agingConfig);
-
-        IGameResolverConfig gameResolverConfig = leagueManagerFactory.createGameResolverConfig();
-        gameResolverConfig.setRandomWinChance(0.2f);
-        gamePlayConfig.setGameResolverConfig(gameResolverConfig);
-
-        IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
-        injuryConfig.setRandomInjuryChance(0.14f);
-        injuryConfig.setInjuryDaysLow(10);
-        injuryConfig.setInjuryDaysHigh(340);
-        gamePlayConfig.setInjuryConfig(injuryConfig);
-
-        ITrainingConfig trainingConfig = leagueManagerFactory.createTrainingConfig();
-        trainingConfig.setDaysUntilStatIncreaseCheck(150);
-        gamePlayConfig.setTrainingConfig(trainingConfig);
-
-        ITradingConfig tradingConfig = leagueManagerFactory.createTradingConfig();
-        tradingConfig.setLossPoint(6);
-        tradingConfig.setRandomTradeOfferChance(0.45f);
-        tradingConfig.setMaxPlayersPerTrade(4);
-        tradingConfig.setRandomAcceptanceChance(0.11f);
-        gamePlayConfig.setTradingConfig(tradingConfig);
-
-        return true;
-    }
-
-    @Override
     public boolean loadGamePlayConfig(int leagueId, IGamePlayConfig gamePlayConfig) {
         gamePlayConfig.setGamePlayConfigID(1);
         gamePlayConfig.setLeagueID(leagueId);

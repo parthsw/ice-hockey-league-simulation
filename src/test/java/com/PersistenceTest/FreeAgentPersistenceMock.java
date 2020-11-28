@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 
-public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
+public class FreeAgentPersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public FreeAgentPersistenceMock() {
@@ -18,37 +18,6 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
     }
 
-    @Override
-    public boolean saveFreeAgent(IFreeAgent freeAgent) {
-        IPlayerStats stats = leagueManagerFactory.createPlayerStats();
-        IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
-
-        freeAgent.setLeagueID(1);
-        freeAgent.setFreeAgentID(1);
-        freeAgent.setPlayerName("Mike Two");
-        freeAgent.setInjuredStatus(false);
-        freeAgent.setDaysInjured(0);
-        freeAgent.setInjuryDate(null);
-        freeAgent.setRetiredStatus(false);
-        freeAgent.setRetirementDate(null);
-
-        stats.setPosition("forward");
-        stats.setShooting(10);
-        stats.setChecking(2);
-        stats.setSaving(14);
-        stats.setSkating(18);
-        stats.setStrength(29);
-        freeAgent.setPlayerStats(stats);
-
-        playerAgeInfo.setBirthDate(LocalDate.of(1996, Month.JULY, 16));
-        playerAgeInfo.setAgeInYears(24);
-        playerAgeInfo.setElapsedDaysFromLastBDay(123);
-        freeAgent.setPlayerAgeInfo(playerAgeInfo);
-
-        return true;
-    }
-
-    @Override
     public boolean loadFreeAgents(int leagueId, List<IFreeAgent> freeAgents) {
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         IPlayerStats stats = leagueManagerFactory.createPlayerStats();

@@ -3,7 +3,7 @@ package com.Persistence;
 public class PersistenceFactory implements IPersistenceFactory{
 
     @Override
-    public ILeaguePersistece createLeaguePersistence() {
+    public ILeaguePersistence createLeaguePersistence() {
         return new LeaguePersistence();
     }
 }

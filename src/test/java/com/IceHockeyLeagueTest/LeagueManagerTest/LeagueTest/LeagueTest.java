@@ -17,6 +17,8 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 //import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.PersistenceTest.GamePlayConfigPersistenceMock;
+import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -27,7 +29,7 @@ import java.util.List;
 
 public class LeagueTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    //private static IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
     public static void setup() {
@@ -36,7 +38,7 @@ public class LeagueTest {
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
        // AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-     //   databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactory();
     }
 
     @Test
@@ -127,12 +129,11 @@ public class LeagueTest {
 
     @Test
     public void setGamePlayConfigTest() {
-  //      IGamePlayConfigPersistence gamePlayConfigDB = databaseFactory.createGamePlayConfigPersistence();
         ILeague league = leagueManagerFactory.createLeague();
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-   //     gamePlayConfigDB.loadGamePlayConfig(1, gamePlayConfig);
+        GamePlayConfigPersistenceMock gamePlayConfigPersistenceMock = persistenceFactory.createGamePlayConfigPersistence();
+        gamePlayConfigPersistenceMock.loadGamePlayConfig(1, gamePlayConfig);
         league.setGamePlayConfig(gamePlayConfig);
-
         IGamePlayConfig leagueConfig = league.getGamePlayConfig();
         Assert.assertEquals(1, leagueConfig.getLeagueID());
     }
