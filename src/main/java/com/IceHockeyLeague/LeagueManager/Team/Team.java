@@ -1,11 +1,14 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+import com.IceHockeyLeague.LeagueManager.Team.Roster.ITeamRoster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +23,31 @@ public class Team implements ITeam {
     private IManager manager;
     private ICoach coach;
     private int lossPoint;
+    private ITeamRoster teamRoster;
+    private ILeagueManagerFactory leagueManagerFactory;
 
     public Team() {
         setDefaults();
     }
 
     private void setDefaults() {
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         teamID = -1;
         divisionID = -1;
         teamStrength = 0f;
         isUserCreated = false;
         players = new ArrayList<>();
         lossPoint = 0;
+        teamRoster = leagueManagerFactory.createTeamRoster();
+    }
+
+    public List<ITeamPlayer> getActiveRoster() {
+        return teamRoster.getActiveRoster();
+    }
+
+    @Override
+    public void setTeamRoster(ITeamRoster teamRoster) {
+        this.teamRoster = teamRoster;
     }
 
     @Override
