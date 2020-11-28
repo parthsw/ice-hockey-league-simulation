@@ -16,4 +16,5 @@ public interface IStandingSystem {
     List<IStanding> getStandingsInDivision(IDivision division);
     List<IStanding> getStandingsInConference(IConference conference);
     IStanding getTopStandingInConference(IConference conference);
+    List<IStanding> getSortedStandingsInLeague();
 }

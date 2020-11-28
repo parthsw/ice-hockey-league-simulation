@@ -251,4 +251,24 @@ public class StandingSystemTest {
 
         Assert.assertEquals(standing, topStandingInConference);
     }
+
+    @Test
+    public void getSortedStandingsInLeagueTest() {
+        IStandingSystem standingSystem = leagueManagerFactory.createStandingSystem();
+        List<IStanding> standings = createDummyStandings();
+        standingSystem.setStandings(standings);
+
+        List<IStanding> leagueStandings = standingSystem.getSortedStandingsInLeague();
+
+        Assert.assertEquals(8, leagueStandings.size());
+        Assert.assertEquals(standings.get(0), leagueStandings.get(6));
+        Assert.assertEquals(standings.get(1), leagueStandings.get(3));
+        Assert.assertEquals(standings.get(2), leagueStandings.get(5));
+        Assert.assertEquals(standings.get(3), leagueStandings.get(4));
+        Assert.assertEquals(standings.get(4), leagueStandings.get(1));
+        Assert.assertEquals(standings.get(5), leagueStandings.get(2));
+        Assert.assertEquals(standings.get(6), leagueStandings.get(7));
+        Assert.assertEquals(standings.get(7), leagueStandings.get(0));
+    }
+
 }

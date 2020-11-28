@@ -91,7 +91,8 @@ public class StandingSystem implements IStandingSystem{
     }
 
     public List<IStanding> getSortedStandingsInLeague() {
-        standings.sort(Standing.standingComparator);
-        return standings;
+        List<IStanding> myStandings = new ArrayList<>(standings);
+        myStandings.sort(Standing.standingComparator);
+        return myStandings;
     }
 }
