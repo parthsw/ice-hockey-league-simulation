@@ -89,4 +89,9 @@ public class StandingSystem implements IStandingSystem{
     public IStanding getTopStandingInConference(IConference conference) {
         return getStandingsInConference(conference).get(0);
     }
+
+    public List<IStanding> getSortedStandingsInLeague() {
+        standings.sort(Standing.standingComparator);
+        return standings;
+    }
 }

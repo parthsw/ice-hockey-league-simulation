@@ -246,9 +246,9 @@ public class League implements ILeague {
     }
 
     @Override
-    public boolean loadCompleteLeague() {
+    public ILeague loadCompleteLeague(String filePath) {
         ILeaguePersistence leaguePersistence = persistenceFactory.createLeaguePersistence();
-        leaguePersistence.loadLeague();
-        return true;
+        ILeague league = leaguePersistence.loadLeague(filePath);
+        return league;
     }
 }

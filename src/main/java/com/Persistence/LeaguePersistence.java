@@ -4,6 +4,8 @@ import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.SerializeDeserializeLeagueObject.Deserialize;
+import com.IceHockeyLeague.SerializeDeserializeLeagueObject.IDeserialize;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerialize;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.Serialize;
 
@@ -32,7 +34,9 @@ public class LeaguePersistence implements ILeaguePersistence {
         s.serializeLeagueObject(league,teamName);
         return true;
     }
-    public boolean loadLeague(){
-        return true;
+    public ILeague loadLeague(String filePath){
+        IDeserialize d = new Deserialize();
+        ILeague league = d.deserializeLeagueObject(filePath);
+        return league;
     }
 }

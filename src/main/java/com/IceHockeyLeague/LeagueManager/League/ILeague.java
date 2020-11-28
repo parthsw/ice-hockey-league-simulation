@@ -66,5 +66,5 @@ public interface ILeague {
     IStandingSystem getStandingSystem();
 
     boolean saveCompleteLeague();
-    boolean loadCompleteLeague();
+    ILeague loadCompleteLeague(String filePath);
 }

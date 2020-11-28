@@ -10,6 +10,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 //import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,41 +47,36 @@ public class LoadTeamState extends AbstractState {
     private AbstractState processLeagueLoad() {
         String teamName;
         ITeam team = leagueManagerFactory.createTeam();
-
-        while(true) {
+        ILeague league = getLeague();
+        while (true) {
             teamName = appInput.getInput();
             team.setTeamName(teamName);
-            if(team.isNullOrEmpty(teamName)) {
+            if (team.isNullOrEmpty(teamName)) {
                 appOutput.displayError(TEAM_NAME_EMPTY);
                 continue;
             }
-            List<ILeague> leagueList = new ArrayList<>();
-
-
-            //if the name of the file with team name exists or not
-                if(leagueList.size() == 0) {
-                    appOutput.displayError(TEAM_NOT_EXIST);
-                    return null;
+            boolean flag = true;
+            String fileToLoad = teamName + ".json";
+            String pathToFile = "";
+            File path = new File("serialization_input_output\\");  // C://tejasvi
+            File[] files = path.listFiles();
+            for (File file: files) {
+                if (file.getName().equals(fileToLoad)) {
+                    pathToFile = file.getAbsolutePath();
+                    league = league.loadCompleteLeague(pathToFile);
+                    break;
+                } else {
+                    flag = false;
                 }
-                if(leagueList.size() == 1) {
-                    ILeague leagueToLoad = leagueList.get(0);
-                    leagueToLoad.loadCompleteLeague();
-                    this.setLeague(leagueToLoad);
-                }
-                else {
-                    appOutput.display(LEAGUE_SELECTION_PROMPT);
-                    for(ILeague league: leagueList) {
-                        appOutput.display("League ID: " + league.getLeagueID() + "& League Name: " + league.getLeagueName());
-                    }
-                    int leagueId = Integer.parseInt(appInput.getInput());
-                    ILeague leagueToLoad = leagueManagerFactory.createLeague();
-                    leagueToLoad.loadCompleteLeague();
-                    this.setLeague(leagueToLoad);
-                }
-                break;
             }
-
-
-        return stateMachineFactory.createPlayerChoiceState();
+            if(flag){
+            }
+            else{
+                appOutput.displayError(TEAM_NOT_EXIST);
+                return null;
+            }
+            this.setLeague(league);
+            return stateMachineFactory.createPlayerChoiceState();
+        }
     }
 }

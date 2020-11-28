@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.SerializeDeserializeLeagueObject;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.League;
@@ -17,12 +18,13 @@ public class Deserialize implements IDeserialize {
     }
 
     public ILeague deserializeLeagueObject(String path){
+        ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
         Gson gson = new Gson();
         String jsonData = "";
         ILeague league = leagueManagerFactory.createLeague();
         Scanner myReader = null;
         try {
-            File obj = new File("jsonInput");
+            File obj = new File(path);
             myReader = new Scanner(obj);
             while(myReader.hasNextLine()) {
                 jsonData = myReader.nextLine();

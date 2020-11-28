@@ -20,7 +20,7 @@ public class Serialize implements ISerialize {
             myWriter = new FileWriter(file);
             File obj = new File(file);
             path = obj.getAbsolutePath();
-            myWriter.write(jsonOutput);
+            myWriter.write("serialization_input_output\\"+jsonOutput);
             myWriter.flush();
             myWriter.close();
         }
