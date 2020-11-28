@@ -2,25 +2,22 @@ package com.PersistenceTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
-
+import com.IceHockeyLeague.LeagueManager.Team.TeamStrengthCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DivisionPersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
-    private final IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
 
     public DivisionPersistenceMock() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactory();
     }
 
     public boolean loadDivisions(int conferenceId, List<IDivision> divisions) {
@@ -29,9 +26,9 @@ public class DivisionPersistenceMock {
         division.setDivisionName("Atlantic");
         division.setConferenceID(1);
 
-        ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
+        TeamPersistenceMock teamPersistenceMock = persistenceFactory.createTeamPersistence();
         List<ITeam> teams = new ArrayList<>();
-        teamDB.loadTeams(1, teams);
+        teamPersistenceMock.loadTeams(1,teams);
         division.setTeams(teams);
         divisions.add(division);
 

@@ -15,13 +15,13 @@ import java.util.List;
 
 public class TeamPersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
-    private final IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
 
     public TeamPersistenceMock() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactory();
     }
 
     public boolean loadTeams(int divisionId, List<ITeam> teams) {
@@ -32,18 +32,18 @@ public class TeamPersistenceMock {
         team.setIsUserCreated(true);
 
         ICoach coach = leagueManagerFactory.createCoach();
-        ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
-        coachDB.loadTeamCoach(1, coach);
+        CoachPersistenceMock coachPersistenceMock = persistenceFactory.createCoachPersistence();
+        coachPersistenceMock.loadTeamCoach(1,coach);
         team.setCoach(coach);
 
         IManager manager = leagueManagerFactory.createManager();
-        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
-        managerDB.loadTeamManager(1, manager);
+        ManagerPersistenceMock managerPersistenceMock = persistenceFactory.createManagerPersistence();
+        managerPersistenceMock.loadTeamManager(1,manager);
         team.setManager(manager);
 
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
-        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
+        TeamPlayerPersistenceMock teamPlayerPersistenceMock = persistenceFactory.createTeamPlayerPersistence();
+        teamPlayerPersistenceMock.loadTeamPlayers(1,teamPlayers);
         team.setPlayers(teamPlayers);
 
         teams.add(team);

@@ -4,7 +4,6 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 
 import java.util.List;
 

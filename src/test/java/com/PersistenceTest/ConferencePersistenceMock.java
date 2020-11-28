@@ -12,13 +12,13 @@ import java.util.List;
 
 public class ConferencePersistenceMock {
     private final ILeagueManagerFactory leagueManagerFactory;
-    private final IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
 
     public ConferencePersistenceMock() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactory();
     }
 
     public boolean loadConferences(int leagueId, List<IConference> conferences) {
@@ -27,9 +27,9 @@ public class ConferencePersistenceMock {
         conference.setConferenceID(1);
         conference.setConferenceName("Eastern Conference");
 
-        IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
+        DivisionPersistenceMock divisionPersistenceMock = persistenceFactory.createDivisionPersistence();
         List<IDivision> divisions = new ArrayList<>();
-        divisionDB.loadDivisions(1, divisions);
+        divisionPersistenceMock.loadDivisions(1,divisions);
         conference.setDivisions(divisions);
         conferences.add(conference);
 

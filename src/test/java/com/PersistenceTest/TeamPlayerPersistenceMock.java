@@ -6,8 +6,6 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerAgeInfo;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
