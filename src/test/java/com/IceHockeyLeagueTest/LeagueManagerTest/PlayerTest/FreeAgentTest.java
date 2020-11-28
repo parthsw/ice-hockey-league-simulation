@@ -10,6 +10,8 @@ import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 //import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.PersistenceTest.FreeAgentPersistenceMock;
+import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -19,14 +21,14 @@ import java.util.List;
 
 public class FreeAgentTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-   // private static IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-     //   databaseFactory = appFactory.createDatabaseFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactory();
     }
     @Test
     public void ConstructorTest() {
@@ -65,15 +67,12 @@ public class FreeAgentTest {
 
     @Test
     public void convertToTeamPlayerTest() {
-      //  IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        FreeAgentPersistenceMock freeAgentPersistenceMock = persistenceFactory.createFreeAgentPersistence();
         List<IFreeAgent> freeAgents = new ArrayList<>();
-        //freeAgentDB.loadFreeAgents(1, freeAgents);
-
+        freeAgentPersistenceMock.loadFreeAgents(1,freeAgents);
         IFreeAgent freeAgent = freeAgents.get(1);
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-
         freeAgent.convertToTeamPlayer(teamPlayer);
-
         Assert.assertFalse(teamPlayer.isCaptain());
         Assert.assertEquals(-1, teamPlayer.getTeamID());
         Assert.assertEquals(-1, teamPlayer.getTeamPlayerID());
@@ -82,12 +81,10 @@ public class FreeAgentTest {
     @Test
     public void bestFreeAgentForPosition() {
         List<IFreeAgent> freeAgents = new ArrayList<>();
-    //    IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        FreeAgentPersistenceMock freeAgentPersistenceMock = persistenceFactory.createFreeAgentPersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
-
-      //  freeAgentDB.loadFreeAgents(1, freeAgents);
+        freeAgentPersistenceMock.loadFreeAgents(1,freeAgents);
         Assert.assertNull(freeAgent.bestFreeAgentForPosition(freeAgents, "goalie"));
-
         IFreeAgent bestFreeAgent = freeAgent.bestFreeAgentForPosition(freeAgents, "forward");
         Assert.assertEquals("Fred Two", bestFreeAgent.getPlayerName());
         Assert.assertEquals(3, bestFreeAgent.getFreeAgentID());

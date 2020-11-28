@@ -247,7 +247,6 @@ public class LeagueTest {
         ILeague league = leagueManagerFactory.createLeague();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         league.addRetiredFreeAgent(freeAgent);
-
         List<IFreeAgent> retiredFreeAgents = league.getRetiredFreeAgents();
         Assert.assertEquals(1, retiredFreeAgents.size());
     }
