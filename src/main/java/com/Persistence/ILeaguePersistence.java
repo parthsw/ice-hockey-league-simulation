@@ -1,5 +1,5 @@
 package com.Persistence;
 interface ILeaguePersistence {
-    void saveALeague();
-    void loadALeague();
+    void saveLeague();
+    void loadLeague();
 }

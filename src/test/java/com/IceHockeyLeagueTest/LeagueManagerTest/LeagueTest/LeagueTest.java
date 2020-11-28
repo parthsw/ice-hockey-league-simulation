@@ -17,8 +17,7 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 //import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.PersistenceTest.GamePlayConfigPersistenceMock;
-import com.PersistenceTest.PersistenceFactoryTest;
+import com.PersistenceTest.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -157,9 +156,9 @@ public class LeagueTest {
     @Test
     public void setConferencesTest() {
         ILeague league = leagueManagerFactory.createLeague();
-  //      IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
+        ConferencePersistenceMock conferencePersistenceMock = persistenceFactory.createConferencePersistence();
         List<IConference> conferences = new ArrayList<>();
-   //     league.loadConferences(conferenceDB, conferences);
+        conferencePersistenceMock.loadConferences(1,conferences);
         league.setConferences(conferences);
 
         List<IConference> leagueConferences = league.getConferences();
@@ -184,10 +183,9 @@ public class LeagueTest {
     @Test
     public void removeFreeAgentTest() {
         ILeague league = leagueManagerFactory.createLeague();
-    //    IFreeAgentPersistence freeAgentPersistence = databaseFactory.createFreeAgentPersistence();
+        FreeAgentPersistenceMock freeAgentPersistenceMock = persistenceFactory.createFreeAgentPersistence();
         List<IFreeAgent> freeAgents = new ArrayList<>();
-
-   //     league.loadLeagueFreeAgents(freeAgentPersistence, freeAgents);
+        freeAgentPersistenceMock.loadFreeAgents(1,freeAgents);
         league.setFreeAgents(freeAgents);
         league.removeFreeAgent(freeAgents.get(0));
 

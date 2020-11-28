@@ -11,6 +11,8 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.AdvanceToNextSeasonState;
 import com.IceHockeyLeague.StateMachine.States.PersistState;
+import com.PersistenceTest.LeaguePersistenceMock;
+import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,24 +25,23 @@ import java.util.List;
 public class AgingStateTest {
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
-  //  private static IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory appFactory = AppFactoryTest.createAppFactory();
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
-    //    AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-      //  databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactory();
     }
 
     @Test
     public void onRunTest() {
         ILeague league = leagueManagerFactory.createLeague();
-      //  ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
-        //leagueDB.loadLeague(1, league);
+        LeaguePersistenceMock leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        leaguePersistenceMock.loadLeague(1,league);
         league.setLeagueDate(LocalDate.of(2020, Month.NOVEMBER, 17));
 
         AbstractState agingState = stateMachineFactory.createAgingState();
@@ -54,8 +55,8 @@ public class AgingStateTest {
     @Test
     public void onRunAlternateTest() {
         ILeague league = leagueManagerFactory.createLeague();
-    //    ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
-      //  leagueDB.loadLeague(1, league);
+        LeaguePersistenceMock leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        leaguePersistenceMock.loadLeague(1,league);
         league.setLeagueDate(LocalDate.of(2020, Month.NOVEMBER, 17));
 
         List<ISchedule> playoffScheduleList = new ArrayList<>();

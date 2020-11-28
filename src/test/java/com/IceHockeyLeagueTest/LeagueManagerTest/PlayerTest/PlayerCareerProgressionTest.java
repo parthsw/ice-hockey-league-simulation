@@ -2,16 +2,16 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-//import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.PersistenceTest.LeaguePersistenceMock;
+import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 public class PlayerCareerProgressionTest {
     private static final LocalDate CURRENT_DATE = LocalDate.of(2020, Month.NOVEMBER, 17);
     private static ILeagueManagerFactory leagueManagerFactory;
-    //private static IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
     private static IPlayerCareerProgression playerCareerProgression;
     private static IPlayer player;
     private static IRandomChance randomChanceMock;
@@ -36,9 +36,8 @@ public class PlayerCareerProgressionTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
-  //      AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-    //    databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactory();
         randomChanceMock = Mockito.mock(RandomChance.class);
         playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(randomChanceMock);
         player = leagueManagerFactory.createPlayer();
@@ -138,13 +137,11 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void handleFreeAgentRetirementTest() {
-      //  ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        LeaguePersistenceMock leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         ILeague league = leagueManagerFactory.createLeague();
-        //leagueDB.loadLeague(1, league);
-
+        leaguePersistenceMock.loadLeague(1,league);
         Assert.assertFalse(playerCareerProgression.handleFreeAgentRetirement(freeAgent, league));
-
         IFreeAgent freeAgentToRemove = league.getFreeAgents().get(1);
         playerCareerProgression.handleFreeAgentRetirement(freeAgentToRemove, league);
         Assert.assertEquals(2, league.getFreeAgents().size());
@@ -153,7 +150,8 @@ public class PlayerCareerProgressionTest {
     @Test
     public void handleTeamPlayerRetirementTest() {
         ILeague league = leagueManagerFactory.createLeague();
-        league.loadCompleteLeague(1);
+        LeaguePersistenceMock leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        leaguePersistenceMock.loadLeague(1, league);
 
         List<IConference> conferences = league.getConferences();
         IConference conference = conferences.get(0);

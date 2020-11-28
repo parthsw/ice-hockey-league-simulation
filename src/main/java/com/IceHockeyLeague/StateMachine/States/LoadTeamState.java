@@ -21,7 +21,6 @@ public class LoadTeamState extends AbstractState {
     private static final String LEAGUE_SELECTION_PROMPT = "Please enter the ID of a league that you want to load";
 
     private final ILeagueManagerFactory leagueManagerFactory;
-  //  private final IDatabaseFactory databaseFactory;
     private final IStateMachineFactory stateMachineFactory;
     private final IAppInput appInput;
     private final IAppOutput appOutput;
@@ -30,7 +29,6 @@ public class LoadTeamState extends AbstractState {
         this.appInput = appInput;
         this.appOutput = appOutput;
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-    //    databaseFactory = AbstractAppFactory.getDatabaseFactory();
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
@@ -56,9 +54,8 @@ public class LoadTeamState extends AbstractState {
                 appOutput.displayError(TEAM_NAME_EMPTY);
                 continue;
             }
-          //  ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
             List<ILeague> leagueList = new ArrayList<>();
-       //     if(team.checkIfTeamNameExists(teamDB, teamName, leagueList)) {
+
 
             //if the name of the file with team name exists or not
                 if(leagueList.size() == 0) {
@@ -82,7 +79,7 @@ public class LoadTeamState extends AbstractState {
                 }
                 break;
             }
-   //     }
+
 
         return stateMachineFactory.createPlayerChoiceState();
     }

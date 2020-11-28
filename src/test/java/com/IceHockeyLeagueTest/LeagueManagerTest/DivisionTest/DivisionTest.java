@@ -12,6 +12,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.DivisionPersistenceMock;
 import com.PersistenceTest.PersistenceFactoryTest;
+import com.PersistenceTest.TeamPersistenceMock;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -100,12 +101,10 @@ public class DivisionTest {
     public void setTeamsTest() {
         IDivision division = leagueManagerFactory.createDivision();
         List<ITeam> teams = new ArrayList<>();
-
-     //   ITeamPersistence teamDB = databaseFactory.createTeamPersistence();
-       // division.loadTeams(teamDB, teams);
-
+        TeamPersistenceMock teamPersistenceMock = persistenceFactory.createTeamPersistence();
+        teamPersistenceMock.loadTeams(1,teams);
         division.setTeams(teams);
-
+        division.setTeams(teams);
         List<ITeam> divisionTeams = division.getTeams();
         Assert.assertEquals(1, divisionTeams.size());
     }
