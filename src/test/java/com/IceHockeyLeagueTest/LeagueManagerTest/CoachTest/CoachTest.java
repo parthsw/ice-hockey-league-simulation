@@ -9,7 +9,9 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,9 @@ import java.util.List;
 public class CoachTest {
     private static ILeagueManagerFactory leagueManagerFactory;
     private static IDatabaseFactory databaseFactory;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -103,6 +108,13 @@ public class CoachTest {
 
         coachStats = coach.getCoachStats();
         Assert.assertEquals(0.7f, coachStats.getSaving(), 0.0);
+    }
+
+    @Test
+    public void setCoachStatsInvalidTest() {
+        thrown.expect(IllegalArgumentException.class);
+        ICoach coach = leagueManagerFactory.createCoach();
+        coach.setCoachStats(null);
     }
 
     @Test
