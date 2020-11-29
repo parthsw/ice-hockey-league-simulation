@@ -41,8 +41,19 @@ public class Team implements ITeam {
         teamRoster = leagueManagerFactory.createTeamRoster();
     }
 
+    @Override
     public List<ITeamPlayer> getActiveRoster() {
         return teamRoster.getActiveRoster();
+    }
+
+    @Override
+    public List<ITeamPlayer> getInactiveRoster() {
+        return teamRoster.getInactiveRoster();
+    }
+
+    @Override
+    public void validateRoster() {
+        teamRoster.validateRoster();
     }
 
     @Override

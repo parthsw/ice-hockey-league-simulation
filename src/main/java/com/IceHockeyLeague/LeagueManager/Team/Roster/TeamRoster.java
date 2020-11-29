@@ -156,7 +156,6 @@ public class TeamRoster implements ITeamRoster {
         List<ITeamPlayer> skaters = new ArrayList<>();
         List<ITeamPlayer> goalies = new ArrayList<>();
 
-
         for (ITeamPlayer player : this.players) {
             if (player.getPlayerStats().getPosition().equals(goalie)) {
                 goalies.add(player);
@@ -164,6 +163,7 @@ public class TeamRoster implements ITeamRoster {
                 skaters.add(player);
             }
         }
+
         List<ITeamPlayer> bestSkaters = new ArrayList<>();
         List<ITeamPlayer> bestGoalies = new ArrayList<>();
 
@@ -192,6 +192,7 @@ public class TeamRoster implements ITeamRoster {
             bestGoalies.add(bestGoalie);
             goalies.remove(bestGoalie);
         }
+
         List<ITeamPlayer> activePlayers = new ArrayList<>();
         List<ITeamPlayer> inactivePlayers = new ArrayList<>();
         activePlayers.addAll(bestSkaters);
@@ -202,6 +203,5 @@ public class TeamRoster implements ITeamRoster {
         inactiveRoster.setInactivePlayers(inactivePlayers);
         inactiveRoster.setAgents(agents);
         activeRoster.validateActiveRoster(inactiveRoster);
-
     }
 }

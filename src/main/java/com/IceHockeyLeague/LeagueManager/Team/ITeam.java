@@ -59,4 +59,10 @@ public interface ITeam {
 
     void setTeamRoster(ITeamRoster teamRoster);
 
+    List<ITeamPlayer> getActiveRoster();
+
+    List<ITeamPlayer> getInactiveRoster();
+
+    void validateRoster();
+
 }
