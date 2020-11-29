@@ -16,7 +16,7 @@ public interface ICoach {
     void setLeagueID(int id);
 
     ICoachStats getCoachStats();
-    void setCoachStats(ICoachStats coachStats);
+    void setCoachStats(ICoachStats coachStats) throws IllegalArgumentException;
 
     boolean isValid();
 

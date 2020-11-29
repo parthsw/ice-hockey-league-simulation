@@ -107,7 +107,7 @@ public class StateMachineFactory implements IStateMachineFactory {
     @Override
     public AbstractState createDraftingState() {
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
-        return new DraftingState(leagueManagerFactory.createRandomPlayersGenerator(randomChance), leagueManagerFactory.createDraftManager());
+        return new DraftingState(leagueManagerFactory.createRandomPlayersGenerator(randomChance), leagueManagerFactory.createDraftManager(), leagueManagerFactory.createTeamRoster(), appOutput);
     }
 
     @Override

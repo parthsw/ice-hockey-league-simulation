@@ -10,6 +10,8 @@ public interface ITeamRoster {
 
     void setPlayers(List<ITeamPlayer> players);
 
+    List<ITeamPlayer> getPlayers();
+
     void setAgents(List<IFreeAgent> agents);
 
     List<ITeamPlayer> getInactiveRoster();

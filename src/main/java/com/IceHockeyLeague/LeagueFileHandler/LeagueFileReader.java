@@ -21,7 +21,7 @@ public class LeagueFileReader implements ILeagueFileReader {
     }
 
     @Override
-    public InputStream readAppResourceFile(String resourceFileName) {
+    public InputStream readAppResourceFile(String resourceFileName) throws NullPointerException {
         if(resourceFileName.isEmpty()) {
             return null;
         }

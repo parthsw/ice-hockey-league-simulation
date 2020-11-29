@@ -9,7 +9,7 @@ public class LeagueJsonMock {
     private static LeagueJsonMock leagueJsonMock;
 
     public static LeagueJsonMock instance() {
-        if (leagueJsonMock == null) {
+        if(leagueJsonMock == null) {
             leagueJsonMock = new LeagueJsonMock();
         }
         return leagueJsonMock;
@@ -37,15 +37,45 @@ public class LeagueJsonMock {
 
     public JSONObject validLeagueJson() {
         JSONArray players = new JSONArray();
-        for (int i=0; i<20; i++) {
+        for(int i = 0; i < 16; i++) {
             JSONObject player = new JSONObject();
-            player.put("playerName", "Player One");
+            player.put("playerName", "Forward Player " + (i + 1));
             player.put("position", "forward");
-            player.put("captain", true);
-            player.put("skating", 1+i);
-            player.put("shooting", 9);
+            player.put("captain", false);
+            player.put("skating", (i + 1));
+            player.put("shooting", (i + 1));
             player.put("checking", 11);
             player.put("saving", 12);
+            player.put("birthDay", 6);
+            player.put("birthMonth", 11);
+            player.put("birthYear", 2000);
+            players.put(player);
+        }
+
+        for(int i = 0; i < 10; i++) {
+            JSONObject player = new JSONObject();
+            player.put("playerName", "Defense Player " + (i + 1));
+            player.put("position", "defense");
+            player.put("captain", false);
+            player.put("skating", (i + 1));
+            player.put("shooting", (i + 1));
+            player.put("checking", (i + 9));
+            player.put("saving", 12);
+            player.put("birthDay", 6);
+            player.put("birthMonth", 11);
+            player.put("birthYear", 2000);
+            players.put(player);
+        }
+
+        for(int i = 0; i < 4; i++) {
+            JSONObject player = new JSONObject();
+            player.put("playerName", "Goalie Player " + (i + 1));
+            player.put("position", "goalie");
+            player.put("captain", true);
+            player.put("skating", (i + 1));
+            player.put("shooting", (i + 1));
+            player.put("checking", 11);
+            player.put("saving", (i + 15));
             player.put("birthDay", 6);
             player.put("birthMonth", 11);
             player.put("birthYear", 2000);
@@ -60,7 +90,7 @@ public class LeagueJsonMock {
         coach.put("saving", 0.5);
 
         JSONArray teams = new JSONArray();
-        for (int i=0; i<2; i++) {
+        for(int i = 0; i < 2; i++) {
             JSONObject team = new JSONObject();
             team.put("teamName", "Boston");
             team.put("generalManager", "Mister Fred");
@@ -70,7 +100,7 @@ public class LeagueJsonMock {
         }
 
         JSONArray divisions = new JSONArray();
-        for (int i=0; i<2; i++) {
+        for(int i = 0; i < 2; i++) {
             JSONObject division = new JSONObject();
             division.put("divisionName", "Atlantic");
             division.put("teams", teams);
@@ -78,7 +108,7 @@ public class LeagueJsonMock {
         }
 
         JSONArray conferences = new JSONArray();
-        for (int i=0; i<2; i++) {
+        for(int i = 0; i < 2; i++) {
             JSONObject conference = new JSONObject();
             conference.put("conferenceName", "Eastern Conference");
             conference.put("divisions", divisions);
@@ -86,11 +116,11 @@ public class LeagueJsonMock {
         }
 
         JSONArray freeAgents = new JSONArray();
-        for (int i=0; i<3; i++) {
+        for(int i = 0; i < 20; i++) {
             JSONObject freeAgent = new JSONObject();
-            freeAgent.put("playerName", "FreeAgent One");
+            freeAgent.put("playerName", "Forward FreeAgent " + (i + 1));
             freeAgent.put("position", "forward");
-            freeAgent.put("skating", 10);
+            freeAgent.put("skating", (i + 1));
             freeAgent.put("shooting", 10);
             freeAgent.put("checking", 10);
             freeAgent.put("saving", 1);
@@ -100,8 +130,36 @@ public class LeagueJsonMock {
             freeAgents.put(freeAgent);
         }
 
+        for(int i = 0; i < 20; i++) {
+            JSONObject freeAgent = new JSONObject();
+            freeAgent.put("playerName", "Goalie FreeAgent " + (i + 1));
+            freeAgent.put("position", "goalie");
+            freeAgent.put("skating", 8);
+            freeAgent.put("shooting", 1);
+            freeAgent.put("checking", 1);
+            freeAgent.put("saving", (i + 1));
+            freeAgent.put("birthDay", 6);
+            freeAgent.put("birthMonth", 11);
+            freeAgent.put("birthYear", 2000);
+            freeAgents.put(freeAgent);
+        }
+
+        for(int i = 0; i < 20; i++) {
+            JSONObject freeAgent = new JSONObject();
+            freeAgent.put("playerName", "Defense FreeAgent " + (i + 1));
+            freeAgent.put("position", "defense");
+            freeAgent.put("skating", 10);
+            freeAgent.put("shooting", 10);
+            freeAgent.put("checking", (i + 1));
+            freeAgent.put("saving", 1);
+            freeAgent.put("birthDay", 6);
+            freeAgent.put("birthMonth", 11);
+            freeAgent.put("birthYear", 2000);
+            freeAgents.put(freeAgent);
+        }
+
         JSONArray freeCoaches = new JSONArray();
-        for (int i=0; i<3; i++) {
+        for(int i = 0; i < 3; i++) {
             JSONObject freeCoach = new JSONObject();
             freeCoach.put("name", "Joe Smith");
             freeCoach.put("skating", 0.7);
@@ -112,7 +170,7 @@ public class LeagueJsonMock {
         }
 
         JSONArray managers = new JSONArray();
-        for (int i=0; i<3; i++) {
+        for(int i = 0; i < 3; i++) {
             managers.put("Manager ");
         }
 
@@ -169,7 +227,8 @@ public class LeagueJsonMock {
             writer.write(jsonObject.toString());
             writer.flush();
             return file.getPath();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             return "";
         }
     }
