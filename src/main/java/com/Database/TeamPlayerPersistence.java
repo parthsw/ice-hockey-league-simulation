@@ -29,12 +29,12 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
             IPlayerStats teamPlayerStats = teamPlayer.getPlayerStats();
             IPlayerAgeInfo teamPlayerAgeInfo = teamPlayer.getPlayerAgeInfo();
 
-            myCall.setInt(1, teamPlayer.getTeamID());
+            myCall.setInt(1, teamPlayer.getTeamId());
             myCall.setString(2, teamPlayer.getPlayerName());
             myCall.setBoolean(3, teamPlayer.isCaptain());
             myCall.setDate(4, sqlDateConversion.convertLocalDateToSQLDate(teamPlayerAgeInfo.getBirthDate()));
             myCall.setInt(5, teamPlayerAgeInfo.getAgeInYears());
-            myCall.setInt(6, teamPlayerAgeInfo.getElapsedDaysFromLastBDay());
+            myCall.setInt(6, teamPlayerAgeInfo.getElapsedDaysFromLastBDate());
             myCall.setBoolean(7, teamPlayer.getInjuredStatus());
             myCall.setInt(8, teamPlayer.getDaysInjured());
 
@@ -66,7 +66,7 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
             while(result.next()) {
                 playerID = result.getString("playerID");
             }
-            teamPlayer.setTeamPlayerID(Integer.parseInt(playerID));
+            teamPlayer.setTeamPlayerId(Integer.parseInt(playerID));
             return true;
         } catch (SQLException e) {
             System.out.println("error in insert player");
@@ -100,11 +100,11 @@ public class TeamPlayerPersistence implements ITeamPlayerPersistence {
 
                 IPlayerAgeInfo teamPlayerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
                 teamPlayerAgeInfo.setAgeInYears(result.getInt("age"));
-                teamPlayerAgeInfo.setElapsedDaysFromLastBDay(result.getInt("elapsedDaysFromLastBDay"));
+                teamPlayerAgeInfo.setElapsedDaysFromLastBDate(result.getInt("elapsedDaysFromLastBDay"));
                 teamPlayerAgeInfo.setBirthDate(sqlDateConversion.convertSQLDateToLocalDate(result.getDate("birthDate")));
 
-                player.setTeamPlayerID(result.getInt("playerID"));
-                player.setTeamID(result.getInt("teamID"));
+                player.setTeamPlayerId(result.getInt("playerID"));
+                player.setTeamId(result.getInt("teamID"));
                 player.setPlayerName(result.getString("name"));
                 player.setIsCaptain(result.getBoolean("captain"));
                 player.setInjuredStatus(result.getBoolean("isInjured"));

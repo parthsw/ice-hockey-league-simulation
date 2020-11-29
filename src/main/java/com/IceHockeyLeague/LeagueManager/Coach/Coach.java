@@ -25,8 +25,8 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public void setCoachId(int id) {
-        coachId = id;
+    public void setCoachId(int coachId) {
+        this.coachId = coachId;
     }
 
     @Override
@@ -45,8 +45,8 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public void setTeamId(int id) {
-        teamId = id;
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
     @Override
@@ -55,8 +55,8 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public void setLeagueId(int id) {
-        leagueId = id;
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Coach implements ICoach {
     @Override
     public void setCoachStats(ICoachStats stats) {
         if (stats == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Please provide a valid concrete implementation of ICoachStats");
         }
         coachStats = stats;
     }
@@ -99,18 +99,18 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public boolean saveTeamCoach(ICoachPersistence coachDB) {
-        return coachDB.saveTeamCoach(this);
+    public boolean saveTeamCoach(ICoachPersistence coachDb) {
+        return coachDb.saveTeamCoach(this);
     }
 
     @Override
-    public boolean saveLeagueCoach(ICoachPersistence coachDB) {
-        return coachDB.saveLeagueCoach(this);
+    public boolean saveLeagueCoach(ICoachPersistence coachDb) {
+        return coachDb.saveLeagueCoach(this);
     }
 
     @Override
-    public boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach) {
-        return coachDB.loadTeamCoach(teamId, this);
+    public boolean loadTeamCoach(ICoachPersistence coachDb, ICoach coach) {
+        return coachDb.loadTeamCoach(teamId, this);
     }
 
 }

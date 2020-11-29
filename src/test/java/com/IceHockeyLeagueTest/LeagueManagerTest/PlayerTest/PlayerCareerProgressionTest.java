@@ -236,7 +236,7 @@ public class PlayerCareerProgressionTest {
         IFreeAgent firstAgent = league.getFreeAgents().get(1);
         IPlayerAgeInfo firstAgentAgeInfo = firstAgent.getPlayerAgeInfo();
         Assert.assertEquals(20, firstAgentAgeInfo.getAgeInYears());
-        Assert.assertEquals(319, firstAgentAgeInfo.getElapsedDaysFromLastBDay());
+        Assert.assertEquals(319, firstAgentAgeInfo.getElapsedDaysFromLastBDate());
     }
 
     private IInjuryConfig createInjuryConfig() {
@@ -258,7 +258,7 @@ public class PlayerCareerProgressionTest {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(birthDate);
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
         return playerAgeInfo;
     }
 

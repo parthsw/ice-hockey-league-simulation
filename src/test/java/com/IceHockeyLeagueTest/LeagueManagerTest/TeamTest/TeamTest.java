@@ -160,7 +160,7 @@ public class TeamTest {
     public void addPlayerTest() {
         ITeam team = leagueManagerFactory.createTeam();
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        teamPlayer.setTeamPlayerID(1);
+        teamPlayer.setTeamPlayerId(1);
 
         team.addPlayer(teamPlayer);
         Assert.assertEquals(1, team.getPlayers().size());

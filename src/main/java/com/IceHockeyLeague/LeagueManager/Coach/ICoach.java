@@ -5,7 +5,7 @@ import java.util.List;
 public interface ICoach {
     int getCoachId();
 
-    void setCoachId(int id);
+    void setCoachId(int coachId);
 
     String getCoachName();
 
@@ -13,11 +13,11 @@ public interface ICoach {
 
     int getTeamId();
 
-    void setTeamId(int id);
+    void setTeamId(int teamId);
 
     int getLeagueId();
 
-    void setLeagueId(int id);
+    void setLeagueId(int leagueId);
 
     ICoachStats getCoachStats();
 
@@ -25,11 +25,11 @@ public interface ICoach {
 
     boolean isValid();
 
-    boolean saveTeamCoach(ICoachPersistence coachDB);
+    boolean saveTeamCoach(ICoachPersistence coachDb);
 
-    boolean saveLeagueCoach(ICoachPersistence coachDB);
+    boolean saveLeagueCoach(ICoachPersistence coachDb);
 
-    boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach);
+    boolean loadTeamCoach(ICoachPersistence coachDb, ICoach coach);
 
     boolean isNullOrEmpty(String coachName);
 

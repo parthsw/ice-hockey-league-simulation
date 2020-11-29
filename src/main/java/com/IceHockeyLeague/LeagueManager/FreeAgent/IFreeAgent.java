@@ -8,18 +8,21 @@ import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import java.util.List;
 
 public interface IFreeAgent extends IPlayer {
-    int getFreeAgentID();
-    void setFreeAgentID(int freeAgentID);
+    int getFreeAgentId();
 
-    int getLeagueID();
-    void setLeagueID(int leagueID);
+    void setFreeAgentId(int freeAgentId);
+
+    int getLeagueId();
+
+    void setLeagueId(int leagueId);
 
     ITeamPlayer convertToTeamPlayer(ITeamPlayer teamPlayer);
+
     void generateFreeAgent(IPlayer player);
 
-    IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgentList, String position);
+    IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgents, String position);
 
-    boolean saveFreeAgent(IFreeAgentPersistence freeAgentDB);
+    boolean saveFreeAgent(IFreeAgentPersistence freeAgentDb);
 
     boolean handleFreeAgentRetirement(IPlayerCareerProgression playerCareerProgression, ILeague league);
 }

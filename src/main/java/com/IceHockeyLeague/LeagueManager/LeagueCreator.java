@@ -147,7 +147,7 @@ public class LeagueCreator implements ILeagueCreator {
         int birthYear = ((JSONObject) playerJson).getInt(BIRTH_YEAR);
         playerAgeInfo.setBirthDate(LocalDate.of(birthYear, birthMonth, birthDay));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(LEAGUE_START_DATE));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(LEAGUE_START_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(LEAGUE_START_DATE));
         player.setPlayerAgeInfo(playerAgeInfo);
 
         IPlayerStats playerStats = leagueManagerFactory.createPlayerStats();

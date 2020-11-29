@@ -120,7 +120,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
             if(isFreeAgentRemoved) {
                 ITeamPlayer newTeamPlayer = leagueManagerFactory.createTeamPlayer();
                 bestFreeAgent.convertToTeamPlayer(newTeamPlayer);
-                newTeamPlayer.setTeamID(team.getTeamID());
+                newTeamPlayer.setTeamId(team.getTeamID());
                 team.addPlayer(newTeamPlayer);
             }
         }

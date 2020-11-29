@@ -236,7 +236,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         player.setPlayerName(generateRandomPlayerName());
         playerAgeInfo.setBirthDate(generateRandomPlayerDateOfBirth(currentDate));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(currentDate));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(currentDate));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(currentDate));
         player.setPlayerAgeInfo(playerAgeInfo);
 
         return player;
