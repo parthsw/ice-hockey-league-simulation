@@ -26,8 +26,8 @@ public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
         IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
 
-        teamPlayer.setTeamPlayerID(1);
-        teamPlayer.setTeamID(1);
+        teamPlayer.setTeamPlayerId(1);
+        teamPlayer.setTeamId(1);
         teamPlayer.setPlayerName("Fred One");
         teamPlayer.setIsCaptain(true);
         teamPlayer.setInjuredStatus(false);
@@ -46,7 +46,7 @@ public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
 
         playerAgeInfo.setBirthDate(LocalDate.of(1997, Month.APRIL, 18));
         playerAgeInfo.setAgeInYears(23);
-        playerAgeInfo.setElapsedDaysFromLastBDay(212);
+        playerAgeInfo.setElapsedDaysFromLastBDate(212);
         teamPlayer.setPlayerAgeInfo(playerAgeInfo);
 
         return true;
@@ -59,8 +59,8 @@ public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
         IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
 
-        teamPlayer.setTeamPlayerID(1);
-        teamPlayer.setTeamID(1);
+        teamPlayer.setTeamPlayerId(1);
+        teamPlayer.setTeamId(1);
         teamPlayer.setPlayerName("Fred One");
         teamPlayer.setIsCaptain(true);
         teamPlayer.setInjuredStatus(false);
@@ -79,15 +79,15 @@ public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
 
         playerAgeInfo.setBirthDate(LocalDate.of(1997, Month.APRIL, 18));
         playerAgeInfo.setAgeInYears(23);
-        playerAgeInfo.setElapsedDaysFromLastBDay(212);
+        playerAgeInfo.setElapsedDaysFromLastBDate(212);
         teamPlayer.setPlayerAgeInfo(playerAgeInfo);
 
         ITeamPlayer teamPlayer1 = leagueManagerFactory.createTeamPlayer();
         IPlayerStats stats1 = leagueManagerFactory.createPlayerStats();
         IPlayerAgeInfo playerAgeInfo1 = leagueManagerFactory.createPlayerAgeInfo();
 
-        teamPlayer1.setTeamPlayerID(2);
-        teamPlayer1.setTeamID(1);
+        teamPlayer1.setTeamPlayerId(2);
+        teamPlayer1.setTeamId(1);
         teamPlayer1.setPlayerName("Mike One");
         teamPlayer1.setIsCaptain(false);
         teamPlayer1.setInjuredStatus(true);
@@ -106,7 +106,7 @@ public class TeamPlayerPersistenceMock implements ITeamPlayerPersistence {
 
         playerAgeInfo1.setBirthDate(LocalDate.of(1993, Month.OCTOBER, 25));
         playerAgeInfo1.setAgeInYears(27);
-        playerAgeInfo1.setElapsedDaysFromLastBDay(22);
+        playerAgeInfo1.setElapsedDaysFromLastBDate(22);
         teamPlayer1.setPlayerAgeInfo(playerAgeInfo1);
 
         teamPlayers.add(teamPlayer);

@@ -106,7 +106,7 @@ public class Player implements IPlayer {
 
     @Override
     public boolean isBirthDay(LocalDate currentDate) {
-        return playerAgeInfo.isPlayerBirthDay(currentDate);
+        return playerAgeInfo.isPlayerBirthDate(currentDate);
     }
 
     @Override

@@ -279,7 +279,7 @@ public class League implements ILeague {
                     team.saveTeam(databaseFactory.createTeamPersistence());
 
                     for(ITeamPlayer player: team.getPlayers()) {
-                        player.setTeamID(team.getTeamID());
+                        player.setTeamId(team.getTeamID());
                         player.saveTeamPlayer(databaseFactory.createTeamPlayerPersistence());
                     }
 
@@ -297,7 +297,7 @@ public class League implements ILeague {
         }
 
         for(IFreeAgent freeAgent: freeAgents) {
-            freeAgent.setLeagueID(leagueID);
+            freeAgent.setLeagueId(leagueID);
             freeAgent.saveFreeAgent(databaseFactory.createFreeAgentPersistence());
         }
 

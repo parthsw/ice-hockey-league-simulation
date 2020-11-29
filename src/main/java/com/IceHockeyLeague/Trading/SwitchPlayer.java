@@ -15,7 +15,7 @@ public class SwitchPlayer implements ISwitchPlayer {
     @Override
     public IFreeAgent teamToFreeTrade(ITeamPlayer player, int leagueID) {
         IFreeAgent agent = leagueManagerFactory.createFreeAgent();
-        agent.setLeagueID(leagueID);
+        agent.setLeagueId(leagueID);
         agent.setPlayerName(player.getPlayerName());
         agent.setInjuredStatus(player.getInjuredStatus());
         agent.setRetiredStatus(player.getRetiredStatus());
@@ -27,7 +27,7 @@ public class SwitchPlayer implements ISwitchPlayer {
     @Override
     public ITeamPlayer freeToTeamTrade(IFreeAgent freeAgent, int teamId) {
         ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
-        player.setTeamID(teamId);
+        player.setTeamId(teamId);
         player.setIsCaptain(false);
         player.setPlayerName(freeAgent.getPlayerName());
         player.setInjuredStatus(freeAgent.getInjuredStatus());

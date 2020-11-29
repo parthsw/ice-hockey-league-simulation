@@ -32,11 +32,11 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
             IPlayerStats freeAgentStats = freeAgent.getPlayerStats();
             IPlayerAgeInfo freeAgentAgeInfo = freeAgent.getPlayerAgeInfo();
 
-            myCall.setInt(1, freeAgent.getLeagueID());
+            myCall.setInt(1, freeAgent.getLeagueId());
             myCall.setString(2, freeAgent.getPlayerName());
             myCall.setDate(3, sqlDateConversion.convertLocalDateToSQLDate(freeAgentAgeInfo.getBirthDate()));
             myCall.setInt(4, freeAgentAgeInfo.getAgeInYears());
-            myCall.setInt(5, freeAgentAgeInfo.getElapsedDaysFromLastBDay());
+            myCall.setInt(5, freeAgentAgeInfo.getElapsedDaysFromLastBDate());
             myCall.setBoolean(6, freeAgent.getInjuredStatus());
             myCall.setInt(7, freeAgent.getDaysInjured());
 
@@ -67,7 +67,7 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
             while(result.next()) {
                 playerID = result.getString("freeAgentID");
             }
-            freeAgent.setFreeAgentID(Integer.parseInt(playerID));
+            freeAgent.setFreeAgentId(Integer.parseInt(playerID));
             return true;
         } catch (SQLException e) {
             System.out.println("error in insert free agent");
@@ -99,12 +99,12 @@ public class FreeAgentPersistence implements IFreeAgentPersistence {
 
                 IPlayerAgeInfo freeAgentAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
                 freeAgentAgeInfo.setAgeInYears(result.getInt("age"));
-                freeAgentAgeInfo.setElapsedDaysFromLastBDay(result.getInt("elapsedDaysFromLastBDay"));
+                freeAgentAgeInfo.setElapsedDaysFromLastBDate(result.getInt("elapsedDaysFromLastBDay"));
                 freeAgentAgeInfo.setBirthDate(sqlDateConversion.convertSQLDateToLocalDate(result.getDate("birthDate")));
 
                 IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
-                freeAgent.setLeagueID(result.getInt("leagueID"));
-                freeAgent.setFreeAgentID(result.getInt("freeAgentID"));
+                freeAgent.setLeagueId(result.getInt("leagueID"));
+                freeAgent.setFreeAgentId(result.getInt("freeAgentID"));
                 freeAgent.setPlayerName(result.getString("name"));
                 freeAgent.setInjuredStatus(result.getBoolean("isInjured"));
                 freeAgent.setDaysInjured(result.getInt("daysInjured"));

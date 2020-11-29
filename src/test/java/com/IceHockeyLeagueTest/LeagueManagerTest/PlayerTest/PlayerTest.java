@@ -198,7 +198,7 @@ public class PlayerTest {
 
         playerAgeInfo.setBirthDate(LocalDate.of(1969, Month.NOVEMBER, 16));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
         player.setPlayerAgeInfo(playerAgeInfo);
 
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
@@ -214,11 +214,11 @@ public class PlayerTest {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2000, Month.NOVEMBER, 17));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
         player.setPlayerAgeInfo(playerAgeInfo);
 
         player.agePlayerByDays(245, CURRENT_DATE);
-        Assert.assertEquals(245, playerAgeInfo.getElapsedDaysFromLastBDay());
+        Assert.assertEquals(245, playerAgeInfo.getElapsedDaysFromLastBDate());
     }
 
     private IPlayerStats createPlayerStats() {
