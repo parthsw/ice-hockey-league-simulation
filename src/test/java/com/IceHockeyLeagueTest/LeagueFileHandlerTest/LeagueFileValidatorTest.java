@@ -14,19 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueFileValidatorTest {
-    private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
+    private static ILeagueFileValidator leagueFileValidator;
 
     @BeforeClass
     public static void setup() {
+        ILeagueFileHandlerFactory leagueFileHandlerFactory;
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
         leagueFileHandlerFactory = AbstractAppFactory.getLeagueFileHandlerFactory();
+        leagueFileValidator = leagueFileHandlerFactory.createLeagueFileValidator();
     }
 
     @Test
     public void validateJsonSchemaValidTest() {
-        ILeagueFileValidator leagueFileValidator = leagueFileHandlerFactory.createLeagueFileValidator();
         JSONObject leagueSchema = LeagueJsonMock.instance().leagueSchema();
         JSONObject leagueJson = LeagueJsonMock.instance().validLeagueJson();
         Assert.assertNull(leagueFileValidator.validateJsonSchema(leagueJson, leagueSchema));
@@ -34,7 +35,6 @@ public class LeagueFileValidatorTest {
 
     @Test
     public void validateJsonSchemaInvalidTest() {
-        ILeagueFileValidator leagueFileValidator = leagueFileHandlerFactory.createLeagueFileValidator();
         JSONObject leagueSchema = LeagueJsonMock.instance().leagueSchema();
         JSONObject invalidLeagueJson = LeagueJsonMock.instance().invalidLeagueJson();
         List<String> expectedError = new ArrayList<>();

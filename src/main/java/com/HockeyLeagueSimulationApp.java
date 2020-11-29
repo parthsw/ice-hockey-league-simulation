@@ -37,8 +37,9 @@ public class HockeyLeagueSimulationApp {
         IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         AbstractState importState = stateMachineFactory.createImportState();
 
+        LOGGER.info("Creating the state machine with starting state as " + importState.getClass().getSimpleName() + ".");
         IStateMachine stateMachine = stateMachineFactory.createStateMachine(importState);
-        LOGGER.info("Starting the outermost state machine.");
+        LOGGER.info("Executing the outermost state machine.");
         stateMachine.onExecution();
     }
 
