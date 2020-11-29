@@ -9,7 +9,7 @@ public class LeagueJsonMock {
     private static LeagueJsonMock leagueJsonMock;
 
     public static LeagueJsonMock instance() {
-        if(leagueJsonMock == null) {
+        if (leagueJsonMock == null) {
             leagueJsonMock = new LeagueJsonMock();
         }
         return leagueJsonMock;
@@ -37,7 +37,7 @@ public class LeagueJsonMock {
 
     public JSONObject validLeagueJson() {
         JSONArray players = new JSONArray();
-        for(int i = 0; i < 16; i++) {
+        for (int i = 0; i < 16; i++) {
             JSONObject player = new JSONObject();
             player.put("playerName", "Forward Player " + (i + 1));
             player.put("position", "forward");
@@ -52,7 +52,7 @@ public class LeagueJsonMock {
             players.put(player);
         }
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             JSONObject player = new JSONObject();
             player.put("playerName", "Defense Player " + (i + 1));
             player.put("position", "defense");
@@ -67,7 +67,7 @@ public class LeagueJsonMock {
             players.put(player);
         }
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             JSONObject player = new JSONObject();
             player.put("playerName", "Goalie Player " + (i + 1));
             player.put("position", "goalie");
@@ -90,7 +90,7 @@ public class LeagueJsonMock {
         coach.put("saving", 0.5);
 
         JSONArray teams = new JSONArray();
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             JSONObject team = new JSONObject();
             team.put("teamName", "Boston");
             team.put("generalManager", "Mister Fred");
@@ -100,7 +100,7 @@ public class LeagueJsonMock {
         }
 
         JSONArray divisions = new JSONArray();
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             JSONObject division = new JSONObject();
             division.put("divisionName", "Atlantic");
             division.put("teams", teams);
@@ -108,7 +108,7 @@ public class LeagueJsonMock {
         }
 
         JSONArray conferences = new JSONArray();
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             JSONObject conference = new JSONObject();
             conference.put("conferenceName", "Eastern Conference");
             conference.put("divisions", divisions);
@@ -116,7 +116,7 @@ public class LeagueJsonMock {
         }
 
         JSONArray freeAgents = new JSONArray();
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             JSONObject freeAgent = new JSONObject();
             freeAgent.put("playerName", "Forward FreeAgent " + (i + 1));
             freeAgent.put("position", "forward");
@@ -130,7 +130,7 @@ public class LeagueJsonMock {
             freeAgents.put(freeAgent);
         }
 
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             JSONObject freeAgent = new JSONObject();
             freeAgent.put("playerName", "Goalie FreeAgent " + (i + 1));
             freeAgent.put("position", "goalie");
@@ -144,7 +144,7 @@ public class LeagueJsonMock {
             freeAgents.put(freeAgent);
         }
 
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             JSONObject freeAgent = new JSONObject();
             freeAgent.put("playerName", "Defense FreeAgent " + (i + 1));
             freeAgent.put("position", "defense");
@@ -159,7 +159,7 @@ public class LeagueJsonMock {
         }
 
         JSONArray freeCoaches = new JSONArray();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             JSONObject freeCoach = new JSONObject();
             freeCoach.put("name", "Joe Smith");
             freeCoach.put("skating", 0.7);
@@ -170,8 +170,8 @@ public class LeagueJsonMock {
         }
 
         JSONArray managers = new JSONArray();
-        for(int i = 0; i < 3; i++) {
-            managers.put("Manager ");
+        for (int i = 0; i < 3; i++) {
+            managers.put("Manager " + (i + 1));
         }
 
         JSONObject aging = new JSONObject();
@@ -203,7 +203,6 @@ public class LeagueJsonMock {
         gameplayConfig.put("training", training);
         gameplayConfig.put("trading", trading);
 
-
         JSONObject leagueJson = new JSONObject();
         leagueJson.put("leagueName", "DHL");
         leagueJson.put("gameplayConfig", gameplayConfig);
@@ -221,16 +220,11 @@ public class LeagueJsonMock {
         return invalidLeagueJson;
     }
 
-    public String createLeagueJsonFile(File file, JSONObject jsonObject) {
-        try {
-            FileWriter writer = new FileWriter(file);
-            writer.write(jsonObject.toString());
-            writer.flush();
-            return file.getPath();
-        }
-        catch (IOException e) {
-            return "";
-        }
+    public String createLeagueJsonFile(File file, JSONObject jsonObject) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        writer.write(jsonObject.toString());
+        writer.flush();
+        return file.getPath();
     }
 
 }
