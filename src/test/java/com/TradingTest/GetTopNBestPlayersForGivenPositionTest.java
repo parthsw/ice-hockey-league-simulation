@@ -44,13 +44,9 @@ public class GetTopNBestPlayersForGivenPositionTest {
             team.addPlayer(player);
         }
 
-        GetTopNBestPlayersForGivenPosition object = tradingFactory.createGetTopNBestPlayersForGivenPosition(team, 1, "Forward");
+        GetTopNBestPlayersForGivenPosition object = tradingFactory.createGetTopNBestPlayersForGivenPosition(team, 1);
         List<ITeamPlayer> players = object.getPlayers();
         Assert.assertEquals(1, players.size());
-        for (ITeamPlayer player : players) {
-            Assert.assertEquals("Forward", player.getPlayerStats().getPosition());
-
-        }
 
     }
 
@@ -70,7 +66,7 @@ public class GetTopNBestPlayersForGivenPositionTest {
             team.addPlayer(player);
         }
         String tempPosition = team.getPlayers().get(0).getPlayerStats().getPosition();
-        GetTopNBestPlayersForGivenPosition object = tradingFactory.createGetTopNBestPlayersForGivenPosition(team, 1, tempPosition);
+        GetTopNBestPlayersForGivenPosition object = tradingFactory.createGetTopNBestPlayersForGivenPosition(team, 1);
         object.getPlayers();
         float sum = object.getCombinedStrendth();
         if (sum > 0) {

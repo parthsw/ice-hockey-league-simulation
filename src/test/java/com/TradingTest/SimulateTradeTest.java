@@ -5,9 +5,10 @@ import com.AppFactoryTest;
 import com.IOTest.IOMock;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerAgeInfo;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
@@ -111,6 +112,8 @@ public class SimulateTradeTest {
 
     private ITeam generateTeam(List<ITeamPlayer> players, int lossPointValue) {
         ITeam team = leagueManagerFactory.createTeam();
+        IManager manager1 = leagueManagerFactory.createManager();
+        team.setManager(manager1);
         team.setPlayers(players);
         team.setLossPointValue(lossPointValue);
         return team;

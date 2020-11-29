@@ -1,8 +1,7 @@
 package com.IceHockeyLeague.Trading;
 
-import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public interface ITradingFactory {
 
     GetBestPlayersFromAllTeams createGetBestPlayersFromAllTeams(List<ITeam> teams);
 
-    GetTopNBestPlayersForGivenPosition createGetTopNBestPlayersForGivenPosition(ITeam team, int tradeNumber, String position);
+    GetTopNBestPlayersForGivenPosition createGetTopNBestPlayersForGivenPosition(ITeam team, int tradeNumber);
 
     GetTradableTeams createGetTradableTeams(List<ITeam> teams, int lossPoint);
 
@@ -32,7 +31,4 @@ public interface ITradingFactory {
 
     Trade createTrade(int maxPlayersPerTrade);
 
-    TradeAcceptor createTradeAcceptor(Trade trade);
-
-    TradeDecision createTradeDecision(List<ITeamPlayer> offered, List<ITeamPlayer> requested, float randomAcceptChance);
 }

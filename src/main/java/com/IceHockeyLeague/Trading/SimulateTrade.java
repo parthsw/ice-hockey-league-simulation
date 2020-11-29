@@ -48,6 +48,7 @@ public class SimulateTrade implements ISimulateTrade{
         this.appOutput = ioFactory.createCommandLineOutput();
     }
 
+
     public void simulate() {
         for (ITeam team : this.tradableTeams) {
             if (team.getIsUserCreated()) {
@@ -69,14 +70,10 @@ public class SimulateTrade implements ISimulateTrade{
 
     private ITeam selectTeamToTrade(ITeam team) {
         List<ITeam> temp = new ArrayList<>();
-        List<ITeamPlayer> playerListToBeTraded;
         temp.addAll(this.allTeams);
         temp.remove(team);
-        playerListToBeTraded = this.selectPlayersToTrade.getPlayersToTrade(this.maxPlayerPerTrade, team);
-        this.tradeSize = playerListToBeTraded.size();
-        String position = playerListToBeTraded.get(0).getPlayerStats().getPosition();
         GetBestPlayersFromAllTeams getBestTeamChoice = tradingFactory.createGetBestPlayersFromAllTeams(temp);
-        getBestTeamChoice.getBestTradeOption(position, tradeSize);
+        getBestTeamChoice.getBestTradeOption(this.maxPlayerPerTrade);
         ITeam bestChoice = getBestTeamChoice.getTeam();
         return bestChoice;
     }
