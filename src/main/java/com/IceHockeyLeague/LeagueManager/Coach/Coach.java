@@ -65,7 +65,10 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public void setCoachStats(ICoachStats stats) {
+    public void setCoachStats(ICoachStats stats) throws IllegalArgumentException {
+        if (stats == null) {
+            throw new IllegalArgumentException();
+        }
         coachStats = stats;
     }
 

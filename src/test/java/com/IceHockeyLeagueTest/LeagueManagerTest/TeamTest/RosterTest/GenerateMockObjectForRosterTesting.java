@@ -25,7 +25,7 @@ public class GenerateMockObjectForRosterTesting implements IGenerateMockObjectFo
 
     @Override
     public List<IFreeAgent> getAgentList(int number) {
-        String[] positions = new String[]{"Goalie", "Forward", "Defence"};
+        String[] positions = new String[]{"Goalie", "Forward", "Defense"};
         Random random = new Random();
         List<IFreeAgent> agents = new ArrayList<>();
 
@@ -44,7 +44,7 @@ public class GenerateMockObjectForRosterTesting implements IGenerateMockObjectFo
 
     @Override
     public List<ITeamPlayer> getPlayerList(int number) {
-        String[] positions = new String[]{"Goalie", "Forward", "Defence"};
+        String[] positions = new String[]{"Goalie", "Forward", "Defense"};
         Random random = new Random();
         List<ITeamPlayer> players = new ArrayList<>();
 

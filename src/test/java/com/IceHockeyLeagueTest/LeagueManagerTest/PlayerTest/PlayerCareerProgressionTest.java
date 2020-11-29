@@ -158,7 +158,7 @@ public class PlayerCareerProgressionTest {
         leagueDB.loadLeague(1, league);
         IFreeAgent freeAgentToRemove = league.getFreeAgents().get(1);
         playerCareerProgression.handleFreeAgentRetirement(freeAgentToRemove, league);
-        Assert.assertEquals(2, league.getFreeAgents().size());
+        Assert.assertEquals(59, league.getFreeAgents().size());
     }
 
     @Test
@@ -170,7 +170,7 @@ public class PlayerCareerProgressionTest {
         ITeamPlayer teamPlayer = teamPlayers.get(0);
 
         playerCareerProgression.handleTeamPlayerRetirement(teamPlayer, team, league);
-        Assert.assertEquals(20, teamPlayers.size());
+        Assert.assertEquals(30, teamPlayers.size());
         Assert.assertEquals(2, league.getRetiredTeamPlayers().size());
         Assert.assertEquals(2, league.getFreeAgents().size());
     }
@@ -207,7 +207,7 @@ public class PlayerCareerProgressionTest {
 
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.01f);
         playerCareerProgression.performLeaguePlayersRetirement(league);
-        Assert.assertEquals(186, league.getRetiredTeamPlayers().size());
+        Assert.assertEquals(266, league.getRetiredTeamPlayers().size());
     }
 
     @Test

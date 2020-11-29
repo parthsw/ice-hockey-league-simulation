@@ -7,19 +7,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class HockeyLeagueSimulationApp {
+    private static final Logger LOGGER = LogManager.getLogger(HockeyLeagueSimulationApp.class);
 
     public static void main(String[] args) {
         GlobalHandler handler = new GlobalHandler();
         Thread.setDefaultUncaughtExceptionHandler(handler);
 
-        Logger logger = LogManager.getLogger(HockeyLeagueSimulationApp.class);
-        logger.info("Starting the app");
+        LOGGER.info("Starting the Ice Hockey League simulation app.");
 
         initializeFactories();
         runApp();
     }
 
     private static void initializeFactories() {
+        LOGGER.info("Assigning the package level factories.");
         AbstractAppFactory.setAppFactory(AppFactory.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
 
@@ -29,6 +30,7 @@ public class HockeyLeagueSimulationApp {
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         AbstractAppFactory.setTradingFactory(appFactory.createTradingFactory());
+        LOGGER.info("Successfully assigned the package level factories.");
     }
 
     private static void runApp() {
@@ -36,6 +38,7 @@ public class HockeyLeagueSimulationApp {
         AbstractState importState = stateMachineFactory.createImportState();
 
         IStateMachine stateMachine = stateMachineFactory.createStateMachine(importState);
+        LOGGER.info("Starting the outermost state machine.");
         stateMachine.onExecution();
     }
 

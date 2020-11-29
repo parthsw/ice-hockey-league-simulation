@@ -54,7 +54,7 @@ public class ImportStateTest {
     @Test
     public void onRunTest() {
         AbstractState importState = stateMachineFactory.createImportState();
-        ioMockInstance.commandLineInput("empty");
+        ioMockInstance.commandLineInput("load");
         Assert.assertTrue(importState.onRun() instanceof LoadTeamState);
     }
 

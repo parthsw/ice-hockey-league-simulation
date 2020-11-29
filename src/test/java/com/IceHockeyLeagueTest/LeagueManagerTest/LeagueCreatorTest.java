@@ -34,7 +34,7 @@ public class LeagueCreatorTest {
         Assert.assertEquals("DHL", league.getLeagueName());
         Assert.assertEquals(2, league.getConferences().size());
         Assert.assertEquals("Eastern Conference", conference.getConferenceName());
-        Assert.assertEquals(3, league.getFreeAgents().size());
+        Assert.assertEquals(60, league.getFreeAgents().size());
         Assert.assertEquals(3, league.getCoaches().size());
         Assert.assertEquals(3, league.getManagers().size());
     }

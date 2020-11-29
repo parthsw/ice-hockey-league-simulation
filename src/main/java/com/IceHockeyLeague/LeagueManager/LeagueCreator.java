@@ -14,6 +14,7 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 
 import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
@@ -76,7 +77,7 @@ public class LeagueCreator implements ILeagueCreator {
     private final ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
 
     @Override
-    public ILeague createLeague(JSONObject leagueJson) {
+    public ILeague createLeague(JSONObject leagueJson) throws JSONException {
         ILeague league = leagueManagerFactory.createLeague();
         league.setLeagueName(leagueJson.getString(LEAGUE_NAME));
         league.setGamePlayConfig(createGamePlayConfig(leagueJson.getJSONObject(GAME_PLAY_CONFIG)));
@@ -87,7 +88,7 @@ public class LeagueCreator implements ILeagueCreator {
         return league;
     }
 
-    private IConference createConference(Object conferenceJson) {
+    private IConference createConference(Object conferenceJson) throws JSONException {
         IConference conference = leagueManagerFactory.createConference();
         conference.setConferenceName(((JSONObject) conferenceJson).getString(CONFERENCE_NAME));
         conference.setDivisions(createDivisionList(((JSONObject) conferenceJson).getJSONArray(DIVISIONS)));
@@ -102,7 +103,7 @@ public class LeagueCreator implements ILeagueCreator {
         return conferences;
     }
 
-    private IDivision createDivision(Object divisionJson) {
+    private IDivision createDivision(Object divisionJson) throws JSONException {
         IDivision division = leagueManagerFactory.createDivision();
         division.setDivisionName(((JSONObject) divisionJson).getString(DIVISION_NAME));
         division.setTeams(createTeamList(((JSONObject) divisionJson).getJSONArray(TEAMS)));
@@ -117,7 +118,7 @@ public class LeagueCreator implements ILeagueCreator {
         return divisions;
     }
 
-    private ITeam createTeam(Object teamJson) {
+    private ITeam createTeam(Object teamJson) throws JSONException {
         ITeam team = leagueManagerFactory.createTeam();
         team.setTeamName(((JSONObject) teamJson).getString(TEAM_NAME));
         team.setManager(createManager(((JSONObject) teamJson).getString(GENERAL_MANAGER)));
@@ -136,7 +137,7 @@ public class LeagueCreator implements ILeagueCreator {
         return teams;
     }
 
-    private IPlayer createPlayer(Object playerJson) {
+    private IPlayer createPlayer(Object playerJson) throws JSONException {
         IPlayer player = leagueManagerFactory.createPlayer();
         player.setPlayerName(((JSONObject) playerJson).getString(PLAYER_NAME));
 
@@ -161,7 +162,7 @@ public class LeagueCreator implements ILeagueCreator {
         return player;
     }
 
-    private ITeamPlayer createTeamPlayer(Object playerJson) {
+    private ITeamPlayer createTeamPlayer(Object playerJson) throws JSONException {
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
         teamPlayer.setIsCaptain(((JSONObject) playerJson).getBoolean(CAPTAIN));
 
@@ -181,7 +182,7 @@ public class LeagueCreator implements ILeagueCreator {
         return teamPlayers;
     }
 
-    private IFreeAgent createFreeAgent(Object playerJson) {
+    private IFreeAgent createFreeAgent(Object playerJson) throws JSONException {
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
 
         IPlayer player = createPlayer(playerJson);
@@ -199,7 +200,7 @@ public class LeagueCreator implements ILeagueCreator {
         return freeAgents;
     }
 
-    private IManager createManager(String generalManager) {
+    private IManager createManager(String generalManager) throws JSONException {
         IManager manager = leagueManagerFactory.createManager();
         manager.setManagerName(generalManager);
         return manager;
@@ -213,14 +214,14 @@ public class LeagueCreator implements ILeagueCreator {
         return managers;
     }
 
-    private ICoach createCoach(Object coachJson) {
+    private ICoach createCoach(Object coachJson) throws JSONException {
         ICoach coach = leagueManagerFactory.createCoach();
         coach.setCoachName(((JSONObject) coachJson).getString(COACH_NAME));
         coach.setCoachStats(createCoachStats(coachJson));
         return coach;
     }
 
-    private ICoachStats createCoachStats(Object coachJson) {
+    private ICoachStats createCoachStats(Object coachJson) throws JSONException {
         ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setSkating(((JSONObject) coachJson).getFloat(SKATING));
         coachStats.setShooting(((JSONObject) coachJson).getFloat(SHOOTING));
@@ -237,7 +238,7 @@ public class LeagueCreator implements ILeagueCreator {
         return coaches;
     }
 
-    private IGamePlayConfig createGamePlayConfig(JSONObject gamePlayConfigJson) {
+    private IGamePlayConfig createGamePlayConfig(JSONObject gamePlayConfigJson) throws JSONException {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setAgingConfig(createAgingConfig(gamePlayConfigJson.getJSONObject(AGING)));
         gamePlayConfig.setGameResolverConfig(createGameResolverConfig(gamePlayConfigJson.getJSONObject(GAME_RESOLVER)));
@@ -247,7 +248,7 @@ public class LeagueCreator implements ILeagueCreator {
         return gamePlayConfig;
     }
 
-    private IAgingConfig createAgingConfig(JSONObject agingConfigJson) {
+    private IAgingConfig createAgingConfig(JSONObject agingConfigJson) throws JSONException {
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setAverageRetirementAge(agingConfigJson.getInt(AVERAGE_RETIREMENT_AGE));
         agingConfig.setMaximumAge(agingConfigJson.getInt(MAXIMUM_AGE));
@@ -255,13 +256,13 @@ public class LeagueCreator implements ILeagueCreator {
         return agingConfig;
     }
 
-    private IGameResolverConfig createGameResolverConfig(JSONObject gameResolverConfigJson) {
+    private IGameResolverConfig createGameResolverConfig(JSONObject gameResolverConfigJson) throws JSONException {
         IGameResolverConfig gameResolverConfig = leagueManagerFactory.createGameResolverConfig();
         gameResolverConfig.setRandomWinChance(gameResolverConfigJson.getFloat(RANDOM_WIN_CHANCE));
         return gameResolverConfig;
     }
 
-    private IInjuryConfig createInjuryConfig(JSONObject injuryConfigJson) {
+    private IInjuryConfig createInjuryConfig(JSONObject injuryConfigJson) throws JSONException {
         IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
         injuryConfig.setRandomInjuryChance(injuryConfigJson.getFloat(RANDOM_INJURY_CHANCE));
         injuryConfig.setInjuryDaysLow(injuryConfigJson.getInt(INJURY_DAYS_LOW));
@@ -269,13 +270,13 @@ public class LeagueCreator implements ILeagueCreator {
         return injuryConfig;
     }
 
-    private ITrainingConfig createTrainingConfig(JSONObject trainingConfigJson) {
+    private ITrainingConfig createTrainingConfig(JSONObject trainingConfigJson) throws JSONException {
         ITrainingConfig trainingConfig = leagueManagerFactory.createTrainingConfig();
         trainingConfig.setDaysUntilStatIncreaseCheck(trainingConfigJson.getInt(DAYS_STAT_INCREASE_CHECK));
         return trainingConfig;
     }
 
-    private ITradingConfig createTradingConfig(JSONObject tradingConfigJson) {
+    private ITradingConfig createTradingConfig(JSONObject tradingConfigJson) throws JSONException {
         ITradingConfig tradingConfig = leagueManagerFactory.createTradingConfig();
         tradingConfig.setLossPoint(tradingConfigJson.getInt(LOSS_POINT));
         tradingConfig.setMaxPlayersPerTrade(tradingConfigJson.getInt(MAX_PLAYERS_PER_TRADE));
