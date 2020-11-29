@@ -289,8 +289,8 @@ public class League implements ILeague {
                     manager.saveTeamManager(databaseFactory.createManagerPersistence());
 
                     ICoach coach = team.getCoach();
-                    coach.setTeamID(team.getTeamID());
-                    coach.setLeagueID(leagueID);
+                    coach.setTeamId(team.getTeamID());
+                    coach.setLeagueId(leagueID);
                     coach.saveTeamCoach(databaseFactory.createCoachPersistence());
                 }
             }
@@ -307,7 +307,7 @@ public class League implements ILeague {
         }
 
         for(ICoach coach: coaches) {
-            coach.setLeagueID(leagueID);
+            coach.setLeagueId(leagueID);
             coach.saveLeagueCoach(databaseFactory.createCoachPersistence());
         }
 
@@ -351,8 +351,8 @@ public class League implements ILeague {
                     team.setManager(manager);
 
                     ICoach coach = leagueManagerFactory.createCoach();
-                    coach.setLeagueID(leagueID);
-                    coach.setTeamID(team.getTeamID());
+                    coach.setLeagueId(leagueID);
+                    coach.setTeamId(team.getTeamID());
                     coach.loadTeamCoach(databaseFactory.createCoachPersistence(), coach);
                     team.setCoach(coach);
                 }

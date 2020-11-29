@@ -60,7 +60,6 @@ public class CoachStatsTest {
         ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setShooting(1.0f);
         Assert.assertEquals(1.0f, coachStats.getShooting(), 0.0);
-
     }
 
     @Test

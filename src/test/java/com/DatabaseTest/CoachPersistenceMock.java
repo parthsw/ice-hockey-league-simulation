@@ -20,9 +20,9 @@ public class CoachPersistenceMock implements ICoachPersistence {
 
     @Override
     public boolean saveTeamCoach(ICoach coach) {
-        coach.setLeagueID(2);
-        coach.setTeamID(2);
-        coach.setCoachID(2);
+        coach.setLeagueId(2);
+        coach.setTeamId(2);
+        coach.setCoachId(2);
         coach.setCoachName("Jonathan");
 
         ICoachStats stats = leagueManagerFactory.createCoachStats();
@@ -37,9 +37,9 @@ public class CoachPersistenceMock implements ICoachPersistence {
 
     @Override
     public boolean saveLeagueCoach(ICoach coach) {
-        coach.setLeagueID(1);
-        coach.setTeamID(-1);
-        coach.setCoachID(4);
+        coach.setLeagueId(1);
+        coach.setTeamId(-1);
+        coach.setCoachId(4);
         coach.setCoachName("Ronald");
 
         ICoachStats stats = leagueManagerFactory.createCoachStats();
@@ -54,9 +54,9 @@ public class CoachPersistenceMock implements ICoachPersistence {
 
     @Override
     public boolean loadTeamCoach(int teamId, ICoach coach) {
-        coach.setLeagueID(1);
-        coach.setTeamID(1);
-        coach.setCoachID(1);
+        coach.setLeagueId(1);
+        coach.setTeamId(1);
+        coach.setCoachId(1);
         coach.setCoachName("Joe Doe");
 
         ICoachStats stats = leagueManagerFactory.createCoachStats();
@@ -72,9 +72,9 @@ public class CoachPersistenceMock implements ICoachPersistence {
     @Override
     public boolean loadLeagueCoaches(int leagueId, List<ICoach> coaches) {
         ICoach coach = leagueManagerFactory.createCoach();
-        coach.setLeagueID(leagueId);
-        coach.setTeamID(1);
-        coach.setCoachID(1);
+        coach.setLeagueId(leagueId);
+        coach.setTeamId(1);
+        coach.setCoachId(1);
         coach.setCoachName("Joe Doe");
 
         ICoachStats stats = leagueManagerFactory.createCoachStats();
@@ -86,9 +86,9 @@ public class CoachPersistenceMock implements ICoachPersistence {
         coaches.add(coach);
 
         ICoach coach1 = leagueManagerFactory.createCoach();
-        coach1.setLeagueID(leagueId);
-        coach1.setTeamID(2);
-        coach1.setCoachID(2);
+        coach1.setLeagueId(leagueId);
+        coach1.setTeamId(2);
+        coach1.setCoachId(2);
         coach1.setCoachName("Jonathan");
 
         ICoachStats stats1 = leagueManagerFactory.createCoachStats();

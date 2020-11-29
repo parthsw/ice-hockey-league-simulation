@@ -21,7 +21,7 @@ public class CoachPersistence implements ICoachPersistence {
 
     private boolean saveBaseCoach(ICoach coach, CallableStatement myCall) throws SQLException {
         String coachID = null;
-        myCall.setInt(2, coach.getLeagueID());
+        myCall.setInt(2, coach.getLeagueId());
         myCall.setString(3, coach.getCoachName());
         myCall.setFloat(4, coach.getCoachStats().getSkating());
         myCall.setFloat(5, coach.getCoachStats().getShooting());
@@ -32,7 +32,7 @@ public class CoachPersistence implements ICoachPersistence {
         while (result.next()) {
             coachID = result.getString("coachID");
         }
-        coach.setCoachID(Integer.parseInt(coachID));
+        coach.setCoachId(Integer.parseInt(coachID));
         return true;
     }
 
@@ -43,7 +43,7 @@ public class CoachPersistence implements ICoachPersistence {
         try {
             storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoCoach(?,?,?,?,?,?,?,?)");
-            myCall.setInt(1, coach.getTeamID());
+            myCall.setInt(1, coach.getTeamId());
             return saveBaseCoach(coach, myCall);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,9 +121,9 @@ public class CoachPersistence implements ICoachPersistence {
     }
 
     private void loadBaseCoach(ResultSet result, ICoach coach) throws SQLException {
-        coach.setCoachID(result.getInt("coachID"));
-        coach.setTeamID(result.getInt("teamID"));
-        coach.setLeagueID(result.getInt("leagueID"));
+        coach.setCoachId(result.getInt("coachID"));
+        coach.setTeamId(result.getInt("teamID"));
+        coach.setLeagueId(result.getInt("leagueID"));
         coach.setCoachName(result.getString("name"));
 
         ICoachStats stats = leagueManagerFactory.createCoachStats();
