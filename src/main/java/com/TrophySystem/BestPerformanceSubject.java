@@ -1,7 +1,7 @@
-package com.TrophySystem.Observers;
+package com.TrophySystem;
 
-import com.TrophySystem.Interfaces.IPerformance;
-import com.TrophySystem.Interfaces.IPerformanceObserver;
+import com.TrophySystem.IPerformance;
+import com.TrophySystem.IPerformanceObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,3 +29,5 @@ public class BestPerformanceSubject implements IPerformance {
         }
     }
 }
+
+

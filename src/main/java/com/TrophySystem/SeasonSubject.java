@@ -1,6 +1,6 @@
-package com.TrophySystem.Observers;
+package com.TrophySystem;
 
-import com.TrophySystem.Interfaces.ITeamObserver;
+import com.TrophySystem.ITeamObserver;
 
 import java.util.ArrayList;
 import java.util.List;

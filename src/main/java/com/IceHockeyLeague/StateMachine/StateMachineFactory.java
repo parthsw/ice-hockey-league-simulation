@@ -108,4 +108,9 @@ public class StateMachineFactory implements IStateMachineFactory {
     public AbstractState createPersistState() {
         return new PersistState();
     }
+
+    @Override
+    public AbstractState createTrophyState() {
+        return new TrophyState();
+    }
 }
