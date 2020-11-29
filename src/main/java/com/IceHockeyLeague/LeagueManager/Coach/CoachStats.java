@@ -28,7 +28,7 @@ public class CoachStats implements ICoachStats {
 
     @Override
     public void setSkating(float value) {
-        if(isStatValid(value)) {
+        if (isStatValid(value)) {
             skating = value;
         }
     }
@@ -40,7 +40,7 @@ public class CoachStats implements ICoachStats {
 
     @Override
     public void setShooting(float value) {
-        if(isStatValid(value)) {
+        if (isStatValid(value)) {
             shooting = value;
         }
     }
@@ -64,7 +64,7 @@ public class CoachStats implements ICoachStats {
 
     @Override
     public void setSaving(float value) {
-        if(isStatValid(value)) {
+        if (isStatValid(value)) {
             saving = value;
         }
     }
