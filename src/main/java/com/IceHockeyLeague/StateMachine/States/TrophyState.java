@@ -8,7 +8,7 @@ import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.TrophySystem.AwardCeremony;
 import com.TrophySystem.DisplayAwards;
 import com.TrophySystem.Interfaces.IAwardDistributed;
-import com.TrophySystem.Interfaces.IAwardWinners;
+import com.TrophySystem.IAwardWinners;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,6 +46,7 @@ public class TrophyState extends AbstractState {
         awardsWinnerList.add(awardWinner.getBestGoalie());
         awardsWinnerList.add(awardWinner.getBestPlayer());
         awardsWinnerList.add(awardWinner.getHighestPointsTeam());
+        awardsWinnerList.add(leagueDate.toString());
     }
 
     public void awardDistributionInProcess() {

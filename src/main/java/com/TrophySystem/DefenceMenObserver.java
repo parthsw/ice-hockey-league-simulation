@@ -2,7 +2,7 @@ package com.TrophySystem.Observers;
 
 import com.TrophySystem.AwardCeremony;
 import com.TrophySystem.IPerformanceObserver;
-import com.TrophySystem.Interfaces.ITrophyNominees;
+import com.TrophySystem.ITrophyNominees;
 
 public class DefenceMenObserver implements IPerformanceObserver {
     ITrophyNominees awardTrophy;
