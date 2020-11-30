@@ -9,7 +9,8 @@ import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializ
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import java.io.*;
+
+import java.io.File;
 
 public class SerializeTest {
     private static ILeagueManagerFactory leagueManagerFactory;
@@ -25,11 +26,12 @@ public class SerializeTest {
 
     @Test
     public void SerializeLeagueObjectTest() {
+        String fileName = "jsonOutput.json";
         ILeague league = leagueManagerFactory.createLeague();
         league.setLeagueID(13);
         league.setLeagueName("Dalhousie Hockey League");
         ISerialize serialize = leagueSerializationFactory.createSerialize();
-        String path = serialize.serializeLeagueObject(league);
+        String path = serialize.serializeLeagueObject(league,fileName);
         File file = new File(path);
         Assert.assertTrue(file.exists());
     }

@@ -99,14 +99,4 @@ public class GamePlayConfig implements IGamePlayConfig {
         return tradingConfig;
     }
 
-    @Override
-    public boolean saveGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDb) {
-        return gamePlayConfigDb.saveGamePlayConfig(this);
-    }
-
-    @Override
-    public boolean loadGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDb, IGamePlayConfig gamePlayConfig) {
-        return gamePlayConfigDb.loadGamePlayConfig(leagueId, gamePlayConfig);
-    }
-
 }

@@ -43,7 +43,7 @@ public class AgingState extends AbstractState {
         }
 
         if (league.getScheduleSystem().isStanleyCupWinnerDetermined()) {
-            nextState = stateMachineFactory.createAdvanceToNextSeasonState();
+            nextState = stateMachineFactory.createTrophyState();
         }
         else {
             nextState = stateMachineFactory.createPersistState();

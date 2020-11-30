@@ -1,7 +1,7 @@
 package com.IceHockeyLeague.LeagueManager.Conference;
 
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+//import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,16 +70,6 @@ public class Conference implements IConference {
     @Override
     public void setDivisions(List<IDivision> divisions) {
         this.divisions = divisions;
-    }
-
-    @Override
-    public boolean saveConference(IConferencePersistence conferenceDB) {
-        return conferenceDB.saveConference(this);
-    }
-
-    @Override
-    public boolean loadDivisions(IDivisionPersistence divisionDB, List<IDivision> divisions) {
-        return divisionDB.loadDivisions(conferenceID, divisions);
     }
 
     @Override

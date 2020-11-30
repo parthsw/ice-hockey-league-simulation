@@ -75,21 +75,6 @@ public class Manager implements IManager {
     }
 
     @Override
-    public boolean saveTeamManager(IManagerPersistence managerDB) {
-        return managerDB.saveTeamManager(this);
-    }
-
-    @Override
-    public boolean saveLeagueManager(IManagerPersistence managerDB) {
-        return managerDB.saveLeagueManager(this);
-    }
-
-    @Override
-    public boolean loadTeamManager(IManagerPersistence managerDB, IManager manager) {
-        return managerDB.loadTeamManager( teamID,this);
-    }
-
-    @Override
     public boolean isNullOrEmpty(String managerName) {
         return (managerName == null || managerName.equals(""));
     }

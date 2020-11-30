@@ -20,4 +20,5 @@ public interface IStandingSystem {
     List<IStanding> getRegularSeasonStandingsInReverse();
     List<IStanding> getPlayOffSeasonStandingsInReverse(List<ISchedule> playoffSchedule);
     IStanding getTopStandingInConference(IConference conference);
+    List<IStanding> getSortedStandingsInLeague();
 }

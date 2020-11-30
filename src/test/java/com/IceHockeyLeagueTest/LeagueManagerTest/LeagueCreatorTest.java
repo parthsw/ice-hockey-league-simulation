@@ -15,12 +15,15 @@ import org.junit.Test;
 public class LeagueCreatorTest {
     private static ILeagueCreator leagueCreator;
     private static ILeague league;
+    private static ILeagueManagerFactory leagueManagerFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
         ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         leagueCreator = leagueManagerFactory.createLeagueCreator();
     }
