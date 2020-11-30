@@ -9,7 +9,6 @@ import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
-import com.IceHockeyLeague.StateMachine.States.PersistState;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,6 +19,8 @@ import java.time.Month;
 import static org.mockito.Mockito.when;
 
 public class AdvanceToNextSeasonStateTest {
+    private static final String PERSIST_STATE = "PersistState";
+
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
     private static IDatabaseFactory databaseFactory;
@@ -40,12 +41,15 @@ public class AdvanceToNextSeasonStateTest {
     public void onRunTest() {
         ILeague league = leagueManagerFactory.createLeague();
         ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
-        leaguePersistence.loadLeague(1, league);
         AbstractState advanceToNextSeasonState = stateMachineFactory.createAdvanceToNextSeasonState();
+        AbstractState nextState;
+
+        leaguePersistence.loadLeague(1, league);
         advanceToNextSeasonState.setLeague(league);
         when(randomChanceMock.getRandomFloatNumber(0, 50)).thenReturn(0.5f);
+        nextState = advanceToNextSeasonState.onRun();
 
-        Assert.assertTrue(advanceToNextSeasonState.onRun() instanceof PersistState);
+        Assert.assertEquals(nextState.getClass().getSimpleName(), PERSIST_STATE);
     }
 
     @Test
@@ -54,6 +58,7 @@ public class AdvanceToNextSeasonStateTest {
         ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
         AbstractState advanceToNextSeasonState = stateMachineFactory.createAdvanceToNextSeasonState();
         LocalDate newSeasonDate = LocalDate.of(2021, Month.SEPTEMBER, 29);
+
         leaguePersistence.loadLeague(1, league);
         advanceToNextSeasonState.setLeague(league);
         when(randomChanceMock.getRandomFloatNumber(0, 50)).thenReturn(0.5f);

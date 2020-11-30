@@ -6,6 +6,7 @@ import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import org.junit.Assert;
@@ -31,8 +32,9 @@ public class DraftingStateTest {
     public void onRunTest() {
         ILeague league = leagueManagerFactory.createLeague();
         ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
-        leaguePersistence.loadLeague(1, league);
         AbstractState draftingState = stateMachineFactory.createDraftingState();
+
+        leaguePersistence.loadLeague(1, league);
         draftingState.setLeague(league);
         Assert.assertNull(draftingState.onRun());
     }
@@ -41,11 +43,27 @@ public class DraftingStateTest {
     public void onRunDraftPicksTest() {
         ILeague league = leagueManagerFactory.createLeague();
         ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
-        leaguePersistence.loadLeague(1, league);
         AbstractState draftingState = stateMachineFactory.createDraftingState();
+
+        leaguePersistence.loadLeague(1, league);
         draftingState.setLeague(league);
         draftingState.onRun();
         Assert.assertNull(league.getDraftPicks());
+    }
+
+    @Test
+    public void onRunTeamPlayersTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
+        AbstractState draftingState = stateMachineFactory.createDraftingState();
+        ITeam firstTeam;
+
+        leaguePersistence.loadLeague(1, league);
+        draftingState.setLeague(league);
+        draftingState.onRun();
+
+        firstTeam = league.getConferences().get(0).getDivisions().get(0).getTeams().get(0);
+        Assert.assertEquals(30, firstTeam.getPlayers().size());
     }
 
 }

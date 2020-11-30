@@ -38,9 +38,9 @@ public class DraftingState extends AbstractState {
         LOGGER.info("Generating " + numberOfDrafteesToGenerate + " random players for the drafting...");
         List<IPlayer> generatedPlayers = randomPlayersGenerator.generateRandomPlayers(league.getLeagueDate(), numberOfDrafteesToGenerate);
 
-        for(int i = 1; i <= DRAFT_ROUNDS; i++) {
+        for (int i = 1; i <= DRAFT_ROUNDS; i++) {
             List<ITeam> teamsForCurrentRound = draftManager.generateTeamOrderForDraftSelection(teamsForDraftRounds, draftPicks, i);
-            for(ITeam teamPickingDraftee: teamsForCurrentRound) {
+            for (ITeam teamPickingDraftee : teamsForCurrentRound) {
                 draftManager.performDraftSelectionForTeam(teamPickingDraftee, generatedPlayers);
             }
         }

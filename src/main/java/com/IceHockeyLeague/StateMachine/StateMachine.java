@@ -24,8 +24,8 @@ public class StateMachine implements IStateMachine {
 
     @Override
     public void onExecution() {
-        while(true) {
-            if(currentState == null) {
+        while (true) {
+            if (currentState == null) {
                 break;
             } else {
                 LOGGER.info("Running the " + currentState.getClass().getSimpleName() + "...");
