@@ -13,10 +13,6 @@ public interface IGamePlayConfig {
 
     IAgingConfig getAgingConfig();
 
-    void setGameResolverConfig(IGameResolverConfig gameResolverConfig);
-
-    IGameResolverConfig getGameResolverConfig();
-
     void setInjuryConfig(IInjuryConfig injuryConfig);
 
     IInjuryConfig getInjuryConfig();

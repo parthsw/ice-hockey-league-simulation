@@ -59,8 +59,6 @@ public class LeagueCreator implements ILeagueCreator {
     private static final String AVERAGE_RETIREMENT_AGE = "averageRetirementAge";
     private static final String MAXIMUM_AGE = "maximumAge";
     private static final String STAT_DECAY_CHANCE = "statDecayChance";
-    private static final String GAME_RESOLVER = "gameResolver";
-    private static final String RANDOM_WIN_CHANCE = "randomWinChance";
     private static final String INJURIES = "injuries";
     private static final String RANDOM_INJURY_CHANCE = "randomInjuryChance";
     private static final String INJURY_DAYS_LOW = "injuryDaysLow";
@@ -245,7 +243,6 @@ public class LeagueCreator implements ILeagueCreator {
     private IGamePlayConfig createGamePlayConfig(JSONObject gamePlayConfigJson) throws JSONException {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         gamePlayConfig.setAgingConfig(createAgingConfig(gamePlayConfigJson.getJSONObject(AGING)));
-        gamePlayConfig.setGameResolverConfig(createGameResolverConfig(gamePlayConfigJson.getJSONObject(GAME_RESOLVER)));
         gamePlayConfig.setInjuryConfig(createInjuryConfig(gamePlayConfigJson.getJSONObject(INJURIES)));
         gamePlayConfig.setTrainingConfig(createTrainingConfig(gamePlayConfigJson.getJSONObject(TRAINING)));
         gamePlayConfig.setTradingConfig(createTradingConfig(gamePlayConfigJson.getJSONObject(TRADING)));
@@ -258,12 +255,6 @@ public class LeagueCreator implements ILeagueCreator {
         agingConfig.setMaximumAge(agingConfigJson.getInt(MAXIMUM_AGE));
         agingConfig.setStatDecayChance(agingConfigJson.getFloat(STAT_DECAY_CHANCE));
         return agingConfig;
-    }
-
-    private IGameResolverConfig createGameResolverConfig(JSONObject gameResolverConfigJson) throws JSONException {
-        IGameResolverConfig gameResolverConfig = leagueManagerFactory.createGameResolverConfig();
-        gameResolverConfig.setRandomWinChance(gameResolverConfigJson.getFloat(RANDOM_WIN_CHANCE));
-        return gameResolverConfig;
     }
 
     private IInjuryConfig createInjuryConfig(JSONObject injuryConfigJson) throws JSONException {

@@ -179,9 +179,6 @@ public class LeagueJsonMock {
         aging.put("maximumAge", 50);
         aging.put("statDecayChance", 0.05);
 
-        JSONObject gameResolver = new JSONObject();
-        gameResolver.put("randomWinChance", 0.1);
-
         JSONObject injuries = new JSONObject();
         injuries.put("randomInjuryChance", 0.05);
         injuries.put("injuryDaysLow", 1);
@@ -198,7 +195,6 @@ public class LeagueJsonMock {
 
         JSONObject gameplayConfig = new JSONObject();
         gameplayConfig.put("aging", aging);
-        gameplayConfig.put("gameResolver", gameResolver);
         gameplayConfig.put("injuries", injuries);
         gameplayConfig.put("training", training);
         gameplayConfig.put("trading", trading);

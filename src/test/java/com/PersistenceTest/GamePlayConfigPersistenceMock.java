@@ -23,10 +23,6 @@ public class GamePlayConfigPersistenceMock {
         agingConfig.setMaximumAge(50);
         gamePlayConfig.setAgingConfig(agingConfig);
 
-        IGameResolverConfig gameResolverConfig = leagueManagerFactory.createGameResolverConfig();
-        gameResolverConfig.setRandomWinChance(0.1f);
-        gamePlayConfig.setGameResolverConfig(gameResolverConfig);
-
         IInjuryConfig injuryConfig = leagueManagerFactory.createInjuryConfig();
         injuryConfig.setRandomInjuryChance(0.05f);
         injuryConfig.setInjuryDaysLow(1);
