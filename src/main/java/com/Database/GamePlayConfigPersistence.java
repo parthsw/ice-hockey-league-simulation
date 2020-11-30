@@ -24,7 +24,7 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
         try {
             storedProcedure = databaseFactory.createStoredProcedure();
             myCall = storedProcedure.setup("insertIntoGamePlayConfig(?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            myCall.setInt(1, gamePlayConfig.getLeagueID());
+            myCall.setInt(1, gamePlayConfig.getLeagueId());
 
             IAgingConfig agingConfig = gamePlayConfig.getAgingConfig();
             myCall.setInt(2, agingConfig.getAverageRetirementAge());
@@ -52,7 +52,7 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
             while(result.next()) {
                 gamePlayConfigID = result.getString("gamePlayConfigID");
             }
-            gamePlayConfig.setGamePlayConfigID(Integer.parseInt(gamePlayConfigID));
+            gamePlayConfig.setGamePlayConfigId(Integer.parseInt(gamePlayConfigID));
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,8 +75,8 @@ public class GamePlayConfigPersistence implements IGamePlayConfigPersistence {
             myCall.setInt(1, leagueId);
             ResultSet result = myCall.executeQuery();
             while(result.next()) {
-                gamePlayConfig.setGamePlayConfigID(result.getInt("gamePlayConfigID"));
-                gamePlayConfig.setLeagueID(leagueId);
+                gamePlayConfig.setGamePlayConfigId(result.getInt("gamePlayConfigID"));
+                gamePlayConfig.setLeagueId(leagueId);
 
                 IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
                 agingConfig.setAverageRetirementAge(result.getInt("averageRetirementAge"));

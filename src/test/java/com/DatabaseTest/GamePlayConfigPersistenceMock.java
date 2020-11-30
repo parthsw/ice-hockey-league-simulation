@@ -16,8 +16,8 @@ public class GamePlayConfigPersistenceMock implements IGamePlayConfigPersistence
 
     @Override
     public boolean saveGamePlayConfig(IGamePlayConfig gamePlayConfig) {
-        gamePlayConfig.setGamePlayConfigID(2);
-        gamePlayConfig.setLeagueID(2);
+        gamePlayConfig.setGamePlayConfigId(2);
+        gamePlayConfig.setLeagueId(2);
 
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setAverageRetirementAge(33);
@@ -50,8 +50,8 @@ public class GamePlayConfigPersistenceMock implements IGamePlayConfigPersistence
 
     @Override
     public boolean loadGamePlayConfig(int leagueId, IGamePlayConfig gamePlayConfig) {
-        gamePlayConfig.setGamePlayConfigID(1);
-        gamePlayConfig.setLeagueID(leagueId);
+        gamePlayConfig.setGamePlayConfigId(1);
+        gamePlayConfig.setLeagueId(leagueId);
 
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setAverageRetirementAge(35);

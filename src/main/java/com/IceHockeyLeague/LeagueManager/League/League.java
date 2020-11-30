@@ -263,7 +263,7 @@ public class League implements ILeague {
     public boolean saveCompleteLeague() {
         this.saveLeague(databaseFactory.createLeaguePersistence());
 
-        gamePlayConfig.setLeagueID(leagueID);
+        gamePlayConfig.setLeagueId(leagueID);
         gamePlayConfig.saveGamePlayConfig(databaseFactory.createGamePlayConfigPersistence());
 
         for(IConference conference: conferences) {
@@ -372,7 +372,7 @@ public class League implements ILeague {
         this.setCoaches(coaches);
 
         gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setLeagueID(leagueID);
+        gamePlayConfig.setLeagueId(leagueID);
         gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
 
         return true;

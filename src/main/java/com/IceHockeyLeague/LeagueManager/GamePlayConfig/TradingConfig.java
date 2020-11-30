@@ -17,8 +17,8 @@ public class TradingConfig implements ITradingConfig {
     }
 
     @Override
-    public void setRandomTradeOfferChance(float tradeOfferChance) {
-        randomTradeOfferChance = tradeOfferChance;
+    public void setRandomTradeOfferChance(float randomTradeOfferChance) {
+        this.randomTradeOfferChance = randomTradeOfferChance;
     }
 
     @Override
@@ -27,8 +27,8 @@ public class TradingConfig implements ITradingConfig {
     }
 
     @Override
-    public void setMaxPlayersPerTrade(int maxPlayers) {
-        maxPlayersPerTrade = maxPlayers;
+    public void setMaxPlayersPerTrade(int maxPlayersPerTrade) {
+        this.maxPlayersPerTrade = maxPlayersPerTrade;
     }
 
     @Override
@@ -37,12 +37,13 @@ public class TradingConfig implements ITradingConfig {
     }
 
     @Override
-    public void setRandomAcceptanceChance(float acceptanceChance) {
-        randomAcceptanceChance = acceptanceChance;
+    public void setRandomAcceptanceChance(float randomAcceptanceChance) {
+        this.randomAcceptanceChance = randomAcceptanceChance;
     }
 
     @Override
     public float getRandomAcceptanceChance() {
         return randomAcceptanceChance;
     }
+
 }

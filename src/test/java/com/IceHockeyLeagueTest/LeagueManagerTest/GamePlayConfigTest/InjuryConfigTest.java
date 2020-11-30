@@ -59,4 +59,5 @@ public class InjuryConfigTest {
         injuryConfig.setInjuryDaysHigh(311);
         Assert.assertEquals(311, injuryConfig.getInjuryDaysHigh());
     }
+
 }

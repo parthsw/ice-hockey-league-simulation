@@ -134,7 +134,7 @@ public class LeagueTest {
         league.setGamePlayConfig(gamePlayConfig);
 
         IGamePlayConfig leagueConfig = league.getGamePlayConfig();
-        Assert.assertEquals(1, leagueConfig.getLeagueID());
+        Assert.assertEquals(1, leagueConfig.getLeagueId());
     }
 
     @Test
