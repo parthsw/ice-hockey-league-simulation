@@ -1,7 +1,5 @@
 package com;
 
-//import com.Database.DatabaseFactory;
-//import com.Database.IDatabaseFactory;
 import com.IO.IIOFactory;
 import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
@@ -14,6 +12,8 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.Trading.ITradingFactory;
 import com.Trading.TradingFactory;
+import com.TrophySystem.ITrophySystemFactory;
+import com.TrophySystem.TrophySystemFactory;
 
 public class AppFactory extends AbstractAppFactory {
 
@@ -21,11 +21,6 @@ public class AppFactory extends AbstractAppFactory {
     public ILeagueFileHandlerFactory createLeagueFileHandlerFactory() {
         return new LeagueFileHandlerFactory();
     }
-
-  /*  @Override
-    public IDatabaseFactory createDatabaseFactory() {
-        return new DatabaseFactory();
-    }*/
 
     @Override
     public IIOFactory createIOFactory() {
@@ -35,6 +30,11 @@ public class AppFactory extends AbstractAppFactory {
     @Override
     public ILeagueManagerFactory createLeagueManagerFactory() {
         return new LeagueManagerFactory();
+    }
+
+    @Override
+    public ITrophySystemFactory createTrophySystemFactory() {
+        return new TrophySystemFactory();
     }
 
     @Override

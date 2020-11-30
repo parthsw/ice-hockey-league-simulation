@@ -16,11 +16,14 @@ public class HockeyLeagueSimulationApp {
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
 
         AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
-        //AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+
         AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         AbstractAppFactory.setTradingFactory(appFactory.createTradingFactory());
+
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
+        AbstractAppFactory.setSerializeDeserializeLeagueObjectFactory(appFactory.createSerializeDeserializeLeagueObjectFactory());
     }
 
     private static void runApp() {

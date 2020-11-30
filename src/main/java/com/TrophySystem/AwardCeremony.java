@@ -66,8 +66,7 @@ public class AwardCeremony implements IAwardWinners, ITrophyNominees {
     }
 
     @Override
-    public void teamNominees(IStandingSystem standingSystem) {
-        List<IStanding> standings = standingSystem.getSortedStandingsInLeague();
+    public void teamNominees(List<IStanding> standings) {
         highestPointsTeam = standings.get(0).getTeam().getTeamName();
         lowestPointsTeam = standings.get(standings.size()-1).getTeam().getTeamName();
     }

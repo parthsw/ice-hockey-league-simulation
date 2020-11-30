@@ -1,13 +1,11 @@
 package com.Persistence;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.SerializeDeserializeLeagueObject.Deserialize;
-import com.IceHockeyLeague.SerializeDeserializeLeagueObject.IDeserialize;
-import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerialize;
-import com.IceHockeyLeague.SerializeDeserializeLeagueObject.Serialize;
+import com.IceHockeyLeague.SerializeDeserializeLeagueObject.*;
 
 import java.util.List;
 
@@ -35,7 +33,8 @@ public class LeaguePersistence implements ILeaguePersistence {
         return true;
     }
     public ILeague loadLeague(String filePath){
-        IDeserialize d = new Deserialize();
+        ISerializeDeserializeLeagueObjectFactory serializeDeserializeLeagueObjectFactory = AbstractAppFactory.getSerializeDeserializeLeagueObjectFactory();
+        IDeserialize d = serializeDeserializeLeagueObjectFactory.createDeserialize();
         ILeague league = d.deserializeLeagueObject(filePath);
         return league;
     }

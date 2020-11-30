@@ -10,11 +10,12 @@ import com.IceHockeyLeague.LeagueManager.Player.IPlayerCareerProgression;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.TrophySystem.*;
 
 import java.util.List;
 import java.util.Random;
 
-public class TeamTraining implements ITeamTraining {
+public class TeamTraining extends BestPerformanceSubject implements ITeamTraining {
     private final IAppOutput appOutput = AppFactory.getIOFactory().createCommandLineOutput();
 
     @Override

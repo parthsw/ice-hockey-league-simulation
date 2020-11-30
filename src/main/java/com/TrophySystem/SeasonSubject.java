@@ -1,5 +1,6 @@
 package com.TrophySystem;
 
+import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
 import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public abstract class SeasonSubject {
 
     private final List<ITeamObserver> observers;
 
-    protected IStandingSystem standingSystem;
+    protected List<IStanding> standingList;
 
     public SeasonSubject(){
         observers = new ArrayList<>();
@@ -25,7 +26,9 @@ public abstract class SeasonSubject {
 
     public void notifyObserver(){
         for(ITeamObserver observer : observers){
-            observer.update(standingSystem);
+            observer.update(standingList);
         }
     }
 }
+
+

@@ -6,16 +6,21 @@ import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.TrophySystem.ITeamObserver;
+import com.TrophySystem.SeasonObserver;
+import com.TrophySystem.SeasonSubject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StandingSystem implements IStandingSystem{
+public class StandingSystem extends SeasonSubject implements IStandingSystem{
     private final ILeagueManagerFactory leagueManagerFactory;
     private List<IStanding> standings;
+    private ITeamObserver teamObserver;
 
     public StandingSystem() {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        teamObserver = new SeasonObserver();
     }
 
     public List<IStanding> getStandings() {
@@ -93,6 +98,9 @@ public class StandingSystem implements IStandingSystem{
     public List<IStanding> getSortedStandingsInLeague() {
         List<IStanding> myStandings = new ArrayList<>(standings);
         myStandings.sort(Standing.standingComparator);
+        this.standingList = myStandings;
+        this.attachObserver(teamObserver);
+        this.notifyObserver();
         return myStandings;
     }
 }

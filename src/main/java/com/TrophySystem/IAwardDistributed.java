@@ -1,4 +1,4 @@
-package com.TrophySystem.Interfaces;
+package com.TrophySystem;
 
 public interface IAwardDistributed {
     void presidentTrophy(String highestPointsTeam);

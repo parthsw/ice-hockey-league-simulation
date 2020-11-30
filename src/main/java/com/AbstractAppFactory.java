@@ -8,6 +8,7 @@ import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializ
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.Persistence.IPersistenceFactory;
 import com.Trading.ITradingFactory;
+import com.TrophySystem.ITrophySystemFactory;
 
 public abstract class AbstractAppFactory {
 
@@ -19,12 +20,20 @@ public abstract class AbstractAppFactory {
     private static ISerializeDeserializeLeagueObjectFactory leagueSerializationFactory;
     private static ITradingFactory tradingFactory;
     private static IStateMachineFactory stateMachineFactory;
+    private static ITrophySystemFactory trophySystemFactory;
 
     public abstract ILeagueFileHandlerFactory createLeagueFileHandlerFactory();
+
     public abstract IIOFactory createIOFactory();
+
     public abstract ILeagueManagerFactory createLeagueManagerFactory();
+
     public abstract ISerializeDeserializeLeagueObjectFactory createSerializeDeserializeLeagueObjectFactory();
+
     public abstract ITradingFactory createTradingFactory();
+
+    public abstract ITrophySystemFactory createTrophySystemFactory();
+
     public abstract IStateMachineFactory createStateMachineFactory();
 
     public static AbstractAppFactory getAppFactory() {
@@ -83,4 +92,11 @@ public abstract class AbstractAppFactory {
         AbstractAppFactory.stateMachineFactory = stateMachineFactory;
     }
 
+    public static void setTrophySystemFactory(ITrophySystemFactory trophySystemFactory) {
+        AbstractAppFactory.trophySystemFactory = trophySystemFactory;
+    }
+
+    public static ITrophySystemFactory getTrophySystemFactory() {
+        return trophySystemFactory;
+    }
 }

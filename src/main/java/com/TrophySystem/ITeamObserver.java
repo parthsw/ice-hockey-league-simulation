@@ -6,5 +6,5 @@ import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import java.util.List;
 
 public interface ITeamObserver {
-    void update(IStandingSystem standingSystem);
+    void update(List<IStanding> standings);
 }

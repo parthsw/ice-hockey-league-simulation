@@ -5,10 +5,7 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
-import com.TrophySystem.AwardCeremony;
-import com.TrophySystem.DisplayAwards;
-import com.TrophySystem.Interfaces.IAwardDistributed;
-import com.TrophySystem.IAwardWinners;
+import com.TrophySystem.*;
 
 import java.time.LocalDate;
 import java.util.List;

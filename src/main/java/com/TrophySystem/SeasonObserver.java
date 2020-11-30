@@ -9,11 +9,16 @@ import com.TrophySystem.ITrophyNominees;
 import java.util.List;
 
 public class SeasonObserver implements ITeamObserver {
-    IStandingSystem standingSystem;
-
     @Override
-    public void update(IStandingSystem standingSystem) {
+    public void update(List<IStanding> standings) {
         ITrophyNominees awardTrophy = new AwardCeremony();
-        awardTrophy.teamNominees(standingSystem);
+        awardTrophy.teamNominees(standings);
     }
+
+
+    /*@Override
+    public void update(List<IStanding> standings) {
+        ITrophyNominees awardTrophy = new AwardCeremony();
+        awardTrophy.teamNominees(standings);
+    }*/
 }

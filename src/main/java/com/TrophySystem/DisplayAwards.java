@@ -1,6 +1,6 @@
 package com.TrophySystem;
 
-import com.TrophySystem.Interfaces.IAwardDistributed;
+import com.TrophySystem.IAwardDistributed;
 
 public class DisplayAwards implements IAwardDistributed {
 
