@@ -13,14 +13,14 @@ public class HockeyLeagueSimulationApp {
         GlobalHandler handler = new GlobalHandler();
         Thread.setDefaultUncaughtExceptionHandler(handler);
 
-        LOGGER.info("Starting the Ice Hockey League simulation app.");
+        LOGGER.info("Starting the Ice Hockey League simulation app...");
 
         initializeFactories();
         runApp();
     }
 
     private static void initializeFactories() {
-        LOGGER.info("Assigning the package level factories.");
+        LOGGER.info("Assigning the package level factories...");
         AbstractAppFactory.setAppFactory(AppFactory.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
 
@@ -37,9 +37,9 @@ public class HockeyLeagueSimulationApp {
         IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         AbstractState importState = stateMachineFactory.createImportState();
 
-        LOGGER.info("Creating the state machine with starting state as " + importState.getClass().getSimpleName() + ".");
+        LOGGER.info("Creating the state-machine with starting state as " + importState.getClass().getSimpleName() + "...");
         IStateMachine stateMachine = stateMachineFactory.createStateMachine(importState);
-        LOGGER.info("Executing the outermost state machine.");
+        LOGGER.info("Executing the outer state-machine...");
         stateMachine.onExecution();
     }
 

@@ -6,8 +6,11 @@ import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
+import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.IStateMachine;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -18,6 +21,7 @@ public class AdvanceToNextSeasonState extends AbstractState {
     private static final String STANLEY_CUP_WINNER_START = "********** STANLEY CUP WINNER ************";
     private static final String STANLEY_CUP_WINNER_END = "******************************************";
 
+    private final Logger LOGGER = LogManager.getLogger(AdvanceToNextSeasonState.class);
     private final IAppOutput appOutput;
     private final IPlayerCareerProgression playerCareerProgression;
     private final IStateMachineFactory stateMachineFactory;
@@ -39,10 +43,12 @@ public class AdvanceToNextSeasonState extends AbstractState {
         LocalDate draftingDate = LocalDate.of(nextSeasonStartYear, Month.JULY, 15);
         LocalDate newSeasonStartDate = LocalDate.of(nextSeasonStartYear, Month.SEPTEMBER, 29);
 
+        LOGGER.info("Adjusting age of all players in the league " + league.getLeagueName() + " as per the new date " + retirementCheckingDate.toString());
         playerCareerProgression.adjustLeaguePlayersAge(league, retirementCheckingDate);
         league.setLeagueDate(retirementCheckingDate);
 
         appOutput.display(RETIRED_PLAYERS_START);
+        LOGGER.info("Performing retirement check on all players in the league " + league.getLeagueName() + " on " + retirementCheckingDate.toString());
         playerCareerProgression.performLeaguePlayersRetirement(league);
         for (ITeamPlayer teamPlayer : league.getRetiredTeamPlayers()) {
             appOutput.display(teamPlayer.getPlayerName());
@@ -52,18 +58,24 @@ public class AdvanceToNextSeasonState extends AbstractState {
         }
         appOutput.display(RETIRED_PLAYERS_END);
 
+        LOGGER.info("Adjusting age of all players in the league " + league.getLeagueName() + " as per the new date " + draftingDate.toString());
         playerCareerProgression.adjustLeaguePlayersAge(league, draftingDate);
         league.setLeagueDate(draftingDate);
 
         AbstractState draftingState = stateMachineFactory.createDraftingState();
+        LOGGER.info("Creating the inner drafting state-machine with starting state as " + draftingDate.getClass().getSimpleName() + "...");
         IStateMachine draftingSimulation = stateMachineFactory.createStateMachine(draftingState);
+        LOGGER.info("Executing the inner drafting state-machine...");
         draftingSimulation.onExecution();
 
+        LOGGER.info("Adjusting age of all players in the league " + league.getLeagueName() + " as per the new date " + newSeasonStartDate.toString());
         playerCareerProgression.adjustLeaguePlayersAge(league, newSeasonStartDate);
         league.setLeagueDate(newSeasonStartDate);
 
         appOutput.display(STANLEY_CUP_WINNER_START);
-        appOutput.display(league.getScheduleSystem().getStanleyCupWinner().getTeamName());
+        String stanleyCupWinner = league.getScheduleSystem().getStanleyCupWinner().getTeamName();
+        LOGGER.info("Stanley cup winner for season " + regularSeasonStartDate.getYear() + "-" + newSeasonStartDate.getYear() + " is: " + stanleyCupWinner);
+        appOutput.display(stanleyCupWinner);
         appOutput.display(STANLEY_CUP_WINNER_END);
 
         return stateMachineFactory.createPersistState();
