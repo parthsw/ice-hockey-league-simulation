@@ -5,20 +5,20 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GetWorsePlayersToTradeFromTeam {
     public List<ITeamPlayer> getPlayersToTrade(int maxTradablePlayers, ITeam team) {
         List<ITeamPlayer> playerList = new ArrayList<>();
         List<ITeamPlayer> tempList = new ArrayList<>();
         List<ITeamPlayer> resultList = new ArrayList<>();
+        Random random = new Random();
         ITeamPlayer badPlayer = null;
         playerList.addAll(team.getPlayers());
         float strength = Float.MAX_VALUE;
-        int counter = 0;
 
         for (int i = 0; i < maxTradablePlayers; i++) {
             for (ITeamPlayer player : playerList) {
-                counter++;
                 if (player.getPlayerStats().getStrength() < strength) {
                     strength = player.getPlayerStats().getStrength();
                     badPlayer = player;
@@ -28,16 +28,11 @@ public class GetWorsePlayersToTradeFromTeam {
             playerList.remove(badPlayer);
             tempList.add(badPlayer);
         }
-        String position = tempList.get(0).getPlayerStats().getPosition();
 
-        for (ITeamPlayer player : tempList) {
-            if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
-                resultList.add(player);
-            } else {
-                break;
-            }
+        int tradeSize = random.nextInt((maxTradablePlayers - 1) + 1) + 1;
+        for (int i = 0; i < tradeSize; i++) {
+            resultList.add(tempList.get(i));
         }
-
         return resultList;
     }
 }

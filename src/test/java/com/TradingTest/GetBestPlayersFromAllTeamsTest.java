@@ -67,7 +67,7 @@ public class GetBestPlayersFromAllTeamsTest {
         teams.add(test);
 
         GetBestPlayersFromAllTeams object = tradingFactory.createGetBestPlayersFromAllTeams(teams);
-        object.getBestTradeOption("Forward", 1);
+        object.getBestTradeOption(1);
         ITeam bestTeam = object.getTeam();
         List<ITeamPlayer> players = object.getBestPlayersSet();
         Assert.assertEquals("Best Team", bestTeam.getTeamName());

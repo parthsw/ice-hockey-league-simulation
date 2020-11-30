@@ -21,7 +21,6 @@ public class SimulateTrade implements ISimulateTrade{
     private List<ITeam> allTeams;
     private List<ITeam> tradableTeams;
     private int maxPlayerPerTrade;
-    private int tradeSize;
     private float randomAcceptChance;
     private ILeague league;
     private IAppInput appInput;
@@ -48,10 +47,10 @@ public class SimulateTrade implements ISimulateTrade{
         this.appOutput = ioFactory.createCommandLineOutput();
     }
 
+
     public void simulate() {
         for (ITeam team : this.tradableTeams) {
             if (team.getIsUserCreated()) {
-                continue;
             } else {
                 ITeam selectedTeam = this.selectTeamToTrade(team);
                 GenerateTrade generateTrade = tradingFactory.createGenerateTrade();
@@ -69,14 +68,10 @@ public class SimulateTrade implements ISimulateTrade{
 
     private ITeam selectTeamToTrade(ITeam team) {
         List<ITeam> temp = new ArrayList<>();
-        List<ITeamPlayer> playerListToBeTraded;
         temp.addAll(this.allTeams);
         temp.remove(team);
-        playerListToBeTraded = this.selectPlayersToTrade.getPlayersToTrade(this.maxPlayerPerTrade, team);
-        this.tradeSize = playerListToBeTraded.size();
-        String position = playerListToBeTraded.get(0).getPlayerStats().getPosition();
         GetBestPlayersFromAllTeams getBestTeamChoice = tradingFactory.createGetBestPlayersFromAllTeams(temp);
-        getBestTeamChoice.getBestTradeOption(position, tradeSize);
+        getBestTeamChoice.getBestTradeOption(this.maxPlayerPerTrade);
         ITeam bestChoice = getBestTeamChoice.getTeam();
         return bestChoice;
     }
@@ -113,9 +108,9 @@ public class SimulateTrade implements ISimulateTrade{
         generateTrade.decideTrade(randomAcceptChance);
         List<ITeam> resultTeams = generateTrade.getResultTeams();
         for (ITeam modifiedTeam : resultTeams) {
-            TeamValidator validate = tradingFactory.createTeamValidator(modifiedTeam, this.league.getLeagueID(), this.league.getFreeAgents());
-            validate.validateTeam();
+            modifiedTeam.validateRoster(league.getFreeAgents());
         }
+
     }
 
     private void displayPlayers(ITeamPlayer player) {

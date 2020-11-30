@@ -21,12 +21,12 @@ public class GetBestPlayersFromAllTeams {
         tradingFactory = AbstractAppFactory.getTradingFactory();
     }
 
-    public void getBestTradeOption(String position, int tradableNumber) {
+    public void getBestTradeOption(int tradableNumber) {
         float totalStrength = -1;
         this.bestPlayersSet = null;
         this.bestChoice = null;
         for (ITeam team : this.teams) {
-            GetTopNBestPlayersForGivenPosition object = tradingFactory.createGetTopNBestPlayersForGivenPosition(team, tradableNumber, position);
+            GetTopNBestPlayersForGivenPosition object = tradingFactory.createGetTopNBestPlayersForGivenPosition(team, tradableNumber);
             List<ITeamPlayer> bestPlayers = object.getPlayers();
             float combinedStrength = object.getCombinedStrendth();
             if (totalStrength < combinedStrength) {

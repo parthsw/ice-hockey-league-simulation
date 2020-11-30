@@ -8,27 +8,19 @@ import java.util.List;
 
 public class GetTopNBestPlayersForGivenPosition {
     private ITeam team = null;
-    private int tradeNumber;
-    private String position;
+    private int maxTradeNumber;
     private List<ITeamPlayer> relaventPlayers = new ArrayList<>();
     private List<ITeamPlayer> bestPlayers = new ArrayList<>();
 
-    public GetTopNBestPlayersForGivenPosition(ITeam team, int tradeNumber, String position) {
+    public GetTopNBestPlayersForGivenPosition(ITeam team, int maxTradeNumber) {
         this.team = team;
-        this.tradeNumber = tradeNumber;
-        this.position = position;
+        this.maxTradeNumber = maxTradeNumber;
+        this.relaventPlayers.addAll(this.team.getPlayers());
     }
 
-
-
     public List<ITeamPlayer> getPlayers() {
-        for (ITeamPlayer player : this.team.getPlayers()) {
-            if (player.getPlayerStats().getPosition().equalsIgnoreCase(this.position)) {
-                this.relaventPlayers.add(player);
-            }
-        }
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < this.team.getPlayers().size(); i++) {
             ITeamPlayer bestPlayer = null;
             float strength = -1;
             for (ITeamPlayer player : this.relaventPlayers) {
@@ -40,7 +32,7 @@ public class GetTopNBestPlayersForGivenPosition {
             this.bestPlayers.add(bestPlayer);
             this.relaventPlayers.remove(bestPlayer);
 
-            if (this.bestPlayers.size() == this.tradeNumber) {
+            if (this.bestPlayers.size() == this.maxTradeNumber) {
                 break;
             }
         }

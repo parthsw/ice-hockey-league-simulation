@@ -3,6 +3,7 @@ package com.TradingTest;
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -34,7 +35,11 @@ public class GenerateTradeTest {
     @Test
     public void generateTradeTest() {
         ITeam team1 = leagueManagerFactory.createTeam();
+        IManager manager1 = leagueManagerFactory.createManager();
+        team1.setManager(manager1);
         ITeam team2 = leagueManagerFactory.createTeam();
+        IManager manager2 = leagueManagerFactory.createManager();
+        team2.setManager(manager2);
         Random random = new Random();
         String[] positions = new String[]{"Forward", "Defence", "Goalie"};
         for (int i = 0; i < 20; i++) {
@@ -68,7 +73,11 @@ public class GenerateTradeTest {
     @Test
     public void generateTradeTest2() {
         ITeam team1 = leagueManagerFactory.createTeam();
+        IManager manager1 = leagueManagerFactory.createManager();
+        team1.setManager(manager1);
         ITeam team2 = leagueManagerFactory.createTeam();
+        IManager manager2 = leagueManagerFactory.createManager();
+        team2.setManager(manager2);
         team1.setTeamName("Team 1");
         team2.setTeamName("Team 2");
         Random random = new Random();
