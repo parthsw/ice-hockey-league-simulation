@@ -1,6 +1,5 @@
 package com.IceHockeyLeague.Trading;
 
-import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -56,11 +55,6 @@ public class TradingFactory implements ITradingFactory {
     @Override
     public SimulateTrade createSimulateTrade() {
         return new SimulateTrade();
-    }
-
-    @Override
-    public TeamValidator createTeamValidator(ITeam team, int leagueID, List<IFreeAgent> agents) {
-        return new TeamValidator(team, leagueID, agents);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class TeamRosterTest {
         ITeamRoster roster = leagueManagerFactory.createTeamRoster();
         roster.setPlayers(players);
         roster.setAgents(agents);
-        roster.validateRoster();
+        roster.validateRoster(agents);
         List<ITeamPlayer> activeRoster = roster.getActiveRoster();
         List<ITeamPlayer> inactiveRoster = roster.getInactiveRoster();
         Assert.assertEquals(activeRoster.size(), 20);

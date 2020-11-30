@@ -13,9 +13,9 @@ import com.IceHockeyLeague.LeagueManager.Player.IPlayerAgeInfo;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.LeagueManager.Team.Roster.ITeamRoster;
 import com.IceHockeyLeague.Trading.ITradingFactory;
 import com.IceHockeyLeague.Trading.SimulateTrade;
-import com.IceHockeyLeague.Trading.TeamValidator;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -113,6 +113,9 @@ public class SimulateTradeTest {
     private ITeam generateTeam(List<ITeamPlayer> players, int lossPointValue) {
         ITeam team = leagueManagerFactory.createTeam();
         IManager manager1 = leagueManagerFactory.createManager();
+        ITeamRoster roster = leagueManagerFactory.createTeamRoster();
+        roster.setPlayers(players);
+        team.setTeamRoster(roster);
         team.setManager(manager1);
         team.setPlayers(players);
         team.setLossPointValue(lossPointValue);
@@ -220,7 +223,7 @@ public class SimulateTradeTest {
         int skater = 0;
         int goalie = 0;
         String keeper = "Goalie";
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 30; i++) {
             String temp = positions[random.nextInt(positions.length)];
             ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
             IPlayerStats stats = leagueManagerFactory.createPlayerStats();
@@ -229,6 +232,7 @@ public class SimulateTradeTest {
             player.setPlayerStats(stats);
             team.addPlayer(player);
         }
+
         for (int i = 0; i < 100; i++) {
             String temp = positions[random.nextInt(positions.length)];
             IFreeAgent agent = leagueManagerFactory.createFreeAgent();
@@ -238,8 +242,13 @@ public class SimulateTradeTest {
             agent.setPlayerStats(stats);
             agents.add(agent);
         }
-        TeamValidator object = tradingFactory.createTeamValidator(team, 1, agents);
-        ITeam validatedTeam = object.validateTeam();
+        ITeamRoster roster = leagueManagerFactory.createTeamRoster();
+        roster.setPlayers(team.getPlayers());
+        roster.setAgents(agents);
+        team.setTeamRoster(roster);
+        team.validateRoster(agents);
+        team.setPlayers(team.getActiveRoster());
+        ITeam validatedTeam = team;
 
         for (ITeamPlayer player : validatedTeam.getPlayers()) {
             if (player.getPlayerStats().getPosition().equals(keeper)) {

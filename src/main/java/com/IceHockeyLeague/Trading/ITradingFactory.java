@@ -1,6 +1,5 @@
 package com.IceHockeyLeague.Trading;
 
-import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
@@ -26,8 +25,6 @@ public interface ITradingFactory {
     ISwitchPlayer createSwitchPlayer();
 
     SimulateTrade createSimulateTrade();
-
-    TeamValidator createTeamValidator(ITeam team, int leagueID, List<IFreeAgent> agents);
 
     Trade createTrade(int maxPlayersPerTrade);
 

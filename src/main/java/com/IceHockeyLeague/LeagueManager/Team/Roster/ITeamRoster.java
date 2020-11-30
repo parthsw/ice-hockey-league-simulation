@@ -14,6 +14,6 @@ public interface ITeamRoster {
 
     List<ITeamPlayer> getInactiveRoster();
 
-    void validateRoster();
+    void validateRoster(List<IFreeAgent> agents);
 
 }

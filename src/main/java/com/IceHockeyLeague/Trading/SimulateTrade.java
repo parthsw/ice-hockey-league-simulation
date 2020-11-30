@@ -110,8 +110,7 @@ public class SimulateTrade implements ISimulateTrade{
         generateTrade.decideTrade(randomAcceptChance);
         List<ITeam> resultTeams = generateTrade.getResultTeams();
         for (ITeam modifiedTeam : resultTeams) {
-            TeamValidator validate = tradingFactory.createTeamValidator(modifiedTeam, this.league.getLeagueID(), this.league.getFreeAgents());
-            validate.validateTeam();
+            modifiedTeam.validateRoster(league.getFreeAgents());
         }
     }
 

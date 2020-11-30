@@ -71,7 +71,7 @@ public class TeamRoster implements ITeamRoster {
         return worseTeamPlayer;
     }
 
-    public void validateRoster() {
+    public void validateRoster(List<IFreeAgent> agents) {
         int numberOfSkaters = 0;
         int numberOfKeepers = 0;
 
@@ -92,7 +92,7 @@ public class TeamRoster implements ITeamRoster {
                 IPlayerStats stats = leagueManagerFactory.createPlayerStats();
                 agent.setPlayerStats(stats);
                 agent = player.convertToFreeAgent(agent);
-                this.agents.add(agent);
+                agents.add(agent);
             }
         }
 
@@ -112,19 +112,19 @@ public class TeamRoster implements ITeamRoster {
                 IPlayerStats stats = leagueManagerFactory.createPlayerStats();
                 agent.setPlayerStats(stats);
                 agent = player.convertToFreeAgent(agent);
-                this.agents.add(agent);
+                agents.add(agent);
             }
         }
 
         if (numberOfKeepers < numberOfKeepersNeeded) {
             int difference = numberOfKeepersNeeded - numberOfKeepers;
             for (int i = 0; i < difference; i++) {
-                IFreeAgent agent = getBestAgentWithPosition(goalie, this.agents);
+                IFreeAgent agent = getBestAgentWithPosition(goalie, agents);
                 ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
                 IPlayerStats stats = leagueManagerFactory.createPlayerStats();
                 player.setPlayerStats(stats);
                 player = agent.convertToTeamPlayer(player);
-                this.agents.remove(agent);
+                agents.remove(agent);
                 this.players.add(player);
             }
         }
@@ -132,8 +132,8 @@ public class TeamRoster implements ITeamRoster {
         if (numberOfSkaters < numberOfSkatersNeeded) {
             int difference = numberOfSkatersNeeded - numberOfSkaters;
             for (int i = 0; i < difference; i++) {
-                IFreeAgent agent1 = getBestAgentWithPosition(forward, this.agents);
-                IFreeAgent agent2 = getBestAgentWithPosition(defence, this.agents);
+                IFreeAgent agent1 = getBestAgentWithPosition(forward, agents);
+                IFreeAgent agent2 = getBestAgentWithPosition(defence, agents);
                 IFreeAgent agent;
                 if (agent1.getPlayerStats().getStrength() < agent2.getPlayerStats().getStrength()) {
                     agent = agent1;
@@ -144,15 +144,15 @@ public class TeamRoster implements ITeamRoster {
                 IPlayerStats stats = leagueManagerFactory.createPlayerStats();
                 player.setPlayerStats(stats);
                 player = agent.convertToTeamPlayer(player);
-                this.agents.remove(agent);
+                agents.remove(agent);
                 this.players.add(player);
             }
         }
-        this.setNewRoster();
+        this.setNewRoster(agents);
 
     }
 
-    private void setNewRoster() {
+    private void setNewRoster(List<IFreeAgent> agents) {
         List<ITeamPlayer> skaters = new ArrayList<>();
         List<ITeamPlayer> goalies = new ArrayList<>();
 
