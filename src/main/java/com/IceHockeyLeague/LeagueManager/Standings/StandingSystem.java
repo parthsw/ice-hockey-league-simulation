@@ -20,14 +20,17 @@ public class StandingSystem implements IStandingSystem {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
+    @Override
     public List<IStanding> getStandings() {
         return standings;
     }
 
+    @Override
     public void setStandings(List<IStanding> standings) {
         this.standings = standings;
     }
 
+    @Override
     public void initializeStandings(ILeague league) {
         standings = new ArrayList<>();
 
@@ -44,6 +47,7 @@ public class StandingSystem implements IStandingSystem {
         }
     }
 
+    @Override
     public void updateStatsForWinningTeam(IConference conference, IDivision division, ITeam team) {
         for (IStanding standing : standings) {
             if (standing.getConference() == conference &&
@@ -56,6 +60,7 @@ public class StandingSystem implements IStandingSystem {
         }
     }
 
+    @Override
     public void updateStatsForLosingTeam(IConference conference, IDivision division, ITeam team) {
         for (IStanding standing : standings) {
             if (standing.getConference() == conference &&
@@ -66,6 +71,7 @@ public class StandingSystem implements IStandingSystem {
         }
     }
 
+    @Override
     public List<IStanding> getStandingsInDivision(IDivision division) {
         List<IStanding> myStandings = new ArrayList<>();
         for (IStanding standing : standings) {
@@ -77,6 +83,7 @@ public class StandingSystem implements IStandingSystem {
         return myStandings;
     }
 
+    @Override
     public List<IStanding> getStandingsInConference(IConference conference) {
         List<IStanding> myStandings = new ArrayList<>();
         for (IStanding standing : standings) {
@@ -88,15 +95,18 @@ public class StandingSystem implements IStandingSystem {
         return myStandings;
     }
 
+    @Override
     public IStanding getTopStandingInConference(IConference conference) {
         return getStandingsInConference(conference).get(0);
     }
 
+    @Override
     public List<IStanding> getRegularSeasonStandingsInReverse() {
         standings.sort(Standing.standingComparator.reversed());
         return standings;
     }
 
+    @Override
     public List<IStanding> getPlayOffSeasonStandingsInReverse(List<ISchedule> playoffSchedule) {
         List<IStanding> playOffStandings = new ArrayList<>();
         int numberOfSchedules = playoffSchedule.size();

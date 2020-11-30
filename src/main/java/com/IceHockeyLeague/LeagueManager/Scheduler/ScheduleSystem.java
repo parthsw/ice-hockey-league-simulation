@@ -104,7 +104,7 @@ public class ScheduleSystem implements IScheduleSystem {
     public void generateRegularSeasonSchedule(ILeague league) {
         regularSchedule = new ArrayList<>();
         generateGamesForRegularSeason(league);
-        generateDates(true);
+        generateDatesForRegularSeason();
     }
 
     private void generateGamesForRegularSeason(ILeague league) {
@@ -141,21 +141,14 @@ public class ScheduleSystem implements IScheduleSystem {
         }
     }
 
-    private void generateDates(boolean isRegularSeason) {
-        LocalDate startDate;
-        LocalDate endDate;
-        List<ISchedule> scheduleList;
-        if (isRegularSeason) {
-            startDate = regularSeasonStartDate;
-            endDate = regularSeasonEndDate;
-            scheduleList = regularSchedule;
-        }
-        else {
-            startDate = playoffStartDate;
-            endDate = playoffEndDate;
-            scheduleList = playoffSchedule;
-        }
+    private void generateDatesForRegularSeason() {
+        LocalDate startDate = regularSeasonStartDate;
+        LocalDate endDate = regularSeasonEndDate;
+        List<ISchedule> scheduleList = regularSchedule;
+        generateDates(startDate, endDate, scheduleList);
+    }
 
+    private void generateDates(LocalDate startDate, LocalDate endDate, List<ISchedule> scheduleList) {
         int days =(int)(DAYS.between(startDate, endDate));
         int noOfGames = scheduleList.size();
 
@@ -184,7 +177,14 @@ public class ScheduleSystem implements IScheduleSystem {
     public void generatePlayoffSchedule(ILeague league, IStandingSystem standingSystem) {
         playoffSchedule = new ArrayList<>();
         generatePlayoffRound1(league, standingSystem);
-        generateDates(false);
+        generateDatesForPlayoff();
+    }
+
+    private void generateDatesForPlayoff() {
+        LocalDate startDate = playoffStartDate;
+        LocalDate endDate = playoffEndDate;
+        List<ISchedule> scheduleList = playoffSchedule;
+        generateDates(startDate, endDate, scheduleList);
     }
 
     private void generatePlayoffRound1(ILeague league, IStandingSystem standingSystem) {
