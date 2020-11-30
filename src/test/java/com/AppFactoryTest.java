@@ -9,6 +9,8 @@ import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializ
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.SerializeDeserializeLeagueObjectFactory;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.IceHockeyLeague.Trading.ITradingFactory;
+import com.IceHockeyLeague.Trading.TradingFactory;
 import com.IceHockeyLeagueTest.LeagueManagerTest.LeagueManagerFactoryTest;
 import com.Persistence.IPersistenceFactory;
 import com.PersistenceTest.PersistenceFactoryTest;
@@ -74,4 +76,5 @@ public class AppFactoryTest extends AbstractAppFactory {
     public static AbstractAppFactory createAppFactory() {
         return new AppFactoryTest();
     }
+
 }

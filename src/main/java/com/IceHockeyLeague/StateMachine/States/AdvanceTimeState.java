@@ -1,6 +1,7 @@
 package com.IceHockeyLeague.StateMachine.States;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
@@ -63,7 +64,7 @@ public class AdvanceTimeState extends AbstractState {
     private void handlePlayerStatDecay(IPlayer player, IRandomChance randomChance) {
         IGamePlayConfig gamePlayConfig = league.getGamePlayConfig();
 
-        if (player.isBirthDay(league.getLeagueDate())) {
+        if (player.isBirthDate(league.getLeagueDate())) {
             player.performStatDecay(gamePlayConfig.getAgingConfig(), randomChance);
         }
     }

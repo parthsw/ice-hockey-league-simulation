@@ -31,4 +31,5 @@ public class GameResolverConfigTest {
         resolverConfig.setRandomWinChance(0.90f);
         Assert.assertEquals(0.90f, resolverConfig.getRandomWinChance(), 0.0);
     }
+
 }

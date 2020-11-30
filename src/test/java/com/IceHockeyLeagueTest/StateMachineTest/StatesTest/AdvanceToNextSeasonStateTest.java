@@ -2,11 +2,11 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-//import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
+import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
+import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.PersistState;
@@ -19,44 +19,57 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
+
+import static org.mockito.Mockito.when;
 
 public class AdvanceToNextSeasonStateTest {
+    private static final String PERSIST_STATE = "PersistState";
+
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
+    private static IDatabaseFactory databaseFactory;
+    private static IRandomChance randomChanceMock;
     private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory appFactory = AppFactoryTest.createAppFactory();
-        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        randomChanceMock = leagueManagerFactory.createRandomChance();
         persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
     }
 
-   /* @Test
+    @Test
     public void onRunTest() {
         ILeague league = leagueManagerFactory.createLeague();
         ILeaguePersistence leaguePersistence = persistenceFactory.createLeaguePersistence();
-        leaguePersistence.loadLeague("");
-
-        league.setLeagueDate(LocalDate.of(Year.now().getValue() + 1, Month.SEPTEMBER, 27));
-        league.getScheduleSystem().setRegularSeasonStartDate(LocalDate.now());
-        ISchedule schedule = leagueManagerFactory.createSchedule();
-        schedule.setWinningTeam(leagueManagerFactory.createTeam());
-        List<ISchedule> playoffList = new ArrayList<>();
-        playoffList.add(schedule);
-        league.getScheduleSystem().setPlayoffSchedule(playoffList);
-
         AbstractState advanceToNextSeasonState = stateMachineFactory.createAdvanceToNextSeasonState();
-        advanceToNextSeasonState.setLeague(league);
+        AbstractState nextState;
 
-        Assert.assertTrue(advanceToNextSeasonState.onRun() instanceof PersistState);
-        Assert.assertEquals(19, league.getConferences().get(0).getDivisions().get(0).getTeams().get(0).getPlayers().get(0).getPlayerAgeInfo().getAgeInYears());
-        Assert.assertEquals(332, league.getFreeAgents().get(0).getPlayerAgeInfo().getElapsedDaysFromLastBDay());
-    }*/
+        leaguePersistence.loadLeague("");
+        advanceToNextSeasonState.setLeague(league);
+        when(randomChanceMock.getRandomFloatNumber(0, 50)).thenReturn(0.5f);
+        nextState = advanceToNextSeasonState.onRun();
+
+        Assert.assertEquals(nextState.getClass().getSimpleName(), PERSIST_STATE);
+    }
+
+    @Test
+    public void onRunNextSeasonVerificationTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leaguePersistence = persistenceFactory.createLeaguePersistence();
+        AbstractState advanceToNextSeasonState = stateMachineFactory.createAdvanceToNextSeasonState();
+        LocalDate newSeasonDate = LocalDate.of(2021, Month.SEPTEMBER, 29);
+
+        leaguePersistence.loadLeague(1, league);
+        advanceToNextSeasonState.setLeague(league);
+        when(randomChanceMock.getRandomFloatNumber(0, 50)).thenReturn(0.5f);
+        advanceToNextSeasonState.onRun();
+
+        Assert.assertEquals(newSeasonDate, league.getLeagueDate());
+    }
+
 }

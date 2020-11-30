@@ -37,17 +37,17 @@ public class PlayerAgeInfoTest {
     }
 
     @Test
-    public void getElapsedDaysFromLastBDayTest() {
+    public void getElapsedDaysFromLastBDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
-        playerAgeInfo.setElapsedDaysFromLastBDay(12);
-        Assert.assertEquals(12, playerAgeInfo.getElapsedDaysFromLastBDay());
+        playerAgeInfo.setElapsedDaysFromLastBDate(12);
+        Assert.assertEquals(12, playerAgeInfo.getElapsedDaysFromLastBDate());
     }
 
     @Test
-    public void setElapsedDaysFromLastBDayTest() {
+    public void setElapsedDaysFromLastBDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
-        playerAgeInfo.setElapsedDaysFromLastBDay(-1);
-        Assert.assertEquals(0, playerAgeInfo.getElapsedDaysFromLastBDay());
+        playerAgeInfo.setElapsedDaysFromLastBDate(-1);
+        Assert.assertEquals(0, playerAgeInfo.getElapsedDaysFromLastBDate());
     }
 
     @Test
@@ -65,17 +65,17 @@ public class PlayerAgeInfoTest {
     }
 
     @Test
-    public void isPlayerBirthDayTrueTest() {
+    public void isPlayerBirthDateTrueTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(CURRENT_DATE);
-        Assert.assertTrue(playerAgeInfo.isPlayerBirthDay(CURRENT_DATE));
+        Assert.assertTrue(playerAgeInfo.isPlayerBirthDate(CURRENT_DATE));
     }
 
     @Test
-    public void isPlayerBirthDayFalseTest() {
+    public void isPlayerBirthDateFalseTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2013, Month.OCTOBER, 6));
-        Assert.assertFalse(playerAgeInfo.isPlayerBirthDay(CURRENT_DATE));
+        Assert.assertFalse(playerAgeInfo.isPlayerBirthDate(CURRENT_DATE));
     }
 
     @Test
@@ -86,59 +86,59 @@ public class PlayerAgeInfoTest {
     }
 
     @Test
-    public void calculateElapsedDaysFromLastBDayBeforeDateTest() {
+    public void calculateElapsedDaysFromLastBDateBeforeDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2001, Month.JANUARY, 7));
-        Assert.assertEquals(316, playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        Assert.assertEquals(316, playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
     }
 
     @Test
-    public void calculateElapsedDaysFromLastBDayAfterDateTest() {
+    public void calculateElapsedDaysFromLastBDateAfterDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2003, Month.DECEMBER, 7));
-        Assert.assertEquals(347, playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        Assert.assertEquals(347, playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
     }
 
     @Test
-    public void calculateElapsedDaysFromLastBDaySameDateTest() {
+    public void calculateElapsedDaysFromLastBDateSameDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2003, Month.NOVEMBER, 17));
-        Assert.assertEquals(0, playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        Assert.assertEquals(0, playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
     }
 
     @Test
-    public void agePlayerByDaysOnBDayTest() {
+    public void agePlayerByDaysOnBDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2000, Month.NOVEMBER, 17));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
 
         playerAgeInfo.agePlayerByDays(40, CURRENT_DATE);
-        Assert.assertEquals(40, playerAgeInfo.getElapsedDaysFromLastBDay());
+        Assert.assertEquals(40, playerAgeInfo.getElapsedDaysFromLastBDate());
     }
 
     @Test
-    public void agePlayerByDaysAfterBDayTest() {
+    public void agePlayerByDaysAfterBDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2000, Month.NOVEMBER, 17));
         playerAgeInfo.setAgeInYears(19);
-        playerAgeInfo.setElapsedDaysFromLastBDay(366);
+        playerAgeInfo.setElapsedDaysFromLastBDate(366);
 
         playerAgeInfo.agePlayerByDays(3, CURRENT_DATE);
         Assert.assertEquals(20, playerAgeInfo.getAgeInYears());
-        Assert.assertEquals(3, playerAgeInfo.getElapsedDaysFromLastBDay());
+        Assert.assertEquals(3, playerAgeInfo.getElapsedDaysFromLastBDate());
     }
 
     @Test
-    public void agePlayerByDaysBeforeBDayTest() {
+    public void agePlayerByDaysBeforeBDateTest() {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2000, Month.NOVEMBER, 17));
         playerAgeInfo.setAgeInYears(19);
-        playerAgeInfo.setElapsedDaysFromLastBDay(363);
+        playerAgeInfo.setElapsedDaysFromLastBDate(363);
 
         playerAgeInfo.agePlayerByDays(3, CURRENT_DATE);
         Assert.assertEquals(20, playerAgeInfo.getAgeInYears());
-        Assert.assertEquals(0, playerAgeInfo.getElapsedDaysFromLastBDay());
+        Assert.assertEquals(0, playerAgeInfo.getElapsedDaysFromLastBDate());
     }
 
     @Test
@@ -158,4 +158,5 @@ public class PlayerAgeInfoTest {
         LocalDate givenYearBirthDay = playerAgeInfo.getBirthDateForGivenYear(2013);
         Assert.assertEquals(28, givenYearBirthDay.getDayOfMonth());
     }
+
 }

@@ -97,13 +97,11 @@ public class PlayerStats implements IPlayerStats {
     @Override
     public float calculateStrength() {
         float strength = 0f;
-        if(position.equalsIgnoreCase(PlayerPosition.FORWARD.toString())) {
+        if (position.equalsIgnoreCase(PlayerPosition.FORWARD.toString())) {
             return forwardStrength();
-        }
-        else if(position.equalsIgnoreCase(PlayerPosition.DEFENSE.toString())) {
+        } else if (position.equalsIgnoreCase(PlayerPosition.DEFENSE.toString())) {
             return defenseStrength();
-        }
-        else if(position.equalsIgnoreCase(PlayerPosition.GOALIE.toString())) {
+        } else if (position.equalsIgnoreCase(PlayerPosition.GOALIE.toString())) {
             return goalieStrength();
         }
         return strength;
@@ -120,23 +118,23 @@ public class PlayerStats implements IPlayerStats {
 
     private float forwardStrength() {
         float strength = 0f;
-        if(isStatValid(skating) && isStatValid(shooting) && isStatValid(checking)) {
-            strength = skating + shooting + ((float)checking/2);
+        if (isStatValid(skating) && isStatValid(shooting) && isStatValid(checking)) {
+            strength = skating + shooting + ((float) checking / 2);
         }
         return strength;
     }
 
     private float defenseStrength() {
         float strength = 0f;
-        if(isStatValid(skating) && isStatValid(shooting) && isStatValid(checking)) {
-            strength = skating + checking + ((float)shooting/2);
+        if (isStatValid(skating) && isStatValid(shooting) && isStatValid(checking)) {
+            strength = skating + checking + ((float) shooting / 2);
         }
         return strength;
     }
 
     private float goalieStrength() {
         float strength = 0f;
-        if(isStatValid(skating) && isStatValid(saving)) {
+        if (isStatValid(skating) && isStatValid(saving)) {
             strength = skating + saving;
         }
         return strength;
@@ -145,7 +143,6 @@ public class PlayerStats implements IPlayerStats {
     private boolean isStatValid(int statValue) {
         return (statValue >= STATS_LOWER_VALUE && statValue <= STATS_HIGHER_VALUE);
     }
-
 
     private boolean shouldStatBeDecayed(IRandomChance randomChance, float statDecayChance) {
         return randomChance.getRandomFloatNumber(0, 1) < statDecayChance;
@@ -157,4 +154,5 @@ public class PlayerStats implements IPlayerStats {
         }
         return stat;
     }
+
 }

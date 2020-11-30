@@ -14,8 +14,7 @@ public class LeagueFileValidator implements ILeagueFileValidator {
         try {
             Schema schema = SchemaLoader.load(schemaToValidate);
             schema.validate(json);
-        }
-        catch (ValidationException validationException) {
+        } catch (ValidationException validationException) {
             return validationException.getAllMessages();
         }
         return null;

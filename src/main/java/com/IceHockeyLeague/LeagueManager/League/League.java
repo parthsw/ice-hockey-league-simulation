@@ -37,6 +37,8 @@ public class League implements ILeague {
     private IScheduleSystem scheduleSystem;
     private IStandingSystem standingSystem;
     private static PersistenceFactory persistenceFactory;
+    private List<IDraftPick> draftPicks;
+    private IGameSimulationSystem gameSimulationSystem;
 
     public League() {
         setDefaults();
@@ -50,9 +52,11 @@ public class League implements ILeague {
         this.managers = new ArrayList<>();
         this.retiredFreeAgents = new ArrayList<>();
         this.retiredTeamPlayers = new ArrayList<>();
+        this.draftPicks = new ArrayList<>();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         this.scheduleSystem = leagueManagerFactory.createScheduleSystem();
         this.standingSystem = leagueManagerFactory.createStandingSystem();
+        this.gameSimulationSystem = leagueManagerFactory.createGameSimulationSystem();
     }
 
     @Override
@@ -236,6 +240,26 @@ public class League implements ILeague {
     @Override
     public IStandingSystem getStandingSystem() {
         return standingSystem;
+    }
+
+    @Override
+    public IGameSimulationSystem getGameSimulationSystem() {
+        return gameSimulationSystem;
+    }
+
+    @Override
+    public void addDraftPick(IDraftPick draftPick) {
+        draftPicks.add(draftPick);
+    }
+
+    @Override
+    public void setDraftPicks(List<IDraftPick> draftPicks) {
+        this.draftPicks = draftPicks;
+    }
+
+    @Override
+    public List<IDraftPick> getDraftPicks() {
+        return draftPicks;
     }
 
     @Override

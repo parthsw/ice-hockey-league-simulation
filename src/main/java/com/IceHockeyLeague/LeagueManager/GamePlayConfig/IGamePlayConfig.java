@@ -1,25 +1,32 @@
 package com.IceHockeyLeague.LeagueManager.GamePlayConfig;
 
 public interface IGamePlayConfig {
-    int getGamePlayConfigID();
-    void setGamePlayConfigID(int id);
+    int getGamePlayConfigId();
 
-    int getLeagueID();
-    void setLeagueID(int id);
+    void setGamePlayConfigId(int gamePlayConfigId);
+
+    int getLeagueId();
+
+    void setLeagueId(int leagueId);
 
     void setAgingConfig(IAgingConfig agingConfig);
+
     IAgingConfig getAgingConfig();
 
     void setGameResolverConfig(IGameResolverConfig gameResolverConfig);
+
     IGameResolverConfig getGameResolverConfig();
 
     void setInjuryConfig(IInjuryConfig injuryConfig);
+
     IInjuryConfig getInjuryConfig();
 
     void setTrainingConfig(ITrainingConfig trainingConfig);
+
     ITrainingConfig getTrainingConfig();
 
     void setTradingConfig(ITradingConfig tradingConfig);
+
     ITradingConfig getTradingConfig();
 
 }

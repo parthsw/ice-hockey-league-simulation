@@ -14,15 +14,15 @@ public class LeagueFileReader implements ILeagueFileReader {
 
     @Override
     public InputStream readSystemFile(String filePath) throws FileNotFoundException {
-        if(filePath.isEmpty()) {
-            return null;
+        if (filePath == null || filePath.isEmpty()) {
+            throw new FileNotFoundException();
         }
         return new FileInputStream(filePath);
     }
 
     @Override
-    public InputStream readAppResourceFile(String resourceFileName) {
-        if(resourceFileName.isEmpty()) {
+    public InputStream readAppResourceFile(String resourceFileName) throws NullPointerException {
+        if (resourceFileName.isEmpty()) {
             return null;
         }
         ClassLoader classLoader = getClass().getClassLoader();

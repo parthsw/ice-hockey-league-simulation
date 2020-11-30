@@ -6,8 +6,8 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.Trading.GetBestPlayersFromAllTeams;
-import com.Trading.ITradingFactory;
+import com.IceHockeyLeague.Trading.GetBestPlayersFromAllTeams;
+import com.IceHockeyLeague.Trading.ITradingFactory;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,8 +25,9 @@ public class GetBestPlayersFromAllTeamsTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setTradingFactory(appFactory.createTradingFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        tradingFactory = appFactory.createTradingFactory();
+        tradingFactory = AbstractAppFactory.getTradingFactory();
     }
 
     @Test

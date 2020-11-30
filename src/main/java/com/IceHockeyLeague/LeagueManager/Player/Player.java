@@ -105,8 +105,8 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public boolean isBirthDay(LocalDate currentDate) {
-        return playerAgeInfo.isPlayerBirthDay(currentDate);
+    public boolean isBirthDate(LocalDate currentDate) {
+        return playerAgeInfo.isPlayerBirthDate(currentDate);
     }
 
     @Override
@@ -150,4 +150,5 @@ public class Player implements IPlayer {
     public void agePlayerByDays(int daysToIncrement, LocalDate currentDate) {
         playerAgeInfo.agePlayerByDays(daysToIncrement, currentDate);
     }
+
 }

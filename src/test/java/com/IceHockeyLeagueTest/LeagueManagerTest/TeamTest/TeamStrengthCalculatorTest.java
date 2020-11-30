@@ -35,6 +35,9 @@ public class TeamStrengthCalculatorTest {
         teamPlayerPersistenceMock.loadTeamPlayers(1,teamPlayers);
 
         ITeamStrengthCalculator teamStrength = leagueManagerFactory.createTeamStrengthCalculator();
+        List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        teamPlayerDb.loadTeamPlayers(1, teamPlayers);
         Assert.assertEquals(46.5f, teamStrength.calculate(teamPlayers), 0.0);
     }
+
 }

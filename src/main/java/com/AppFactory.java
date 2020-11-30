@@ -1,5 +1,6 @@
 package com;
 
+
 import com.IO.IIOFactory;
 import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
@@ -16,6 +17,8 @@ import com.Trading.ITradingFactory;
 import com.Trading.TradingFactory;
 import com.TrophySystem.ITrophySystemFactory;
 import com.TrophySystem.TrophySystemFactory;
+import com.IceHockeyLeague.Trading.ITradingFactory;
+import com.IceHockeyLeague.Trading.TradingFactory;
 
 public class AppFactory extends AbstractAppFactory {
 

@@ -9,7 +9,9 @@ import com.PersistenceTest.CoachPersistenceMock;
 import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,9 @@ import java.util.List;
 public class CoachTest {
     private static ILeagueManagerFactory leagueManagerFactory;
     private static PersistenceFactoryTest persistenceFactory;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -29,23 +34,23 @@ public class CoachTest {
     @Test
     public void ConstructorTest() {
         ICoach coach = leagueManagerFactory.createCoach();
-        Assert.assertEquals(-1, coach.getTeamID());
-        Assert.assertEquals(-1, coach.getLeagueID());
-        Assert.assertEquals(-1, coach.getCoachID());
+        Assert.assertEquals(-1, coach.getTeamId());
+        Assert.assertEquals(-1, coach.getLeagueId());
+        Assert.assertEquals(-1, coach.getCoachId());
     }
 
     @Test
-    public void getCoachIDTest() {
+    public void getCoachIdTest() {
         ICoach coach = leagueManagerFactory.createCoach();
-        coach.setCoachID(3);
-        Assert.assertEquals(3, coach.getCoachID());
+        coach.setCoachId(3);
+        Assert.assertEquals(3, coach.getCoachId());
     }
 
     @Test
-    public void setCoachIDTest() {
+    public void setCoachIdTest() {
         ICoach coach = leagueManagerFactory.createCoach();
-        coach.setCoachID(22);
-        Assert.assertEquals(22, coach.getCoachID());
+        coach.setCoachId(22);
+        Assert.assertEquals(22, coach.getCoachId());
     }
 
     @Test
@@ -63,56 +68,65 @@ public class CoachTest {
     }
 
     @Test
-    public void getTeamIDTest() {
+    public void getTeamIdTest() {
         ICoach coach = leagueManagerFactory.createCoach();
-        coach.setTeamID(3);
-        Assert.assertEquals(3, coach.getTeamID());
+        coach.setTeamId(3);
+        Assert.assertEquals(3, coach.getTeamId());
     }
 
     @Test
-    public void setTeamIDTest() {
+    public void setTeamIdTest() {
         ICoach coach = leagueManagerFactory.createCoach();
-        coach.setTeamID(22);
-        Assert.assertEquals(22, coach.getTeamID());
+        coach.setTeamId(22);
+        Assert.assertEquals(22, coach.getTeamId());
     }
 
     @Test
-    public void getLeagueIDTest() {
+    public void getLeagueIdTest() {
         ICoach coach = leagueManagerFactory.createCoach();
-        coach.setLeagueID(3);
-        Assert.assertEquals(3, coach.getLeagueID());
+        coach.setLeagueId(3);
+        Assert.assertEquals(3, coach.getLeagueId());
     }
 
     @Test
-    public void setLeagueIDTest() {
+    public void setLeagueIdTest() {
         ICoach coach = leagueManagerFactory.createCoach();
-        coach.setLeagueID(22);
-        Assert.assertEquals(22, coach.getLeagueID());
+        coach.setLeagueId(22);
+        Assert.assertEquals(22, coach.getLeagueId());
     }
 
     @Test
     public void setCoachStatsTest() {
+        ICoach coach = leagueManagerFactory.createCoach();
         ICoachStats stats = leagueManagerFactory.createCoachStats();
+        ICoachStats coachStats;
         stats.setSaving(0.7f);
         stats.setChecking(0.5f);
         stats.setShooting(0.3f);
         stats.setSkating(0.8f);
-
-        ICoach coach = leagueManagerFactory.createCoach();
         coach.setCoachStats(stats);
 
-        ICoachStats coachStats = coach.getCoachStats();
+        coachStats = coach.getCoachStats();
         Assert.assertEquals(0.7f, coachStats.getSaving(), 0.0);
-        Assert.assertEquals(0.3f, coachStats.getShooting(), 0.0);
     }
 
     @Test
-    public void isValidTest() {
+    public void setCoachStatsInvalidTest() {
+        thrown.expect(IllegalArgumentException.class);
         ICoach coach = leagueManagerFactory.createCoach();
+        coach.setCoachStats(null);
+    }
 
+    @Test
+    public void isValidTrueTest() {
+        ICoach coach = leagueManagerFactory.createCoach();
         coach.setCoachName("Raj K");
         Assert.assertTrue(coach.isValid());
+    }
 
+    @Test
+    public void isValidFalseTest() {
+        ICoach coach = leagueManagerFactory.createCoach();
         coach.setCoachName("");
         Assert.assertFalse(coach.isValid());
     }
@@ -123,8 +137,16 @@ public class CoachTest {
         ICoach coach = leagueManagerFactory.createCoach();
         List<ICoach> coaches = new ArrayList<>();
         coachPersistenceMock.loadLeagueCoaches(1, coaches);
-        Assert.assertFalse(coach.isCoachNameExist(coaches, ""));
         Assert.assertTrue(coach.isCoachNameExist(coaches, "joe doe"));
     }
 
+    @Test
+    public void isCoachNameExistFalseTest() {
+        CoachPersistenceMock coachPersistenceMock = persistenceFactory.createCoachPersistence();
+        ICoach coach = leagueManagerFactory.createCoach();
+        List<ICoach> coaches = new ArrayList<>();
+        coachPersistenceMock.loadLeagueCoaches(1, coaches);
+        Assert.assertFalse(coach.isCoachNameExist(coaches, ""));
+        Assert.assertTrue(coach.isCoachNameExist(coaches, "joe doe"));
+    }
 }

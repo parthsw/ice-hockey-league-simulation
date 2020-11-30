@@ -6,8 +6,8 @@ public class InjuryConfig implements IInjuryConfig {
     private int injuryDaysHigh;
 
     @Override
-    public void setRandomInjuryChance(float injuryChance) {
-        randomInjuryChance = injuryChance;
+    public void setRandomInjuryChance(float randomInjuryChance) {
+        this.randomInjuryChance = randomInjuryChance;
     }
 
     @Override
@@ -34,4 +34,5 @@ public class InjuryConfig implements IInjuryConfig {
     public int getInjuryDaysHigh() {
         return injuryDaysHigh;
     }
+
 }

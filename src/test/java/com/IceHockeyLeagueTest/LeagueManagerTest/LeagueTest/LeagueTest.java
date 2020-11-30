@@ -2,20 +2,16 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.LeagueTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-//import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-//import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
-//import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfigPersistence;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-//import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-//import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
+import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
-//import com.IceHockeyLeague.LeagueManager.Player.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.PersistenceTest.*;
 import org.junit.Assert;
@@ -134,7 +130,7 @@ public class LeagueTest {
         gamePlayConfigPersistenceMock.loadGamePlayConfig(1, gamePlayConfig);
         league.setGamePlayConfig(gamePlayConfig);
         IGamePlayConfig leagueConfig = league.getGamePlayConfig();
-        Assert.assertEquals(1, leagueConfig.getLeagueID());
+        Assert.assertEquals(1, leagueConfig.getLeagueId());
     }
 
     @Test
@@ -247,5 +243,123 @@ public class LeagueTest {
         league.addRetiredFreeAgent(freeAgent);
         List<IFreeAgent> retiredFreeAgents = league.getRetiredFreeAgents();
         Assert.assertEquals(1, retiredFreeAgents.size());
+    }
+
+    @Test
+    public void getScheduleSystemTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        Assert.assertNotNull(league.getScheduleSystem());
+    }
+
+    @Test
+    public void getStandingSystemTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        Assert.assertNotNull(league.getStandingSystem());
+    }
+
+    @Test
+    public void getGameSimulationSystemTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        Assert.assertNotNull(league.getGameSimulationSystem());
+    }
+
+    @Test
+    public void saveCompleteLeagueTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        league.saveCompleteLeague();
+
+        Assert.assertEquals(2, league.getLeagueID());
+        Assert.assertEquals("NHL", league.getLeagueName());
+
+        List<IConference> conferences = league.getConferences();
+        Assert.assertEquals(2, conferences.size());
+
+        List<IFreeAgent> freeAgents = league.getFreeAgents();
+        Assert.assertEquals(60, freeAgents.size());
+
+        List<ICoach> coaches = league.getCoaches();
+        Assert.assertEquals(3, coaches.size());
+
+        List<IManager> managers = league.getManagers();
+        Assert.assertEquals(3, managers.size());
+    }
+
+    @Test
+    public void loadCompleteLeagueTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        league.loadCompleteLeague(1);
+
+        Assert.assertEquals(1, league.getLeagueID());
+        Assert.assertEquals("DHL", league.getLeagueName());
+
+        List<IFreeAgent> freeAgents = league.getFreeAgents();
+        Assert.assertEquals(3, freeAgents.size());
+
+        List<ICoach> coaches = league.getCoaches();
+        Assert.assertEquals(2, coaches.size());
+
+        List<IManager> managers = league.getManagers();
+        Assert.assertEquals(3, managers.size());
+    }
+
+    @Test
+    public void saveLeagueTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        league.saveLeague(leagueDB);
+
+        Assert.assertEquals(2, league.getLeagueID());
+        Assert.assertEquals("NHL", league.getLeagueName());
+    }
+
+    @Test
+    public void loadLeagueTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        league.setLeagueID(1);
+        league.loadLeague(leagueDB);
+
+        Assert.assertEquals(1, league.getLeagueID());
+        Assert.assertEquals("DHL", league.getLeagueName());
+    }
+
+    @Test
+    public void loadConferencesTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
+        List<IConference> conferences = new ArrayList<>();
+        league.loadConferences(conferenceDB, conferences);
+
+        Assert.assertEquals(2, conferences.size());
+    }
+
+    @Test
+    public void loadLeagueManagersTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
+        List<IManager> managers = new ArrayList<>();
+        league.loadLeagueManagers(managerDB, managers);
+
+        Assert.assertEquals(3, managers.size());
+    }
+
+    @Test
+    public void loadLeagueCoachesTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
+        List<ICoach> coaches = new ArrayList<>();
+        league.loadLeagueCoaches(coachDB, coaches);
+
+        Assert.assertEquals(2, coaches.size());
+    }
+
+    @Test
+    public void loadLeagueFreeAgentsTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        List<IFreeAgent> freeAgents = new ArrayList<>();
+        league.loadLeagueFreeAgents(freeAgentDB, freeAgents);
+
+        Assert.assertEquals(3, freeAgents.size());
     }
 }

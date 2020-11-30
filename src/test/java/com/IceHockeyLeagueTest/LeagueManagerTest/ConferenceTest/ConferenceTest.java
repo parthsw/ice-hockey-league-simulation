@@ -2,16 +2,16 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.ConferenceTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-//import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-//import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.ConferencePersistenceMock;
 import com.PersistenceTest.DivisionPersistenceMock;
 import com.PersistenceTest.PersistenceFactoryTest;
+import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,7 +29,12 @@ public class ConferenceTest {
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
         persistenceFactory =AppFactoryTest.createPersistenceFactoryTest();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+        databaseFactory = AbstractAppFactory.getDatabaseFactory();
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
+
 
     @Test
     public void ConstructorTest() {

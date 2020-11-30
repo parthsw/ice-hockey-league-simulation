@@ -2,6 +2,8 @@ package com.IceHockeyLeague.LeagueManager.Player;
 
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     // Reference: Random names - https://homepage.net/name_generator/
-    private static final String[] firstNames = {
+    private static final String[] FIRST_NAMES = {
             "Adam",
             "Adrian",
             "Alan",
@@ -90,7 +92,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
             "Warren",
             "William"
     };
-    private static final String[] lastNames = {
+    private static final String[] LAST_NAMES = {
             "Abraham",
             "Allan",
             "Alsop",
@@ -177,6 +179,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     private static final int FORWARD_RATIO = 50;
     private static final int DEFENSE_RATIO = 40;
     private static IRandomChance randomChance;
+    private final Logger LOGGER = LogManager.getLogger(RandomPlayersGenerator.class);
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public RandomPlayersGenerator(IRandomChance randomChance) {
@@ -185,23 +188,25 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     }
 
     public List<IPlayer> generateRandomPlayers(LocalDate currentDate, int totalPlayers) {
-        if(totalPlayers <= 0) {
+        if (totalPlayers <= 0) {
             return new ArrayList<>();
         }
 
         List<IPlayer> generatedPlayers = new ArrayList<>();
         int numberOfForwardsToGenerate = numberOfPlayersToGenerate(totalPlayers, FORWARD_RATIO);
-        int numberOfDefenseToGenerate = numberOfPlayersToGenerate(totalPlayers, DEFENSE_RATIO);
+        int numberOfDefensesToGenerate = numberOfPlayersToGenerate(totalPlayers, DEFENSE_RATIO);
 
-        for(int i = 0; i < totalPlayers; i++) {
+        LOGGER.info("Generating " + numberOfForwardsToGenerate + " forward draftees...");
+        LOGGER.info("Generating " + numberOfDefensesToGenerate + " defense draftees...");
+        LOGGER.info("Generating " + (totalPlayers - (numberOfDefensesToGenerate + numberOfForwardsToGenerate)) + " goalie draftees...");
+
+        for (int i = 0; i < totalPlayers; i++) {
             IPlayer player = generateRandomBasePlayer(currentDate);
-            if(generatedPlayers.size() < numberOfForwardsToGenerate) {
+            if (generatedPlayers.size() < numberOfForwardsToGenerate) {
                 player.setPlayerStats(generateRandomStatsForForward());
-            }
-            else if(generatedPlayers.size() < numberOfForwardsToGenerate + numberOfDefenseToGenerate) {
+            } else if (generatedPlayers.size() < numberOfForwardsToGenerate + numberOfDefensesToGenerate) {
                 player.setPlayerStats(generateRandomStatsForDefense());
-            }
-            else {
+            } else {
                 player.setPlayerStats(generateRandomStatsForGoalie());
             }
             generatedPlayers.add(player);
@@ -210,17 +215,14 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     }
 
     private int numberOfPlayersToGenerate(int totalPlayers, int percentage) {
-        if(totalPlayers > 0) {
-            return ((100 * percentage) / totalPlayers);
-        }
-        return 0;
+        return ((100 * percentage) / totalPlayers);
     }
 
-    private String generateRandomPlayerName() {
-        int firstNameRandomIndex = randomChance.getRandomIntegerNumber(0, firstNames.length - 1);
-        int lastNameRandomIndex = randomChance.getRandomIntegerNumber(0, lastNames.length - 1);
+    private String generateRandomPlayerName() throws IndexOutOfBoundsException {
+        int firstNameRandomIndex = randomChance.getRandomIntegerNumber(0, FIRST_NAMES.length - 1);
+        int lastNameRandomIndex = randomChance.getRandomIntegerNumber(0, LAST_NAMES.length - 1);
 
-        return firstNames[firstNameRandomIndex] + lastNames[lastNameRandomIndex];
+        return FIRST_NAMES[firstNameRandomIndex] + LAST_NAMES[lastNameRandomIndex];
     }
 
     private LocalDate generateRandomPlayerDateOfBirth(LocalDate currentDate) {
@@ -236,10 +238,17 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         IPlayer player = leagueManagerFactory.createPlayer();
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
 
-        player.setPlayerName(generateRandomPlayerName());
+        try {
+            player.setPlayerName(generateRandomPlayerName());
+        } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            LOGGER.error("Error while generating random names for new draftees...");
+            LOGGER.info("Assigning first combination as player's name...");
+            player.setPlayerName(FIRST_NAMES[0] + " " + LAST_NAMES[0]);
+        }
+
         playerAgeInfo.setBirthDate(generateRandomPlayerDateOfBirth(currentDate));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(currentDate));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(currentDate));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(currentDate));
         player.setPlayerAgeInfo(playerAgeInfo);
 
         return player;
@@ -252,6 +261,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         forwardPlayerStats.setShooting(randomChance.getRandomIntegerNumber(12, 20));
         forwardPlayerStats.setChecking(randomChance.getRandomIntegerNumber(9, 18));
         forwardPlayerStats.setSaving(randomChance.getRandomIntegerNumber(1, 7));
+        forwardPlayerStats.setStrength(forwardPlayerStats.calculateStrength());
         return forwardPlayerStats;
     }
 
@@ -262,6 +272,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         defensePlayerStats.setShooting(randomChance.getRandomIntegerNumber(9, 18));
         defensePlayerStats.setChecking(randomChance.getRandomIntegerNumber(12, 20));
         defensePlayerStats.setSaving(randomChance.getRandomIntegerNumber(1, 12));
+        defensePlayerStats.setStrength(defensePlayerStats.calculateStrength());
         return defensePlayerStats;
     }
 
@@ -272,6 +283,8 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         goaliePlayerStats.setShooting(randomChance.getRandomIntegerNumber(1, 10));
         goaliePlayerStats.setChecking(randomChance.getRandomIntegerNumber(1, 12));
         goaliePlayerStats.setSaving(randomChance.getRandomIntegerNumber(12, 20));
+        goaliePlayerStats.setStrength(goaliePlayerStats.calculateStrength());
         return goaliePlayerStats;
     }
+
 }

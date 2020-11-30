@@ -8,11 +8,16 @@ import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class GamePlayConfigTest {
     private static ILeagueManagerFactory leagueManagerFactory;
     private static PersistenceFactoryTest persistenceFactory;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @BeforeClass
     public static void setup() {
@@ -25,125 +30,170 @@ public class GamePlayConfigTest {
     @Test
     public void ConstructorTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        Assert.assertEquals(-1, gamePlayConfig.getGamePlayConfigID());
-        Assert.assertEquals(-1, gamePlayConfig.getLeagueID());
+        Assert.assertEquals(-1, gamePlayConfig.getGamePlayConfigId());
+        Assert.assertEquals(-1, gamePlayConfig.getLeagueId());
     }
 
     @Test
-    public void getGamePlayConfigIDTest() {
+    public void getGamePlayConfigIdTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setGamePlayConfigID(7);
-        Assert.assertEquals(7, gamePlayConfig.getGamePlayConfigID());
+        gamePlayConfig.setGamePlayConfigId(7);
+        Assert.assertEquals(7, gamePlayConfig.getGamePlayConfigId());
     }
 
     @Test
-    public void setGamePlayConfigIDTest() {
+    public void setGamePlayConfigIdTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setGamePlayConfigID(12);
-        Assert.assertEquals(12, gamePlayConfig.getGamePlayConfigID());
+        gamePlayConfig.setGamePlayConfigId(12);
+        Assert.assertEquals(12, gamePlayConfig.getGamePlayConfigId());
     }
 
     @Test
-    public void getLeagueIDTest() {
+    public void getLeagueIdTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setLeagueID(12);
-        Assert.assertEquals(12, gamePlayConfig.getLeagueID());
+        gamePlayConfig.setLeagueId(12);
+        Assert.assertEquals(12, gamePlayConfig.getLeagueId());
     }
 
     @Test
-    public void setLeagueIDTest() {
+    public void setLeagueIdTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setLeagueID(23);
-        Assert.assertEquals(23, gamePlayConfig.getLeagueID());
+        gamePlayConfig.setLeagueId(23);
+        Assert.assertEquals(23, gamePlayConfig.getLeagueId());
     }
 
     @Test
     public void setAgingConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        IAgingConfig actualAgeConfig;
         gamePlayConfig.setAgingConfig(createAgingConfig());
 
-        IAgingConfig actualAgeConfig = gamePlayConfig.getAgingConfig();
+        actualAgeConfig = gamePlayConfig.getAgingConfig();
         Assert.assertEquals(50, actualAgeConfig.getMaximumAge());
+    }
+
+    @Test
+    public void setAgingConfigInvalidTest() {
+        thrown.expect(IllegalArgumentException.class);
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        gamePlayConfig.setAgingConfig(null);
     }
 
     @Test
     public void getAgingConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        IAgingConfig actualAgeConfig;
         gamePlayConfig.setAgingConfig(createAgingConfig());
 
-        IAgingConfig actualAgeConfig = gamePlayConfig.getAgingConfig();
+        actualAgeConfig = gamePlayConfig.getAgingConfig();
         Assert.assertEquals(35, actualAgeConfig.getAverageRetirementAge());
     }
 
     @Test
     public void setGameResolverConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        IGameResolverConfig actualGameResolverConfig;
         gamePlayConfig.setGameResolverConfig(createGameResolverConfig());
 
-        IGameResolverConfig actualGameResolverConfig = gamePlayConfig.getGameResolverConfig();
+        actualGameResolverConfig = gamePlayConfig.getGameResolverConfig();
         Assert.assertEquals(0.03f, actualGameResolverConfig.getRandomWinChance(), 0.0);
+    }
+
+    @Test
+    public void setGameResolverConfigInvalidTest() {
+        thrown.expect(IllegalArgumentException.class);
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        gamePlayConfig.setGameResolverConfig(null);
     }
 
     @Test
     public void getGameResolverConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        IGameResolverConfig actualGameResolverConfig;
         gamePlayConfig.setGameResolverConfig(createGameResolverConfig());
 
-        IGameResolverConfig actualGameResolverConfig = gamePlayConfig.getGameResolverConfig();
+        actualGameResolverConfig = gamePlayConfig.getGameResolverConfig();
         Assert.assertEquals(0.03f, actualGameResolverConfig.getRandomWinChance(), 0.0);
     }
 
     @Test
     public void setInjuryConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        IInjuryConfig actualInjuryConfig;
         gamePlayConfig.setInjuryConfig(createInjuryConfig());
 
-        IInjuryConfig actualInjuryConfig = gamePlayConfig.getInjuryConfig();
+        actualInjuryConfig = gamePlayConfig.getInjuryConfig();
         Assert.assertEquals(230, actualInjuryConfig.getInjuryDaysHigh());
+    }
+
+    @Test
+    public void setInjuryConfigInvalidTest() {
+        thrown.expect(IllegalArgumentException.class);
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        gamePlayConfig.setInjuryConfig(null);
     }
 
     @Test
     public void getInjuryConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        IInjuryConfig actualInjuryConfig;
         gamePlayConfig.setInjuryConfig(createInjuryConfig());
 
-        IInjuryConfig actualInjuryConfig = gamePlayConfig.getInjuryConfig();
+        actualInjuryConfig = gamePlayConfig.getInjuryConfig();
         Assert.assertEquals(3, actualInjuryConfig.getInjuryDaysLow());
     }
 
     @Test
     public void setTrainingConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        ITrainingConfig actualTrainingConfig;
         gamePlayConfig.setTrainingConfig(createTrainingConfig());
 
-        ITrainingConfig actualTrainingConfig = gamePlayConfig.getTrainingConfig();
+        actualTrainingConfig = gamePlayConfig.getTrainingConfig();
         Assert.assertEquals(111, actualTrainingConfig.getDaysUntilStatIncreaseCheck());
+    }
+
+    @Test
+    public void setTrainingConfigInvalidTest() {
+        thrown.expect(IllegalArgumentException.class);
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        gamePlayConfig.setTrainingConfig(null);
     }
 
     @Test
     public void getTrainingConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        ITrainingConfig actualTrainingConfig;
         gamePlayConfig.setTrainingConfig(createTrainingConfig());
 
-        ITrainingConfig actualTrainingConfig = gamePlayConfig.getTrainingConfig();
+        actualTrainingConfig = gamePlayConfig.getTrainingConfig();
         Assert.assertEquals(111, actualTrainingConfig.getDaysUntilStatIncreaseCheck());
     }
 
     @Test
     public void setTradingConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        ITradingConfig actualTradingConfig;
         gamePlayConfig.setTradingConfig(createTradingConfig());
 
-        ITradingConfig actualTradingConfig = gamePlayConfig.getTradingConfig();
+        actualTradingConfig = gamePlayConfig.getTradingConfig();
         Assert.assertEquals(6, actualTradingConfig.getLossPoint());
+    }
+
+    @Test
+    public void setTradingConfigInvalidTest() {
+        thrown.expect(IllegalArgumentException.class);
+        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        gamePlayConfig.setTradingConfig(null);
     }
 
     @Test
     public void getTradingConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
+        ITradingConfig actualTradingConfig;
         gamePlayConfig.setTradingConfig(createTradingConfig());
 
-        ITradingConfig actualTradingConfig = gamePlayConfig.getTradingConfig();
+        actualTradingConfig = gamePlayConfig.getTradingConfig();
         Assert.assertEquals(23, actualTradingConfig.getMaxPlayersPerTrade());
     }
 
@@ -175,7 +225,7 @@ public class GamePlayConfigTest {
         tradingConfig.setMaxPlayersPerTrade(23);
         tradingConfig.setLossPoint(6);
         tradingConfig.setRandomTradeOfferChance(0.56f);
-        return  tradingConfig;
+        return tradingConfig;
     }
 
     private ITrainingConfig createTrainingConfig() {
@@ -183,4 +233,5 @@ public class GamePlayConfigTest {
         trainingConfig.setDaysUntilStatIncreaseCheck(111);
         return trainingConfig;
     }
+
 }

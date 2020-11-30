@@ -15,8 +15,8 @@ public class GamePlayConfigPersistenceMock {
     }
 
     public boolean loadGamePlayConfig(int leagueId, IGamePlayConfig gamePlayConfig) {
-        gamePlayConfig.setGamePlayConfigID(1);
-        gamePlayConfig.setLeagueID(leagueId);
+        gamePlayConfig.setGamePlayConfigId(1);
+        gamePlayConfig.setLeagueId(leagueId);
 
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
         agingConfig.setAverageRetirementAge(35);

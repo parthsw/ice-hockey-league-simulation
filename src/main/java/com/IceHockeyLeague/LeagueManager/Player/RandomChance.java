@@ -11,10 +11,9 @@ public class RandomChance implements IRandomChance {
         this.random = random;
     }
 
-
     @Override
     public float getRandomFloatNumber(int lowerValue, int upperValue) {
-        if(upperValue < lowerValue) {
+        if (upperValue < lowerValue) {
             return -1;
         }
         // Formula reference: https://stackoverflow.com/questions/40431966/what-is-the-best-way-to-generate-a-random-float-value-included-into-a-specified/51247968
@@ -29,16 +28,11 @@ public class RandomChance implements IRandomChance {
 
     @Override
     public int getRandomIntegerNumber(int lowerValue, int upperValue) {
-        if(upperValue < lowerValue) {
+        if (upperValue < lowerValue) {
             return -1;
         }
         // Adding 1 as specified value is exclusive in number generation
-        int randomNumber = random.nextInt(upperValue+1);
-
-        if(randomNumber < lowerValue) {
-            randomNumber += lowerValue;
-        }
-
-        return randomNumber;
+        return random.nextInt(upperValue - lowerValue + 1) + lowerValue;
     }
+
 }

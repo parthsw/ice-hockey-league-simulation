@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
@@ -17,4 +18,8 @@ public interface IPlayerCareerProgression {
     boolean handleFreeAgentRetirement(IFreeAgent freeAgent, ILeague league);
 
     boolean handleTeamPlayerRetirement(ITeamPlayer teamPlayer, ITeam team, ILeague league);
+
+    void performLeaguePlayersRetirement(ILeague league);
+
+    void adjustLeaguePlayersAge(ILeague league, LocalDate newDate);
 }

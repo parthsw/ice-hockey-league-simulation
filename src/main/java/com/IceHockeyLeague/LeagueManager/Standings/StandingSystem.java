@@ -5,6 +5,7 @@ import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.TrophySystem.ITeamObserver;
 import com.TrophySystem.ITrophySystemFactory;
@@ -12,6 +13,7 @@ import com.TrophySystem.SeasonObserver;
 import com.TrophySystem.SeasonSubject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class StandingSystem extends SeasonSubject implements IStandingSystem{
@@ -26,20 +28,23 @@ public class StandingSystem extends SeasonSubject implements IStandingSystem{
         teamObserver = trophySystemFactory.seasonObserver();
     }
 
+    @Override
     public List<IStanding> getStandings() {
         return standings;
     }
 
-    public void setStandings(List<IStanding> standingsList) {
-        standings = standingsList;
+    @Override
+    public void setStandings(List<IStanding> standings) {
+        this.standings = standings;
     }
 
+    @Override
     public void initializeStandings(ILeague league) {
         standings = new ArrayList<>();
 
-        for (IConference conference: league.getConferences()) {
-            for (IDivision division: conference.getDivisions()) {
-                for (ITeam team: division.getTeams()) {
+        for (IConference conference : league.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
                     IStanding standing = leagueManagerFactory.createStanding();
                     standing.setConference(conference);
                     standing.setDivision(division);
@@ -50,11 +55,12 @@ public class StandingSystem extends SeasonSubject implements IStandingSystem{
         }
     }
 
+    @Override
     public void updateStatsForWinningTeam(IConference conference, IDivision division, ITeam team) {
-        for (IStanding standing: standings) {
+        for (IStanding standing : standings) {
             if (standing.getConference() == conference &&
-                standing.getDivision() == division &&
-                standing.getTeam() == team) {
+                    standing.getDivision() == division &&
+                    standing.getTeam() == team) {
                 standing.incrementGamesPlayed();
                 standing.incrementGamesWon();
                 standing.incrementPoints();
@@ -62,8 +68,9 @@ public class StandingSystem extends SeasonSubject implements IStandingSystem{
         }
     }
 
+    @Override
     public void updateStatsForLosingTeam(IConference conference, IDivision division, ITeam team) {
-        for (IStanding standing: standings) {
+        for (IStanding standing : standings) {
             if (standing.getConference() == conference &&
                     standing.getDivision() == division &&
                     standing.getTeam() == team) {
@@ -72,10 +79,11 @@ public class StandingSystem extends SeasonSubject implements IStandingSystem{
         }
     }
 
+    @Override
     public List<IStanding> getStandingsInDivision(IDivision division) {
         List<IStanding> myStandings = new ArrayList<>();
-        for (IStanding standing: standings){
-            if (standing.getDivision() == division){
+        for (IStanding standing : standings) {
+            if (standing.getDivision() == division) {
                 myStandings.add(standing);
             }
         }
@@ -83,10 +91,11 @@ public class StandingSystem extends SeasonSubject implements IStandingSystem{
         return myStandings;
     }
 
+    @Override
     public List<IStanding> getStandingsInConference(IConference conference) {
         List<IStanding> myStandings = new ArrayList<>();
-        for (IStanding standing: standings){
-            if (standing.getConference() == conference){
+        for (IStanding standing : standings) {
+            if (standing.getConference() == conference) {
                 myStandings.add(standing);
             }
         }
@@ -94,9 +103,53 @@ public class StandingSystem extends SeasonSubject implements IStandingSystem{
         return myStandings;
     }
 
+    @Override
     public IStanding getTopStandingInConference(IConference conference) {
         return getStandingsInConference(conference).get(0);
     }
+
+    @Override
+    public List<IStanding> getRegularSeasonStandingsInReverse() {
+        standings.sort(Standing.standingComparator.reversed());
+        return standings;
+    }
+
+    @Override
+    public List<IStanding> getPlayOffSeasonStandingsInReverse(List<ISchedule> playoffSchedule) {
+        List<IStanding> playOffStandings = new ArrayList<>();
+        int numberOfSchedules = playoffSchedule.size();
+        playoffSchedule.sort(Comparator.comparing(ISchedule::getDate));
+
+        for (int i = 0; i < numberOfSchedules; i++) {
+            IStanding standing, lastStanding;
+            ISchedule currentSchedule = playoffSchedule.get(i);
+            if (currentSchedule.getWinningTeam() == currentSchedule.getFirstTeam()) {
+                standing = setStanding(currentSchedule.getSecondConference(), currentSchedule.getSecondDivision(), currentSchedule.getSecondTeam());
+            } else {
+                standing = setStanding(currentSchedule.getFirstConference(), currentSchedule.getFirstDivision(), currentSchedule.getFirstTeam());
+            }
+            playOffStandings.add(standing);
+
+            if (i == numberOfSchedules - 1) {
+                if ((currentSchedule.getWinningTeam() == currentSchedule.getFirstTeam())) {
+                    lastStanding = setStanding(currentSchedule.getFirstConference(), currentSchedule.getFirstDivision(), currentSchedule.getFirstTeam());
+                } else {
+                    lastStanding = setStanding(currentSchedule.getSecondConference(), currentSchedule.getSecondDivision(), currentSchedule.getSecondTeam());
+                }
+                playOffStandings.add(lastStanding);
+            }
+        }
+        return playOffStandings;
+    }
+
+    private IStanding setStanding(IConference conference, IDivision division, ITeam team) {
+        IStanding standing = leagueManagerFactory.createStanding();
+        standing.setConference(conference);
+        standing.setDivision(division);
+        standing.setTeam(team);
+        return standing;
+    }
+
 
     public List<IStanding> getSortedStandingsInLeague() {
         List<IStanding> myStandings = new ArrayList<>(standings);
