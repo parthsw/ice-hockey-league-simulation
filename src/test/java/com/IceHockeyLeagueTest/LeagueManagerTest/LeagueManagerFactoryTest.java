@@ -159,7 +159,7 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
 
     @Override
     public IRandomChance createRandomChance() {
-        if(randomChanceGenerator == null) {
+        if (randomChanceGenerator == null) {
             Random randomMock = Mockito.mock(Random.class);
             randomChanceGenerator = new RandomChance(randomMock);
         }

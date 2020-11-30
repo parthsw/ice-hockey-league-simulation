@@ -10,16 +10,21 @@ import java.util.List;
 
 public interface IStandingSystem {
     List<IStanding> getStandings();
-    void setStandings(List<IStanding> standingsList);
+
+    void setStandings(List<IStanding> standings);
 
     void initializeStandings(ILeague league);
 
     void updateStatsForWinningTeam(IConference conference, IDivision division, ITeam team);
+
     void updateStatsForLosingTeam(IConference conference, IDivision division, ITeam team);
 
     List<IStanding> getStandingsInDivision(IDivision division);
+
     List<IStanding> getStandingsInConference(IConference conference);
+
     List<IStanding> getRegularSeasonStandingsInReverse();
+
     List<IStanding> getPlayOffSeasonStandingsInReverse(List<ISchedule> playoffSchedule);
 
     IStanding getTopStandingInConference(IConference conference);

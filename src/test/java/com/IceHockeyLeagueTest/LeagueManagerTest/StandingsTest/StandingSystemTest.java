@@ -33,7 +33,7 @@ public class StandingSystemTest {
     }
 
     @Before
-    public void beforeTest() {
+    public void setupBeforeTest() {
         league = leagueManagerFactory.createLeague();
         ILeaguePersistence leaguePersistence = persistenceFactory.createLeaguePersistence();
         leaguePersistence.loadLeague(1, league);
