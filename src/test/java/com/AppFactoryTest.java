@@ -14,8 +14,6 @@ import com.IceHockeyLeague.Trading.TradingFactory;
 import com.IceHockeyLeagueTest.LeagueManagerTest.LeagueManagerFactoryTest;
 import com.Persistence.IPersistenceFactory;
 import com.PersistenceTest.PersistenceFactoryTest;
-import com.Trading.ITradingFactory;
-import com.Trading.TradingFactory;
 import com.TrophySystem.ITrophySystemFactory;
 import com.TrophySystem.TrophySystemFactory;
 

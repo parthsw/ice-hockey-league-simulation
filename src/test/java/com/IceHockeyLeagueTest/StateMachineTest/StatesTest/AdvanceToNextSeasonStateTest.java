@@ -4,14 +4,11 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
-import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
-import com.IceHockeyLeague.StateMachine.States.PersistState;
 import com.Persistence.ILeaguePersistence;
-import com.PersistenceTest.LeaguePersistenceMock;
+import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -27,7 +24,6 @@ public class AdvanceToNextSeasonStateTest {
 
     private static IStateMachineFactory stateMachineFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
     private static IRandomChance randomChanceMock;
     private static PersistenceFactoryTest persistenceFactory;
 
@@ -44,12 +40,12 @@ public class AdvanceToNextSeasonStateTest {
 
     @Test
     public void onRunTest() {
-        ILeague league = leagueManagerFactory.createLeague();
         ILeaguePersistence leaguePersistence = persistenceFactory.createLeaguePersistence();
+        ILeague league = leaguePersistence.loadLeague("");
         AbstractState advanceToNextSeasonState = stateMachineFactory.createAdvanceToNextSeasonState();
         AbstractState nextState;
 
-        leaguePersistence.loadLeague("");
+
         advanceToNextSeasonState.setLeague(league);
         when(randomChanceMock.getRandomFloatNumber(0, 50)).thenReturn(0.5f);
         nextState = advanceToNextSeasonState.onRun();
@@ -59,12 +55,11 @@ public class AdvanceToNextSeasonStateTest {
 
     @Test
     public void onRunNextSeasonVerificationTest() {
-        ILeague league = leagueManagerFactory.createLeague();
         ILeaguePersistence leaguePersistence = persistenceFactory.createLeaguePersistence();
         AbstractState advanceToNextSeasonState = stateMachineFactory.createAdvanceToNextSeasonState();
+        ILeague league = leaguePersistence.loadLeague("");
         LocalDate newSeasonDate = LocalDate.of(2021, Month.SEPTEMBER, 29);
 
-        leaguePersistence.loadLeague(1, league);
         advanceToNextSeasonState.setLeague(league);
         when(randomChanceMock.getRandomFloatNumber(0, 50)).thenReturn(0.5f);
         advanceToNextSeasonState.onRun();

@@ -97,20 +97,4 @@ public class Coach implements ICoach {
     public boolean isNullOrEmpty(String coachName) {
         return (coachName == null || coachName.equals(""));
     }
-
-    @Override
-    public boolean saveTeamCoach(ICoachPersistence coachDb) {
-        return coachDb.saveTeamCoach(this);
-    }
-
-    @Override
-    public boolean saveLeagueCoach(ICoachPersistence coachDb) {
-        return coachDb.saveLeagueCoach(this);
-    }
-
-    @Override
-    public boolean loadTeamCoach(ICoachPersistence coachDb, ICoach coach) {
-        return coachDb.loadTeamCoach(teamId, this);
-    }
-
 }

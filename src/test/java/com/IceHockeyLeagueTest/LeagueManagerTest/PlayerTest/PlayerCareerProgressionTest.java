@@ -2,7 +2,6 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.PlayerTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
@@ -14,7 +13,6 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.Persistence.ILeaguePersistence;
-import com.PersistenceTest.LeaguePersistenceMock;
 import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -139,19 +137,18 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void handleFreeAgentRetirementInvalidTest() {
-        ILeaguePersistence leagueDb = databaseFactory.createLeaguePersistence();
+        ILeaguePersistence leagueDb = persistenceFactory.createLeaguePersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         ILeague league = leagueManagerFactory.createLeague();
-        leagueDb.loadLeague(1, league);
+        leagueDb.loadLeague("");
         Assert.assertFalse(playerCareerProgression.handleFreeAgentRetirement(freeAgent, league));
     }
 
     @Test
     public void handleFreeAgentRetirementValidTest() {
-        ILeaguePersistence leagueDb = databaseFactory.createLeaguePersistence();
-        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        ILeague league = leaguePersistenceMock.loadLeague("");
         IFreeAgent freeAgentToRemove;
-        leagueDb.loadLeague(1, league);
         freeAgentToRemove = league.getFreeAgents().get(1);
         playerCareerProgression.handleFreeAgentRetirement(freeAgentToRemove, league);
         Assert.assertEquals(59, league.getFreeAgents().size());
@@ -159,8 +156,8 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void handleTeamPlayerRetirementValidTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        league.loadCompleteLeague(1);
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        ILeague league = leaguePersistenceMock.loadLeague("");
         ITeam team = getFirstTeam(league);
         List<ITeamPlayer> teamPlayers = team.getPlayers();
         ITeamPlayer teamPlayer = teamPlayers.get(0);
@@ -172,18 +169,18 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void handleTeamPlayerRetirementInvalidTest() {
-        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        ILeague league = leaguePersistenceMock.loadLeague("");
         ITeamPlayer emptyPlayer = leagueManagerFactory.createTeamPlayer();
         ITeam team;
-        league.loadCompleteLeague(1);
         team = getFirstTeam(league);
         Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(emptyPlayer, team, league));
     }
 
     @Test
     public void handleTeamPlayerRetirementGoaliePlayerTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        league.loadCompleteLeague(1);
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        ILeague league = leaguePersistenceMock.loadLeague("");
         ITeam team = getFirstTeam(league);
         List<ITeamPlayer> teamPlayers = team.getPlayers();
         ITeamPlayer goalieTeamPlayer = teamPlayers.get(0);
@@ -195,21 +192,21 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void performLeaguePlayersRetirementTeamPlayersTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        league.loadCompleteLeague(1);
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        ILeague league = leaguePersistenceMock.loadLeague("");
         IGamePlayConfig gamePlayConfig = league.getGamePlayConfig();
         IAgingConfig agingConfig = gamePlayConfig.getAgingConfig();
         league.setLeagueDate(CURRENT_DATE);
 
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.01f);
         playerCareerProgression.performLeaguePlayersRetirement(league);
-        Assert.assertEquals(266, league.getRetiredTeamPlayers().size());
+        Assert.assertEquals(301, league.getRetiredTeamPlayers().size());
     }
 
     @Test
     public void performLeaguePlayersRetirementFreeAgentsTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        league.loadCompleteLeague(1);
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        ILeague league = leaguePersistenceMock.loadLeague("");
         IGamePlayConfig gamePlayConfig = league.getGamePlayConfig();
         IAgingConfig agingConfig = gamePlayConfig.getAgingConfig();
         List<IConference> emptyConferences = new ArrayList<>();
@@ -218,14 +215,13 @@ public class PlayerCareerProgressionTest {
 
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.01f);
         playerCareerProgression.performLeaguePlayersRetirement(league);
-        Assert.assertEquals(4, league.getRetiredFreeAgents().size());
+        Assert.assertEquals(61, league.getRetiredFreeAgents().size());
     }
 
     @Test
     public void adjustLeaguePlayersAgeTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
-        leaguePersistence.loadLeague(1, league);
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+        ILeague league = leaguePersistenceMock.loadLeague("");
 
         playerCareerProgression.adjustLeaguePlayersAge(league, LocalDate.of(2021, Month.SEPTEMBER, 20));
 

@@ -77,11 +77,6 @@ public class FreeAgent extends Player implements IFreeAgent {
     }
 
     @Override
-    public boolean saveFreeAgent(IFreeAgentPersistence freeAgentDb) {
-        return freeAgentDb.saveFreeAgent(this);
-    }
-
-    @Override
     public boolean handleFreeAgentRetirement(IPlayerCareerProgression playerCareerProgression, ILeague league) {
         return playerCareerProgression.handleFreeAgentRetirement(this, league);
     }

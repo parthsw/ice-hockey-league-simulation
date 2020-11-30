@@ -8,11 +8,9 @@ import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
-import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgentPersistence;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.Persistence.ILeaguePersistence;
 import com.PersistenceTest.*;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -31,7 +29,7 @@ public class LeagueTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
-       // AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
     }
@@ -263,10 +261,11 @@ public class LeagueTest {
         Assert.assertNotNull(league.getGameSimulationSystem());
     }
 
-    @Test
+    /*@Test
     public void saveCompleteLeagueTest() {
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
         ILeague league = leagueManagerFactory.createLeague();
-        league.saveCompleteLeague();
+        league = leaguePersistenceMock.saveLeague(league);
 
         Assert.assertEquals(2, league.getLeagueID());
         Assert.assertEquals("NHL", league.getLeagueName());
@@ -282,84 +281,25 @@ public class LeagueTest {
 
         List<IManager> managers = league.getManagers();
         Assert.assertEquals(3, managers.size());
-    }
+    }*/
 
     @Test
     public void loadCompleteLeagueTest() {
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
+
         ILeague league = leagueManagerFactory.createLeague();
-        league.loadCompleteLeague(1);
+        league = leaguePersistenceMock.loadLeague("");
 
         Assert.assertEquals(1, league.getLeagueID());
         Assert.assertEquals("DHL", league.getLeagueName());
 
         List<IFreeAgent> freeAgents = league.getFreeAgents();
-        Assert.assertEquals(3, freeAgents.size());
+        Assert.assertEquals(60, freeAgents.size());
 
         List<ICoach> coaches = league.getCoaches();
-        Assert.assertEquals(2, coaches.size());
+        Assert.assertEquals(3, coaches.size());
 
         List<IManager> managers = league.getManagers();
         Assert.assertEquals(3, managers.size());
-    }
-
-    @Test
-    public void saveLeagueTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
-        league.saveLeague(leagueDB);
-
-        Assert.assertEquals(2, league.getLeagueID());
-        Assert.assertEquals("NHL", league.getLeagueName());
-    }
-
-    @Test
-    public void loadLeagueTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
-        league.setLeagueID(1);
-        league.loadLeague(leagueDB);
-
-        Assert.assertEquals(1, league.getLeagueID());
-        Assert.assertEquals("DHL", league.getLeagueName());
-    }
-
-    @Test
-    public void loadConferencesTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
-        List<IConference> conferences = new ArrayList<>();
-        league.loadConferences(conferenceDB, conferences);
-
-        Assert.assertEquals(2, conferences.size());
-    }
-
-    @Test
-    public void loadLeagueManagersTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        IManagerPersistence managerDB = databaseFactory.createManagerPersistence();
-        List<IManager> managers = new ArrayList<>();
-        league.loadLeagueManagers(managerDB, managers);
-
-        Assert.assertEquals(3, managers.size());
-    }
-
-    @Test
-    public void loadLeagueCoachesTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        ICoachPersistence coachDB = databaseFactory.createCoachPersistence();
-        List<ICoach> coaches = new ArrayList<>();
-        league.loadLeagueCoaches(coachDB, coaches);
-
-        Assert.assertEquals(2, coaches.size());
-    }
-
-    @Test
-    public void loadLeagueFreeAgentsTest() {
-        ILeague league = leagueManagerFactory.createLeague();
-        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
-        List<IFreeAgent> freeAgents = new ArrayList<>();
-        league.loadLeagueFreeAgents(freeAgentDB, freeAgents);
-
-        Assert.assertEquals(3, freeAgents.size());
     }
 }

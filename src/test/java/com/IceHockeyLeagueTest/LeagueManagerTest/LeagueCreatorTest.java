@@ -15,6 +15,7 @@ import org.junit.Test;
 public class LeagueCreatorTest {
     private static ILeagueCreator leagueCreator;
     private static ILeague league;
+    private static ILeagueManagerFactory leagueManagerFactory;
 
     @BeforeClass
     public static void setup() {

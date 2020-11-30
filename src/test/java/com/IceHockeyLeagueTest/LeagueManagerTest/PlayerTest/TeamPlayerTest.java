@@ -81,11 +81,11 @@ public class TeamPlayerTest {
 
     @Test
     public void convertToFreeAgentTest() {
-        ITeamPlayerPersistence teamPlayerDb = databaseFactory.createTeamPlayerPersistence();
+        TeamPlayerPersistenceMock teamPlayerPersistenceMock = persistenceFactory.createTeamPlayerPersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
         ITeamPlayer teamPlayer;
-        teamPlayerDb.loadTeamPlayers(1, teamPlayers);
+        teamPlayerPersistenceMock.loadTeamPlayers(1, teamPlayers);
         teamPlayer = teamPlayers.get(0);
 
         teamPlayer.convertToFreeAgent(freeAgent);
@@ -104,14 +104,6 @@ public class TeamPlayerTest {
         Assert.assertEquals("Rhea", teamPlayer.getPlayerName());
     }
 
-    @Test
-    public void saveTeamPlayerTest() {
-        ITeamPlayerPersistence teamPlayerDb = databaseFactory.createTeamPlayerPersistence();
-        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        teamPlayer.saveTeamPlayer(teamPlayerDb);
-
-        Assert.assertEquals(1, teamPlayer.getTeamPlayerId());
-    }
 
     @Test
     public void handleTeamPlayerRetirementTest() {

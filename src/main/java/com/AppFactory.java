@@ -13,8 +13,6 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.Persistence.IPersistenceFactory;
 import com.Persistence.PersistenceFactory;
-import com.Trading.ITradingFactory;
-import com.Trading.TradingFactory;
 import com.TrophySystem.ITrophySystemFactory;
 import com.TrophySystem.TrophySystemFactory;
 import com.IceHockeyLeague.Trading.ITradingFactory;
