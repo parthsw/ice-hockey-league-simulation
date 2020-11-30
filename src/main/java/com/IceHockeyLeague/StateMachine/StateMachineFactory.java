@@ -76,7 +76,7 @@ public class StateMachineFactory implements IStateMachineFactory {
 
     @Override
     public AbstractState createGeneratePlayoffScheduleState() {
-        return new GeneratePlayoffScheduleState();
+        return new GeneratePlayoffScheduleState(appOutput);
     }
 
     @Override

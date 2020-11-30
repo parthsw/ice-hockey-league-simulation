@@ -5,21 +5,24 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.PlayerPosition;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class GameSimulation implements IGameSimulation {
+    private static final Logger LOGGER = LogManager.getLogger(GameSimulation.class);
     private ILeagueManagerFactory leagueManagerFactory;
     private IGameStats gameStats;
     private ITeam team1;
     private ITeam team2;
     private List<ITeamPlayer> team1AllPlayers;
-//    private List<ITeamPlayer> team1Forwards;
+    private List<ITeamPlayer> team1Forwards;
     private List<ITeamPlayer> team1Defensemen;
     private List<ITeamPlayer> team1Goalies;
     private List<ITeamPlayer> team2AllPlayers;
-//    private List<ITeamPlayer> team2Forwards;
+    private List<ITeamPlayer> team2Forwards;
     private List<ITeamPlayer> team2Defensemen;
     private List<ITeamPlayer> team2Goalies;
     private final IGameSimulationConfig gameSimulationConfig;
@@ -45,11 +48,11 @@ public class GameSimulation implements IGameSimulation {
 
     private void initialize() {
         team1AllPlayers = team1.getPlayers();
-//        team1Forwards = team1AllPlayers.stream().filter(p -> p.getPlayerStats().getPosition().equalsIgnoreCase(PlayerPosition.FORWARD.toString())).collect(Collectors.toList());
+        team1Forwards = team1AllPlayers.stream().filter(p -> p.getPlayerStats().getPosition().equalsIgnoreCase(PlayerPosition.FORWARD.toString())).collect(Collectors.toList());
         team1Defensemen = team1AllPlayers.stream().filter(p -> p.getPlayerStats().getPosition().equalsIgnoreCase(PlayerPosition.DEFENSE.toString())).collect(Collectors.toList());
         team1Goalies = team1AllPlayers.stream().filter(p -> p.getPlayerStats().getPosition().equalsIgnoreCase(PlayerPosition.GOALIE.toString())).collect(Collectors.toList());
         team2AllPlayers = team2.getPlayers();
-//        team2Forwards = team2AllPlayers.stream().filter(p -> p.getPlayerStats().getPosition().equalsIgnoreCase(PlayerPosition.FORWARD.toString())).collect(Collectors.toList());
+        team2Forwards = team2AllPlayers.stream().filter(p -> p.getPlayerStats().getPosition().equalsIgnoreCase(PlayerPosition.FORWARD.toString())).collect(Collectors.toList());
         team2Defensemen = team2AllPlayers.stream().filter(p -> p.getPlayerStats().getPosition().equalsIgnoreCase(PlayerPosition.DEFENSE.toString())).collect(Collectors.toList());
         team2Goalies = team2AllPlayers.stream().filter(p -> p.getPlayerStats().getPosition().equalsIgnoreCase(PlayerPosition.GOALIE.toString())).collect(Collectors.toList());
     }
@@ -60,17 +63,15 @@ public class GameSimulation implements IGameSimulation {
         calculatePenaltiesInGame();
         calculateSavesInGame();
         calculateGoalsInGame();
-        System.out.println("TeamA Goals: " + gameStats.getTeam1Goals());
-        System.out.println("TeamA Penalties: " + gameStats.getTeam1Penalties());
-        System.out.println("TeamA Shots: " + gameStats.getTeam1Shots());
-        System.out.println("TeamA Saves: " + gameStats.getTeam1Saves());
-        System.out.println("TeamB Goals: " + gameStats.getTeam2Goals());
-        System.out.println("TeamB Penalties: " + gameStats.getTeam2Penalties());
-        System.out.println("TeamB Shots: " + gameStats.getTeam2Shots());
-        System.out.println("TeamB Saves: " + gameStats.getTeam2Saves());
-//        for (int i = 0; i < shifts; i++) {
-//            Collections.shuffle(team1Defensemen);
-//        }
+        LOGGER.info("Game Stats: " + team1.getTeamName() + " vs " + team2.getTeamName());
+        LOGGER.info("TeamA Goals: " + gameStats.getTeam1Goals());
+        LOGGER.info("TeamA Penalties: " + gameStats.getTeam1Penalties());
+        LOGGER.info("TeamA Shots: " + gameStats.getTeam1Shots());
+        LOGGER.info("TeamA Saves: " + gameStats.getTeam1Saves());
+        LOGGER.info("TeamB Goals: " + gameStats.getTeam2Goals());
+        LOGGER.info("TeamB Penalties: " + gameStats.getTeam2Penalties());
+        LOGGER.info("TeamB Shots: " + gameStats.getTeam2Shots());
+        LOGGER.info("TeamB Saves: " + gameStats.getTeam2Saves());
     }
 
     private void calculateShotsInGame() {

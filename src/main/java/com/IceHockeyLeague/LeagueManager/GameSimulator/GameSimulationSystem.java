@@ -69,6 +69,15 @@ public class GameSimulationSystem implements IGameSimulationSystem {
     }
 
     @Override
+    public void resetAllStats() {
+        totalGoals = 0;
+        totalPenalties = 0;
+        totalShots = 0;
+        totalSaves = 0;
+        numberOfGamesPlayed = 0;
+    }
+
+    @Override
     public ITeam simulateGameAndGetWinner(ITeam teamA, ITeam teamB) {
         IGameSimulation gameSimulation = leagueManagerFactory.createGameSimulation(teamA, teamB, gameSimulationConfig);
         gameSimulation.simulateGame();
