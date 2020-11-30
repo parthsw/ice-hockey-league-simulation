@@ -1,19 +1,28 @@
 package com.IceHockeyLeague.Trading;
 
+import com.AbstractAppFactory;
+import com.IO.IAppOutput;
+import com.IO.IIOFactory;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class Trade {
+public class Trade implements ITrade {
     private ITeam sendingTeam;
     private ITeam receivingTeam;
     private List<ITeamPlayer> sendingPlayers;
     private List<ITeamPlayer> receivingPlayers;
     private int maxPlayersPerTrade;
+    private final IIOFactory ioFactory;
+    private IAppOutput appOutput;
 
     public Trade(int maxPlayersPerTrade) {
         this.maxPlayersPerTrade = maxPlayersPerTrade;
+        ioFactory = AbstractAppFactory.getIOFactory();
+        this.appOutput = ioFactory.createCommandLineOutput();
     }
 
     public ITeam getSendingTeam() {
@@ -57,26 +66,59 @@ public class Trade {
             return false;
         }
 
-        String position = this.receivingPlayers.get(0).getPlayerStats().getPosition();
-        if (this.sendingPlayers.size() == this.receivingPlayers.size()) {
-            for (ITeamPlayer player : this.sendingPlayers) {
-                if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
-
-                } else {
-                    return false;
-                }
-            }
-
-            for (ITeamPlayer player : this.receivingPlayers) {
-                if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
-
-                } else {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
+        return true;
     }
 
+    public List<ITeam> acceptTrade() {
+        List<ITeamPlayer> team1Players = new ArrayList<>();
+        team1Players.addAll(this.sendingTeam.getPlayers());
+        List<ITeamPlayer> team2Players = new ArrayList<>();
+        team2Players.addAll(this.receivingTeam.getPlayers());
+
+        for (ITeamPlayer player : this.sendingPlayers) {
+            player.setTeamId(this.receivingTeam.getTeamID());
+            team2Players.add(player);
+        }
+        team1Players.removeAll(this.sendingPlayers);
+
+        for (ITeamPlayer player : this.receivingPlayers) {
+            player.setTeamId(this.sendingTeam.getTeamID());
+            team1Players.add(player);
+        }
+        team2Players.removeAll(this.receivingPlayers);
+
+        this.sendingTeam.setPlayers(team1Players);
+        this.receivingTeam.setPlayers(team2Players);
+        List<ITeam> result = new ArrayList<>();
+        int counter = 0;
+        for (ITeamPlayer player : this.sendingPlayers) {
+            appOutput.display("Player " + player.getPlayerName() + " from team " + this.sendingTeam.getTeamName() + " traded with " + this.receivingPlayers.get(counter).getPlayerName() + " of team " + this.receivingTeam.getTeamName());
+            counter++;
+        }
+        result.add(this.sendingTeam);
+        result.add(this.receivingTeam);
+        return result;
+    }
+
+    public boolean tradeDecision(float randomAcceptChance) {
+        Random rand = new Random();
+        float sumOffered = 0;
+        float sumRequested = 0;
+
+        for (ITeamPlayer player : this.sendingPlayers) {
+            sumOffered += player.getPlayerStats().getStrength();
+        }
+
+        for (ITeamPlayer player : this.receivingPlayers) {
+            sumRequested += player.getPlayerStats().getStrength();
+        }
+
+        if (rand.nextFloat() <= randomAcceptChance) {
+            return true;
+        } else if (sumOffered > sumRequested) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

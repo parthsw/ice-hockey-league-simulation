@@ -4,7 +4,8 @@ import com.IO.IAppOutput;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.Player.*;
+import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.IRandomPlayersGenerator;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.LeagueManager.Team.Roster.ITeamRoster;
 import org.apache.logging.log4j.LogManager;
@@ -74,7 +75,7 @@ public class DraftingState extends AbstractState {
             appOutput.display(ROSTER_VALIDATION + currentTeam.getTeamName());
 
             teamRoster.setPlayers(currentTeam.getPlayers());
-            teamRoster.validateRoster();
+            teamRoster.validateRoster(league.getFreeAgents());
             currentTeam.setPlayers(teamRoster.getPlayers());
             teamRoster.setPlayers(null);
         }

@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Manager;
 
+import java.util.Hashtable;
 import java.util.List;
 
 public class Manager implements IManager {
@@ -7,6 +8,7 @@ public class Manager implements IManager {
     private String managerName;
     private int teamID;
     private int leagueID;
+    private Hashtable<String, Float> managerPersonality;
 
     public Manager() {
         setDefaults();
@@ -16,6 +18,20 @@ public class Manager implements IManager {
         managerID = -1;
         teamID = -1;
         leagueID = -1;
+        this.managerPersonality = new Hashtable<>();
+        this.managerPersonality.put("shrewd", -0.1f);
+        this.managerPersonality.put("gambler", 0.1f);
+        this.managerPersonality.put("normal", 0.0f);
+    }
+
+    @Override
+    public Hashtable<String, Float> getManagerPersonality() {
+        return this.managerPersonality;
+    }
+
+    @Override
+    public void setManagerPersonality(Hashtable<String, Float> personality) {
+        managerPersonality = personality;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.IceHockeyLeague.LeagueManager.Team;
 
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
@@ -52,8 +53,8 @@ public class Team implements ITeam {
     }
 
     @Override
-    public void validateRoster() {
-        teamRoster.validateRoster();
+    public void validateRoster(List<IFreeAgent> agents) {
+        teamRoster.validateRoster(agents);
     }
 
     @Override

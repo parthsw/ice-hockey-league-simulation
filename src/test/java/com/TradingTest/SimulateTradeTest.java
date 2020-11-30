@@ -5,16 +5,17 @@ import com.AppFactoryTest;
 import com.IOTest.IOMock;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerAgeInfo;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.IceHockeyLeague.LeagueManager.Team.Roster.ITeamRoster;
 import com.IceHockeyLeague.Trading.ITradingFactory;
 import com.IceHockeyLeague.Trading.SimulateTrade;
-import com.IceHockeyLeague.Trading.TeamValidator;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -111,6 +112,11 @@ public class SimulateTradeTest {
 
     private ITeam generateTeam(List<ITeamPlayer> players, int lossPointValue) {
         ITeam team = leagueManagerFactory.createTeam();
+        IManager manager1 = leagueManagerFactory.createManager();
+        ITeamRoster roster = leagueManagerFactory.createTeamRoster();
+        roster.setPlayers(players);
+        team.setTeamRoster(roster);
+        team.setManager(manager1);
         team.setPlayers(players);
         team.setLossPointValue(lossPointValue);
         return team;
@@ -118,15 +124,15 @@ public class SimulateTradeTest {
 
     private List<ITeamPlayer> generatePlayers() {
         List<ITeamPlayer> players = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 13; i++) {
             ITeamPlayer player = generatePlayer("Forward");
             players.add(player);
         }
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 13; i++) {
             ITeamPlayer player = generatePlayer("Defence");
             players.add(player);
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             ITeamPlayer player = generatePlayer("Goalie");
             players.add(player);
         }
@@ -158,7 +164,7 @@ public class SimulateTradeTest {
         IDivision division = leagueManagerFactory.createDivision();
         conference.addDivision(division);
         Random random = new Random();
-        String[] positions = new String[]{"Forward", "Defence", "Goalie"};
+        String[] positions = new String[]{"forward", "defense", "goalie"};
         for (int j = 0; j < 200; j++) {
             league.addFreeAgent(generateAgent(positions[random.nextInt(positions.length)]));
         }
@@ -212,12 +218,12 @@ public class SimulateTradeTest {
     public void validateTeamNumberTest() {
         ITeam team = leagueManagerFactory.createTeam();
         List<IFreeAgent> agents = new ArrayList<>();
-        String[] positions = new String[]{"Goalie", "Forward", "Defence"};
+        String[] positions = new String[]{"goalie", "forward", "defense"};
         Random random = new Random();
         int skater = 0;
         int goalie = 0;
-        String keeper = "Goalie";
-        for (int i = 0; i < 20; i++) {
+        String keeper = "goalie";
+        for (int i = 0; i < 30; i++) {
             String temp = positions[random.nextInt(positions.length)];
             ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
             IPlayerStats stats = leagueManagerFactory.createPlayerStats();
@@ -226,17 +232,23 @@ public class SimulateTradeTest {
             player.setPlayerStats(stats);
             team.addPlayer(player);
         }
+
         for (int i = 0; i < 100; i++) {
             String temp = positions[random.nextInt(positions.length)];
             IFreeAgent agent = leagueManagerFactory.createFreeAgent();
             IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
-            stats.setStrength(random.nextInt(100));
+            stats.setStrength(random.nextInt(99) + 1);
             agent.setPlayerStats(stats);
             agents.add(agent);
         }
-        TeamValidator object = tradingFactory.createTeamValidator(team, 1, agents);
-        ITeam validatedTeam = object.validateTeam();
+        ITeamRoster roster = leagueManagerFactory.createTeamRoster();
+        roster.setPlayers(team.getPlayers());
+        roster.setAgents(agents);
+        team.setTeamRoster(roster);
+        team.validateRoster(agents);
+        team.setPlayers(team.getActiveRoster());
+        ITeam validatedTeam = team;
 
         for (ITeamPlayer player : validatedTeam.getPlayers()) {
             if (player.getPlayerStats().getPosition().equals(keeper)) {
