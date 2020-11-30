@@ -28,7 +28,7 @@ public class StateMachine implements IStateMachine {
             if (currentState == null) {
                 break;
             } else {
-                LOGGER.info("Running the " + currentState.getClass().getSimpleName() + "...");
+                LOGGER.info("Running the outer state-machine's " + currentState.getClass().getSimpleName() + "...");
                 currentState = currentState.onRun();
             }
         }

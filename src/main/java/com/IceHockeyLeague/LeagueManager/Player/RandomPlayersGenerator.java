@@ -2,6 +2,8 @@ package com.IceHockeyLeague.LeagueManager.Player;
 
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -177,6 +179,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     private static final int FORWARD_RATIO = 50;
     private static final int DEFENSE_RATIO = 40;
     private static IRandomChance randomChance;
+    private final Logger LOGGER = LogManager.getLogger(RandomPlayersGenerator.class);
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public RandomPlayersGenerator(IRandomChance randomChance) {
@@ -192,6 +195,10 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         List<IPlayer> generatedPlayers = new ArrayList<>();
         int numberOfForwardsToGenerate = numberOfPlayersToGenerate(totalPlayers, FORWARD_RATIO);
         int numberOfDefensesToGenerate = numberOfPlayersToGenerate(totalPlayers, DEFENSE_RATIO);
+
+        LOGGER.info("Generating " + numberOfForwardsToGenerate + " forward draftees...");
+        LOGGER.info("Generating " + numberOfDefensesToGenerate + " defense draftees...");
+        LOGGER.info("Generating " + (totalPlayers - (numberOfDefensesToGenerate + numberOfForwardsToGenerate)) + " goalie draftees...");
 
         for (int i = 0; i < totalPlayers; i++) {
             IPlayer player = generateRandomBasePlayer(currentDate);
@@ -211,7 +218,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         return ((100 * percentage) / totalPlayers);
     }
 
-    private String generateRandomPlayerName() {
+    private String generateRandomPlayerName() throws IndexOutOfBoundsException {
         int firstNameRandomIndex = randomChance.getRandomIntegerNumber(0, FIRST_NAMES.length - 1);
         int lastNameRandomIndex = randomChance.getRandomIntegerNumber(0, LAST_NAMES.length - 1);
 
@@ -231,7 +238,14 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
         IPlayer player = leagueManagerFactory.createPlayer();
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
 
-        player.setPlayerName(generateRandomPlayerName());
+        try {
+            player.setPlayerName(generateRandomPlayerName());
+        } catch (IndexOutOfBoundsException indexOutOfBoundsException) {
+            LOGGER.error("Error while generating random names for new draftees...");
+            LOGGER.info("Assigning first combination as player's name...");
+            player.setPlayerName(FIRST_NAMES[0] + " " + LAST_NAMES[0]);
+        }
+
         playerAgeInfo.setBirthDate(generateRandomPlayerDateOfBirth(currentDate));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(currentDate));
         playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(currentDate));

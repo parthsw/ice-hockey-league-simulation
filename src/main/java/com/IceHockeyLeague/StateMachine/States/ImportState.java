@@ -16,8 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 public class ImportState extends AbstractState {
@@ -56,6 +55,7 @@ public class ImportState extends AbstractState {
 
     @Override
     public AbstractState onRun() {
+        LOGGER.info("User enters into ImportState to process league JSON file...");
         welcomeMessage();
         appOutput.display(FILEPATH);
         String filePath = appInput.getInput();
@@ -68,7 +68,8 @@ public class ImportState extends AbstractState {
     }
 
     private AbstractState processLeagueJsonFile(String filePath) {
-        InputStream leagueJsonStream;
+        InputStream leagueJsonStream, leagueSchemaStream;
+        JSONObject leagueJson, leagueSchema;
 
         if (filePath.equalsIgnoreCase(LOAD)) {
             appOutput.displayError(FILEPATH_ERROR);
@@ -81,27 +82,30 @@ public class ImportState extends AbstractState {
             leagueJsonStream = leagueFileReader.readSystemFile(filePath);
         } catch (FileNotFoundException fileNotFoundException) {
             LOGGER.error("The provided filepath " + filePath + " does not exist");
-            return null;
+            LOGGER.error("Assigning smaller league json to InputStream...");
+            leagueJsonStream = new ByteArrayInputStream("{\"leagueName\": \"DHL\"}".getBytes());
         }
 
-        LOGGER.info("Parsing the league JSON available in " + filePath);
-        JSONObject leagueJson = jsonParser.parse(leagueJsonStream);
+        LOGGER.info("Parsing the league JSON available at " + filePath);
+        leagueJson = jsonParser.parse(leagueJsonStream);
 
-        InputStream leagueSchemaStream = leagueFileReader.readAppResourceFile(LEAGUE_SCHEMA);
+        leagueSchemaStream = leagueFileReader.readAppResourceFile(LEAGUE_SCHEMA);
 
-        LOGGER.info("Parsing the league schema available in " + LEAGUE_SCHEMA);
-        JSONObject leagueSchema = jsonParser.parse(leagueSchemaStream);
+        LOGGER.info("Parsing the league schema available at " + LEAGUE_SCHEMA);
+        leagueSchema = jsonParser.parse(leagueSchemaStream);
 
         boolean isValidStructure = isStructureValid(leagueJson, leagueSchema);
         if (isValidStructure) {
             ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
-            LOGGER.info("constructing league business class from parsed JSON file " + filePath);
+
+            LOGGER.info("Constructing league business class from parsed JSON file " + filePath);
             ILeague league = leagueCreator.createLeague(leagueJson);
             this.setLeague(league);
-            LOGGER.info("Transitioning to CreateTeamState...");
+
+            LOGGER.info("League " + league.getLeagueName() + " has successfully been parsed, therefore, Transitioning to CreateTeamState...");
             return stateMachineFactory.createCreateTeamState();
         } else {
-            LOGGER.error("Terminating the app as provided league JSON has schema issues");
+            LOGGER.error("Terminating the app as provided league JSON has schema issues as above...");
             return null;
         }
     }
@@ -109,6 +113,7 @@ public class ImportState extends AbstractState {
     private void displaySchemaValidationErrors(List<String> errors) {
         appOutput.displayError(LEAGUE_SCHEMA_ERROR);
         for (String error : errors) {
+            LOGGER.error(error);
             appOutput.displayError(error);
         }
     }
