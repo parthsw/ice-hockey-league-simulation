@@ -2,16 +2,12 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.TeamTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-//import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-//import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-//import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
 import com.PersistenceTest.*;
 import org.junit.Assert;

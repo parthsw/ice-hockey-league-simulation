@@ -2,10 +2,8 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.GamePlayConfigTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
-import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -14,7 +12,6 @@ import org.junit.rules.ExpectedException;
 
 public class GamePlayConfigTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static PersistenceFactoryTest persistenceFactory;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -24,7 +21,6 @@ public class GamePlayConfigTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
     }
 
     @Test

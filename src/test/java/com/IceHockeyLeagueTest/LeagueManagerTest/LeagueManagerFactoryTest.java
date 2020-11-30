@@ -236,4 +236,5 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
     public IGameStats createGameStats() {
         return new GameStats();
     }
+
 }

@@ -2,13 +2,11 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.Persistence.ILeaguePersistence;
-import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -16,7 +14,6 @@ import org.junit.Test;
 
 public class DraftingStateTest {
     private static IStateMachineFactory stateMachineFactory;
-    private static ILeagueManagerFactory leagueManagerFactory;
     private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
@@ -24,9 +21,9 @@ public class DraftingStateTest {
         AbstractAppFactory appFactory = AppFactoryTest.createAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
-        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-         persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
+        persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
     }
 
     @Test

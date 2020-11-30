@@ -23,14 +23,11 @@ public class HockeyLeagueSimulationApp {
         LOGGER.info("Assigning the package level factories...");
         AbstractAppFactory.setAppFactory(AppFactory.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
-
         AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
-
         AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
         AbstractAppFactory.setTradingFactory(appFactory.createTradingFactory());
-
         AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
         AbstractAppFactory.setSerializeDeserializeLeagueObjectFactory(appFactory.createSerializeDeserializeLeagueObjectFactory());
         AbstractAppFactory.setPersistenceFactory(appFactory.createPersistenceFactory());

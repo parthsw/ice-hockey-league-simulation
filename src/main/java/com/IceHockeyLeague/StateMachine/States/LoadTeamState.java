@@ -1,18 +1,14 @@
 package com.IceHockeyLeague.StateMachine.States;
 
 import com.AbstractAppFactory;
-//import com.Database.IDatabaseFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-//import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoadTeamState extends AbstractState {
     private static final String LOAD_STATE = "*****Load Team State*****";

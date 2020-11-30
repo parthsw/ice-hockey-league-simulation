@@ -28,5 +28,4 @@ public interface IGamePlayConfig {
     void setTradingConfig(ITradingConfig tradingConfig);
 
     ITradingConfig getTradingConfig();
-
 }

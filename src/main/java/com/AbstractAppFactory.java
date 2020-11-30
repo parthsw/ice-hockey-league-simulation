@@ -107,4 +107,5 @@ public abstract class AbstractAppFactory {
     public static void setPersistenceFactory(IPersistenceFactory persistenceFactory) {
         AbstractAppFactory.persistenceFactory = persistenceFactory;
     }
+
 }

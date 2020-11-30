@@ -1,7 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Conference;
 
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-//import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 
 import java.util.ArrayList;
 import java.util.List;

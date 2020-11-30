@@ -8,7 +8,6 @@ import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.Persistence.ILeaguePersistence;
-import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -23,12 +22,12 @@ public class AdvanceToNextSeasonStateTest {
     private static final String PERSIST_STATE = "PersistState";
 
     private static IStateMachineFactory stateMachineFactory;
-    private static ILeagueManagerFactory leagueManagerFactory;
     private static IRandomChance randomChanceMock;
     private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
     public static void setup() {
+        ILeagueManagerFactory leagueManagerFactory;
         AbstractAppFactory appFactory = AppFactoryTest.createAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
@@ -44,7 +43,6 @@ public class AdvanceToNextSeasonStateTest {
         ILeague league = leaguePersistence.loadLeague("");
         AbstractState advanceToNextSeasonState = stateMachineFactory.createAdvanceToNextSeasonState();
         AbstractState nextState;
-
 
         advanceToNextSeasonState.setLeague(league);
         when(randomChanceMock.getRandomFloatNumber(0, 50)).thenReturn(0.5f);

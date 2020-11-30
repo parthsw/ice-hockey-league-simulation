@@ -1,15 +1,10 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.DivisionTest;
 
 import com.AbstractAppFactory;
-import com.AppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-//import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-//import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
-import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.DivisionPersistenceMock;
 import com.PersistenceTest.PersistenceFactoryTest;
 import com.PersistenceTest.TeamPersistenceMock;

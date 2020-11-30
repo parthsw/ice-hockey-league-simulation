@@ -18,10 +18,11 @@ public class SimulateStateTest {
         stateMachineFactory = appFactory.createStateMachineFactory();
     }
 
-   /* @Test
+    @Test
     public void onRunNoSeasonsSimulatedTest() {
         int noOfSeasons = 0;
         AbstractState simulateState = stateMachineFactory.createSimulateState(noOfSeasons);
         Assert.assertNull(simulateState.onRun());
-    }*/
+    }
+
 }
