@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-public class GenerateTrade {
+public class GenerateTrade implements IGenerateTrade {
     private final ITradingFactory tradingFactory;
     private List<ITeam> resultTeams = new ArrayList<>();
     private boolean tradeResult;
