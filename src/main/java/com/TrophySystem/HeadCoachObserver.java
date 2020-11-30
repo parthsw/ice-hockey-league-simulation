@@ -1,15 +1,11 @@
 package com.TrophySystem;
 
-import com.TrophySystem.AwardCeremony;
-import com.TrophySystem.IPerformanceObserver;
-import com.TrophySystem.ITrophyNominees;
-
 public class HeadCoachObserver implements IPerformanceObserver {
 
-    ITrophyNominees awardTrophy;
+    ITrophyContenders awardTrophy;
 
     public HeadCoachObserver(){
-        awardTrophy = new AwardCeremony();
+        awardTrophy = new TrophyDistribution();
     }
 
     public void update(String coachName, int coachPoints){

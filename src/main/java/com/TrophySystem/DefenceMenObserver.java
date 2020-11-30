@@ -1,14 +1,10 @@
 package com.TrophySystem;
 
-import com.TrophySystem.AwardCeremony;
-import com.TrophySystem.IPerformanceObserver;
-import com.TrophySystem.ITrophyNominees;
-
 public class DefenceMenObserver implements IPerformanceObserver {
-    ITrophyNominees awardTrophy;
+    ITrophyContenders awardTrophy;
 
     public DefenceMenObserver(){
-        awardTrophy = new AwardCeremony();
+        awardTrophy = new TrophyDistribution();
     }
 
     public void update(String defenceMenName, int defenceMenPoints){

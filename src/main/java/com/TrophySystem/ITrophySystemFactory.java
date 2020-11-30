@@ -18,5 +18,5 @@ public interface ITrophySystemFactory {
 
         IAwardDistributed displayAwards();
 
-        AwardCeremony awardCeremony();
+        TrophyDistribution trophyDistribution();
 }

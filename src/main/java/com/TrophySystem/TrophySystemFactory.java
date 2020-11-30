@@ -1,6 +1,5 @@
 package com.TrophySystem;
 
-import com.TrophySystem.DefenceMenObserver;
 import com.TrophySystem.Observers.GoalieObserver;
 
 
@@ -47,7 +46,7 @@ public class TrophySystemFactory implements ITrophySystemFactory{
     }
 
     @Override
-    public AwardCeremony awardCeremony() {
-        return new AwardCeremony();
+    public TrophyDistribution trophyDistribution() {
+        return new TrophyDistribution();
     }
 }

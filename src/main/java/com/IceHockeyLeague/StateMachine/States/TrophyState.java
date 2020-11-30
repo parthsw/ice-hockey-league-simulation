@@ -1,10 +1,8 @@
 package com.IceHockeyLeague.StateMachine.States;
 
 import com.AbstractAppFactory;
-import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
-import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.TrophySystem.*;
 
 import java.time.LocalDate;
@@ -21,7 +19,7 @@ public class TrophyState extends AbstractState {
         ILeague league = getLeague();
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
         awardDisplay = new DisplayAwards();
-        awardWinner = new AwardCeremony();
+        awardWinner = new TrophyDistribution();
     }
 
     @Override

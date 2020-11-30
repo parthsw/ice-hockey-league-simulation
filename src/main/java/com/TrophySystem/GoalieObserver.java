@@ -1,14 +1,14 @@
 package com.TrophySystem.Observers;
 
-import com.TrophySystem.AwardCeremony;
+import com.TrophySystem.TrophyDistribution;
 import com.TrophySystem.IPerformanceObserver;
-import com.TrophySystem.ITrophyNominees;
+import com.TrophySystem.ITrophyContenders;
 
 public class GoalieObserver implements IPerformanceObserver {
-    ITrophyNominees awardTrophy;
+    ITrophyContenders awardTrophy;
 
     public GoalieObserver(){
-        awardTrophy = new AwardCeremony();
+        awardTrophy = new TrophyDistribution();
     }
 
     public void update(String goalieName, int goaliePoints){

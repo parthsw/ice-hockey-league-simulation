@@ -1,14 +1,10 @@
 package com.TrophySystem;
 
-import com.TrophySystem.AwardCeremony;
-import com.TrophySystem.IPerformanceObserver;
-import com.TrophySystem.ITrophyNominees;
-
 public class GoalScorerObserver implements IPerformanceObserver {
-        ITrophyNominees awardTrophy;
+        ITrophyContenders awardTrophy;
 
         public GoalScorerObserver(){
-            awardTrophy = new AwardCeremony();
+            awardTrophy = new TrophyDistribution();
         }
 
         public void update(String goalScorerName, int goalPoints){
