@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 
 public class PlayerStatsTest {
-    private final String INVALID_POSITION = "invalidPosition";
+    private static final String INVALID_POSITION = "invalidPosition";
 
     private static ILeagueManagerFactory leagueManagerFactory;
     private static IRandomChance randomChanceMock;

@@ -2,12 +2,12 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.ConferenceTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
-import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
-import com.IceHockeyLeague.LeagueManager.Division.IDivision;
-import com.IceHockeyLeague.LeagueManager.Division.IDivisionPersistence;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
+import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.PersistenceTest.ConferencePersistenceMock;
+import com.PersistenceTest.DivisionPersistenceMock;
+import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,15 +17,15 @@ import java.util.List;
 
 public class ConferenceTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
+    private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        persistenceFactory =AppFactoryTest.createPersistenceFactoryTest();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
-        AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
-        databaseFactory = AbstractAppFactory.getDatabaseFactory();
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
 
@@ -98,34 +98,12 @@ public class ConferenceTest {
     @Test
     public void setDivisionsTest() {
         IConference conference = leagueManagerFactory.createConference();
-        IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
+        DivisionPersistenceMock divisionPersistenceMock = persistenceFactory.createDivisionPersistence();
         List<IDivision> divisions = new ArrayList<>();
-        conference.loadDivisions(divisionDB, divisions);
+        divisionPersistenceMock.loadDivisions(conference.getConferenceID(),divisions);
         conference.setDivisions(divisions);
-
         List<IDivision> conferenceDivisions = conference.getDivisions();
         Assert.assertEquals(2, conferenceDivisions.size());
-    }
-
-    @Test
-    public void saveConferenceTest() {
-        IConference conference = leagueManagerFactory.createConference();
-        IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
-
-        Assert.assertTrue(conference.saveConference(conferenceDB));
-        Assert.assertEquals(1, conference.getConferenceID());
-        Assert.assertEquals(1, conference.getLeagueID());
-        Assert.assertEquals("Eastern Conference", conference.getConferenceName());
-    }
-
-    @Test
-    public void loadDivisionsTest() {
-        IConference conference = leagueManagerFactory.createConference();
-        IDivisionPersistence divisionDB = databaseFactory.createDivisionPersistence();
-        List<IDivision> divisions = new ArrayList<>();
-
-        conference.loadDivisions(divisionDB, divisions);
-        Assert.assertEquals(2, divisions.size());
     }
 
     @Test
@@ -137,13 +115,11 @@ public class ConferenceTest {
 
     @Test
     public void isConferenceNameExistTest() {
+        ConferencePersistenceMock conferencePersistenceMock = persistenceFactory.createConferencePersistence();
         IConference conference = leagueManagerFactory.createConference();
-        IConferencePersistence conferenceDB = databaseFactory.createConferencePersistence();
         List<IConference> conferences = new ArrayList<>();
-        conferenceDB.loadConferences(1, conferences);
-
+        conferencePersistenceMock.loadConferences(1, conferences);
         Assert.assertFalse(conference.isConferenceNameExist(conferences, "central"));
         Assert.assertTrue(conference.isConferenceNameExist(conferences, "Eastern Conference"));
     }
-
 }

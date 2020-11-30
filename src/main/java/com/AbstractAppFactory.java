@@ -1,26 +1,26 @@
 package com;
 
-import com.Database.IDatabaseFactory;
 import com.IO.IIOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializeLeagueObjectFactory;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
+import com.Persistence.IPersistenceFactory;
+import com.TrophySystem.ITrophySystemFactory;
 import com.IceHockeyLeague.Trading.ITradingFactory;
 
 public abstract class AbstractAppFactory {
     private static AbstractAppFactory appFactory;
     private static ILeagueFileHandlerFactory leagueFileHandlerFactory;
-    private static IDatabaseFactory databaseFactory;
+    private static IPersistenceFactory persistenceFactory;
     private static IIOFactory ioFactory;
     private static ILeagueManagerFactory leagueManagerFactory;
     private static ISerializeDeserializeLeagueObjectFactory leagueSerializationFactory;
     private static ITradingFactory tradingFactory;
     private static IStateMachineFactory stateMachineFactory;
+    private static ITrophySystemFactory trophySystemFactory;
 
     public abstract ILeagueFileHandlerFactory createLeagueFileHandlerFactory();
-
-    public abstract IDatabaseFactory createDatabaseFactory();
 
     public abstract IIOFactory createIOFactory();
 
@@ -29,6 +29,10 @@ public abstract class AbstractAppFactory {
     public abstract ISerializeDeserializeLeagueObjectFactory createSerializeDeserializeLeagueObjectFactory();
 
     public abstract ITradingFactory createTradingFactory();
+
+    public abstract IPersistenceFactory createPersistenceFactory();
+
+    public abstract ITrophySystemFactory createTrophySystemFactory();
 
     public abstract IStateMachineFactory createStateMachineFactory();
 
@@ -46,14 +50,6 @@ public abstract class AbstractAppFactory {
 
     public static void setLeagueFileHandlerFactory(ILeagueFileHandlerFactory leagueFileHandlerFactory) {
         AbstractAppFactory.leagueFileHandlerFactory = leagueFileHandlerFactory;
-    }
-
-    public static IDatabaseFactory getDatabaseFactory() {
-        return databaseFactory;
-    }
-
-    public static void setDatabaseFactory(IDatabaseFactory databaseFactory) {
-        AbstractAppFactory.databaseFactory = databaseFactory;
     }
 
     public static IIOFactory getIOFactory() {
@@ -94,6 +90,22 @@ public abstract class AbstractAppFactory {
 
     public static void setStateMachineFactory(IStateMachineFactory stateMachineFactory) {
         AbstractAppFactory.stateMachineFactory = stateMachineFactory;
+    }
+
+    public static void setTrophySystemFactory(ITrophySystemFactory trophySystemFactory) {
+        AbstractAppFactory.trophySystemFactory = trophySystemFactory;
+    }
+
+    public static ITrophySystemFactory getTrophySystemFactory() {
+        return trophySystemFactory;
+    }
+
+    public static IPersistenceFactory getPersistenceFactory() {
+        return persistenceFactory;
+    }
+
+    public static void setPersistenceFactory(IPersistenceFactory persistenceFactory) {
+        AbstractAppFactory.persistenceFactory = persistenceFactory;
     }
 
 }

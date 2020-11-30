@@ -37,4 +37,6 @@ public interface IStateMachineFactory {
     AbstractState createAdvanceToNextSeasonState();
 
     AbstractState createPersistState();
+
+    AbstractState createTrophyState();
 }

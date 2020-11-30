@@ -18,10 +18,12 @@ public class LeagueCreatorTest {
 
     @BeforeClass
     public static void setup() {
+        ILeagueManagerFactory leagueManagerFactory;
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
-        ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         leagueCreator = leagueManagerFactory.createLeagueCreator();
     }
 

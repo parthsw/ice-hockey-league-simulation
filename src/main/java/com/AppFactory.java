@@ -1,7 +1,5 @@
 package com;
 
-import com.Database.DatabaseFactory;
-import com.Database.IDatabaseFactory;
 import com.IO.IIOFactory;
 import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
@@ -12,6 +10,10 @@ import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializ
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.SerializeDeserializeLeagueObjectFactory;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.Persistence.IPersistenceFactory;
+import com.Persistence.PersistenceFactory;
+import com.TrophySystem.ITrophySystemFactory;
+import com.TrophySystem.TrophySystemFactory;
 import com.IceHockeyLeague.Trading.ITradingFactory;
 import com.IceHockeyLeague.Trading.TradingFactory;
 
@@ -23,11 +25,6 @@ public class AppFactory extends AbstractAppFactory {
     }
 
     @Override
-    public IDatabaseFactory createDatabaseFactory() {
-        return new DatabaseFactory();
-    }
-
-    @Override
     public IIOFactory createIOFactory() {
         return new IOFactory();
     }
@@ -35,6 +32,11 @@ public class AppFactory extends AbstractAppFactory {
     @Override
     public ILeagueManagerFactory createLeagueManagerFactory() {
         return new LeagueManagerFactory();
+    }
+
+    @Override
+    public ITrophySystemFactory createTrophySystemFactory() {
+        return new TrophySystemFactory();
     }
 
     @Override
@@ -57,6 +59,11 @@ public class AppFactory extends AbstractAppFactory {
                 leagueFileHandlerFactory.createLeagueFileReader(),
                 leagueFileHandlerFactory.createJsonParser(),
                 leagueFileHandlerFactory.createLeagueFileValidator());
+    }
+
+    @Override
+    public IPersistenceFactory createPersistenceFactory() {
+        return new PersistenceFactory();
     }
 
     public static AbstractAppFactory createAppFactory() {

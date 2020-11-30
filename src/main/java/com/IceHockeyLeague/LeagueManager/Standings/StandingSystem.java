@@ -7,17 +7,24 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.TrophySystem.ITeamObserver;
+import com.TrophySystem.ITrophySystemFactory;
+import com.TrophySystem.SeasonSubject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class StandingSystem implements IStandingSystem {
+public class StandingSystem extends SeasonSubject implements IStandingSystem {
     private final ILeagueManagerFactory leagueManagerFactory;
+    private final ITrophySystemFactory trophySystemFactory;
     private List<IStanding> standings;
+    private ITeamObserver teamObserver;
 
     public StandingSystem() {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
+        teamObserver = trophySystemFactory.seasonObserver();
     }
 
     @Override
@@ -141,5 +148,15 @@ public class StandingSystem implements IStandingSystem {
         standing.setTeam(team);
         return standing;
     }
-    
+
+
+    public List<IStanding> getSortedStandingsInLeague() {
+        List<IStanding> myStandings = new ArrayList<>(standings);
+        myStandings.sort(Standing.standingComparator);
+        this.standingList = myStandings;
+        this.attachObserver(teamObserver);
+        this.notifyObserver();
+        return myStandings;
+    }
+
 }

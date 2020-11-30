@@ -24,4 +24,5 @@ public class SimulateStateTest {
         AbstractState simulateState = stateMachineFactory.createSimulateState(noOfSeasons);
         Assert.assertNull(simulateState.onRun());
     }
+
 }

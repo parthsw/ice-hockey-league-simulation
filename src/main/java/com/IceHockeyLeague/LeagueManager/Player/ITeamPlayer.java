@@ -23,7 +23,5 @@ public interface ITeamPlayer extends IPlayer {
 
     void generatePlayer(IPlayer player);
 
-    boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDb);
-
     boolean handleTeamPlayerRetirement(IPlayerCareerProgression playerCareerProgression, ITeam team, ILeague league);
 }

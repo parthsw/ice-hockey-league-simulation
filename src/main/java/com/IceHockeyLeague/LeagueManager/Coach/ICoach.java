@@ -25,12 +25,6 @@ public interface ICoach {
 
     boolean isValid();
 
-    boolean saveTeamCoach(ICoachPersistence coachDb);
-
-    boolean saveLeagueCoach(ICoachPersistence coachDb);
-
-    boolean loadTeamCoach(ICoachPersistence coachDb, ICoach coach);
-
     boolean isNullOrEmpty(String coachName);
 
     boolean isCoachNameExist(List<ICoach> coaches, String coachName);

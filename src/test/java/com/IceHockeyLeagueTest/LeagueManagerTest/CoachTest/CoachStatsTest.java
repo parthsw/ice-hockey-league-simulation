@@ -103,7 +103,7 @@ public class CoachStatsTest {
         coachStats.setSaving(0.5f);
         Assert.assertEquals(0.5f, coachStats.getSaving(), 0.0);
     }
-    
+
     @Test
     public void setSavingInvalidTest() {
         ICoachStats coachStats = leagueManagerFactory.createCoachStats();

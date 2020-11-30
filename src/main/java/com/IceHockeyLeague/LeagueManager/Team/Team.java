@@ -4,11 +4,9 @@ import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
 import com.IceHockeyLeague.LeagueManager.Team.Roster.ITeamRoster;
 
 import java.util.ArrayList;
@@ -30,6 +28,8 @@ public class Team implements ITeam {
     public Team() {
         setDefaults();
     }
+
+    private static final String positionToCheck = "goalie";
 
     private void setDefaults() {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
@@ -166,7 +166,7 @@ public class Team implements ITeam {
         int goalieCounter = 0;
         boolean listIsPerfect = false;
         for(ITeamPlayer p : players){
-            if(p.getPlayerStats().getPosition().equalsIgnoreCase("goalie")){
+            if(p.getPlayerStats().getPosition().equalsIgnoreCase(positionToCheck)){
                 goalieCounter++;
             }
             else{
@@ -177,18 +177,6 @@ public class Team implements ITeam {
             listIsPerfect = true;
         }
         return listIsPerfect;
-    }
-
-
-
-    @Override
-    public boolean saveTeam(ITeamPersistence teamDB) {
-        return teamDB.saveTeam(this);
-    }
-
-    @Override
-    public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
-        return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
     }
 
     @Override
@@ -211,11 +199,6 @@ public class Team implements ITeam {
         if (this.lossPoint > 0) {
             this.lossPoint = this.lossPoint - 1;
         }
-    }
-
-    @Override
-    public boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues) {
-        return teamDB.checkIfTeamNameExists(teamName, leagues);
     }
 
     @Override

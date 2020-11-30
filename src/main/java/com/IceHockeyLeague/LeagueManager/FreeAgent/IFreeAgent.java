@@ -22,7 +22,5 @@ public interface IFreeAgent extends IPlayer {
 
     IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgents, String position);
 
-    boolean saveFreeAgent(IFreeAgentPersistence freeAgentDb);
-
     boolean handleFreeAgentRetirement(IPlayerCareerProgression playerCareerProgression, ILeague league);
 }

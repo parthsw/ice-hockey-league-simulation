@@ -2,15 +2,16 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.DraftTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.ILeaguePersistence;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
+import com.Persistence.ILeaguePersistence;
+import com.PersistenceTest.PersistenceFactoryTest;
+import com.PersistenceTest.TeamPersistenceMock;
+import com.PersistenceTest.TeamPlayerPersistenceMock;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,8 +21,8 @@ import java.util.List;
 
 public class DraftManagerTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
     private static IDraftManager draftManager;
+    private static PersistenceFactoryTest persistenceFactory;
 
     @BeforeClass
     public static void setup() {
@@ -29,16 +30,17 @@ public class DraftManagerTest {
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
         draftManager = leagueManagerFactory.createDraftManager();
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
     }
 
     @Test
     public void findBestDrafteeFoundTest() {
         IPlayer bestDraftee;
-        ITeamPlayerPersistence teamPlayerPersistence = databaseFactory.createTeamPlayerPersistence();
+        TeamPlayerPersistenceMock teamPlayerPersistenceMock = persistenceFactory.createTeamPlayerPersistence();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        teamPlayerPersistence.loadTeamPlayers(1, teamPlayers);
+        teamPlayerPersistenceMock.loadTeamPlayers(1, teamPlayers);
 
         bestDraftee = draftManager.findBestDraftee(createPlayers(teamPlayers));
         Assert.assertEquals("Mike One", bestDraftee.getPlayerName());
@@ -53,44 +55,41 @@ public class DraftManagerTest {
 
     @Test
     public void performDraftSelectionForTeamTest() {
-        ITeamPlayerPersistence teamPlayerPersistence = databaseFactory.createTeamPlayerPersistence();
-        ITeamPersistence teamPersistence = databaseFactory.createTeamPersistence();
+        TeamPlayerPersistenceMock teamPlayerPersistenceMock = persistenceFactory.createTeamPlayerPersistence();
+        TeamPersistenceMock teamPersistenceMock = persistenceFactory.createTeamPersistence();
         List<ITeam> teams = new ArrayList<>();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
         ITeam teamPickingDraftee;
         List<IPlayer> draftees;
 
-        teamPersistence.loadTeams(1, teams);
-        teamPlayerPersistence.loadTeamPlayers(1, teamPlayers);
+        teamPersistenceMock.loadTeams(1, teams);
+        teamPlayerPersistenceMock.loadTeamPlayers(1, teamPlayers);
         teamPickingDraftee = teams.get(0);
         draftees = createPlayers(teamPlayers);
-
         draftManager.performDraftSelectionForTeam(teamPickingDraftee, draftees);
+
         Assert.assertEquals(3, teamPickingDraftee.getPlayers().size());
         Assert.assertEquals(1, draftees.size());
     }
 
     @Test
     public void generateTeamOrderForDraftSelectionTest() {
-        ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
-        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
         List<ITeam> draftRoundTeams;
-
-        leaguePersistence.loadLeague(1, league);
+        ILeague league = leaguePersistenceMock.loadLeague("");
         draftRoundTeams = draftManager.generateTeamOrderForDraftSelection(league);
         Assert.assertEquals(8, draftRoundTeams.size());
     }
 
     @Test
     public void generateTeamOrderForDraftSelectionRoundWiseTest() {
-        ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
-        ILeague league = leagueManagerFactory.createLeague();
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
         List<ITeam> draftRoundTeams;
         List<IDraftPick> draftPicks = new ArrayList<>();
         IDraftPick draftPick;
         List<ITeam> currentRoundTeams;
+        ILeague league = leaguePersistenceMock.loadLeague("");
 
-        leaguePersistence.loadLeague(1, league);
         draftRoundTeams = draftManager.generateTeamOrderForDraftSelection(league);
         draftPick = leagueManagerFactory.createDraftPick(draftRoundTeams.get(0), draftRoundTeams.get(2), 1, leagueManagerFactory.createTeamPlayer());
         draftPicks.add(draftPick);

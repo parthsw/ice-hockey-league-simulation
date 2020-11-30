@@ -2,7 +2,6 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.GamePlayConfigTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import org.junit.Assert;
@@ -13,7 +12,6 @@ import org.junit.rules.ExpectedException;
 
 public class GamePlayConfigTest {
     private static ILeagueManagerFactory leagueManagerFactory;
-    private static IDatabaseFactory databaseFactory;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -23,7 +21,6 @@ public class GamePlayConfigTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        databaseFactory = appFactory.createDatabaseFactory();
     }
 
     @Test
@@ -194,28 +191,6 @@ public class GamePlayConfigTest {
 
         actualTradingConfig = gamePlayConfig.getTradingConfig();
         Assert.assertEquals(23, actualTradingConfig.getMaxPlayersPerTrade());
-    }
-
-    @Test
-    public void saveGamePlayConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setLeagueId(2);
-        gamePlayConfig.saveGamePlayConfig(databaseFactory.createGamePlayConfigPersistence());
-        Assert.assertEquals(2, gamePlayConfig.getGamePlayConfigId());
-        Assert.assertEquals(2, gamePlayConfig.getLeagueId());
-    }
-
-    @Test
-    public void loadGamePlayConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        ITrainingConfig trainingConfig;
-        gamePlayConfig.setLeagueId(1);
-        gamePlayConfig.loadGamePlayConfig(databaseFactory.createGamePlayConfigPersistence(), gamePlayConfig);
-        trainingConfig = gamePlayConfig.getTrainingConfig();
-
-        Assert.assertEquals(1, gamePlayConfig.getGamePlayConfigId());
-        Assert.assertEquals(1, gamePlayConfig.getLeagueId());
-        Assert.assertEquals(100, trainingConfig.getDaysUntilStatIncreaseCheck());
     }
 
     private IAgingConfig createAgingConfig() {

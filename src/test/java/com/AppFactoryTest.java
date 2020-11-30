@@ -1,7 +1,5 @@
 package com;
 
-import com.Database.IDatabaseFactory;
-import com.DatabaseTest.DatabaseFactoryTest;
 import com.IO.IIOFactory;
 import com.IO.IOFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
@@ -14,17 +12,16 @@ import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeague.Trading.ITradingFactory;
 import com.IceHockeyLeague.Trading.TradingFactory;
 import com.IceHockeyLeagueTest.LeagueManagerTest.LeagueManagerFactoryTest;
+import com.Persistence.IPersistenceFactory;
+import com.PersistenceTest.PersistenceFactoryTest;
+import com.TrophySystem.ITrophySystemFactory;
+import com.TrophySystem.TrophySystemFactory;
 
 public class AppFactoryTest extends AbstractAppFactory {
 
     @Override
     public ILeagueFileHandlerFactory createLeagueFileHandlerFactory() {
         return new LeagueFileHandlerFactory();
-    }
-
-    @Override
-    public IDatabaseFactory createDatabaseFactory() {
-        return new DatabaseFactoryTest();
     }
 
     @Override
@@ -48,6 +45,11 @@ public class AppFactoryTest extends AbstractAppFactory {
     }
 
     @Override
+    public IPersistenceFactory createPersistenceFactory() {
+        return new PersistenceFactoryTest();
+    }
+
+    @Override
     public IStateMachineFactory createStateMachineFactory() {
         IIOFactory ioFactory = createIOFactory();
         ILeagueFileHandlerFactory leagueFileHandlerFactory = createLeagueFileHandlerFactory();
@@ -57,6 +59,15 @@ public class AppFactoryTest extends AbstractAppFactory {
                 leagueFileHandlerFactory.createLeagueFileReader(),
                 leagueFileHandlerFactory.createJsonParser(),
                 leagueFileHandlerFactory.createLeagueFileValidator());
+    }
+
+    @Override
+    public ITrophySystemFactory createTrophySystemFactory() {
+        return new TrophySystemFactory();
+    }
+
+    public static PersistenceFactoryTest createPersistenceFactoryTest() {
+        return new PersistenceFactoryTest();
     }
 
     public static AbstractAppFactory createAppFactory() {

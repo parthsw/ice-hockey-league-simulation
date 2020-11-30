@@ -1,16 +1,12 @@
 package com.IceHockeyLeague.LeagueManager.League;
 
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
 import com.IceHockeyLeague.LeagueManager.GameSimulator.IGameSimulationSystem;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
-import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgentPersistence;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
@@ -73,11 +69,5 @@ public interface ILeague {
     List<IDraftPick> getDraftPicks();
 
     boolean saveCompleteLeague();
-    boolean loadCompleteLeague(int leagueId);
-    boolean saveLeague(ILeaguePersistence leagueDB);
-    boolean loadLeague(ILeaguePersistence leagueDB);
-    boolean loadConferences(IConferencePersistence conferenceDB, List<IConference> conferences);
-    boolean loadLeagueManagers(IManagerPersistence managerDB, List<IManager> managers);
-    boolean loadLeagueCoaches(ICoachPersistence coachDB, List<ICoach> coaches);
-    boolean loadLeagueFreeAgents(IFreeAgentPersistence freeAgentDB, List<IFreeAgent> freeAgents);
+    ILeague loadCompleteLeague(String filePath);
 }

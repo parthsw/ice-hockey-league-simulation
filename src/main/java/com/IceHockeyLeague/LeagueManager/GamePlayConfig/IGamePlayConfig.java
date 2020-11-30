@@ -28,8 +28,4 @@ public interface IGamePlayConfig {
     void setTradingConfig(ITradingConfig tradingConfig);
 
     ITradingConfig getTradingConfig();
-
-    boolean saveGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDb);
-
-    boolean loadGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDb, IGamePlayConfig gamePlayConfig);
 }
