@@ -3,17 +3,17 @@ package com.IceHockeyLeague.LeagueManager.Coach;
 public interface ICoachStats {
     float getSkating();
 
-    void setSkating(float value);
+    void setSkating(float statValue);
 
     float getShooting();
 
-    void setShooting(float value);
+    void setShooting(float statValue);
 
     float getChecking();
 
-    void setChecking(float value);
+    void setChecking(float statValue);
 
     float getSaving();
 
-    void setSaving(float value);
+    void setSaving(float statValue);
 }
