@@ -8,6 +8,11 @@ import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPickManager;
 import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.GameSimulator.IGameSimulation;
+import com.IceHockeyLeague.LeagueManager.GameSimulator.IGameSimulationConfig;
+import com.IceHockeyLeague.LeagueManager.GameSimulator.IGameSimulationSystem;
+import com.IceHockeyLeague.LeagueManager.GameSimulator.IGameStats;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
@@ -91,4 +96,12 @@ public interface ILeagueManagerFactory {
     IActiveRoster createActiveRoster();
 
     IInactiveRoster createInactiveRoster();
+
+    IGameSimulationSystem createGameSimulationSystem();
+
+    IGameSimulationConfig createGameSimulationConfig();
+
+    IGameSimulation createGameSimulation(ITeam teamA, ITeam teamB, IGameSimulationConfig config);
+
+    IGameStats createGameStats();
 }

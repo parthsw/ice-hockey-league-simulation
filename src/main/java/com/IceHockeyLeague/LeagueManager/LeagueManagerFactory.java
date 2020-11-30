@@ -21,6 +21,7 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.Manager;
+import com.IceHockeyLeague.LeagueManager.GameSimulator.*;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
@@ -211,4 +212,23 @@ public class LeagueManagerFactory implements ILeagueManagerFactory {
         return new InactiveRoster();
     }
 
+    @Override
+    public IGameSimulationSystem createGameSimulationSystem() {
+        return new GameSimulationSystem();
+    }
+
+    @Override
+    public IGameSimulationConfig createGameSimulationConfig() {
+        return new GameSimulationConfig();
+    }
+
+    @Override
+    public IGameSimulation createGameSimulation(ITeam teamA, ITeam teamB, IGameSimulationConfig config) {
+        return new GameSimulation(teamA, teamB, config);
+    }
+
+    @Override
+    public IGameStats createGameStats() {
+        return new GameStats();
+    }
 }
