@@ -66,6 +66,24 @@ public class GameSimulationSystemTest {
     }
 
     @Test
+    public void resetAllStatsTest() {
+        IGameSimulationSystem gameSimulationSystem = leagueManagerFactory.createGameSimulationSystem();
+        gameSimulationSystem.setTotalGoals(5);
+        gameSimulationSystem.setTotalPenalties(50);
+        gameSimulationSystem.setTotalShots(26);
+        gameSimulationSystem.setTotalSaves(38);
+        gameSimulationSystem.setNumberOfGamesPlayed(1271);
+
+        gameSimulationSystem.resetAllStats();
+
+        Assert.assertEquals(gameSimulationSystem.getTotalGoals(), 0);
+        Assert.assertEquals(gameSimulationSystem.getTotalPenalties(), 0);
+        Assert.assertEquals(gameSimulationSystem.getTotalShots(), 0);
+        Assert.assertEquals(gameSimulationSystem.getTotalSaves(), 0);
+        Assert.assertEquals(gameSimulationSystem.getNumberOfGamesPlayed(), 0);
+    }
+
+    @Test
     public void simulateGameAndGetWinner1Test() {
         MockTeamGenerator mockTeamGenerator = new MockTeamGenerator();
         ITeam teamA = mockTeamGenerator.getTeamWithAllStatsAsOne();

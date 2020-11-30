@@ -13,5 +13,6 @@ public interface IGameSimulationSystem {
     void setTotalSaves(int totalSaves);
     int getNumberOfGamesPlayed();
     void setNumberOfGamesPlayed(int numberOfGamesPlayed);
+    void resetAllStats();
     ITeam simulateGameAndGetWinner(ITeam teamA, ITeam teamB);
 }

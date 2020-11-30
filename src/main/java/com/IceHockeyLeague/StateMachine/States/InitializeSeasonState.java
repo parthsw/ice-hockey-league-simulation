@@ -54,6 +54,7 @@ public class InitializeSeasonState extends AbstractState {
 
         league.getScheduleSystem().generateRegularSeasonSchedule(league);
         league.getStandingSystem().initializeStandings(league);
+        league.getGameSimulationSystem().resetAllStats();
 
         return stateMachineFactory.createAdvanceTimeState();
     }
