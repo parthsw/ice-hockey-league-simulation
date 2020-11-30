@@ -155,7 +155,7 @@ public class LeagueManagerFactory implements ILeagueManagerFactory {
 
     @Override
     public IRandomChance createRandomChance() {
-        if(randomChance == null) {
+        if (randomChance == null) {
             return new RandomChance(new Random());
         }
         return randomChance;

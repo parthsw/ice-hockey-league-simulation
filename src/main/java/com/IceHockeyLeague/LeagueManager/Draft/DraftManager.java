@@ -24,7 +24,7 @@ public class DraftManager implements IDraftManager {
     }
 
     public IPlayer findBestDraftee(List<IPlayer> players) {
-        if(players.size() <= 0) {
+        if (players.size() <= 0) {
             return leagueManagerFactory.createPlayer();
         }
 
@@ -32,25 +32,26 @@ public class DraftManager implements IDraftManager {
         IPlayerStats bestPlayerStats = bestPlayer.getPlayerStats();
         float bestStrength = bestPlayerStats.getStrength();
 
-        for(int i = 1; i < players.size(); i++) {
+        for (int i = 1; i < players.size(); i++) {
             IPlayer player = players.get(i);
             IPlayerStats stats = player.getPlayerStats();
             float strength = stats.getStrength();
 
-            if(strength > bestStrength) {
+            if (strength > bestStrength) {
                 bestPlayer = player;
                 bestStrength = strength;
             }
         }
+
         return bestPlayer;
     }
 
     public void performDraftSelectionForTeam(ITeam teamPickingDraftee, List<IPlayer> draftees) {
         List<ITeamPlayer> teamPlayers = teamPickingDraftee.getPlayers();
+        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
         IPlayer bestPlayer = this.findBestDraftee(draftees);
         draftees.remove(bestPlayer);
 
-        ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
         teamPlayer.generateTeamPlayer(bestPlayer);
         teamPlayers.add(teamPlayer);
     }
@@ -64,24 +65,24 @@ public class DraftManager implements IDraftManager {
         IScheduleSystem scheduleSystem = league.getScheduleSystem();
         List<IStanding> playOffSeasonStandings = standingSystem.getPlayOffSeasonStandingsInReverse(scheduleSystem.getPlayoffSchedule());
 
-        for(int i = 0; i < regularSeasonEliminatedTeamsCount; i++) {
+        for (int i = 0; i < regularSeasonEliminatedTeamsCount; i++) {
             IStanding standing = regularSeasonStandings.get(i);
             teamsForDraftRounds.add(standing.getTeam());
         }
 
-        for(IStanding standing : playOffSeasonStandings) {
+        for (IStanding standing : playOffSeasonStandings) {
             teamsForDraftRounds.add(standing.getTeam());
         }
+
         return teamsForDraftRounds;
     }
 
     public List<ITeam> generateTeamOrderForDraftSelection(List<ITeam> teams, List<IDraftPick> draftPicks, int roundNumber) {
+        List<ITeam> teamsForCurrentRound = new ArrayList<>(teams);
         List<IDraftPick> currentRoundDraftPicks = draftPicks.stream()
                 .filter(draftPick -> draftPick.getDraftPickRoundNumber() == roundNumber).collect(Collectors.toList());
 
-        List<ITeam> teamsForCurrentRound = new ArrayList<>(teams);
-
-        for(IDraftPick draftPick: currentRoundDraftPicks) {
+        for (IDraftPick draftPick : currentRoundDraftPicks) {
             ITeam teamTradedAwayTheirPick = draftPick.getSendingTeam();
             ITeam teamDoingAdditionalPick = draftPick.getReceivingTeam();
 
