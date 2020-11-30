@@ -47,7 +47,7 @@ public class CoachTest {
     }
 
     @Test
-    public void setCoachIDTest() {
+    public void setCoachIdTest() {
         ICoach coach = leagueManagerFactory.createCoach();
         coach.setCoachId(22);
         Assert.assertEquals(22, coach.getCoachId());

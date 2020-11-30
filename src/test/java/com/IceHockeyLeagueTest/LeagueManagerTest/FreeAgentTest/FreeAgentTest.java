@@ -74,11 +74,12 @@ public class FreeAgentTest {
 
     @Test
     public void convertToTeamPlayerTest() {
-        IFreeAgentPersistence freeAgentDB = databaseFactory.createFreeAgentPersistence();
+        IFreeAgentPersistence freeAgentDb = databaseFactory.createFreeAgentPersistence();
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
+        IFreeAgent freeAgent;
         List<IFreeAgent> freeAgents = new ArrayList<>();
-        freeAgentDB.loadFreeAgents(1, freeAgents);
-        IFreeAgent freeAgent = freeAgents.get(1);
+        freeAgentDb.loadFreeAgents(1, freeAgents);
+        freeAgent = freeAgents.get(1);
 
         freeAgent.convertToTeamPlayer(teamPlayer);
 
@@ -112,9 +113,10 @@ public class FreeAgentTest {
         List<IFreeAgent> freeAgents = new ArrayList<>();
         IFreeAgentPersistence freeAgentDb = databaseFactory.createFreeAgentPersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+        IFreeAgent bestFreeAgent;
         freeAgentDb.loadFreeAgents(1, freeAgents);
 
-        IFreeAgent bestFreeAgent = freeAgent.bestFreeAgentForPosition(freeAgents, PlayerPosition.FORWARD.toString());
+        bestFreeAgent = freeAgent.bestFreeAgentForPosition(freeAgents, PlayerPosition.FORWARD.toString());
         Assert.assertEquals("Fred Two", bestFreeAgent.getPlayerName());
         Assert.assertEquals(3, bestFreeAgent.getFreeAgentId());
     }
@@ -140,10 +142,10 @@ public class FreeAgentTest {
     @Test
     public void handleFreeAgentRetirementTest() {
         IPlayerCareerProgression playerCareerProgression = leagueManagerFactory.createPlayerCareerProgression(leagueManagerFactory.createRandomChance());
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        ILeaguePersistence leagueDb = databaseFactory.createLeaguePersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         ILeague league = leagueManagerFactory.createLeague();
-        leagueDB.loadLeague(1, league);
+        leagueDb.loadLeague(1, league);
         Assert.assertFalse(freeAgent.handleFreeAgentRetirement(playerCareerProgression, league));
     }
 
