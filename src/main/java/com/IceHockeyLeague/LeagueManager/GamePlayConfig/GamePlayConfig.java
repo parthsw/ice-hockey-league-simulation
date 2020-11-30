@@ -4,7 +4,6 @@ public class GamePlayConfig implements IGamePlayConfig {
     private int gamePlayConfigId;
     private int leagueId;
     private IAgingConfig agingConfig;
-    private IGameResolverConfig gameResolverConfig;
     private ITradingConfig tradingConfig;
     private ITrainingConfig trainingConfig;
     private IInjuryConfig injuryConfig;
@@ -45,19 +44,6 @@ public class GamePlayConfig implements IGamePlayConfig {
     @Override
     public IAgingConfig getAgingConfig() {
         return agingConfig;
-    }
-
-    @Override
-    public void setGameResolverConfig(IGameResolverConfig gameResolverConfig) {
-        if (gameResolverConfig == null) {
-            throw new IllegalArgumentException("Please provide a valid concrete implementation of IGameResolverConfig");
-        }
-        this.gameResolverConfig = gameResolverConfig;
-    }
-
-    @Override
-    public IGameResolverConfig getGameResolverConfig() {
-        return gameResolverConfig;
     }
 
     @Override

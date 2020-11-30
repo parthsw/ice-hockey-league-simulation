@@ -2,25 +2,44 @@
   "$schema": "http://json-schema.org/draft-06/schema#",
   "description": "Representation of Ice Hockey League",
   "type": "object",
-  "required": ["leagueName", "gameplayConfig", "conferences", "freeAgents", "coaches", "generalManagers"],
+  "required": [
+    "leagueName",
+    "gameplayConfig",
+    "conferences",
+    "freeAgents",
+    "coaches",
+    "generalManagers"
+  ],
   "properties": {
-    "leagueName": { "$ref": "#/definitions/nonEmptyString" },
-    "gameplayConfig": { "$ref":  "#/definitions/gameplayConfiguration" },
+    "leagueName": {
+      "$ref": "#/definitions/nonEmptyString"
+    },
+    "gameplayConfig": {
+      "$ref": "#/definitions/gameplayConfiguration"
+    },
     "conferences": {
       "type": "array",
-      "items": { "$ref": "#/definitions/conference" }
+      "items": {
+        "$ref": "#/definitions/conference"
+      }
     },
     "freeAgents": {
       "type": "array",
-      "items": { "$ref": "#/definitions/freeAgent" }
+      "items": {
+        "$ref": "#/definitions/freeAgent"
+      }
     },
     "coaches": {
       "type": "array",
-      "items": { "$ref": "#/definitions/coach" }
+      "items": {
+        "$ref": "#/definitions/coach"
+      }
     },
     "generalManagers": {
       "type": "array",
-      "items": { "$ref": "#/definitions/nonEmptyString" }
+      "items": {
+        "$ref": "#/definitions/nonEmptyString"
+      }
     }
   },
   "definitions": {
@@ -28,22 +47,37 @@
       "type": "string",
       "minLength": 1
     },
-
     "gameplayConfiguration": {
       "type": "object",
       "description": "Configuration about the gameplay for current league",
-      "required": ["aging", "gameResolver", "injuries", "training", "trading"],
+      "required": [
+        "aging",
+        "injuries",
+        "training",
+        "trading"
+      ],
       "properties": {
-        "aging": { "$ref": "#/definitions/agingConfig" },
-        "gameResolver": { "$ref": "#/definitions/gameResolverConfig" },
-        "injuries": { "$ref": "#/definitions/injuriesConfig" },
-        "training": { "$ref": "#/definitions/trainingConfig" },
-        "trading": { "$ref": "#/definitions/tradingConfig" }
+        "aging": {
+          "$ref": "#/definitions/agingConfig"
+        },
+        "injuries": {
+          "$ref": "#/definitions/injuriesConfig"
+        },
+        "training": {
+          "$ref": "#/definitions/trainingConfig"
+        },
+        "trading": {
+          "$ref": "#/definitions/tradingConfig"
+        }
       }
     },
     "agingConfig": {
       "type": "object",
-      "required": ["averageRetirementAge", "maximumAge", "statDecayChance"],
+      "required": [
+        "averageRetirementAge",
+        "maximumAge",
+        "statDecayChance"
+      ],
       "properties": {
         "averageRetirementAge": {
           "type": "number"
@@ -56,18 +90,13 @@
         }
       }
     },
-    "gameResolverConfig": {
-      "type": "object",
-      "required": ["randomWinChance"],
-      "properties": {
-        "randomWinChance": {
-          "type": "number"
-        }
-      }
-    },
     "injuriesConfig": {
       "type": "object",
-      "required": ["randomInjuryChance", "injuryDaysLow", "injuryDaysHigh"],
+      "required": [
+        "randomInjuryChance",
+        "injuryDaysLow",
+        "injuryDaysHigh"
+      ],
       "properties": {
         "randomInjuryChance": {
           "type": "number"
@@ -82,7 +111,9 @@
     },
     "trainingConfig": {
       "type": "object",
-      "required": ["daysUntilStatIncreaseCheck"],
+      "required": [
+        "daysUntilStatIncreaseCheck"
+      ],
       "properties": {
         "daysUntilStatIncreaseCheck": {
           "type": "number"
@@ -91,7 +122,12 @@
     },
     "tradingConfig": {
       "type": "object",
-      "required": ["lossPoint", "randomTradeOfferChance", "maxPlayersPerTrade", "randomAcceptanceChance"],
+      "required": [
+        "lossPoint",
+        "randomTradeOfferChance",
+        "maxPlayersPerTrade",
+        "randomAcceptanceChance"
+      ],
       "properties": {
         "lossPoint": {
           "type": "number"
@@ -107,54 +143,97 @@
         }
       }
     },
-
     "conference": {
       "type": "object",
       "description": "Representation of a conference in Ice Hockey League",
-      "required": ["conferenceName", "divisions"],
+      "required": [
+        "conferenceName",
+        "divisions"
+      ],
       "properties": {
-        "conferenceName": { "$ref": "#/definitions/nonEmptyString" },
+        "conferenceName": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
         "divisions": {
           "type": "array",
-          "items": { "$ref": "#/definitions/division" }
+          "items": {
+            "$ref": "#/definitions/division"
+          }
         }
       }
     },
     "division": {
       "type": "object",
       "description": "Representation of a division in Ice Hockey League",
-      "required": ["divisionName", "teams"],
+      "required": [
+        "divisionName",
+        "teams"
+      ],
       "properties": {
-        "divisionName": { "$ref": "#/definitions/nonEmptyString" },
+        "divisionName": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
         "teams": {
           "type": "array",
-          "items": { "$ref": "#/definitions/team" }
+          "items": {
+            "$ref": "#/definitions/team"
+          }
         }
       }
     },
     "team": {
       "type": "object",
       "description": "Representation of a team in Ice Hockey League",
-      "required": ["teamName", "generalManager", "headCoach", "players"],
+      "required": [
+        "teamName",
+        "generalManager",
+        "headCoach",
+        "players"
+      ],
       "properties": {
-        "teamName": { "$ref": "#/definitions/nonEmptyString" },
-        "generalManager": { "$ref": "#/definitions/nonEmptyString" },
-        "headCoach": { "$ref": "#/definitions/coach" },
+        "teamName": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "generalManager": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "headCoach": {
+          "$ref": "#/definitions/coach"
+        },
         "players": {
           "type": "array",
-          "items": { "$ref": "#/definitions/player" }
+          "items": {
+            "$ref": "#/definitions/player"
+          }
         }
       }
     },
     "player": {
       "type": "object",
       "description": "Representation of a player in Ice Hockey League",
-      "required": ["playerName", "position", "captain", "skating", "shooting", "checking", "saving", "birthDay", "birthMonth", "birthYear"],
+      "required": [
+        "playerName",
+        "position",
+        "captain",
+        "skating",
+        "shooting",
+        "checking",
+        "saving",
+        "birthDay",
+        "birthMonth",
+        "birthYear"
+      ],
       "properties": {
-        "playerName": { "$ref": "#/definitions/nonEmptyString" },
+        "playerName": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
         "position": {
           "type": "string",
-          "enum": ["forward", "defense", "goalie"]
+          "enum": [
+            "forward",
+            "defense",
+            "goalie"
+          ]
         },
         "captain": {
           "type": "boolean"
@@ -197,12 +276,28 @@
     "freeAgent": {
       "type": "object",
       "description": "Representation of a free agent in Ice Hockey League",
-      "required": ["playerName", "position", "skating", "shooting", "checking", "saving", "birthDay", "birthMonth", "birthYear"],
+      "required": [
+        "playerName",
+        "position",
+        "skating",
+        "shooting",
+        "checking",
+        "saving",
+        "birthDay",
+        "birthMonth",
+        "birthYear"
+      ],
       "properties": {
-        "playerName": { "$ref": "#/definitions/nonEmptyString" },
+        "playerName": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
         "position": {
           "type": "string",
-          "enum": ["forward", "defense", "goalie"]
+          "enum": [
+            "forward",
+            "defense",
+            "goalie"
+          ]
         },
         "skating": {
           "type": "number",
@@ -242,9 +337,17 @@
     "coach": {
       "type": "object",
       "description": "Representation of a coach in Ice Hockey League",
-      "required": ["name", "skating", "shooting", "checking", "saving"],
+      "required": [
+        "name",
+        "skating",
+        "shooting",
+        "checking",
+        "saving"
+      ],
       "properties": {
-        "name": { "$ref": "#/definitions/nonEmptyString" },
+        "name": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
         "skating": {
           "type": "number",
           "minimum": 0.0,
