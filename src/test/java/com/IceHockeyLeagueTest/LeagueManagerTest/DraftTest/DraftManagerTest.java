@@ -55,7 +55,6 @@ public class DraftManagerTest {
 
     @Test
     public void performDraftSelectionForTeamTest() {
-
         TeamPlayerPersistenceMock teamPlayerPersistenceMock = persistenceFactory.createTeamPlayerPersistence();
         TeamPersistenceMock teamPersistenceMock = persistenceFactory.createTeamPersistence();
         List<ITeam> teams = new ArrayList<>();
@@ -64,25 +63,20 @@ public class DraftManagerTest {
         List<IPlayer> draftees;
 
         teamPersistenceMock.loadTeams(1, teams);
-        teamPlayerPersistenceMock.loadTeamPlayers(1,teamPlayers);
-
+        teamPlayerPersistenceMock.loadTeamPlayers(1, teamPlayers);
         teamPickingDraftee = teams.get(0);
         draftees = createPlayers(teamPlayers);
-
         draftManager.performDraftSelectionForTeam(teamPickingDraftee, draftees);
+
         Assert.assertEquals(3, teamPickingDraftee.getPlayers().size());
         Assert.assertEquals(1, draftees.size());
     }
 
     @Test
     public void generateTeamOrderForDraftSelectionTest() {
-
         ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
-
-        ILeague league = leagueManagerFactory.createLeague();
         List<ITeam> draftRoundTeams;
-
-        league = leaguePersistenceMock.loadLeague("");
+        ILeague league = leaguePersistenceMock.loadLeague("");
         draftRoundTeams = draftManager.generateTeamOrderForDraftSelection(league);
         Assert.assertEquals(8, draftRoundTeams.size());
     }
@@ -90,13 +84,12 @@ public class DraftManagerTest {
     @Test
     public void generateTeamOrderForDraftSelectionRoundWiseTest() {
         ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
-        ILeague league = leagueManagerFactory.createLeague();
         List<ITeam> draftRoundTeams;
         List<IDraftPick> draftPicks = new ArrayList<>();
         IDraftPick draftPick;
         List<ITeam> currentRoundTeams;
+        ILeague league = leaguePersistenceMock.loadLeague("");
 
-        league = leaguePersistenceMock.loadLeague("");
         draftRoundTeams = draftManager.generateTeamOrderForDraftSelection(league);
         draftPick = leagueManagerFactory.createDraftPick(draftRoundTeams.get(0), draftRoundTeams.get(2), 1, leagueManagerFactory.createTeamPlayer());
         draftPicks.add(draftPick);

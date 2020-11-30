@@ -149,4 +149,5 @@ public class CoachTest {
         Assert.assertFalse(coach.isCoachNameExist(coaches, ""));
         Assert.assertTrue(coach.isCoachNameExist(coaches, "joe doe"));
     }
+
 }
