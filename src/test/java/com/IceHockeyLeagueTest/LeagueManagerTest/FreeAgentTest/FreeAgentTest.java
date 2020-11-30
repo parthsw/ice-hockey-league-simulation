@@ -78,9 +78,9 @@ public class FreeAgentTest {
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
         IFreeAgent freeAgent;
         List<IFreeAgent> freeAgents = new ArrayList<>();
+
         freeAgentPersistenceMock.loadFreeAgents(1, freeAgents);
         freeAgent = freeAgents.get(1);
-
         freeAgent.convertToTeamPlayer(teamPlayer);
 
         Assert.assertFalse(teamPlayer.isCaptain());

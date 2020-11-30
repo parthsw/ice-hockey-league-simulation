@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class StandingSystem extends SeasonSubject implements IStandingSystem{
+public class StandingSystem extends SeasonSubject implements IStandingSystem {
     private final ILeagueManagerFactory leagueManagerFactory;
     private final ITrophySystemFactory trophySystemFactory;
     private List<IStanding> standings;
@@ -158,4 +158,5 @@ public class StandingSystem extends SeasonSubject implements IStandingSystem{
         this.notifyObserver();
         return myStandings;
     }
+
 }

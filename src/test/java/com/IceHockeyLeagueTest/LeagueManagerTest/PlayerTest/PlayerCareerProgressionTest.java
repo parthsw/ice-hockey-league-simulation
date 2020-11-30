@@ -137,10 +137,9 @@ public class PlayerCareerProgressionTest {
 
     @Test
     public void handleFreeAgentRetirementInvalidTest() {
-        ILeaguePersistence leagueDb = persistenceFactory.createLeaguePersistence();
+        ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
-        ILeague league = leagueManagerFactory.createLeague();
-        leagueDb.loadLeague("");
+        ILeague league = leaguePersistenceMock.loadLeague("");
         Assert.assertFalse(playerCareerProgression.handleFreeAgentRetirement(freeAgent, league));
     }
 
@@ -170,9 +169,9 @@ public class PlayerCareerProgressionTest {
     @Test
     public void handleTeamPlayerRetirementInvalidTest() {
         ILeaguePersistence leaguePersistenceMock = persistenceFactory.createLeaguePersistence();
-        ILeague league = leaguePersistenceMock.loadLeague("");
         ITeamPlayer emptyPlayer = leagueManagerFactory.createTeamPlayer();
         ITeam team;
+        ILeague league = leaguePersistenceMock.loadLeague("");
         team = getFirstTeam(league);
         Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(emptyPlayer, team, league));
     }

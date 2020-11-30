@@ -19,7 +19,6 @@ import com.TrophySystem.TrophySystemFactory;
 
 public class AppFactoryTest extends AbstractAppFactory {
 
-
     @Override
     public ILeagueFileHandlerFactory createLeagueFileHandlerFactory() {
         return new LeagueFileHandlerFactory();
