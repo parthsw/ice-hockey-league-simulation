@@ -11,6 +11,8 @@ import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
 import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
 import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 
 public class DraftManager implements IDraftManager {
     private final ILeagueManagerFactory leagueManagerFactory;
+    private final Logger LOGGER = LogManager.getLogger(DraftManager.class);
 
     public DraftManager() {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
@@ -25,6 +28,7 @@ public class DraftManager implements IDraftManager {
 
     public IPlayer findBestDraftee(List<IPlayer> players) {
         if (players.size() <= 0) {
+            LOGGER.warn("Invalid list of draftees were passed in findBestDraftee()");
             return leagueManagerFactory.createPlayer();
         }
 
@@ -43,6 +47,7 @@ public class DraftManager implements IDraftManager {
             }
         }
 
+        LOGGER.info("The best draftee from the current list of draftees is " + bestPlayer.getPlayerName());
         return bestPlayer;
     }
 
@@ -54,6 +59,7 @@ public class DraftManager implements IDraftManager {
 
         teamPlayer.generateTeamPlayer(bestPlayer);
         teamPlayers.add(teamPlayer);
+        LOGGER.info(teamPickingDraftee.getTeamName() + " picked " + teamPlayer.getPlayerName() + " from the current list of draftees...");
     }
 
     public List<ITeam> generateTeamOrderForDraftSelection(ILeague league) {
@@ -61,17 +67,22 @@ public class DraftManager implements IDraftManager {
         IStandingSystem standingSystem = league.getStandingSystem();
         List<IStanding> regularSeasonStandings = standingSystem.getRegularSeasonStandingsInReverse();
         int regularSeasonEliminatedTeamsCount = (regularSeasonStandings.size() / 2);
+        int playOffCounter = regularSeasonEliminatedTeamsCount;
 
         IScheduleSystem scheduleSystem = league.getScheduleSystem();
         List<IStanding> playOffSeasonStandings = standingSystem.getPlayOffSeasonStandingsInReverse(scheduleSystem.getPlayoffSchedule());
 
+        LOGGER.info("Generating team order for draft players selection...");
         for (int i = 0; i < regularSeasonEliminatedTeamsCount; i++) {
             IStanding standing = regularSeasonStandings.get(i);
             teamsForDraftRounds.add(standing.getTeam());
+            LOGGER.info((i + 1) + " - " + standing.getTeam().getTeamName());
         }
 
         for (IStanding standing : playOffSeasonStandings) {
+            playOffCounter++;
             teamsForDraftRounds.add(standing.getTeam());
+            LOGGER.info((playOffCounter) + " - " + standing.getTeam().getTeamName());
         }
 
         return teamsForDraftRounds;

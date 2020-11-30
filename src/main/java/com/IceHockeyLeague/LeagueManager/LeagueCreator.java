@@ -13,6 +13,8 @@ import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 
 import com.IceHockeyLeague.LeagueManager.Team.ITeamStrengthCalculator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,10 +73,12 @@ public class LeagueCreator implements ILeagueCreator {
     private static final String MAX_PLAYERS_PER_TRADE = "maxPlayersPerTrade";
     private static final String RANDOM_ACCEPTANCE_CHANCE = "randomAcceptanceChance";
 
+    private final Logger LOGGER = LogManager.getLogger(LeagueCreator.class);
     private final ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
 
     @Override
     public ILeague createLeague(JSONObject leagueJson) throws JSONException {
+        LOGGER.info("Creating the league model from league JSON object...");
         ILeague league = leagueManagerFactory.createLeague();
         league.setLeagueName(leagueJson.getString(LEAGUE_NAME));
         league.setGamePlayConfig(createGamePlayConfig(leagueJson.getJSONObject(GAME_PLAY_CONFIG)));
@@ -82,6 +86,7 @@ public class LeagueCreator implements ILeagueCreator {
         league.setFreeAgents(createFreeAgentList(leagueJson.getJSONArray(FREE_AGENTS)));
         league.setCoaches(createCoachList(leagueJson.getJSONArray(COACHES)));
         league.setManagers(createManagerList(leagueJson.getJSONArray(GENERAL_MANAGERS)));
+        LOGGER.info("Successfully created league model for league " + league.getLeagueName());
         return league;
     }
 

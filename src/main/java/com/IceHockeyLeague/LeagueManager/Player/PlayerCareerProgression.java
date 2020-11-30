@@ -10,6 +10,8 @@ import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IAgingConfig;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IInjuryConfig;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -19,6 +21,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class PlayerCareerProgression implements IPlayerCareerProgression {
     private final IRandomChance randomChanceGenerator;
+    private final Logger LOGGER = LogManager.getLogger(PlayerCareerProgression.class);
 
     public PlayerCareerProgression(IRandomChance randomChance) {
         randomChanceGenerator = randomChance;
@@ -26,6 +29,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
 
     @Override
     public boolean isInjured(IPlayer player, IInjuryConfig injuryConfig, LocalDate currentDate) {
+        LOGGER.info("Checking player " + player.getPlayerName() + " for injury on " + currentDate.toString());
         float randomInjuryChance = injuryConfig.getRandomInjuryChance();
         int minInjuryDays = injuryConfig.getInjuryDaysLow();
         int maxInjuryDays = injuryConfig.getInjuryDaysHigh();
@@ -49,6 +53,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
 
     @Override
     public boolean isRecovered(IPlayer player, LocalDate currentDate) {
+        LOGGER.info("Checking player " + player.getPlayerName() + " for recovery on " + currentDate.toString());
         if (player.getInjuredStatus()) {
             long noOfDaysElapsed = ChronoUnit.DAYS.between(player.getInjuryDate(), currentDate);
             if (noOfDaysElapsed == player.getDaysInjured()) {
@@ -64,6 +69,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
 
     @Override
     public boolean isRetired(IPlayer player, IAgingConfig agingConfig, LocalDate currentDate) {
+        LOGGER.info("Checking player " + player.getPlayerName() + " for retirement on " + currentDate.toString());
         IPlayerAgeInfo playerAgeInfo = player.getPlayerAgeInfo();
         int DAYS_IN_YEAR = 365;
         long currentAgeInDays = ChronoUnit.DAYS.between(playerAgeInfo.getBirthDate(), currentDate);
@@ -92,6 +98,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
 
     @Override
     public boolean handleFreeAgentRetirement(IFreeAgent freeAgent, ILeague league) {
+        LOGGER.info("freeAgent " + freeAgent.getPlayerName() + " retired from the league " + league.getLeagueName());
         boolean isRemoved = league.removeFreeAgent(freeAgent);
         if (isRemoved) {
             league.addRetiredFreeAgent(freeAgent);
@@ -102,6 +109,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
 
     @Override
     public boolean handleTeamPlayerRetirement(ITeamPlayer teamPlayer, ITeam team, ILeague league) {
+        LOGGER.info("Player " + teamPlayer.getPlayerName() + " of team " + team.getTeamName() + " retired from the league " + league.getLeagueName());
         ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         boolean isRemoved = team.removePlayer(teamPlayer);
