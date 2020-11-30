@@ -3,17 +3,8 @@ package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
-import com.IceHockeyLeague.StateMachine.States.AbstractState;
-import com.IceHockeyLeague.StateMachine.States.AdvanceTimeState;
-import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PersistStateTest {
     private static IStateMachineFactory stateMachineFactory;

@@ -9,7 +9,6 @@ import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.TrophySystem.ITeamObserver;
 import com.TrophySystem.ITrophySystemFactory;
-import com.TrophySystem.SeasonObserver;
 import com.TrophySystem.SeasonSubject;
 
 import java.util.ArrayList;

@@ -8,7 +8,6 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.Persistence.ILeaguePersistence;
-import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;
 import org.junit.BeforeClass;

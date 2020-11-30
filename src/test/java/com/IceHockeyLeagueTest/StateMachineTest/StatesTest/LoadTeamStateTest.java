@@ -4,9 +4,7 @@ import com.AbstractAppFactory;
 import com.AppFactoryTest;
 import com.IOTest.IOMock;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
-import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.LoadTeamState;
-import com.IceHockeyLeague.StateMachine.States.PlayerChoiceState;
 import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 

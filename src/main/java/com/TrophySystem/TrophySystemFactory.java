@@ -1,8 +1,5 @@
 package com.TrophySystem;
 
-import com.TrophySystem.Observers.GoalieObserver;
-
-
 public class TrophySystemFactory implements ITrophySystemFactory{
 
     private TrophyDistribution trophyDistribution =null;
