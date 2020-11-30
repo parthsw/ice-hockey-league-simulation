@@ -32,12 +32,7 @@ public class RandomChance implements IRandomChance {
             return -1;
         }
         // Adding 1 as specified value is exclusive in number generation
-        int randomNumber = random.nextInt(upperValue + 1);
-
-        if (randomNumber < lowerValue) {
-            randomNumber += lowerValue;
-        }
-        return randomNumber;
+        return random.nextInt(upperValue - lowerValue + 1) + lowerValue;
     }
 
 }

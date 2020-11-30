@@ -2,6 +2,7 @@ package com.IceHockeyLeague.LeagueManager.GameSimulator;
 
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.PlayerPosition;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
@@ -63,6 +64,7 @@ public class GameSimulation implements IGameSimulation {
         calculatePenaltiesInGame();
         calculateSavesInGame();
         calculateGoalsInGame();
+        attributeGameEventsToPlayers();
         LOGGER.info("Game Stats: " + team1.getTeamName() + " vs " + team2.getTeamName());
         LOGGER.info("TeamA Goals: " + gameStats.getTeam1Goals());
         LOGGER.info("TeamA Penalties: " + gameStats.getTeam1Penalties());
@@ -72,6 +74,7 @@ public class GameSimulation implements IGameSimulation {
         LOGGER.info("TeamB Penalties: " + gameStats.getTeam2Penalties());
         LOGGER.info("TeamB Shots: " + gameStats.getTeam2Shots());
         LOGGER.info("TeamB Saves: " + gameStats.getTeam2Saves());
+
     }
 
     private void calculateShotsInGame() {
@@ -191,6 +194,44 @@ public class GameSimulation implements IGameSimulation {
         }
         if (gameStats.getTeam2Goals() < 0) {
             gameStats.setTeam2Goals(0);
+        }
+    }
+
+    private void attributeGameEventsToPlayers() {
+        IRandomChance randomChance = leagueManagerFactory.createRandomChance();
+
+        int numberOfTeam1Forwards = team1Forwards.size();
+        int numberOfTeam1Defensemen = team1Defensemen.size();
+        int numberOfTeam1Goalies = team1Goalies.size();
+        int numberOfTeam2Forwards = team2Forwards.size();
+        int numberOfTeam2Defensemen = team2Defensemen.size();
+        int numberOfTeam2Goalies = team2Goalies.size();
+
+        for (int i = 0; i < gameStats.getTeam1Goals(); i++) {
+            int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam1Forwards - 1);
+            LOGGER.info("Goal scored by " + team1Forwards.get(playerIndex).getPlayerName() + " of " + team1.getTeamName());
+        }
+        for (int i = 0; i < gameStats.getTeam2Goals(); i++) {
+            int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam2Forwards - 1);
+            LOGGER.info("Goal scored by " + team2Forwards.get(playerIndex).getPlayerName() + " of " + team2.getTeamName());
+        }
+
+        for (int i = 0; i < gameStats.getTeam1Penalties(); i++) {
+            int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam1Defensemen - 1);
+            LOGGER.info("Penalty awarded to " + team1Defensemen.get(playerIndex).getPlayerName() + " of " + team1.getTeamName());
+        }
+        for (int i = 0; i < gameStats.getTeam2Penalties(); i++) {
+            int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam2Defensemen - 1);
+            LOGGER.info("Penalty awarded to " + team2Defensemen.get(playerIndex).getPlayerName() + " of " + team2.getTeamName());
+        }
+
+        for (int i = 0; i < gameStats.getTeam1Saves(); i++) {
+            int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam1Goalies - 1);
+            LOGGER.info("Goal saved by " + team1Goalies.get(playerIndex).getPlayerName() + " of " + team1.getTeamName());
+        }
+        for (int i = 0; i < gameStats.getTeam2Saves(); i++) {
+            int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam2Goalies - 1);
+            LOGGER.info("Goal saved by " + team2Goalies.get(playerIndex).getPlayerName() + " of " + team2.getTeamName());
         }
     }
 }
