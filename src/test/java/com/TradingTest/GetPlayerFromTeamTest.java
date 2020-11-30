@@ -2,11 +2,13 @@ package com.TradingTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.Trading.GetBestChoiceAgentAndPlayer;
+import com.IceHockeyLeague.Trading.GetBestAgent;
+import com.IceHockeyLeague.Trading.GetPlayerFromTeam;
+import com.IceHockeyLeague.Trading.IGetPlayerFromTeam;
 import com.IceHockeyLeague.Trading.ITradingFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -15,7 +17,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetBestChoiceAgentAndPlayerTest {
+public class GetPlayerFromTeamTest {
     private static ILeagueManagerFactory leagueManagerFactory;
     private static ITradingFactory tradingFactory;
 
@@ -48,7 +50,7 @@ public class GetBestChoiceAgentAndPlayerTest {
         agentList.add(agent1);
         agentList.add(agent2);
 
-        GetBestChoiceAgentAndPlayer object = tradingFactory.createGetBestAgent();
+        GetBestAgent object = tradingFactory.createGetBestAgent();
         IFreeAgent result = object.getBestAgentWithPosition(agentList, "Goalie");
         Assert.assertEquals("test player 2", result.getPlayerName());
 
@@ -74,7 +76,7 @@ public class GetBestChoiceAgentAndPlayerTest {
         players.add(agent1);
         players.add(agent2);
 
-        GetBestChoiceAgentAndPlayer object = tradingFactory.createGetBestAgent();
+        GetPlayerFromTeam object = tradingFactory.createGetPlayerFromTeam();
         ITeamPlayer result = object.getWorsePlayerInTeamWithPosition(players, "Goalie");
         Assert.assertEquals("test player 1", result.getPlayerName());
 
@@ -101,7 +103,7 @@ public class GetBestChoiceAgentAndPlayerTest {
         agentList.add(agent1);
         agentList.add(agent2);
 
-        GetBestChoiceAgentAndPlayer object = tradingFactory.createGetBestAgent();
+        GetBestAgent object = tradingFactory.createGetBestAgent();
         IFreeAgent result = object.getRandomBestAgentSkater(agentList);
         Assert.assertEquals("test player 2", result.getPlayerName());
 
@@ -127,7 +129,7 @@ public class GetBestChoiceAgentAndPlayerTest {
         players.add(agent1);
         players.add(agent2);
 
-        GetBestChoiceAgentAndPlayer object = tradingFactory.createGetBestAgent();
+        IGetPlayerFromTeam object = tradingFactory.createGetPlayerFromTeam();
         ITeamPlayer result = object.getWorseSkaterInTeam(players);
         Assert.assertEquals("test player 1", result.getPlayerName());
     }

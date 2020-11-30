@@ -8,19 +8,19 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetAllTeamsFromLeague {
+public class GetAllTeamsFromLeague implements IGetAllTeamsFromLeague {
 
     public GetAllTeamsFromLeague(ILeague league) {
-       this.gatherTeams(league);
+        this.gatherTeams(league);
     }
 
     private List<ITeam> allTeams;
 
-    private void gatherTeams(ILeague league){
+    public void gatherTeams(ILeague league) {
         List<ITeam> teams = new ArrayList<>();
         List<IConference> conferences = this.getAllConferencesFromLeague(league);
-        for(IConference conference : conferences){
-            for(IDivision division : this.getAllDivisionsFromConference(conference)){
+        for (IConference conference : conferences) {
+            for (IDivision division : this.getAllDivisionsFromConference(conference)) {
                 teams.addAll(this.getAllTeamsFromDivision(division));
             }
         }

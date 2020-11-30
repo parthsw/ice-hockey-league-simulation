@@ -22,9 +22,8 @@ public class TradingFactory implements ITradingFactory {
         return new GetAllTeamsFromLeague(league);
     }
 
-    @Override
-    public GetBestChoiceAgentAndPlayer createGetBestAgent() {
-        return new GetBestChoiceAgentAndPlayer();
+    public GetPlayerFromTeam createGetPlayerFromTeam() {
+        return new GetPlayerFromTeam();
     }
 
     @Override
@@ -60,6 +59,11 @@ public class TradingFactory implements ITradingFactory {
     @Override
     public Trade createTrade(int maxPlayersPerTrade) {
         return new Trade(maxPlayersPerTrade);
+    }
+
+    @Override
+    public GetBestAgent createGetBestAgent() {
+        return new GetBestAgent();
     }
 
 }
