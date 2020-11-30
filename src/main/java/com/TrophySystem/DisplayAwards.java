@@ -1,7 +1,5 @@
 package com.TrophySystem;
 
-import com.TrophySystem.IAwardDistributed;
-
 public class DisplayAwards implements IAwardDistributed {
 
     public void presidentTrophy(String highestPointsTeam){

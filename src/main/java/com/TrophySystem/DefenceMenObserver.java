@@ -1,10 +1,13 @@
 package com.TrophySystem;
 
+import com.AbstractAppFactory;
+
 public class DefenceMenObserver implements IPerformanceObserver {
     ITrophyContenders awardTrophy;
 
     public DefenceMenObserver(){
-        awardTrophy = new TrophyDistribution();
+        ITrophySystemFactory trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
+        awardTrophy = trophySystemFactory.trophyDistribution();
     }
 
     public void update(String defenceMenName, int defenceMenPoints){

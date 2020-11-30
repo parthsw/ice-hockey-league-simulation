@@ -1,5 +1,6 @@
 package com.TrophySystem;
 
+import com.AbstractAppFactory;
 import com.TrophySystem.TrophyDistribution;
 import com.TrophySystem.IPerformanceObserver;
 import com.TrophySystem.ITrophyContenders;
@@ -8,7 +9,8 @@ public class GoalieObserver implements IPerformanceObserver {
     ITrophyContenders awardTrophy;
 
     public GoalieObserver(){
-        awardTrophy = new TrophyDistribution();
+        ITrophySystemFactory trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
+        awardTrophy = trophySystemFactory.trophyDistribution();
     }
 
     public void update(String goalieName, int goaliePoints){
