@@ -19,11 +19,17 @@ public abstract class AbstractAppFactory {
     private static IStateMachineFactory stateMachineFactory;
 
     public abstract ILeagueFileHandlerFactory createLeagueFileHandlerFactory();
+
     public abstract IDatabaseFactory createDatabaseFactory();
+
     public abstract IIOFactory createIOFactory();
+
     public abstract ILeagueManagerFactory createLeagueManagerFactory();
+
     public abstract ISerializeDeserializeLeagueObjectFactory createSerializeDeserializeLeagueObjectFactory();
+
     public abstract ITradingFactory createTradingFactory();
+
     public abstract IStateMachineFactory createStateMachineFactory();
 
     public static AbstractAppFactory getAppFactory() {

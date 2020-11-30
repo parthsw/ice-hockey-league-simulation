@@ -27,9 +27,9 @@ public class CoachStats implements ICoachStats {
     }
 
     @Override
-    public void setSkating(float value) {
-        if(isStatValid(value)) {
-            skating = value;
+    public void setSkating(float statValue) {
+        if (isStatValid(statValue)) {
+            skating = statValue;
         }
     }
 
@@ -39,9 +39,9 @@ public class CoachStats implements ICoachStats {
     }
 
     @Override
-    public void setShooting(float value) {
-        if(isStatValid(value)) {
-            shooting = value;
+    public void setShooting(float statValue) {
+        if (isStatValid(statValue)) {
+            shooting = statValue;
         }
     }
 
@@ -51,9 +51,9 @@ public class CoachStats implements ICoachStats {
     }
 
     @Override
-    public void setChecking(float value) {
-        if (isStatValid(value)) {
-            checking = value;
+    public void setChecking(float statValue) {
+        if (isStatValid(statValue)) {
+            checking = statValue;
         }
     }
 
@@ -63,9 +63,9 @@ public class CoachStats implements ICoachStats {
     }
 
     @Override
-    public void setSaving(float value) {
-        if(isStatValid(value)) {
-            saving = value;
+    public void setSaving(float statValue) {
+        if (isStatValid(statValue)) {
+            saving = statValue;
         }
     }
 

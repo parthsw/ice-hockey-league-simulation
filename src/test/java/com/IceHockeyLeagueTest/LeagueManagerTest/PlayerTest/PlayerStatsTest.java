@@ -13,6 +13,8 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 
 public class PlayerStatsTest {
+    private final String INVALID_POSITION = "invalidPosition";
+
     private static ILeagueManagerFactory leagueManagerFactory;
     private static IRandomChance randomChanceMock;
 
@@ -144,7 +146,7 @@ public class PlayerStatsTest {
     public void getStrengthTest() {
         IPlayerStats playerStats = leagueManagerFactory.createPlayerStats();
         playerStats.setStrength(230.1f);
-        Assert.assertEquals(230.1f, playerStats.getStrength(),0.0);
+        Assert.assertEquals(230.1f, playerStats.getStrength(), 0.0);
     }
 
     @Test
@@ -171,7 +173,7 @@ public class PlayerStatsTest {
     @Test
     public void calculateStrengthInvalidPositionTest() {
         IPlayerStats playerStats = createStats();
-        playerStats.setPosition("invalidPosition");
+        playerStats.setPosition(INVALID_POSITION);
         Assert.assertEquals(playerStats.calculateStrength(), 0.0, 0.0);
     }
 

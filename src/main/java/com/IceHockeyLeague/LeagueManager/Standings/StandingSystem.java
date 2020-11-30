@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class StandingSystem implements IStandingSystem{
+public class StandingSystem implements IStandingSystem {
     private final ILeagueManagerFactory leagueManagerFactory;
     private List<IStanding> standings;
 
@@ -24,16 +24,16 @@ public class StandingSystem implements IStandingSystem{
         return standings;
     }
 
-    public void setStandings(List<IStanding> standingsList) {
-        standings = standingsList;
+    public void setStandings(List<IStanding> standings) {
+        this.standings = standings;
     }
 
     public void initializeStandings(ILeague league) {
         standings = new ArrayList<>();
 
-        for (IConference conference: league.getConferences()) {
-            for (IDivision division: conference.getDivisions()) {
-                for (ITeam team: division.getTeams()) {
+        for (IConference conference : league.getConferences()) {
+            for (IDivision division : conference.getDivisions()) {
+                for (ITeam team : division.getTeams()) {
                     IStanding standing = leagueManagerFactory.createStanding();
                     standing.setConference(conference);
                     standing.setDivision(division);
@@ -45,10 +45,10 @@ public class StandingSystem implements IStandingSystem{
     }
 
     public void updateStatsForWinningTeam(IConference conference, IDivision division, ITeam team) {
-        for (IStanding standing: standings) {
+        for (IStanding standing : standings) {
             if (standing.getConference() == conference &&
-                standing.getDivision() == division &&
-                standing.getTeam() == team) {
+                    standing.getDivision() == division &&
+                    standing.getTeam() == team) {
                 standing.incrementGamesPlayed();
                 standing.incrementGamesWon();
                 standing.incrementPoints();
@@ -57,7 +57,7 @@ public class StandingSystem implements IStandingSystem{
     }
 
     public void updateStatsForLosingTeam(IConference conference, IDivision division, ITeam team) {
-        for (IStanding standing: standings) {
+        for (IStanding standing : standings) {
             if (standing.getConference() == conference &&
                     standing.getDivision() == division &&
                     standing.getTeam() == team) {
@@ -68,8 +68,8 @@ public class StandingSystem implements IStandingSystem{
 
     public List<IStanding> getStandingsInDivision(IDivision division) {
         List<IStanding> myStandings = new ArrayList<>();
-        for (IStanding standing: standings){
-            if (standing.getDivision() == division){
+        for (IStanding standing : standings) {
+            if (standing.getDivision() == division) {
                 myStandings.add(standing);
             }
         }
@@ -79,8 +79,8 @@ public class StandingSystem implements IStandingSystem{
 
     public List<IStanding> getStandingsInConference(IConference conference) {
         List<IStanding> myStandings = new ArrayList<>();
-        for (IStanding standing: standings){
-            if (standing.getConference() == conference){
+        for (IStanding standing : standings) {
+            if (standing.getConference() == conference) {
                 myStandings.add(standing);
             }
         }
@@ -98,26 +98,24 @@ public class StandingSystem implements IStandingSystem{
     }
 
     public List<IStanding> getPlayOffSeasonStandingsInReverse(List<ISchedule> playoffSchedule) {
-        playoffSchedule.sort(Comparator.comparing(ISchedule::getDate));
         List<IStanding> playOffStandings = new ArrayList<>();
         int numberOfSchedules = playoffSchedule.size();
+        playoffSchedule.sort(Comparator.comparing(ISchedule::getDate));
 
-        for(int i = 0; i < numberOfSchedules; i++) {
+        for (int i = 0; i < numberOfSchedules; i++) {
             IStanding standing, lastStanding;
             ISchedule currentSchedule = playoffSchedule.get(i);
-            if(currentSchedule.getWinningTeam() == currentSchedule.getFirstTeam()) {
+            if (currentSchedule.getWinningTeam() == currentSchedule.getFirstTeam()) {
                 standing = setStanding(currentSchedule.getSecondConference(), currentSchedule.getSecondDivision(), currentSchedule.getSecondTeam());
-            }
-            else {
+            } else {
                 standing = setStanding(currentSchedule.getFirstConference(), currentSchedule.getFirstDivision(), currentSchedule.getFirstTeam());
             }
             playOffStandings.add(standing);
 
-            if(i == numberOfSchedules - 1) {
+            if (i == numberOfSchedules - 1) {
                 if ((currentSchedule.getWinningTeam() == currentSchedule.getFirstTeam())) {
                     lastStanding = setStanding(currentSchedule.getFirstConference(), currentSchedule.getFirstDivision(), currentSchedule.getFirstTeam());
-                }
-                else {
+                } else {
                     lastStanding = setStanding(currentSchedule.getSecondConference(), currentSchedule.getSecondDivision(), currentSchedule.getSecondTeam());
                 }
                 playOffStandings.add(lastStanding);
@@ -133,4 +131,5 @@ public class StandingSystem implements IStandingSystem{
         standing.setTeam(team);
         return standing;
     }
+    
 }

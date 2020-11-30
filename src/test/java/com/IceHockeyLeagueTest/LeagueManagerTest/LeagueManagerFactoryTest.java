@@ -1,5 +1,13 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest;
 
+import com.IceHockeyLeague.LeagueManager.Coach.Coach;
+import com.IceHockeyLeague.LeagueManager.Coach.CoachStats;
+import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
+import com.IceHockeyLeague.LeagueManager.Coach.ICoachStats;
+import com.IceHockeyLeague.LeagueManager.Conference.Conference;
+import com.IceHockeyLeague.LeagueManager.Conference.IConference;
+import com.IceHockeyLeague.LeagueManager.Division.Division;
+import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftManager;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.DraftPick;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.DraftPickManager;
@@ -15,9 +23,12 @@ import com.IceHockeyLeague.LeagueManager.Conference.*;
 import com.IceHockeyLeague.LeagueManager.Division.*;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
-import com.IceHockeyLeague.LeagueManager.League.*;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.League.League;
 import com.IceHockeyLeague.LeagueManager.LeagueCreator;
-import com.IceHockeyLeague.LeagueManager.Manager.*;
+import com.IceHockeyLeague.LeagueManager.Manager.IManager;
+import com.IceHockeyLeague.LeagueManager.Manager.Manager;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Scheduler.ISchedule;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
@@ -28,6 +39,7 @@ import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.IceHockeyLeague.LeagueManager.Standings.Standing;
 import com.IceHockeyLeague.LeagueManager.Standings.StandingSystem;
 import com.IceHockeyLeague.LeagueManager.Team.*;
+import com.IceHockeyLeague.LeagueManager.Team.Roster.*;
 import org.mockito.Mockito;
 
 import java.util.Random;
@@ -152,7 +164,7 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
 
     @Override
     public IRandomChance createRandomChance() {
-        if(randomChanceGenerator == null) {
+        if (randomChanceGenerator == null) {
             Random randomMock = Mockito.mock(Random.class);
             randomChanceGenerator = new RandomChance(randomMock);
         }
@@ -192,6 +204,21 @@ public class LeagueManagerFactoryTest implements ILeagueManagerFactory {
     @Override
     public IDraftPickManager createDraftPickManager() {
         return new DraftPickManager();
+    }
+
+    @Override
+    public ITeamRoster createTeamRoster() {
+        return new TeamRoster();
+    }
+
+    @Override
+    public IActiveRoster createActiveRoster() {
+        return new ActiveRoster();
+    }
+
+    @Override
+    public IInactiveRoster createInactiveRoster() {
+        return new InactiveRoster();
     }
 
     @Override

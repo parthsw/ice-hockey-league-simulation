@@ -25,8 +25,8 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
         IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
 
-        freeAgent.setLeagueID(1);
-        freeAgent.setFreeAgentID(1);
+        freeAgent.setLeagueId(1);
+        freeAgent.setFreeAgentId(1);
         freeAgent.setPlayerName("Mike Two");
         freeAgent.setInjuredStatus(false);
         freeAgent.setDaysInjured(0);
@@ -44,7 +44,7 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
 
         playerAgeInfo.setBirthDate(LocalDate.of(1996, Month.JULY, 16));
         playerAgeInfo.setAgeInYears(24);
-        playerAgeInfo.setElapsedDaysFromLastBDay(123);
+        playerAgeInfo.setElapsedDaysFromLastBDate(123);
         freeAgent.setPlayerAgeInfo(playerAgeInfo);
 
         return true;
@@ -56,8 +56,8 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
         IPlayerStats stats = leagueManagerFactory.createPlayerStats();
         IPlayerAgeInfo freeAgentAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
 
-        freeAgent.setFreeAgentID(1);
-        freeAgent.setLeagueID(1);
+        freeAgent.setFreeAgentId(1);
+        freeAgent.setLeagueId(1);
         freeAgent.setPlayerName("Fred One");
         freeAgent.setInjuredStatus(false);
         freeAgent.setDaysInjured(0);
@@ -75,15 +75,15 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
 
         freeAgentAgeInfo.setBirthDate(LocalDate.of(1997, Month.APRIL, 18));
         freeAgentAgeInfo.setAgeInYears(23);
-        freeAgentAgeInfo.setElapsedDaysFromLastBDay(212);
+        freeAgentAgeInfo.setElapsedDaysFromLastBDate(212);
         freeAgent.setPlayerAgeInfo(freeAgentAgeInfo);
 
         IFreeAgent freeAgent1 = leagueManagerFactory.createFreeAgent();
         IPlayerStats stats1 = leagueManagerFactory.createPlayerStats();
         IPlayerAgeInfo freeAgentAgeInfo1 = leagueManagerFactory.createPlayerAgeInfo();
 
-        freeAgent1.setFreeAgentID(2);
-        freeAgent1.setLeagueID(1);
+        freeAgent1.setFreeAgentId(2);
+        freeAgent1.setLeagueId(1);
         freeAgent1.setPlayerName("Mike One");
         freeAgent1.setInjuredStatus(true);
         freeAgent1.setDaysInjured(23);
@@ -101,15 +101,15 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
 
         freeAgentAgeInfo1.setBirthDate(LocalDate.of(1993, Month.OCTOBER, 25));
         freeAgentAgeInfo1.setAgeInYears(27);
-        freeAgentAgeInfo1.setElapsedDaysFromLastBDay(22);
+        freeAgentAgeInfo1.setElapsedDaysFromLastBDate(22);
         freeAgent1.setPlayerAgeInfo(freeAgentAgeInfo1);
 
         IFreeAgent freeAgent2 = leagueManagerFactory.createFreeAgent();
         IPlayerStats stats2 = leagueManagerFactory.createPlayerStats();
         IPlayerAgeInfo freeAgentAgeInfo2 = leagueManagerFactory.createPlayerAgeInfo();
 
-        freeAgent2.setFreeAgentID(3);
-        freeAgent2.setLeagueID(1);
+        freeAgent2.setFreeAgentId(3);
+        freeAgent2.setLeagueId(1);
         freeAgent2.setPlayerName("Fred Two");
         freeAgent2.setInjuredStatus(false);
         freeAgent2.setDaysInjured(0);
@@ -127,7 +127,7 @@ public class FreeAgentPersistenceMock implements IFreeAgentPersistence {
 
         freeAgentAgeInfo2.setBirthDate(LocalDate.of(1991, Month.APRIL, 18));
         freeAgentAgeInfo2.setAgeInYears(29);
-        freeAgentAgeInfo2.setElapsedDaysFromLastBDay(212);
+        freeAgentAgeInfo2.setElapsedDaysFromLastBDate(212);
         freeAgent2.setPlayerAgeInfo(freeAgentAgeInfo2);
 
         freeAgents.add(freeAgent);

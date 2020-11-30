@@ -6,8 +6,8 @@ public class AgingConfig implements IAgingConfig {
     private float statDecayChance;
 
     @Override
-    public void setAverageRetirementAge(int age) {
-        averageRetirementAge = age;
+    public void setAverageRetirementAge(int averageRetirementAge) {
+        this.averageRetirementAge = averageRetirementAge;
     }
 
     @Override
@@ -16,8 +16,8 @@ public class AgingConfig implements IAgingConfig {
     }
 
     @Override
-    public void setMaximumAge(int age) {
-        maximumAge = age;
+    public void setMaximumAge(int maximumAge) {
+        this.maximumAge = maximumAge;
     }
 
     @Override

@@ -33,22 +33,22 @@ public class TeamPlayerTest {
     @Test
     public void ConstructorTest() {
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        Assert.assertEquals(-1, teamPlayer.getTeamID());
-        Assert.assertEquals(-1, teamPlayer.getTeamPlayerID());
+        Assert.assertEquals(-1, teamPlayer.getTeamId());
+        Assert.assertEquals(-1, teamPlayer.getTeamPlayerId());
     }
 
     @Test
-    public void getTeamPlayerIDTest() {
+    public void getTeamPlayerIdTest() {
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        teamPlayer.setTeamPlayerID(2);
-        Assert.assertEquals(2, teamPlayer.getTeamPlayerID());
+        teamPlayer.setTeamPlayerId(2);
+        Assert.assertEquals(2, teamPlayer.getTeamPlayerId());
     }
 
     @Test
-    public void setTeamPlayerIDTest() {
+    public void setTeamPlayerIdTest() {
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        teamPlayer.setTeamPlayerID(9);
-        Assert.assertEquals(9, teamPlayer.getTeamPlayerID());
+        teamPlayer.setTeamPlayerId(9);
+        Assert.assertEquals(9, teamPlayer.getTeamPlayerId());
     }
 
     @Test
@@ -66,30 +66,31 @@ public class TeamPlayerTest {
     }
 
     @Test
-    public void getTeamIDTest() {
+    public void getTeamIdTest() {
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        teamPlayer.setTeamID(11);
-        Assert.assertEquals(11, teamPlayer.getTeamID());
+        teamPlayer.setTeamId(11);
+        Assert.assertEquals(11, teamPlayer.getTeamId());
     }
 
     @Test
-    public void setTeamIDTest() {
+    public void setTeamIdTest() {
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        teamPlayer.setTeamID(5);
-        Assert.assertEquals(5, teamPlayer.getTeamID());
+        teamPlayer.setTeamId(5);
+        Assert.assertEquals(5, teamPlayer.getTeamId());
     }
 
     @Test
     public void convertToFreeAgentTest() {
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
-        List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
-        ITeamPlayer teamPlayer = teamPlayers.get(0);
+        ITeamPlayerPersistence teamPlayerDb = databaseFactory.createTeamPlayerPersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+        List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        ITeamPlayer teamPlayer;
+        teamPlayerDb.loadTeamPlayers(1, teamPlayers);
+        teamPlayer = teamPlayers.get(0);
 
         teamPlayer.convertToFreeAgent(freeAgent);
 
-        Assert.assertEquals(-1, freeAgent.getLeagueID());
+        Assert.assertEquals(-1, freeAgent.getLeagueId());
         Assert.assertEquals("Fred One", freeAgent.getPlayerName());
     }
 
@@ -105,12 +106,11 @@ public class TeamPlayerTest {
 
     @Test
     public void saveTeamPlayerTest() {
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
+        ITeamPlayerPersistence teamPlayerDb = databaseFactory.createTeamPlayerPersistence();
         ITeamPlayer teamPlayer = leagueManagerFactory.createTeamPlayer();
-        teamPlayer.saveTeamPlayer(teamPlayerDB);
+        teamPlayer.saveTeamPlayer(teamPlayerDb);
 
-        Assert.assertEquals(1, teamPlayer.getTeamPlayerID());
-        Assert.assertEquals(1, teamPlayer.getTeamID());
+        Assert.assertEquals(1, teamPlayer.getTeamPlayerId());
     }
 
     @Test

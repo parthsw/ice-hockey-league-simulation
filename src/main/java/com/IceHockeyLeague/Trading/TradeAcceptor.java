@@ -34,13 +34,13 @@ public class TradeAcceptor {
         team2Players.addAll(this.team2.getPlayers());
 
         for (ITeamPlayer player : this.fromTeam1) {
-            player.setTeamID(this.team2.getTeamID());
+            player.setTeamId(this.team2.getTeamID());
             team2Players.add(player);
         }
         team1Players.removeAll(this.fromTeam1);
 
         for (ITeamPlayer player : this.fromTeam2) {
-            player.setTeamID(this.team1.getTeamID());
+            player.setTeamId(this.team1.getTeamID());
             team1Players.add(player);
         }
         team2Players.removeAll(this.fromTeam2);

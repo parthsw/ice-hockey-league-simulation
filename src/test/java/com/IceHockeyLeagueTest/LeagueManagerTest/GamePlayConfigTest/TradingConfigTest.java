@@ -73,4 +73,5 @@ public class TradingConfigTest {
         tradingConfig.setRandomAcceptanceChance(0.23f);
         Assert.assertEquals(0.23f, tradingConfig.getRandomAcceptanceChance(), 0.0);
     }
+
 }

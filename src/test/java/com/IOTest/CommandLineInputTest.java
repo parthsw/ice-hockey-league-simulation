@@ -10,13 +10,15 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 public class CommandLineInputTest {
-    private final InputStream systemIn = System.in;
+    private final InputStream SYSTEM_IN = System.in;
+    private static IIOFactory ioFactory;
 
     @BeforeClass
     public static void setup() {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
+        ioFactory = AbstractAppFactory.getIOFactory();
     }
 
     private void commandLineInput(String data) {
@@ -26,16 +28,21 @@ public class CommandLineInputTest {
 
     @After
     public void resetSystemInput() {
-        System.setIn(systemIn);
+        System.setIn(SYSTEM_IN);
     }
 
     @Test
     public void getInputTest() {
-        IIOFactory ioFactory = AbstractAppFactory.getIOFactory();
         IAppInput appInput = ioFactory.createCommandLineInput();
-
         commandLineInput("Hockey League Simulation");
         Assert.assertEquals("Hockey League Simulation", appInput.getInput());
+    }
+
+    @Test
+    public void getInputAlternativeTest() {
+        IAppInput appInput = ioFactory.createCommandLineInput();
+        commandLineInput("1234");
+        Assert.assertEquals("1234", appInput.getInput());
     }
 
 }

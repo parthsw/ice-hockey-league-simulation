@@ -5,27 +5,27 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 public class TeamPlayer extends Player implements ITeamPlayer {
-    private int teamPlayerID;
+    private int teamPlayerId;
     private boolean isCaptain;
-    private int teamID;
+    private int teamId;
 
     public TeamPlayer() {
         setDefaults();
     }
 
     private void setDefaults() {
-        teamPlayerID = -1;
-        teamID = -1;
+        teamPlayerId = -1;
+        teamId = -1;
     }
 
     @Override
-    public int getTeamPlayerID() {
-        return teamPlayerID;
+    public int getTeamPlayerId() {
+        return teamPlayerId;
     }
 
     @Override
-    public void setTeamPlayerID(int teamPlayerID) {
-        this.teamPlayerID = teamPlayerID;
+    public void setTeamPlayerId(int teamPlayerId) {
+        this.teamPlayerId = teamPlayerId;
     }
 
     @Override
@@ -39,20 +39,20 @@ public class TeamPlayer extends Player implements ITeamPlayer {
     }
 
     @Override
-    public int getTeamID() {
-        return teamID;
+    public int getTeamId() {
+        return teamId;
     }
 
     @Override
-    public void setTeamID(int teamID) {
-        this.teamID = teamID;
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
     @Override
     public IFreeAgent convertToFreeAgent(IFreeAgent freeAgent) {
         super.convertBetweenPlayerTypes(freeAgent);
-        freeAgent.setFreeAgentID(-1);
-        freeAgent.setLeagueID(-1);
+        freeAgent.setFreeAgentId(-1);
+        freeAgent.setLeagueId(-1);
         return freeAgent;
     }
 
@@ -72,8 +72,8 @@ public class TeamPlayer extends Player implements ITeamPlayer {
     }
 
     @Override
-    public boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB) {
-        return teamPlayerDB.saveTeamPlayer(this);
+    public boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDb) {
+        return teamPlayerDb.saveTeamPlayer(this);
     }
 
     @Override

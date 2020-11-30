@@ -5,22 +5,39 @@ import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import com.IceHockeyLeague.LeagueManager.Player.PlayerPosition;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamRoster implements ITeamRoster {
 
+    private final ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     private List<ITeamPlayer> players;
     private List<IFreeAgent> agents;
-    private int numberOfSkaters = 26;
-    private int numberOfKeepers = 4;
-    private String goalie = "Goalie";
-    private String forward = "Forward";
-    private String defence = "Defence";
-    private ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    private int numberOfSkatersNeeded = 26;
+    private int numberOfKeepersNeeded = 4;
+    private final String goalie = PlayerPosition.GOALIE.toString();
+    private final String forward = PlayerPosition.FORWARD.toString();
+    private final String defence = PlayerPosition.DEFENSE.toString();
+    private final IActiveRoster activeRoster = leagueManagerFactory.createActiveRoster();
+    private final IInactiveRoster inactiveRoster = leagueManagerFactory.createInactiveRoster();
+
+    public List<ITeamPlayer> getActiveRoster() {
+        return activeRoster.getActivePlayers();
+    }
+
+    public List<ITeamPlayer> getInactiveRoster() {
+        return inactiveRoster.getInactivePlayers();
+    }
 
     public void setPlayers(List<ITeamPlayer> players) {
         this.players = players;
+    }
+
+    @Override
+    public List<ITeamPlayer> getPlayers() {
+        return players;
     }
 
     public void setAgents(List<IFreeAgent> agents) {
@@ -33,7 +50,7 @@ public class TeamRoster implements ITeamRoster {
         for (IFreeAgent agent : agents) {
             if (agent.getInjuredStatus()) {
             } else {
-                if (agent.getPlayerStats().getPosition().equals(position)) {
+                if (agent.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
                     if (agent.getPlayerStats().getStrength() > strength) {
                         bestAgent = agent;
                         strength = agent.getPlayerStats().getStrength();
@@ -49,13 +66,10 @@ public class TeamRoster implements ITeamRoster {
         ITeamPlayer worseTeamPlayer = null;
         float strength = Float.MAX_VALUE;
         for (ITeamPlayer player : players) {
-            if (player.getInjuredStatus()) {
-            } else {
-                if (player.getPlayerStats().getPosition().equals(position)) {
-                    if (player.getPlayerStats().getStrength() < strength) {
-                        worseTeamPlayer = player;
-                        strength = player.getPlayerStats().getStrength();
-                    }
+            if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
+                if (player.getPlayerStats().getStrength() < strength) {
+                    worseTeamPlayer = player;
+                    strength = player.getPlayerStats().getStrength();
                 }
             }
 
@@ -64,8 +78,8 @@ public class TeamRoster implements ITeamRoster {
     }
 
     public void validateRoster() {
-        numberOfSkaters = 0;
-        numberOfKeepers = 0;
+        int numberOfSkaters = 0;
+        int numberOfKeepers = 0;
 
         for (ITeamPlayer player : this.players) {
             if (player.getPlayerStats().getPosition().equalsIgnoreCase(goalie)) {
@@ -75,8 +89,8 @@ public class TeamRoster implements ITeamRoster {
             }
         }
 
-        if (numberOfKeepers > 4) {
-            int difference = numberOfKeepers - 4;
+        if (numberOfKeepers > numberOfKeepersNeeded) {
+            int difference = numberOfKeepers - numberOfKeepersNeeded;
             for (int i = 0; i < difference; i++) {
                 ITeamPlayer player = getWorseTeamPlayerWithPosition(goalie, this.players);
                 this.players.remove(player);
@@ -88,8 +102,8 @@ public class TeamRoster implements ITeamRoster {
             }
         }
 
-        if (numberOfSkaters > 26) {
-            int difference = numberOfSkaters - 4;
+        if (numberOfSkaters > numberOfSkatersNeeded) {
+            int difference = numberOfSkaters - numberOfSkatersNeeded;
             for (int i = 0; i < difference; i++) {
                 ITeamPlayer player1 = getWorseTeamPlayerWithPosition(forward, this.players);
                 ITeamPlayer player2 = getWorseTeamPlayerWithPosition(defence, this.players);
@@ -108,8 +122,8 @@ public class TeamRoster implements ITeamRoster {
             }
         }
 
-        if (numberOfKeepers < 4) {
-            int difference = 4 - numberOfKeepers;
+        if (numberOfKeepers < numberOfKeepersNeeded) {
+            int difference = numberOfKeepersNeeded - numberOfKeepers;
             for (int i = 0; i < difference; i++) {
                 IFreeAgent agent = getBestAgentWithPosition(goalie, this.agents);
                 ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
@@ -121,8 +135,8 @@ public class TeamRoster implements ITeamRoster {
             }
         }
 
-        if (numberOfSkaters < 26) {
-            int difference = 26 - numberOfSkaters;
+        if (numberOfSkaters < numberOfSkatersNeeded) {
+            int difference = numberOfSkatersNeeded - numberOfSkaters;
             for (int i = 0; i < difference; i++) {
                 IFreeAgent agent1 = getBestAgentWithPosition(forward, this.agents);
                 IFreeAgent agent2 = getBestAgentWithPosition(defence, this.agents);
@@ -140,7 +154,60 @@ public class TeamRoster implements ITeamRoster {
                 this.players.add(player);
             }
         }
+        this.setNewRoster();
 
+    }
 
+    private void setNewRoster() {
+        List<ITeamPlayer> skaters = new ArrayList<>();
+        List<ITeamPlayer> goalies = new ArrayList<>();
+
+        for (ITeamPlayer player : this.players) {
+            if (player.getPlayerStats().getPosition().equalsIgnoreCase(goalie)) {
+                goalies.add(player);
+            } else {
+                skaters.add(player);
+            }
+        }
+
+        List<ITeamPlayer> bestSkaters = new ArrayList<>();
+        List<ITeamPlayer> bestGoalies = new ArrayList<>();
+
+        while (bestSkaters.size() < 18) {
+            ITeamPlayer bestSkater = null;
+            float strength = 0;
+            for (ITeamPlayer player : skaters) {
+                if (player.getPlayerStats().getStrength() > strength) {
+                    bestSkater = player;
+                    strength = player.getPlayerStats().getStrength();
+                }
+            }
+            bestSkaters.add(bestSkater);
+            skaters.remove(bestSkater);
+        }
+
+        while (bestGoalies.size() < 2) {
+            ITeamPlayer bestGoalie = null;
+            float strength = 0;
+            for (ITeamPlayer player : goalies) {
+                if (player.getPlayerStats().getStrength() > strength) {
+                    bestGoalie = player;
+                    strength = player.getPlayerStats().getStrength();
+                }
+            }
+            bestGoalies.add(bestGoalie);
+            goalies.remove(bestGoalie);
+        }
+
+        List<ITeamPlayer> activePlayers = new ArrayList<>();
+        List<ITeamPlayer> inactivePlayers = new ArrayList<>();
+        activePlayers.addAll(bestSkaters);
+        activePlayers.addAll(bestGoalies);
+        inactivePlayers.addAll(skaters);
+        inactivePlayers.addAll(goalies);
+        activeRoster.setActivePlayers(activePlayers);
+        inactiveRoster.setInactivePlayers(inactivePlayers);
+        inactiveRoster.setAgents(agents);
+        activeRoster.validateActiveRoster(inactiveRoster);
     }
 }

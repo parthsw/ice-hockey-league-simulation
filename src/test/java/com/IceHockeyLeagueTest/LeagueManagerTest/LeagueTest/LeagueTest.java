@@ -134,7 +134,7 @@ public class LeagueTest {
         league.setGamePlayConfig(gamePlayConfig);
 
         IGamePlayConfig leagueConfig = league.getGamePlayConfig();
-        Assert.assertEquals(1, leagueConfig.getLeagueID());
+        Assert.assertEquals(1, leagueConfig.getLeagueId());
     }
 
     @Test
@@ -281,7 +281,7 @@ public class LeagueTest {
         Assert.assertEquals(2, conferences.size());
 
         List<IFreeAgent> freeAgents = league.getFreeAgents();
-        Assert.assertEquals(3, freeAgents.size());
+        Assert.assertEquals(60, freeAgents.size());
 
         List<ICoach> coaches = league.getCoaches();
         Assert.assertEquals(3, coaches.size());

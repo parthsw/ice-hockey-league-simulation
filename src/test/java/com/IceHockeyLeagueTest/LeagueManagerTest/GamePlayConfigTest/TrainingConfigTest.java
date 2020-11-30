@@ -31,4 +31,5 @@ public class TrainingConfigTest {
         trainingConfig.setDaysUntilStatIncreaseCheck(27);
         Assert.assertEquals(27, trainingConfig.getDaysUntilStatIncreaseCheck());
     }
+
 }

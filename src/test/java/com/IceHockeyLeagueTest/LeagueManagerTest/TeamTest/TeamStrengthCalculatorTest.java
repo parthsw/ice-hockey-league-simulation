@@ -28,11 +28,10 @@ public class TeamStrengthCalculatorTest {
 
     @Test
     public void calculateTest() {
-        ITeamPlayerPersistence teamPlayerDB = databaseFactory.createTeamPlayerPersistence();
-        List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        teamPlayerDB.loadTeamPlayers(1, teamPlayers);
-
+        ITeamPlayerPersistence teamPlayerDb = databaseFactory.createTeamPlayerPersistence();
         ITeamStrengthCalculator teamStrength = leagueManagerFactory.createTeamStrengthCalculator();
+        List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        teamPlayerDb.loadTeamPlayers(1, teamPlayers);
         Assert.assertEquals(46.5f, teamStrength.calculate(teamPlayers), 0.0);
     }
 

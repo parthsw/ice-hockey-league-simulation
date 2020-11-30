@@ -6,43 +6,43 @@ import com.IceHockeyLeague.LeagueManager.Player.*;
 import java.util.List;
 
 public class FreeAgent extends Player implements IFreeAgent {
-    private int freeAgentID;
-    private int leagueID;
+    private int freeAgentId;
+    private int leagueId;
 
     public FreeAgent() {
         setDefaults();
     }
 
     private void setDefaults() {
-        freeAgentID = -1;
-        leagueID = -1;
+        freeAgentId = -1;
+        leagueId = -1;
     }
 
     @Override
-    public int getFreeAgentID() {
-        return freeAgentID;
+    public int getFreeAgentId() {
+        return freeAgentId;
     }
 
     @Override
-    public void setFreeAgentID(int freeAgentID) {
-        this.freeAgentID = freeAgentID;
+    public void setFreeAgentId(int freeAgentId) {
+        this.freeAgentId = freeAgentId;
     }
 
     @Override
-    public int getLeagueID() {
-        return leagueID;
+    public int getLeagueId() {
+        return leagueId;
     }
 
     @Override
-    public void setLeagueID(int leagueID) {
-        this.leagueID = leagueID;
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
     }
 
     @Override
     public ITeamPlayer convertToTeamPlayer(ITeamPlayer teamPlayer) {
         super.convertBetweenPlayerTypes(teamPlayer);
-        teamPlayer.setTeamPlayerID(-1);
-        teamPlayer.setTeamID(-1);
+        teamPlayer.setTeamPlayerId(-1);
+        teamPlayer.setTeamId(-1);
         teamPlayer.setIsCaptain(false);
         return teamPlayer;
     }
@@ -56,13 +56,17 @@ public class FreeAgent extends Player implements IFreeAgent {
 
     @Override
     public IFreeAgent bestFreeAgentForPosition(List<IFreeAgent> freeAgents, String position) {
+        if (freeAgents == null) {
+            throw new IllegalArgumentException("Please provide valid list of freeAgents");
+        }
+
         float bestStrength = 0;
         IFreeAgent bestFreeAgent = null;
-        if(freeAgents.size() > 0) {
-            for (IFreeAgent freeAgent: freeAgents) {
+        if (freeAgents.size() > 0) {
+            for (IFreeAgent freeAgent : freeAgents) {
                 IPlayerStats freeAgentStats = freeAgent.getPlayerStats();
-                if(freeAgentStats.getPosition().equalsIgnoreCase(position)) {
-                    if(freeAgentStats.getStrength() > bestStrength) {
+                if (freeAgentStats.getPosition().equalsIgnoreCase(position)) {
+                    if (freeAgentStats.getStrength() > bestStrength) {
                         bestStrength = freeAgentStats.getStrength();
                         bestFreeAgent = freeAgent;
                     }
@@ -73,8 +77,8 @@ public class FreeAgent extends Player implements IFreeAgent {
     }
 
     @Override
-    public boolean saveFreeAgent(IFreeAgentPersistence freeAgentDB) {
-        return freeAgentDB.saveFreeAgent(this);
+    public boolean saveFreeAgent(IFreeAgentPersistence freeAgentDb) {
+        return freeAgentDb.saveFreeAgent(this);
     }
 
     @Override

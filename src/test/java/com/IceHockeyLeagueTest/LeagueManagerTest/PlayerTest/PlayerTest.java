@@ -98,7 +98,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void setRetirementDate() {
+    public void setRetirementDateTest() {
         IPlayer player = leagueManagerFactory.createPlayer();
         player.setRetirementDate(LocalDate.of(2010, 11, 27));
         Assert.assertEquals(LocalDate.of(2010, 11, 27), player.getRetirementDate());
@@ -122,10 +122,10 @@ public class PlayerTest {
     public void getPlayerStatsTest() {
         IPlayer player = leagueManagerFactory.createPlayer();
         IPlayerStats expectedStats = createPlayerStats();
+        IPlayerStats actualStats;
 
         player.setPlayerStats(expectedStats);
-        IPlayerStats actualStats = player.getPlayerStats();
-
+        actualStats = player.getPlayerStats();
         Assert.assertEquals(expectedStats.getChecking(), actualStats.getChecking());
     }
 
@@ -135,35 +135,32 @@ public class PlayerTest {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setAgeInYears(22);
         player.setPlayerAgeInfo(playerAgeInfo);
-
         Assert.assertEquals(22, player.getPlayerAgeInfo().getAgeInYears());
     }
 
     @Test
-    public void isBirthDayTest() {
+    public void isBirthDateTest() {
         IPlayer player = leagueManagerFactory.createPlayer();
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(CURRENT_DATE);
         player.setPlayerAgeInfo(playerAgeInfo);
-
-        Assert.assertTrue(player.isBirthDay(CURRENT_DATE));
+        Assert.assertTrue(player.isBirthDate(CURRENT_DATE));
     }
 
     @Test
-    public void calculateStrength() {
+    public void calculateStrengthTest() {
         IPlayer player = leagueManagerFactory.createPlayer();
         IPlayerStats forwardStats = createPlayerStats();
-
         Assert.assertEquals(21.5, player.calculateStrength(forwardStats), 0.0);
     }
 
     @Test
     public void performStatDecayTest() {
         IPlayer player = leagueManagerFactory.createPlayer();
-        IPlayerStats playerStats = createPlayerStats();
-        player.setPlayerStats(playerStats);
         IRandomChance randomChanceMock = Mockito.mock(RandomChance.class);
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
+        IPlayerStats playerStats = createPlayerStats();
+        player.setPlayerStats(playerStats);
         agingConfig.setStatDecayChance(0.05f);
 
         when(randomChanceMock.getRandomFloatNumber(0, 1)).thenReturn(0.01f);
@@ -198,7 +195,7 @@ public class PlayerTest {
 
         playerAgeInfo.setBirthDate(LocalDate.of(1969, Month.NOVEMBER, 16));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
         player.setPlayerAgeInfo(playerAgeInfo);
 
         IAgingConfig agingConfig = leagueManagerFactory.createAgingConfig();
@@ -214,11 +211,11 @@ public class PlayerTest {
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
         playerAgeInfo.setBirthDate(LocalDate.of(2000, Month.NOVEMBER, 17));
         playerAgeInfo.setAgeInYears(playerAgeInfo.calculatePlayerAgeInYears(CURRENT_DATE));
-        playerAgeInfo.setElapsedDaysFromLastBDay(playerAgeInfo.calculateElapsedDaysFromLastBDay(CURRENT_DATE));
+        playerAgeInfo.setElapsedDaysFromLastBDate(playerAgeInfo.calculateElapsedDaysFromLastBDate(CURRENT_DATE));
         player.setPlayerAgeInfo(playerAgeInfo);
 
         player.agePlayerByDays(245, CURRENT_DATE);
-        Assert.assertEquals(245, playerAgeInfo.getElapsedDaysFromLastBDay());
+        Assert.assertEquals(245, playerAgeInfo.getElapsedDaysFromLastBDate());
     }
 
     private IPlayerStats createPlayerStats() {

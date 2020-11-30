@@ -60,7 +60,6 @@ public class CoachStatsTest {
         ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setShooting(1.0f);
         Assert.assertEquals(1.0f, coachStats.getShooting(), 0.0);
-
     }
 
     @Test
@@ -99,17 +98,17 @@ public class CoachStatsTest {
     }
 
     @Test
-    public void setSavingInvalidTest() {
-        ICoachStats coachStats = leagueManagerFactory.createCoachStats();
-        coachStats.setSaving(9);
-        Assert.assertEquals(0.0f, coachStats.getSaving(), 0.0);
-    }
-
-    @Test
     public void setSavingTest() {
         ICoachStats coachStats = leagueManagerFactory.createCoachStats();
         coachStats.setSaving(0.5f);
         Assert.assertEquals(0.5f, coachStats.getSaving(), 0.0);
+    }
+    
+    @Test
+    public void setSavingInvalidTest() {
+        ICoachStats coachStats = leagueManagerFactory.createCoachStats();
+        coachStats.setSaving(9);
+        Assert.assertEquals(0.0f, coachStats.getSaving(), 0.0);
     }
 
 }

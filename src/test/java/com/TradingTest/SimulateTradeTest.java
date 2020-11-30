@@ -143,7 +143,7 @@ public class SimulateTradeTest {
         stats.setPosition(position);
         player.setPlayerStats(stats);
         player.setPlayerAgeInfo(ageInfo);
-        player.setLeagueID(1);
+        player.setLeagueId(1);
 
         return player;
     }

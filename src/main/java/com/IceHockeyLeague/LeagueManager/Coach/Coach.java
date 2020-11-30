@@ -3,10 +3,10 @@ package com.IceHockeyLeague.LeagueManager.Coach;
 import java.util.List;
 
 public class Coach implements ICoach {
-    private int coachID;
+    private int coachId;
+    private int teamId;
+    private int leagueId;
     private String coachName;
-    private int teamID;
-    private int leagueID;
     private ICoachStats coachStats;
 
     public Coach() {
@@ -14,19 +14,19 @@ public class Coach implements ICoach {
     }
 
     private void setDefaults() {
-        coachID = -1;
-        teamID = -1;
-        leagueID = -1;
+        coachId = -1;
+        teamId = -1;
+        leagueId = -1;
     }
 
     @Override
-    public int getCoachID() {
-        return coachID;
+    public int getCoachId() {
+        return coachId;
     }
 
     @Override
-    public void setCoachID(int id) {
-        coachID = id;
+    public void setCoachId(int coachId) {
+        this.coachId = coachId;
     }
 
     @Override
@@ -40,23 +40,23 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public int getTeamID() {
-        return teamID;
+    public int getTeamId() {
+        return teamId;
     }
 
     @Override
-    public void setTeamID(int id) {
-        teamID = id;
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
     @Override
-    public int getLeagueID() {
-        return leagueID;
+    public int getLeagueId() {
+        return leagueId;
     }
 
     @Override
-    public void setLeagueID(int id) {
-        leagueID = id;
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
     }
 
     @Override
@@ -66,13 +66,16 @@ public class Coach implements ICoach {
 
     @Override
     public void setCoachStats(ICoachStats stats) {
+        if (stats == null) {
+            throw new IllegalArgumentException("Please provide a valid concrete implementation of ICoachStats");
+        }
         coachStats = stats;
     }
 
     @Override
     public boolean isValid() {
         boolean valid = true;
-        if(isNullOrEmpty(coachName)) {
+        if (isNullOrEmpty(coachName)) {
             valid = false;
         }
         return valid;
@@ -81,8 +84,8 @@ public class Coach implements ICoach {
     @Override
     public boolean isCoachNameExist(List<ICoach> coaches, String coachName) {
         boolean isExist = false;
-        for(ICoach c : coaches){
-            if (c.getCoachName().equalsIgnoreCase(coachName)){
+        for (ICoach coach : coaches) {
+            if (coach.getCoachName().equalsIgnoreCase(coachName)) {
                 isExist = true;
                 break;
             }
@@ -96,18 +99,18 @@ public class Coach implements ICoach {
     }
 
     @Override
-    public boolean saveTeamCoach(ICoachPersistence coachDB) {
-        return coachDB.saveTeamCoach(this);
+    public boolean saveTeamCoach(ICoachPersistence coachDb) {
+        return coachDb.saveTeamCoach(this);
     }
 
     @Override
-    public boolean saveLeagueCoach(ICoachPersistence coachDB) {
-        return coachDB.saveLeagueCoach(this);
+    public boolean saveLeagueCoach(ICoachPersistence coachDb) {
+        return coachDb.saveLeagueCoach(this);
     }
 
     @Override
-    public boolean loadTeamCoach(ICoachPersistence coachDB, ICoach coach) {
-        return coachDB.loadTeamCoach(teamID, this);
+    public boolean loadTeamCoach(ICoachPersistence coachDb, ICoach coach) {
+        return coachDb.loadTeamCoach(teamId, this);
     }
 
 }

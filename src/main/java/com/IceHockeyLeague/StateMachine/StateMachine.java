@@ -1,8 +1,11 @@
 package com.IceHockeyLeague.StateMachine;
 
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class StateMachine implements IStateMachine {
+    private final Logger LOGGER = LogManager.getLogger(StateMachine.class);
     private AbstractState currentState;
 
     StateMachine(AbstractState state) {
@@ -21,10 +24,11 @@ public class StateMachine implements IStateMachine {
 
     @Override
     public void onExecution() {
-        while(true) {
-            if(currentState == null) {
+        while (true) {
+            if (currentState == null) {
                 break;
             } else {
+                LOGGER.info("Running the " + currentState.getClass().getSimpleName() + "...");
                 currentState = currentState.onRun();
             }
         }

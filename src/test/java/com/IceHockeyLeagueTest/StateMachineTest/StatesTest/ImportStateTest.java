@@ -5,9 +5,7 @@ import com.AppFactoryTest;
 import com.IOTest.IOMock;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
-import com.IceHockeyLeague.StateMachine.States.CreateTeamState;
 import com.IceHockeyLeague.StateMachine.States.ImportState;
-import com.IceHockeyLeague.StateMachine.States.LoadTeamState;
 import com.IceHockeyLeagueTest.LeagueFileHandlerTest.LeagueJsonMock;
 import org.json.JSONObject;
 import org.junit.*;
@@ -17,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class ImportStateTest {
+    private static final String LOAD_TEAM_STATE = "LoadTeamState";
+    private static final String CREATE_TEAM_STATE = "CreateTeamState";
     private static IOMock ioMockInstance = null;
     private static IStateMachineFactory stateMachineFactory;
 
@@ -54,17 +54,30 @@ public class ImportStateTest {
     @Test
     public void onRunTest() {
         AbstractState importState = stateMachineFactory.createImportState();
-        ioMockInstance.commandLineInput("empty");
-        Assert.assertTrue(importState.onRun() instanceof LoadTeamState);
+        AbstractState nextState;
+
+        ioMockInstance.commandLineInput("load");
+        nextState = importState.onRun();
+        Assert.assertEquals(nextState.getClass().getSimpleName(), LOAD_TEAM_STATE);
     }
 
     @Test
     public void onRunAlternateValidTest() throws IOException {
         AbstractState importState = stateMachineFactory.createImportState();
+        AbstractState nextState;
         File leagueFile = folder.newFile("validLeague.json");
         JSONObject validLeague = LeagueJsonMock.instance().validLeagueJson();
+
         ioMockInstance.commandLineInput(LeagueJsonMock.instance().createLeagueJsonFile(leagueFile, validLeague));
-        Assert.assertTrue(importState.onRun() instanceof CreateTeamState);
+        nextState = importState.onRun();
+        Assert.assertEquals(nextState.getClass().getSimpleName(), CREATE_TEAM_STATE);
+    }
+
+    @Test
+    public void onRunInvalidTest() {
+        AbstractState importState = stateMachineFactory.createImportState();
+        ioMockInstance.commandLineInput("file.json");
+        Assert.assertNull(importState.onRun());
     }
 
     @Test
@@ -72,6 +85,7 @@ public class ImportStateTest {
         AbstractState importState = stateMachineFactory.createImportState();
         File leagueFile = folder.newFile("invalidLeague.json");
         JSONObject invalidLeague = LeagueJsonMock.instance().invalidLeagueJson();
+
         ioMockInstance.commandLineInput(LeagueJsonMock.instance().createLeagueJsonFile(leagueFile, invalidLeague));
         Assert.assertNull(importState.onRun());
         Assert.assertTrue(ioMockInstance.getOutput().contains("#: required key [gameplayConfig] not found"));

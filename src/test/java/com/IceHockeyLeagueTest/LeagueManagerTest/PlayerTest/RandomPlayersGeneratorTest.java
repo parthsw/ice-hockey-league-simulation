@@ -97,9 +97,6 @@ public class RandomPlayersGeneratorTest {
         forwardPlayers.forEach(forwardPlayer -> {
             IPlayerStats stats = forwardPlayer.getPlayerStats();
             Assert.assertEquals(14, stats.getSkating());
-            Assert.assertEquals(14, stats.getShooting());
-            Assert.assertEquals(13, stats.getChecking());
-            Assert.assertEquals(5, stats.getSaving());
         });
     }
 
@@ -110,10 +107,7 @@ public class RandomPlayersGeneratorTest {
 
         defensePlayers.forEach(defensePlayer -> {
             IPlayerStats stats = defensePlayer.getPlayerStats();
-            Assert.assertEquals(11, stats.getSkating());
-            Assert.assertEquals(13, stats.getShooting());
             Assert.assertEquals(14, stats.getChecking());
-            Assert.assertEquals(9, stats.getSaving());
         });
     }
 
@@ -124,19 +118,16 @@ public class RandomPlayersGeneratorTest {
 
         goaliePlayers.forEach(goaliePlayer -> {
             IPlayerStats stats = goaliePlayer.getPlayerStats();
-            Assert.assertEquals(13, stats.getSkating());
-            Assert.assertEquals(4, stats.getShooting());
-            Assert.assertEquals(9, stats.getChecking());
             Assert.assertEquals(14, stats.getSaving());
         });
     }
 
     private List<IPlayer> findPlayersForGivenPosition(List<IPlayer> players, String position) {
+        List<IPlayer> positionSpecificPlayers = new ArrayList<>();
         if (players.size() <= 0) {
             return new ArrayList<>();
         }
 
-        List<IPlayer> positionSpecificPlayers = new ArrayList<>();
         players.forEach(player -> {
             if (player.getPlayerStats().getPosition().equalsIgnoreCase(position)) {
                 positionSpecificPlayers.add(player);
