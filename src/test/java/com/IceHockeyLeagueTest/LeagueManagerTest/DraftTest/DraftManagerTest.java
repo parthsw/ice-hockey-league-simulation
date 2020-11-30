@@ -35,11 +35,12 @@ public class DraftManagerTest {
 
     @Test
     public void findBestDrafteeFoundTest() {
+        IPlayer bestDraftee;
         ITeamPlayerPersistence teamPlayerPersistence = databaseFactory.createTeamPlayerPersistence();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
         teamPlayerPersistence.loadTeamPlayers(1, teamPlayers);
 
-        IPlayer bestDraftee = draftManager.findBestDraftee(createPlayers(teamPlayers));
+        bestDraftee = draftManager.findBestDraftee(createPlayers(teamPlayers));
         Assert.assertEquals("Mike One", bestDraftee.getPlayerName());
     }
 
@@ -56,11 +57,13 @@ public class DraftManagerTest {
         ITeamPersistence teamPersistence = databaseFactory.createTeamPersistence();
         List<ITeam> teams = new ArrayList<>();
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        ITeam teamPickingDraftee;
+        List<IPlayer> draftees;
 
         teamPersistence.loadTeams(1, teams);
         teamPlayerPersistence.loadTeamPlayers(1, teamPlayers);
-        ITeam teamPickingDraftee = teams.get(0);
-        List<IPlayer> draftees = createPlayers(teamPlayers);
+        teamPickingDraftee = teams.get(0);
+        draftees = createPlayers(teamPlayers);
 
         draftManager.performDraftSelectionForTeam(teamPickingDraftee, draftees);
         Assert.assertEquals(3, teamPickingDraftee.getPlayers().size());
@@ -71,9 +74,10 @@ public class DraftManagerTest {
     public void generateTeamOrderForDraftSelectionTest() {
         ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
         ILeague league = leagueManagerFactory.createLeague();
-        leaguePersistence.loadLeague(1, league);
+        List<ITeam> draftRoundTeams;
 
-        List<ITeam> draftRoundTeams = draftManager.generateTeamOrderForDraftSelection(league);
+        leaguePersistence.loadLeague(1, league);
+        draftRoundTeams = draftManager.generateTeamOrderForDraftSelection(league);
         Assert.assertEquals(8, draftRoundTeams.size());
     }
 
@@ -81,12 +85,16 @@ public class DraftManagerTest {
     public void generateTeamOrderForDraftSelectionRoundWiseTest() {
         ILeaguePersistence leaguePersistence = databaseFactory.createLeaguePersistence();
         ILeague league = leagueManagerFactory.createLeague();
-        leaguePersistence.loadLeague(1, league);
-        List<ITeam> draftRoundTeams = draftManager.generateTeamOrderForDraftSelection(league);
+        List<ITeam> draftRoundTeams;
         List<IDraftPick> draftPicks = new ArrayList<>();
-        IDraftPick draftPick = leagueManagerFactory.createDraftPick(draftRoundTeams.get(0), draftRoundTeams.get(2), 1, leagueManagerFactory.createTeamPlayer());
+        IDraftPick draftPick;
+        List<ITeam> currentRoundTeams;
+
+        leaguePersistence.loadLeague(1, league);
+        draftRoundTeams = draftManager.generateTeamOrderForDraftSelection(league);
+        draftPick = leagueManagerFactory.createDraftPick(draftRoundTeams.get(0), draftRoundTeams.get(2), 1, leagueManagerFactory.createTeamPlayer());
         draftPicks.add(draftPick);
-        List<ITeam> currentRoundTeams = draftManager.generateTeamOrderForDraftSelection(draftRoundTeams, draftPicks, 1);
+        currentRoundTeams = draftManager.generateTeamOrderForDraftSelection(draftRoundTeams, draftPicks, 1);
 
         Assert.assertEquals(2, findNumberOfTeams(currentRoundTeams, draftRoundTeams.get(2)));
         Assert.assertEquals(0, findNumberOfTeams(currentRoundTeams, draftRoundTeams.get(0)));
@@ -94,7 +102,7 @@ public class DraftManagerTest {
 
     private List<IPlayer> createPlayers(List<ITeamPlayer> teamPlayers) {
         List<IPlayer> players = new ArrayList<>();
-        for(ITeamPlayer teamPlayer: teamPlayers) {
+        for (ITeamPlayer teamPlayer : teamPlayers) {
             IPlayer player = leagueManagerFactory.createPlayer();
             teamPlayer.generatePlayer(player);
             players.add(player);
