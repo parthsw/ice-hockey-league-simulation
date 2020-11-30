@@ -124,15 +124,15 @@ public class SimulateTradeTest {
 
     private List<ITeamPlayer> generatePlayers() {
         List<ITeamPlayer> players = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 13; i++) {
             ITeamPlayer player = generatePlayer("Forward");
             players.add(player);
         }
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 13; i++) {
             ITeamPlayer player = generatePlayer("Defence");
             players.add(player);
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             ITeamPlayer player = generatePlayer("Goalie");
             players.add(player);
         }
@@ -164,7 +164,7 @@ public class SimulateTradeTest {
         IDivision division = leagueManagerFactory.createDivision();
         conference.addDivision(division);
         Random random = new Random();
-        String[] positions = new String[]{"Forward", "Defence", "Goalie"};
+        String[] positions = new String[]{"forward", "defense", "goalie"};
         for (int j = 0; j < 200; j++) {
             league.addFreeAgent(generateAgent(positions[random.nextInt(positions.length)]));
         }
@@ -218,11 +218,11 @@ public class SimulateTradeTest {
     public void validateTeamNumberTest() {
         ITeam team = leagueManagerFactory.createTeam();
         List<IFreeAgent> agents = new ArrayList<>();
-        String[] positions = new String[]{"Goalie", "Forward", "Defence"};
+        String[] positions = new String[]{"goalie", "forward", "defense"};
         Random random = new Random();
         int skater = 0;
         int goalie = 0;
-        String keeper = "Goalie";
+        String keeper = "goalie";
         for (int i = 0; i < 30; i++) {
             String temp = positions[random.nextInt(positions.length)];
             ITeamPlayer player = leagueManagerFactory.createTeamPlayer();
@@ -238,7 +238,7 @@ public class SimulateTradeTest {
             IFreeAgent agent = leagueManagerFactory.createFreeAgent();
             IPlayerStats stats = leagueManagerFactory.createPlayerStats();
             stats.setPosition(temp);
-            stats.setStrength(random.nextInt(100));
+            stats.setStrength(random.nextInt(99) + 1);
             agent.setPlayerStats(stats);
             agents.add(agent);
         }

@@ -76,13 +76,13 @@ public class Trade implements ITrade {
         team2Players.addAll(this.receivingTeam.getPlayers());
 
         for (ITeamPlayer player : this.sendingPlayers) {
-            player.setTeamID(this.receivingTeam.getTeamID());
+            player.setTeamId(this.receivingTeam.getTeamID());
             team2Players.add(player);
         }
         team1Players.removeAll(this.sendingPlayers);
 
         for (ITeamPlayer player : this.receivingPlayers) {
-            player.setTeamID(this.sendingTeam.getTeamID());
+            player.setTeamId(this.sendingTeam.getTeamID());
             team1Players.add(player);
         }
         team2Players.removeAll(this.receivingPlayers);
