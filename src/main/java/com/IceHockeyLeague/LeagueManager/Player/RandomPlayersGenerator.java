@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     // Reference: Random names - https://homepage.net/name_generator/
-    private static final String[] firstNames = {
+    private static final String[] FIRST_NAMES = {
             "Adam",
             "Adrian",
             "Alan",
@@ -90,7 +90,7 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
             "Warren",
             "William"
     };
-    private static final String[] lastNames = {
+    private static final String[] LAST_NAMES = {
             "Abraham",
             "Allan",
             "Alsop",
@@ -185,23 +185,21 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     }
 
     public List<IPlayer> generateRandomPlayers(LocalDate currentDate, int totalPlayers) {
-        if(totalPlayers <= 0) {
+        if (totalPlayers <= 0) {
             return new ArrayList<>();
         }
 
         List<IPlayer> generatedPlayers = new ArrayList<>();
         int numberOfForwardsToGenerate = numberOfPlayersToGenerate(totalPlayers, FORWARD_RATIO);
-        int numberOfDefenseToGenerate = numberOfPlayersToGenerate(totalPlayers, DEFENSE_RATIO);
+        int numberOfDefensesToGenerate = numberOfPlayersToGenerate(totalPlayers, DEFENSE_RATIO);
 
-        for(int i = 0; i < totalPlayers; i++) {
+        for (int i = 0; i < totalPlayers; i++) {
             IPlayer player = generateRandomBasePlayer(currentDate);
-            if(generatedPlayers.size() < numberOfForwardsToGenerate) {
+            if (generatedPlayers.size() < numberOfForwardsToGenerate) {
                 player.setPlayerStats(generateRandomStatsForForward());
-            }
-            else if(generatedPlayers.size() < numberOfForwardsToGenerate + numberOfDefenseToGenerate) {
+            } else if (generatedPlayers.size() < numberOfForwardsToGenerate + numberOfDefensesToGenerate) {
                 player.setPlayerStats(generateRandomStatsForDefense());
-            }
-            else {
+            } else {
                 player.setPlayerStats(generateRandomStatsForGoalie());
             }
             generatedPlayers.add(player);
@@ -214,10 +212,10 @@ public class RandomPlayersGenerator implements IRandomPlayersGenerator {
     }
 
     private String generateRandomPlayerName() {
-        int firstNameRandomIndex = randomChance.getRandomIntegerNumber(0, firstNames.length - 1);
-        int lastNameRandomIndex = randomChance.getRandomIntegerNumber(0, lastNames.length - 1);
+        int firstNameRandomIndex = randomChance.getRandomIntegerNumber(0, FIRST_NAMES.length - 1);
+        int lastNameRandomIndex = randomChance.getRandomIntegerNumber(0, LAST_NAMES.length - 1);
 
-        return firstNames[firstNameRandomIndex] + lastNames[lastNameRandomIndex];
+        return FIRST_NAMES[firstNameRandomIndex] + LAST_NAMES[lastNameRandomIndex];
     }
 
     private LocalDate generateRandomPlayerDateOfBirth(LocalDate currentDate) {

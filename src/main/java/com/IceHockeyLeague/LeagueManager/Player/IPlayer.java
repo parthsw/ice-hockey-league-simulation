@@ -42,7 +42,7 @@ public interface IPlayer {
 
     void setPlayerAgeInfo(IPlayerAgeInfo playerAgeInfo);
 
-    boolean isBirthDay(LocalDate currentDate);
+    boolean isBirthDate(LocalDate currentDate);
 
     void convertBetweenPlayerTypes(IPlayer player);
 

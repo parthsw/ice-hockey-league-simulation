@@ -82,10 +82,11 @@ public class TeamPlayerTest {
     @Test
     public void convertToFreeAgentTest() {
         ITeamPlayerPersistence teamPlayerDb = databaseFactory.createTeamPlayerPersistence();
-        List<ITeamPlayer> teamPlayers = new ArrayList<>();
-        teamPlayerDb.loadTeamPlayers(1, teamPlayers);
-        ITeamPlayer teamPlayer = teamPlayers.get(0);
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
+        List<ITeamPlayer> teamPlayers = new ArrayList<>();
+        ITeamPlayer teamPlayer;
+        teamPlayerDb.loadTeamPlayers(1, teamPlayers);
+        teamPlayer = teamPlayers.get(0);
 
         teamPlayer.convertToFreeAgent(freeAgent);
 
@@ -110,7 +111,6 @@ public class TeamPlayerTest {
         teamPlayer.saveTeamPlayer(teamPlayerDb);
 
         Assert.assertEquals(1, teamPlayer.getTeamPlayerId());
-        Assert.assertEquals(1, teamPlayer.getTeamId());
     }
 
     @Test

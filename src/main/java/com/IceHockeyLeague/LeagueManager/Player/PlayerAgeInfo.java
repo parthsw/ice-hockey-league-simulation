@@ -17,7 +17,7 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
 
     @Override
     public void setAgeInYears(int ageInYears) {
-        if(ageInYears > 0) {
+        if (ageInYears > 0) {
             this.ageInYears = ageInYears;
         }
     }
@@ -29,7 +29,7 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
 
     @Override
     public void setElapsedDaysFromLastBDate(int elapsedDaysFromLastBDate) {
-        if(elapsedDaysFromLastBDate > 0) {
+        if (elapsedDaysFromLastBDate > 0) {
             this.elapsedDaysFromLastBDate = elapsedDaysFromLastBDate;
         }
     }
@@ -52,10 +52,10 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
     @Override
     public LocalDate getBirthDateForGivenYear(int year) {
         LocalDate currentYearDate = LocalDate.of(year, Month.JANUARY, 1);
-        if(currentYearDate.isLeapYear()) {
+        if (currentYearDate.isLeapYear()) {
             return LocalDate.of(year, birthDate.getMonth(), birthDate.getDayOfMonth());
         }
-        if(birthDate.getMonth() == Month.FEBRUARY && birthDate.getDayOfMonth() == 29) {
+        if (birthDate.getMonth() == Month.FEBRUARY && birthDate.getDayOfMonth() == 29) {
             return LocalDate.of(year, birthDate.getMonth(), birthDate.getDayOfMonth() - 1);
         }
         return LocalDate.of(year, birthDate.getMonth(), birthDate.getDayOfMonth());
@@ -73,14 +73,13 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
         LocalDate lastYearBirthDate = getBirthDateForGivenYear(currentDate.getYear() - 1);
         int elapsedDays;
 
-        if(currentDate.isEqual(currentYearBirthDate)) {
+        if (currentDate.isEqual(currentYearBirthDate)) {
             return 0;
         }
 
-        if(currentYearBirthDate.isBefore(currentDate)) {
+        if (currentYearBirthDate.isBefore(currentDate)) {
             elapsedDays = (int) ChronoUnit.DAYS.between(currentYearBirthDate, currentDate);
-        }
-        else {
+        } else {
             elapsedDays = (int) ChronoUnit.DAYS.between(lastYearBirthDate, currentDate);
         }
         // Adding 1 as the end date is exclusive in ChronoUnit.DAYS.between
@@ -89,7 +88,7 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
 
     @Override
     public void agePlayerByDays(int daysToIncrement, LocalDate currentDate) {
-        if(daysToIncrement > 0) {
+        if (daysToIncrement > 0) {
             elapsedDaysFromLastBDate += daysToIncrement;
             handlePlayerAgingInYears(currentDate);
         }
@@ -101,14 +100,13 @@ public class PlayerAgeInfo implements IPlayerAgeInfo {
         int daysBetweenBirthDates = (int) ChronoUnit.DAYS.between(lastYearBirthDate, currentYearBirthDate);
         int remainderDays;
 
-        if(elapsedDaysFromLastBDate >= daysBetweenBirthDates) {
+        if (elapsedDaysFromLastBDate >= daysBetweenBirthDates) {
             remainderDays = elapsedDaysFromLastBDate % daysBetweenBirthDates;
 
-            if(remainderDays == 0) {
+            if (remainderDays == 0) {
                 ageInYears += 1;
                 elapsedDaysFromLastBDate = 0;
-            }
-            else {
+            } else {
                 ageInYears += (elapsedDaysFromLastBDate / daysBetweenBirthDates);
                 elapsedDaysFromLastBDate = remainderDays;
             }
