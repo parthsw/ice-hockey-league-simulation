@@ -3,6 +3,7 @@ package com.IceHockeyLeague.LeagueManager.League;
 import com.AbstractAppFactory;
 import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
+import com.IceHockeyLeague.LeagueManager.GameSimulator.IGameSimulationSystem;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoachPersistence;
@@ -41,6 +42,7 @@ public class League implements ILeague {
     private IScheduleSystem scheduleSystem;
     private IStandingSystem standingSystem;
     private List<IDraftPick> draftPicks;
+    private IGameSimulationSystem gameSimulationSystem;
 
     public League() {
         setDefaults();
@@ -59,6 +61,7 @@ public class League implements ILeague {
         databaseFactory = AbstractAppFactory.getDatabaseFactory();
         this.scheduleSystem = leagueManagerFactory.createScheduleSystem();
         this.standingSystem = leagueManagerFactory.createStandingSystem();
+        this.gameSimulationSystem = leagueManagerFactory.createGameSimulationSystem();
     }
 
     @Override
@@ -242,6 +245,11 @@ public class League implements ILeague {
     @Override
     public IStandingSystem getStandingSystem() {
         return standingSystem;
+    }
+
+    @Override
+    public IGameSimulationSystem getGameSimulationSystem() {
+        return gameSimulationSystem;
     }
 
     @Override

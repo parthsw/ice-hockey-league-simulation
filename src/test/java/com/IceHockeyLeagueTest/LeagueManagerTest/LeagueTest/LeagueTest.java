@@ -252,6 +252,24 @@ public class LeagueTest {
     }
 
     @Test
+    public void getScheduleSystemTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        Assert.assertNotNull(league.getScheduleSystem());
+    }
+
+    @Test
+    public void getStandingSystemTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        Assert.assertNotNull(league.getStandingSystem());
+    }
+
+    @Test
+    public void getGameSimulationSystemTest() {
+        ILeague league = leagueManagerFactory.createLeague();
+        Assert.assertNotNull(league.getGameSimulationSystem());
+    }
+
+    @Test
     public void saveCompleteLeagueTest() {
         ILeague league = leagueManagerFactory.createLeague();
         league.saveCompleteLeague();

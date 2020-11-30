@@ -6,6 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Conference.IConferencePersistence;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.IGamePlayConfig;
+import com.IceHockeyLeague.LeagueManager.GameSimulator.IGameSimulationSystem;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
@@ -65,6 +66,7 @@ public interface ILeague {
 
     IScheduleSystem getScheduleSystem();
     IStandingSystem getStandingSystem();
+    IGameSimulationSystem getGameSimulationSystem();
 
     void addDraftPick(IDraftPick draftPick);
     void setDraftPicks(List<IDraftPick> draftPicks);
