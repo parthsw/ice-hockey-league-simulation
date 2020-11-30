@@ -1,7 +1,6 @@
 package com.TrophySystem;
 
 import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
-import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 
 import java.util.ArrayList;
 import java.util.List;

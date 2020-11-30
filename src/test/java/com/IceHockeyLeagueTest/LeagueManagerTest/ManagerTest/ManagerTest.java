@@ -2,10 +2,8 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.ManagerTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
-//import com.IceHockeyLeague.LeagueManager.Manager.IManagerPersistence;
 import com.PersistenceTest.ManagerPersistenceMock;
 import com.PersistenceTest.PersistenceFactoryTest;
 import org.junit.Assert;

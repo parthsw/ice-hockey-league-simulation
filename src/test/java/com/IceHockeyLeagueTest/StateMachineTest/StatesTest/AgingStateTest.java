@@ -6,7 +6,6 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
-import com.IceHockeyLeague.StateMachine.States.AdvanceToNextSeasonState;
 import com.IceHockeyLeague.StateMachine.States.PersistState;
 import com.Persistence.ILeaguePersistence;
 import com.PersistenceTest.PersistenceFactoryTest;

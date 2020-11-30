@@ -2,7 +2,6 @@ package com.IceHockeyLeagueTest.LeagueManagerTest.GamePlayConfigTest;
 
 import com.AbstractAppFactory;
 import com.AppFactoryTest;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.GamePlayConfig.*;
 import com.PersistenceTest.PersistenceFactoryTest;

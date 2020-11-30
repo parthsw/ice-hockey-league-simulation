@@ -1,8 +1,4 @@
-package com.TrophySystem.Observers;
-
-import com.TrophySystem.TrophyDistribution;
-import com.TrophySystem.IPerformanceObserver;
-import com.TrophySystem.ITrophyContenders;
+package com.TrophySystem;
 
 public class GoalieObserver implements IPerformanceObserver {
     ITrophyContenders awardTrophy;

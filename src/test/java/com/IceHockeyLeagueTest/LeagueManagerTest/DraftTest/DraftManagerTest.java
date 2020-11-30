@@ -1,7 +1,6 @@
 package com.IceHockeyLeagueTest.LeagueManagerTest.DraftTest;
 
 import com.AbstractAppFactory;
-import com.AppFactory;
 import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.Draft.DraftPick.IDraftPick;
 import com.IceHockeyLeague.LeagueManager.Draft.IDraftManager;
@@ -10,9 +9,6 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.Persistence.ILeaguePersistence;
-import com.Persistence.IPersistenceFactory;
-import com.Persistence.PersistenceFactory;
-import com.PersistenceTest.LeaguePersistenceMock;
 import com.PersistenceTest.PersistenceFactoryTest;
 import com.PersistenceTest.TeamPersistenceMock;
 import com.PersistenceTest.TeamPlayerPersistenceMock;

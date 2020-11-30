@@ -2,7 +2,6 @@ package com.IceHockeyLeague.LeagueManager.Team;
 
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
-import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
