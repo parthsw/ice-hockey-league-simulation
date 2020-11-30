@@ -1,4 +1,4 @@
-package com.TrophySystem.Observers;
+package com.TrophySystem;
 
 import com.TrophySystem.TrophyDistribution;
 import com.TrophySystem.IPerformanceObserver;

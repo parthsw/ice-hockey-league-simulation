@@ -12,23 +12,19 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
         String highestPointsTeamName;
         String bestPlayerName;
         String bestGoalieName;
-        String bestCoachName;
         String topGoalScorerName;
         String bestDefenceManName;
         String lowestPointsTeamName;
-        int bestCoachStats = 0;
         int bestGoaliePoints = 0;
         int bestPlayerPoints = 0;
         int bestGoalScorerPoints = 0;
         int bestDefenceManPoints = 0;
-        List<PerformanceParameter> bestHeadCoaches;
         List<PerformanceParameter> bestGoalies;
         List<PerformanceParameter> bestPlayers;
         List<PerformanceParameter> bestGoalScorers;
         List<PerformanceParameter> bestDefenceMen;
 
         public TrophyDistribution(){
-                bestHeadCoaches = new ArrayList<>();
                 bestGoalies = new ArrayList<>();
                 bestPlayers = new ArrayList<>();
                 bestGoalScorers = new ArrayList<>();
@@ -43,11 +39,6 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
     @Override
     public String getBestPlayer() {
         return bestPlayerName;
-    }
-
-    @Override
-    public String getBestCoach() {
-        return bestCoachName;
     }
 
     @Override
@@ -77,32 +68,6 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
     }
 
     @Override
-    public void coachContenders(String coachName, int coachPoints) {
-        boolean coachFlag = false;
-        for (IPerformanceParameter p: bestHeadCoaches) {
-            if (p.getPerformerName().equalsIgnoreCase(coachName)) {
-                p.setPerformerPoints(p.getPerformerPoints() + coachPoints);
-                coachFlag = true;
-                break;
-            }
-        }
-        if(coachFlag){
-        }
-        else{
-            IPerformanceParameter newPerformer = trophySystemFactory.performanceParameter();
-            newPerformer.setPerformerName(coachName);
-            newPerformer.setPerformerPoints(coachPoints);
-        }
-        bestHeadCoaches.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
-        coachName = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerName();
-        coachPoints = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerPoints();
-        if(bestCoachStats < coachPoints){
-            bestCoachName = coachName;
-            bestCoachStats = coachPoints;
-        }
-    }
-
-    @Override
     public void playerContenders(String playerName, int playerPoints) {
         boolean playerFlag = false;
         for (IPerformanceParameter p: bestPlayers) {
@@ -119,9 +84,9 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
             newPerformer.setPerformerName(playerName);
             newPerformer.setPerformerPoints(playerPoints);
         }
-        bestHeadCoaches.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
-        playerName = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerName();
-        playerPoints = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerPoints();
+        bestPlayers.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
+        playerName = bestPlayers.get(bestPlayers.size()-1).getPerformerName();
+        playerPoints = bestPlayers.get(bestPlayers.size()-1).getPerformerPoints();
         if(bestPlayerPoints < playerPoints){
             bestPlayerName = playerName;
             bestPlayerPoints = playerPoints;
@@ -131,7 +96,7 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
     @Override
     public void defenceMenContenders(String defenceMenName, int defenceMenPoints) {
         boolean defenceManFlag = false;
-        for (IPerformanceParameter p: bestHeadCoaches) {
+        for (IPerformanceParameter p: bestDefenceMen) {
             if (p.getPerformerName().equalsIgnoreCase(defenceMenName)) {
                 p.setPerformerPoints(p.getPerformerPoints() + defenceMenPoints);
                 defenceManFlag = true;
@@ -145,9 +110,9 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
             newPerformer.setPerformerName(defenceMenName);
             newPerformer.setPerformerPoints(defenceMenPoints);
         }
-        bestHeadCoaches.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
-        defenceMenName = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerName();
-        defenceMenPoints = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerPoints();
+        bestDefenceMen.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
+        defenceMenName = bestDefenceMen.get(bestDefenceMen.size()-1).getPerformerName();
+        defenceMenPoints = bestDefenceMen.get(bestDefenceMen.size()-1).getPerformerPoints();
         if(bestDefenceManPoints < defenceMenPoints){
             bestDefenceManName = defenceMenName;
             bestDefenceManPoints = defenceMenPoints;
@@ -171,9 +136,9 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
             newPerformer.setPerformerName(goalieName);
             newPerformer.setPerformerPoints(goaliePoints);
         }
-        bestHeadCoaches.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
-        goalieName = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerName();
-        goaliePoints = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerPoints();
+        bestGoalies.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
+        goalieName = bestGoalies.get(bestGoalies.size()-1).getPerformerName();
+        goaliePoints = bestGoalies.get(bestGoalies.size()-1).getPerformerPoints();
         if(bestGoaliePoints < goaliePoints){
             bestGoalieName = goalieName;
             bestGoaliePoints = goaliePoints;
@@ -183,7 +148,7 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
     @Override
     public void goalScorerContenders(String goalScorerName, int goalScorerPoints) {
         boolean goalScorerFlag = false;
-        for (IPerformanceParameter p: bestHeadCoaches) {
+        for (IPerformanceParameter p: bestGoalScorers) {
             if (p.getPerformerName().equalsIgnoreCase(goalScorerName)) {
                 p.setPerformerPoints(p.getPerformerPoints() + goalScorerPoints);
                 goalScorerFlag = true;
@@ -197,9 +162,9 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
             newPerformer.setPerformerName(goalScorerName);
             newPerformer.setPerformerPoints(goalScorerPoints);
         }
-        bestHeadCoaches.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
-        goalScorerName = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerName();
-        goalScorerPoints = bestHeadCoaches.get(bestHeadCoaches.size()-1).getPerformerPoints();
+        bestGoalScorers.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
+        goalScorerName = bestGoalScorers.get(bestGoalScorers.size()-1).getPerformerName();
+        goalScorerPoints = bestGoalScorers.get(bestGoalScorers.size()-1).getPerformerPoints();
         if(bestGoalScorerPoints < goalScorerPoints){
             topGoalScorerName = goalScorerName;
             bestGoalScorerPoints = goalScorerPoints;

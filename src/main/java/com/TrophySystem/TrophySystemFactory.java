@@ -1,16 +1,8 @@
 package com.TrophySystem;
 
-import com.TrophySystem.Observers.GoalieObserver;
-
-
 public class TrophySystemFactory implements ITrophySystemFactory{
 
     private TrophyDistribution trophyDistribution =null;
-
-    @Override
-    public IPerformanceObserver headCoachObserver() {
-        return new HeadCoachObserver();
-    }
 
     @Override
     public IPerformanceObserver defenceMenObserver() {

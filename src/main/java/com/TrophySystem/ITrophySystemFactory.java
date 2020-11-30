@@ -2,8 +2,6 @@ package com.TrophySystem;
 
 public interface ITrophySystemFactory {
 
-        IPerformanceObserver headCoachObserver();
-
         IPerformanceObserver defenceMenObserver();
 
         IPerformanceObserver goalieObserver();

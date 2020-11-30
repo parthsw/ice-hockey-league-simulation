@@ -16,10 +16,6 @@ public class DisplayAwards implements IAwardDistributed {
         System.out.println(bestGoalie);
     }
 
-    public void jackAdamsAward(String bestCoach){
-        System.out.println(bestCoach);
-    }
-
     public void mauriceRichardTrophy(String topGoalScorer){
         System.out.println(topGoalScorer);
     }
