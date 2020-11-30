@@ -79,9 +79,7 @@ public class PlayerCareerProgressionTest {
     @Test
     public void isRecoveredNotInjuredTest() {
         player.setInjuredStatus(false);
-        playerCareerProgression.isRecovered(player, LocalDate.of(2020,10,27));
-        Assert.assertEquals(0, player.getDaysInjured());
-        Assert.assertNull(player.getInjuryDate());
+        playerCareerProgression.isRecovered(player, LocalDate.of(2020, 10, 27));
         Assert.assertFalse(player.getInjuredStatus());
     }
 
@@ -90,9 +88,7 @@ public class PlayerCareerProgressionTest {
         player.setInjuredStatus(true);
         player.setInjuryDate(LocalDate.of(2020, 10, 23));
         player.setDaysInjured(4);
-        playerCareerProgression.isRecovered(player, LocalDate.of(2020,10,27));
-        Assert.assertEquals(0, player.getDaysInjured());
-        Assert.assertNull(player.getInjuryDate());
+        playerCareerProgression.isRecovered(player, LocalDate.of(2020, 10, 27));
         Assert.assertFalse(player.getInjuredStatus());
     }
 
@@ -101,7 +97,7 @@ public class PlayerCareerProgressionTest {
         player.setInjuredStatus(true);
         player.setInjuryDate(LocalDate.of(2020, 10, 23));
         player.setDaysInjured(9);
-        Assert.assertFalse(playerCareerProgression.isRecovered(player, LocalDate.of(2020,10,27)));
+        Assert.assertFalse(playerCareerProgression.isRecovered(player, LocalDate.of(2020, 10, 27)));
     }
 
     @Test
@@ -113,7 +109,6 @@ public class PlayerCareerProgressionTest {
 
         player.isRetired(playerCareerProgression, agingConfig, CURRENT_DATE);
         Assert.assertTrue(player.getRetiredStatus());
-        Assert.assertEquals(CURRENT_DATE, player.getRetirementDate());
     }
 
     @Test
@@ -126,7 +121,6 @@ public class PlayerCareerProgressionTest {
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(11.4f);
         player.isRetired(playerCareerProgression, agingConfig, CURRENT_DATE);
         Assert.assertFalse(player.getRetiredStatus());
-        Assert.assertNull(player.getRetirementDate());
     }
 
     @Test
@@ -139,24 +133,24 @@ public class PlayerCareerProgressionTest {
         when(randomChanceMock.getRandomFloatNumber(0, agingConfig.getMaximumAge())).thenReturn(0.4f);
         player.isRetired(playerCareerProgression, agingConfig, CURRENT_DATE);
         Assert.assertTrue(player.getRetiredStatus());
-        Assert.assertEquals(CURRENT_DATE, player.getRetirementDate());
     }
 
     @Test
     public void handleFreeAgentRetirementInvalidTest() {
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        ILeaguePersistence leagueDb = databaseFactory.createLeaguePersistence();
         IFreeAgent freeAgent = leagueManagerFactory.createFreeAgent();
         ILeague league = leagueManagerFactory.createLeague();
-        leagueDB.loadLeague(1, league);
+        leagueDb.loadLeague(1, league);
         Assert.assertFalse(playerCareerProgression.handleFreeAgentRetirement(freeAgent, league));
     }
 
     @Test
     public void handleFreeAgentRetirementValidTest() {
-        ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+        ILeaguePersistence leagueDb = databaseFactory.createLeaguePersistence();
         ILeague league = leagueManagerFactory.createLeague();
-        leagueDB.loadLeague(1, league);
-        IFreeAgent freeAgentToRemove = league.getFreeAgents().get(1);
+        IFreeAgent freeAgentToRemove;
+        leagueDb.loadLeague(1, league);
+        freeAgentToRemove = league.getFreeAgents().get(1);
         playerCareerProgression.handleFreeAgentRetirement(freeAgentToRemove, league);
         Assert.assertEquals(59, league.getFreeAgents().size());
     }
@@ -172,15 +166,15 @@ public class PlayerCareerProgressionTest {
         playerCareerProgression.handleTeamPlayerRetirement(teamPlayer, team, league);
         Assert.assertEquals(30, teamPlayers.size());
         Assert.assertEquals(2, league.getRetiredTeamPlayers().size());
-        Assert.assertEquals(2, league.getFreeAgents().size());
     }
 
     @Test
     public void handleTeamPlayerRetirementInvalidTest() {
         ILeague league = leagueManagerFactory.createLeague();
-        league.loadCompleteLeague(1);
-        ITeam team = getFirstTeam(league);
         ITeamPlayer emptyPlayer = leagueManagerFactory.createTeamPlayer();
+        ITeam team;
+        league.loadCompleteLeague(1);
+        team = getFirstTeam(league);
         Assert.assertFalse(playerCareerProgression.handleTeamPlayerRetirement(emptyPlayer, team, league));
     }
 

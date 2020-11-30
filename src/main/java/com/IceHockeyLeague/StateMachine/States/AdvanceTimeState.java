@@ -64,7 +64,7 @@ public class AdvanceTimeState extends AbstractState {
     private void handlePlayerStatDecay(IPlayer player, IRandomChance randomChance) {
         IGamePlayConfig gamePlayConfig = league.getGamePlayConfig();
 
-        if (player.isBirthDay(league.getLeagueDate())) {
+        if (player.isBirthDate(league.getLeagueDate())) {
             player.performStatDecay(gamePlayConfig.getAgingConfig(), randomChance);
         }
     }

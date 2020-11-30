@@ -51,7 +51,7 @@ public class RandomChanceTest {
     @Test
     public void getRandomIntegerNumberBoundaryTest() {
         IRandomChance randomChance = leagueManagerFactory.createRandomChance();
-        int randomNumber = randomChance.getRandomIntegerNumber(1,2);
+        int randomNumber = randomChance.getRandomIntegerNumber(1, 2);
         Assert.assertTrue(randomNumber >= 1 && randomNumber <= 2);
     }
 
