@@ -6,7 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 import java.util.List;
 
-public class GetBestPlayersFromAllTeams {
+public class GetBestPlayersFromAllTeams implements IGetBestPlayersFromAllTeams {
     private ITradingFactory tradingFactory;
     private List<ITeam> teams;
     private List<ITeamPlayer> bestPlayersSet;

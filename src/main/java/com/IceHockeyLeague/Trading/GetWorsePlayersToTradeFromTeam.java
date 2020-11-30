@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GetWorsePlayersToTradeFromTeam {
+public class GetWorsePlayersToTradeFromTeam implements IGetWorsePlayersToTradeFromTeam {
     public List<ITeamPlayer> getPlayersToTrade(int maxTradablePlayers, ITeam team) {
         List<ITeamPlayer> playerList = new ArrayList<>();
         List<ITeamPlayer> tempList = new ArrayList<>();

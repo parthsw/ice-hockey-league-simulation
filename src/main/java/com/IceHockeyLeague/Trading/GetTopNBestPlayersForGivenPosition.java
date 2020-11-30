@@ -6,7 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetTopNBestPlayersForGivenPosition {
+public class GetTopNBestPlayersForGivenPosition implements IGetTopNBestPlayersForGivenPosition {
     private ITeam team = null;
     private int maxTradeNumber;
     private List<ITeamPlayer> relaventPlayers = new ArrayList<>();
