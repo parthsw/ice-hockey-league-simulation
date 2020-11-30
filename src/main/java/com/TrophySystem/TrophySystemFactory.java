@@ -49,4 +49,9 @@ public class TrophySystemFactory implements ITrophySystemFactory{
     public TrophyDistribution trophyDistribution() {
         return new TrophyDistribution();
     }
+
+    @Override
+    public PerformanceParameter performanceParameter() {
+        return new PerformanceParameter();
+    }
 }

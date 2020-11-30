@@ -9,7 +9,6 @@ import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class TeamPersistenceMock {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        persistenceFactory = AppFactoryTest.createPersistenceFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
     }
 
     public boolean loadTeams(int divisionId, List<ITeam> teams) {
@@ -33,17 +32,17 @@ public class TeamPersistenceMock {
 
         ICoach coach = leagueManagerFactory.createCoach();
         CoachPersistenceMock coachPersistenceMock = persistenceFactory.createCoachPersistence();
-        coachPersistenceMock.loadTeamCoach(1,coach);
+        coachPersistenceMock.loadTeamCoach(1, coach);
         team.setCoach(coach);
 
         IManager manager = leagueManagerFactory.createManager();
         ManagerPersistenceMock managerPersistenceMock = persistenceFactory.createManagerPersistence();
-        managerPersistenceMock.loadTeamManager(1,manager);
+        managerPersistenceMock.loadTeamManager(1, manager);
         team.setManager(manager);
 
         List<ITeamPlayer> teamPlayers = new ArrayList<>();
         TeamPlayerPersistenceMock teamPlayerPersistenceMock = persistenceFactory.createTeamPlayerPersistence();
-        teamPlayerPersistenceMock.loadTeamPlayers(1,teamPlayers);
+        teamPlayerPersistenceMock.loadTeamPlayers(1, teamPlayers);
         team.setPlayers(teamPlayers);
 
         teams.add(team);

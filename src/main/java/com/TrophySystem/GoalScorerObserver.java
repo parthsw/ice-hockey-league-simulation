@@ -8,6 +8,6 @@ public class GoalScorerObserver implements IPerformanceObserver {
         }
 
         public void update(String goalScorerName, int goalPoints){
-            awardTrophy.goalScorerNominee(goalScorerName, goalPoints);
+            awardTrophy.goalScorerContenders(goalScorerName, goalPoints);
         }
 }

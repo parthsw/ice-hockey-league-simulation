@@ -21,6 +21,7 @@ public class LeagueCreatorTest {
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
     }
 
     @Test

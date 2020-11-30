@@ -37,7 +37,7 @@ public class LeagueTest {
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
        // AbstractAppFactory.setDatabaseFactory(appFactory.createDatabaseFactory());
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        persistenceFactory = AppFactoryTest.createPersistenceFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
     }
 
     @Test

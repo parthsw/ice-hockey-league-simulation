@@ -6,10 +6,11 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeagueTest.LeagueFileHandlerTest.LeagueJsonMock;
+import com.Persistence.ILeaguePersistence;
 
 import java.time.LocalDate;
 
-public class LeaguePersistenceMock {
+public class LeaguePersistenceMock implements ILeaguePersistence {
     private final ILeagueManagerFactory leagueManagerFactory;
 
     public LeaguePersistenceMock() {
@@ -35,5 +36,17 @@ public class LeaguePersistenceMock {
 
     public boolean checkIfLeagueNameExists(String leagueName) {
         return false;
+    }
+
+    @Override
+    public boolean saveLeague(ILeague league) {
+        return false;
+    }
+
+    @Override
+    public ILeague loadLeague(String filePath) {
+        ILeague league = leagueManagerFactory.createLeague();
+        loadLeague(1, league);
+        return league;
     }
 }

@@ -9,6 +9,6 @@ public class PlayerObserver implements IPerformanceObserver {
     }
 
     public void update(String playerName, int playerPoints){
-        awardTrophy.playerNominee(playerName, playerPoints);
+        awardTrophy.playerContenders(playerName, playerPoints);
     }
 }

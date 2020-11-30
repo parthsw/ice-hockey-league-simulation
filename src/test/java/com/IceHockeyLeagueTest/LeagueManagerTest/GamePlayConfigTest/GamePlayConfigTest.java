@@ -19,7 +19,7 @@ public class GamePlayConfigTest {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        persistenceFactory = AppFactoryTest.createPersistenceFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
     }
 
     @Test

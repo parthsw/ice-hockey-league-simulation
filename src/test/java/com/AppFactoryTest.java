@@ -11,7 +11,6 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
 import com.IceHockeyLeagueTest.LeagueManagerTest.LeagueManagerFactoryTest;
 import com.Persistence.IPersistenceFactory;
-import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.PersistenceFactoryTest;
 import com.Trading.ITradingFactory;
 import com.Trading.TradingFactory;
@@ -19,6 +18,7 @@ import com.TrophySystem.ITrophySystemFactory;
 import com.TrophySystem.TrophySystemFactory;
 
 public class AppFactoryTest extends AbstractAppFactory {
+
 
     @Override
     public ILeagueFileHandlerFactory createLeagueFileHandlerFactory() {
@@ -46,6 +46,11 @@ public class AppFactoryTest extends AbstractAppFactory {
     }
 
     @Override
+    public IPersistenceFactory createPersistenceFactory() {
+        return new PersistenceFactoryTest();
+    }
+
+    @Override
     public IStateMachineFactory createStateMachineFactory() {
         IIOFactory ioFactory = createIOFactory();
         ILeagueFileHandlerFactory leagueFileHandlerFactory = createLeagueFileHandlerFactory();
@@ -62,11 +67,11 @@ public class AppFactoryTest extends AbstractAppFactory {
         return new TrophySystemFactory();
     }
 
-    public static AbstractAppFactory createAppFactory() {
-        return new AppFactoryTest();
+    public static PersistenceFactoryTest createPersistenceFactoryTest() {
+        return new PersistenceFactoryTest();
     }
 
-    public static PersistenceFactoryTest createPersistenceFactory() {
-        return new PersistenceFactoryTest();
+    public static AbstractAppFactory createAppFactory() {
+        return new AppFactoryTest();
     }
 }

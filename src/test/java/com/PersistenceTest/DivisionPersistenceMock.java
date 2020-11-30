@@ -17,7 +17,7 @@ public class DivisionPersistenceMock {
         AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
-        persistenceFactory = AppFactoryTest.createPersistenceFactory();
+        persistenceFactory = AppFactoryTest.createPersistenceFactoryTest();
     }
 
     public boolean loadDivisions(int conferenceId, List<IDivision> divisions) {

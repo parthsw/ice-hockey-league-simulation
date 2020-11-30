@@ -9,6 +9,6 @@ public class HeadCoachObserver implements IPerformanceObserver {
     }
 
     public void update(String coachName, int coachPoints){
-        awardTrophy.coachNominees(coachName, coachPoints);
+        awardTrophy.goalScorerContenders(coachName, coachPoints);
     }
 }

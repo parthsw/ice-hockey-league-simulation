@@ -8,6 +8,6 @@ public class DefenceMenObserver implements IPerformanceObserver {
     }
 
     public void update(String defenceMenName, int defenceMenPoints){
-        awardTrophy.defenceMenNominees(defenceMenName, defenceMenPoints);
+        awardTrophy.defenceMenContenders(defenceMenName, defenceMenPoints);
     }
 }

@@ -19,4 +19,6 @@ public interface ITrophySystemFactory {
         IAwardDistributed displayAwards();
 
         TrophyDistribution trophyDistribution();
+
+        PerformanceParameter performanceParameter();
 }

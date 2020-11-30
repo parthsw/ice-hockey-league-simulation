@@ -12,6 +12,6 @@ public class GoalieObserver implements IPerformanceObserver {
     }
 
     public void update(String goalieName, int goaliePoints){
-        awardTrophy.goalieNominee(goalieName, goaliePoints);
+        awardTrophy.goalieContenders(goalieName, goaliePoints);
     }
 }
