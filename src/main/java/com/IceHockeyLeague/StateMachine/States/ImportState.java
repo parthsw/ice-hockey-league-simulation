@@ -68,7 +68,7 @@ public class ImportState extends AbstractState {
     }
 
     private AbstractState processLeagueJsonFile(String filePath) {
-        InputStream leagueJsonStream = null;
+        InputStream leagueJsonStream;
 
         if (filePath.equalsIgnoreCase(LOAD)) {
             appOutput.displayError(FILEPATH_ERROR);
@@ -79,9 +79,9 @@ public class ImportState extends AbstractState {
 
         try {
             leagueJsonStream = leagueFileReader.readSystemFile(filePath);
-        }
-        catch (FileNotFoundException fileNotFoundException) {
+        } catch (FileNotFoundException fileNotFoundException) {
             LOGGER.error("The provided filepath " + filePath + " does not exist");
+            return null;
         }
 
         LOGGER.info("Parsing the league JSON available in " + filePath);
@@ -93,15 +93,14 @@ public class ImportState extends AbstractState {
         JSONObject leagueSchema = jsonParser.parse(leagueSchemaStream);
 
         boolean isValidStructure = isStructureValid(leagueJson, leagueSchema);
-        if(isValidStructure) {
+        if (isValidStructure) {
             ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
             LOGGER.info("constructing league business class from parsed JSON file " + filePath);
             ILeague league = leagueCreator.createLeague(leagueJson);
             this.setLeague(league);
             LOGGER.info("Transitioning to CreateTeamState...");
             return stateMachineFactory.createCreateTeamState();
-        }
-        else {
+        } else {
             LOGGER.error("Terminating the app as provided league JSON has schema issues");
             return null;
         }
@@ -109,7 +108,7 @@ public class ImportState extends AbstractState {
 
     private void displaySchemaValidationErrors(List<String> errors) {
         appOutput.displayError(LEAGUE_SCHEMA_ERROR);
-        for(String error : errors) {
+        for (String error : errors) {
             appOutput.displayError(error);
         }
     }
@@ -117,7 +116,7 @@ public class ImportState extends AbstractState {
     private boolean isStructureValid(JSONObject json, JSONObject schema) {
         List<String> validationResults = leagueFileValidator.validateJsonSchema(json, schema);
 
-        if(validationResults == null) {
+        if (validationResults == null) {
             appOutput.display(LEAGUE_SCHEMA_SUCCESS);
             return true;
         } else {

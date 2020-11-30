@@ -30,12 +30,14 @@ public class AdvanceToNextSeasonState extends AbstractState {
     @Override
     public AbstractState onRun() {
         ILeague league = getLeague();
-
         IScheduleSystem scheduleSystem = league.getScheduleSystem();
         LocalDate regularSeasonStartDate = scheduleSystem.getRegularSeasonStartDate();
         int nextSeasonStartYear = regularSeasonStartDate.getYear() + 1;
 
         LocalDate retirementCheckingDate = LocalDate.of(nextSeasonStartYear, Month.MAY, 20);
+        LocalDate draftingDate = LocalDate.of(nextSeasonStartYear, Month.JULY, 15);
+        LocalDate newSeasonStartDate = LocalDate.of(nextSeasonStartYear, Month.SEPTEMBER, 29);
+
         playerCareerProgression.adjustLeaguePlayersAge(league, retirementCheckingDate);
         league.setLeagueDate(retirementCheckingDate);
 
@@ -43,7 +45,6 @@ public class AdvanceToNextSeasonState extends AbstractState {
         playerCareerProgression.performLeaguePlayersRetirement(league);
         appOutput.display(RETIRED_PLAYERS_END);
 
-        LocalDate draftingDate = LocalDate.of(nextSeasonStartYear, Month.JULY, 15);
         playerCareerProgression.adjustLeaguePlayersAge(league, draftingDate);
         league.setLeagueDate(draftingDate);
 
@@ -51,7 +52,6 @@ public class AdvanceToNextSeasonState extends AbstractState {
         IStateMachine draftingSimulation = stateMachineFactory.createStateMachine(draftingState);
         draftingSimulation.onExecution();
 
-        LocalDate newSeasonStartDate = LocalDate.of(nextSeasonStartYear, Month.SEPTEMBER, 29);
         playerCareerProgression.adjustLeaguePlayersAge(league, newSeasonStartDate);
         league.setLeagueDate(newSeasonStartDate);
 
