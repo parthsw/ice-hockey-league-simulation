@@ -7,6 +7,7 @@ import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.TrophySystem.ITeamObserver;
+import com.TrophySystem.ITrophySystemFactory;
 import com.TrophySystem.SeasonObserver;
 import com.TrophySystem.SeasonSubject;
 
@@ -15,12 +16,14 @@ import java.util.List;
 
 public class StandingSystem extends SeasonSubject implements IStandingSystem{
     private final ILeagueManagerFactory leagueManagerFactory;
+    private final ITrophySystemFactory trophySystemFactory;
     private List<IStanding> standings;
     private ITeamObserver teamObserver;
 
     public StandingSystem() {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
-        teamObserver = new SeasonObserver();
+        trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
+        teamObserver = trophySystemFactory.seasonObserver();
     }
 
     public List<IStanding> getStandings() {

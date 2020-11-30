@@ -15,6 +15,8 @@ import com.Persistence.PersistenceFactory;
 import com.PersistenceTest.PersistenceFactoryTest;
 import com.Trading.ITradingFactory;
 import com.Trading.TradingFactory;
+import com.TrophySystem.ITrophySystemFactory;
+import com.TrophySystem.TrophySystemFactory;
 
 public class AppFactoryTest extends AbstractAppFactory {
 
@@ -53,6 +55,11 @@ public class AppFactoryTest extends AbstractAppFactory {
                 leagueFileHandlerFactory.createLeagueFileReader(),
                 leagueFileHandlerFactory.createJsonParser(),
                 leagueFileHandlerFactory.createLeagueFileValidator());
+    }
+
+    @Override
+    public ITrophySystemFactory createTrophySystemFactory() {
+        return new TrophySystemFactory();
     }
 
     public static AbstractAppFactory createAppFactory() {

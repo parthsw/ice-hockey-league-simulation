@@ -1,7 +1,6 @@
 package com;
 
 import com.IO.IIOFactory;
-//import com.Database.IDatabaseFactory;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileHandlerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializeLeagueObjectFactory;
@@ -31,6 +30,8 @@ public abstract class AbstractAppFactory {
     public abstract ISerializeDeserializeLeagueObjectFactory createSerializeDeserializeLeagueObjectFactory();
 
     public abstract ITradingFactory createTradingFactory();
+
+    public abstract IPersistenceFactory createPersistenceFactory();
 
     public abstract ITrophySystemFactory createTrophySystemFactory();
 
@@ -98,5 +99,13 @@ public abstract class AbstractAppFactory {
 
     public static ITrophySystemFactory getTrophySystemFactory() {
         return trophySystemFactory;
+    }
+
+    public static IPersistenceFactory getPersistenceFactory() {
+        return persistenceFactory;
+    }
+
+    public static void setPersistenceFactory(IPersistenceFactory persistenceFactory) {
+        AbstractAppFactory.persistenceFactory = persistenceFactory;
     }
 }

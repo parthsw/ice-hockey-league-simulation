@@ -11,7 +11,8 @@ import java.util.List;
 
 public class LeaguePersistence implements ILeaguePersistence {
     public boolean saveLeague(ILeague league){
-        ISerialize s = new Serialize();
+        ISerializeDeserializeLeagueObjectFactory serializeDeserializeLeagueObjectFactory = AbstractAppFactory.getSerializeDeserializeLeagueObjectFactory();
+        ISerialize s = serializeDeserializeLeagueObjectFactory.createSerialize();
         String teamName = "";
         List<IConference> conferences;
         List<IDivision> divisions;

@@ -10,6 +10,8 @@ import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializ
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.SerializeDeserializeLeagueObjectFactory;
 import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.Persistence.IPersistenceFactory;
+import com.Persistence.PersistenceFactory;
 import com.Trading.ITradingFactory;
 import com.Trading.TradingFactory;
 import com.TrophySystem.ITrophySystemFactory;
@@ -59,7 +61,13 @@ public class AppFactory extends AbstractAppFactory {
                 leagueFileHandlerFactory.createLeagueFileValidator());
     }
 
+    @Override
+    public IPersistenceFactory createPersistenceFactory() {
+        return new PersistenceFactory();
+    }
+
     public static AbstractAppFactory createAppFactory() {
         return new AppFactory();
     }
+
 }

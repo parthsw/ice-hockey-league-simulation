@@ -24,6 +24,7 @@ public class HockeyLeagueSimulationApp {
 
         AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
         AbstractAppFactory.setSerializeDeserializeLeagueObjectFactory(appFactory.createSerializeDeserializeLeagueObjectFactory());
+        AbstractAppFactory.setPersistenceFactory(appFactory.createPersistenceFactory());
     }
 
     private static void runApp() {
