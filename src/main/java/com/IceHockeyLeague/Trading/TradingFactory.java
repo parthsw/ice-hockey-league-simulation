@@ -8,8 +8,8 @@ import java.util.List;
 public class TradingFactory implements ITradingFactory {
 
     @Override
-    public DivisionUpdatorAfterTrading createDivisionUpdatorAfterTrading(ILeague league, ITeam oldSendingTeam, ITeam newSendingTeam, ITeam oldReceivingTeam, ITeam newReceivingTeam) {
-        return new DivisionUpdatorAfterTrading(league, oldSendingTeam, newSendingTeam, oldReceivingTeam, newReceivingTeam);
+    public DivisionUpdatorAfterTrading createDivisionUpdatorAfterTrading() {
+        return new DivisionUpdatorAfterTrading();
     }
 
     @Override

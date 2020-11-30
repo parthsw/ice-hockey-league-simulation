@@ -21,7 +21,6 @@ public class SimulateTrade implements ISimulateTrade{
     private List<ITeam> allTeams;
     private List<ITeam> tradableTeams;
     private int maxPlayerPerTrade;
-    private int tradeSize;
     private float randomAcceptChance;
     private ILeague league;
     private IAppInput appInput;
@@ -52,7 +51,6 @@ public class SimulateTrade implements ISimulateTrade{
     public void simulate() {
         for (ITeam team : this.tradableTeams) {
             if (team.getIsUserCreated()) {
-                continue;
             } else {
                 ITeam selectedTeam = this.selectTeamToTrade(team);
                 GenerateTrade generateTrade = tradingFactory.createGenerateTrade();
@@ -112,6 +110,7 @@ public class SimulateTrade implements ISimulateTrade{
         for (ITeam modifiedTeam : resultTeams) {
             modifiedTeam.validateRoster(league.getFreeAgents());
         }
+
     }
 
     private void displayPlayers(ITeamPlayer player) {

@@ -5,9 +5,9 @@ import com.IceHockeyLeague.LeagueManager.Division.IDivision;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
-public class DivisionUpdatorAfterTrading {
+public class DivisionUpdatorAfterTrading implements IDivisionUpdatorAfterTrading {
 
-    public DivisionUpdatorAfterTrading(ILeague league, ITeam oldSendingTeam, ITeam newSendingTeam, ITeam oldReceivingTeam, ITeam newReceivingTeam) {
+    public void divisionUpdatorAfterTradingFunction(ILeague league, ITeam oldSendingTeam, ITeam newSendingTeam, ITeam oldReceivingTeam, ITeam newReceivingTeam) {
         for (IConference conference : league.getConferences()) {
             for (IDivision division : conference.getDivisions()) {
                 if (division.getTeams().contains(oldSendingTeam)) {

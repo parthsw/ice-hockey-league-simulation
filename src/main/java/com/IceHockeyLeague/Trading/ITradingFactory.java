@@ -6,7 +6,7 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import java.util.List;
 
 public interface ITradingFactory {
-    DivisionUpdatorAfterTrading createDivisionUpdatorAfterTrading(ILeague league, ITeam oldSendingTeam, ITeam newSendingTeam, ITeam oldReceivingTeam, ITeam newReceivingTeam);
+    DivisionUpdatorAfterTrading createDivisionUpdatorAfterTrading();
 
     GenerateTrade createGenerateTrade();
 

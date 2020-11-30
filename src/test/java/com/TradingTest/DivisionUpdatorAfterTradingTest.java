@@ -9,7 +9,7 @@ import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.Trading.DivisionUpdatorAfterTrading;
+import com.IceHockeyLeague.Trading.IDivisionUpdatorAfterTrading;
 import com.IceHockeyLeague.Trading.ITradingFactory;
 import junit.framework.Assert;
 import org.junit.BeforeClass;
@@ -87,7 +87,8 @@ public class DivisionUpdatorAfterTradingTest {
             newteam2.addPlayer(player);
         }
 
-        DivisionUpdatorAfterTrading testObj = tradingFactory.createDivisionUpdatorAfterTrading(league, team1, newteam1, team2, newteam2);
+        IDivisionUpdatorAfterTrading divisionUpdaterObject = tradingFactory.createDivisionUpdatorAfterTrading();
+        divisionUpdaterObject.divisionUpdatorAfterTradingFunction(league, team1, newteam1, team2, newteam2);
         for (ITeam team : division.getTeams()) {
             Assert.assertEquals(10, team.getPlayers().size());
         }
