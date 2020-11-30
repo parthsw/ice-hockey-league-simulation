@@ -5,6 +5,8 @@ import com.TrophySystem.Observers.GoalieObserver;
 
 public class TrophySystemFactory implements ITrophySystemFactory{
 
+    private TrophyDistribution trophyDistribution =null;
+
     @Override
     public IPerformanceObserver headCoachObserver() {
         return new HeadCoachObserver();
@@ -47,7 +49,11 @@ public class TrophySystemFactory implements ITrophySystemFactory{
 
     @Override
     public TrophyDistribution trophyDistribution() {
-        return new TrophyDistribution();
+        if (trophyDistribution == null){
+            trophyDistribution = new TrophyDistribution();
+            return trophyDistribution;
+        }
+        return trophyDistribution;
     }
 
     @Override
