@@ -2,21 +2,21 @@ package com.TrophySystem;
 
 public interface ITrophySystemFactory {
 
-        IPerformanceObserver defenceMenObserver();
+    IPerformanceObserver defenceMenObserver();
 
-        IPerformanceObserver goalieObserver();
+    IPerformanceObserver goalieObserver();
 
-        IPerformanceObserver goalScorerObserver();
+    IPerformanceObserver goalScorerObserver();
 
-        IPerformance bestPerformanceSubject();
+    IPerformance bestPerformanceSubject();
 
-        IPerformanceObserver playerObserver();
+    IPerformanceObserver playerObserver();
 
-        ITeamObserver seasonObserver();
+    ITeamObserver seasonObserver();
 
-        IAwardDistributed displayAwards();
+    IAwardDistributed displayAwards();
 
-        TrophyDistribution trophyDistribution();
+    TrophyDistribution trophyDistribution();
 
-        PerformanceParameter performanceParameter();
+    PerformanceParameter performanceParameter();
 }

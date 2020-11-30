@@ -1,8 +1,8 @@
 package com.TrophySystem;
 
-public class TrophySystemFactory implements ITrophySystemFactory{
+public class TrophySystemFactory implements ITrophySystemFactory {
 
-    private TrophyDistribution trophyDistribution =null;
+    private TrophyDistribution trophyDistribution = null;
 
     @Override
     public IPerformanceObserver defenceMenObserver() {
@@ -41,7 +41,7 @@ public class TrophySystemFactory implements ITrophySystemFactory{
 
     @Override
     public TrophyDistribution trophyDistribution() {
-        if (trophyDistribution == null){
+        if (trophyDistribution == null) {
             trophyDistribution = new TrophyDistribution();
             return trophyDistribution;
         }

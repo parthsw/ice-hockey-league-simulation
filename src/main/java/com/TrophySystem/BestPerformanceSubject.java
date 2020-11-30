@@ -11,21 +11,21 @@ public class BestPerformanceSubject implements IPerformance {
     protected String performerName;
     private final List<IPerformanceObserver> observers;
 
-    public BestPerformanceSubject(){
+    public BestPerformanceSubject() {
         this.observers = new ArrayList<>();
     }
 
-    public void attachObserver(IPerformanceObserver observer){
+    public void attachObserver(IPerformanceObserver observer) {
         this.observers.add(observer);
     }
 
-    public void detachObserver(IPerformanceObserver observer){
+    public void detachObserver(IPerformanceObserver observer) {
         this.observers.remove(observer);
     }
 
-    public void notifyObserver(){
-        for(IPerformanceObserver observer : observers){
-            observer.update(performerName,score);
+    public void notifyObserver() {
+        for (IPerformanceObserver observer : observers) {
+            observer.update(performerName, score);
         }
     }
 }

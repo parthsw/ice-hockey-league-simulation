@@ -10,9 +10,9 @@ public class SeasonObserver implements ITeamObserver {
     ITrophySystemFactory trophySystemFactory;
     ITrophyContenders awardTrophy;
 
-    public SeasonObserver(){
-         trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
-         awardTrophy = trophySystemFactory.trophyDistribution();
+    public SeasonObserver() {
+        trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
+        awardTrophy = trophySystemFactory.trophyDistribution();
     }
 
     @Override
