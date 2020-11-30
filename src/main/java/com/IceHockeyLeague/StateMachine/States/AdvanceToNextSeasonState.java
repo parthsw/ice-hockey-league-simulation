@@ -2,6 +2,7 @@ package com.IceHockeyLeague.StateMachine.States;
 
 import com.AbstractAppFactory;
 import com.IO.IAppOutput;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.*;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
@@ -43,6 +44,12 @@ public class AdvanceToNextSeasonState extends AbstractState {
 
         appOutput.display(RETIRED_PLAYERS_START);
         playerCareerProgression.performLeaguePlayersRetirement(league);
+        for (ITeamPlayer teamPlayer : league.getRetiredTeamPlayers()) {
+            appOutput.display(teamPlayer.getPlayerName());
+        }
+        for (IFreeAgent freeAgent : league.getRetiredFreeAgents()) {
+            appOutput.display(freeAgent.getPlayerName());
+        }
         appOutput.display(RETIRED_PLAYERS_END);
 
         playerCareerProgression.adjustLeaguePlayersAge(league, draftingDate);
