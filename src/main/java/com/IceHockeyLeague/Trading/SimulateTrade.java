@@ -11,13 +11,13 @@ import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimulateTrade implements ISimulateTrade{
+public class SimulateTrade implements ISimulateTrade {
     private final ITradingFactory tradingFactory;
     private final IIOFactory ioFactory;
 
-    private GetAllTeamsFromLeague getAllTeamsObject;
-    private GetTradableTeams getTradableTeamsObject;
-    private GetWorsePlayersToTradeFromTeam selectPlayersToTrade;
+    private IGetAllTeamsFromLeague getAllTeamsObject;
+    private IGetTradableTeams getTradableTeamsObject;
+    private IGetWorsePlayersToTradeFromTeam selectPlayersToTrade;
     private List<ITeam> allTeams;
     private List<ITeam> tradableTeams;
     private int maxPlayerPerTrade;
