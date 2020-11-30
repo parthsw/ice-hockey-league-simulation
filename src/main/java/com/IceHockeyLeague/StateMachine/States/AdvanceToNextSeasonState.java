@@ -24,7 +24,6 @@ public class AdvanceToNextSeasonState extends AbstractState {
     private static final String LEAGUE_AVERAGES_END = "--------------------- League averages end --------------------";
     private static final Logger LOGGER = LogManager.getLogger(AdvanceToNextSeasonState.class);
 
-    private final Logger LOGGER = LogManager.getLogger(AdvanceToNextSeasonState.class);
     private final IAppOutput appOutput;
     private final IPlayerCareerProgression playerCareerProgression;
     private final IStateMachineFactory stateMachineFactory;
