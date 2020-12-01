@@ -63,6 +63,11 @@ public class Team implements ITeam {
     }
 
     @Override
+    public ITeamRoster getTeamRoster() {
+        return teamRoster;
+    }
+
+    @Override
     public int getTeamID() {
         return teamID;
     }

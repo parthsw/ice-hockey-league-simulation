@@ -93,9 +93,12 @@ public class LeagueJsonMock {
         for (int i = 0; i < 2; i++) {
             JSONObject team = new JSONObject();
             team.put("teamName", "Boston");
-            team.put("generalManager", "Mister Fred");
             team.put("headCoach", coach);
             team.put("players", players);
+            JSONObject manager = new JSONObject();
+            manager.put("name", "Manager " + (i + 1));
+            manager.put("personality", "gambler");
+            team.put("generalManager", manager);
             teams.put(team);
         }
 
@@ -171,7 +174,10 @@ public class LeagueJsonMock {
 
         JSONArray managers = new JSONArray();
         for (int i = 0; i < 3; i++) {
-            managers.put("Manager " + (i + 1));
+            JSONObject manager = new JSONObject();
+            manager.put("name", "Manager " + (i + 1));
+            manager.put("personality", "gambler");
+            managers.put(manager);
         }
 
         JSONObject aging = new JSONObject();

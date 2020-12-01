@@ -52,6 +52,8 @@ public interface ITeam {
 
     void setTeamRoster(ITeamRoster teamRoster);
 
+    ITeamRoster getTeamRoster();
+
     List<ITeamPlayer> getActiveRoster();
 
     List<ITeamPlayer> getInactiveRoster();
