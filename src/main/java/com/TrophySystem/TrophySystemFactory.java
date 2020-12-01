@@ -1,13 +1,11 @@
 package com.TrophySystem;
 
-public class TrophySystemFactory implements ITrophySystemFactory{
+import com.AbstractAppFactory;
+import com.IO.IIOFactory;
 
-    private TrophyDistribution trophyDistribution =null;
-
-    @Override
-    public IPerformanceObserver headCoachObserver() {
-        return new HeadCoachObserver();
-    }
+public class TrophySystemFactory implements ITrophySystemFactory {
+    private IIOFactory iioFactory = AbstractAppFactory.getIOFactory();
+    private TrophyDistribution trophyDistribution = null;
 
     @Override
     public IPerformanceObserver defenceMenObserver() {
@@ -41,12 +39,12 @@ public class TrophySystemFactory implements ITrophySystemFactory{
 
     @Override
     public IAwardDistributed displayAwards() {
-        return new DisplayAwards();
+        return new DisplayAwards(iioFactory.createCommandLineOutput());
     }
 
     @Override
     public TrophyDistribution trophyDistribution() {
-        if (trophyDistribution == null){
+        if (trophyDistribution == null) {
             trophyDistribution = new TrophyDistribution();
             return trophyDistribution;
         }

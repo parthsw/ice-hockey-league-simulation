@@ -14,12 +14,14 @@ public class TrophyState extends AbstractState {
     private IAwardDistributed awardDisplay;
     private IAwardWinners awardWinner;
     List<String> awardsWinnerList;
+    ITrophySystemFactory trophySystemFactory;
 
     public TrophyState(){
         ILeague league = getLeague();
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
-        awardDisplay = new DisplayAwards();
-        awardWinner = new TrophyDistribution();
+        trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
+        awardDisplay = trophySystemFactory.displayAwards();
+        awardWinner = trophySystemFactory.trophyDistribution();
     }
 
     @Override
@@ -37,7 +39,6 @@ public class TrophyState extends AbstractState {
         awardsWinnerList.add(awardWinner.getLowestPointsTeam());
         awardsWinnerList.add(awardWinner.getBestDefenceMen());
         awardsWinnerList.add(awardWinner.getTopGoalScorer());
-        awardsWinnerList.add(awardWinner.getBestCoach());
         awardsWinnerList.add(awardWinner.getBestGoalie());
         awardsWinnerList.add(awardWinner.getBestPlayer());
         awardsWinnerList.add(awardWinner.getHighestPointsTeam());
@@ -49,10 +50,9 @@ public class TrophyState extends AbstractState {
             awardDisplay.presidentTrophy(awardsWinnerList.get(i + 1));
             awardDisplay.calderMemorialTrophy(awardsWinnerList.get(i + 2));
             awardDisplay.vezinaTrophy(awardsWinnerList.get(i + 3));
-            awardDisplay.jackAdamsAward(awardsWinnerList.get(i + 4));
-            awardDisplay.mauriceRichardTrophy(awardsWinnerList.get(i + 5));
-            awardDisplay.robHawkeyMemorialCup(awardsWinnerList.get(i + 6));
-            awardDisplay.participationAward(awardsWinnerList.get(i + 7));
+            awardDisplay.mauriceRichardTrophy(awardsWinnerList.get(i + 4));
+            awardDisplay.robHawkeyMemorialCup(awardsWinnerList.get(i + 5));
+            awardDisplay.participationAward(awardsWinnerList.get(i + 6));
         }
     }
 }
