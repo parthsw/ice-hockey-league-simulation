@@ -23,7 +23,11 @@ public class GeneratePlayoffScheduleState extends AbstractState {
     public AbstractState onRun() {
         ILeague league = getLeague();
         league.getScheduleSystem().generatePlayoffSchedule(league, league.getStandingSystem());
+        showLeagueStatistics(league, appOutput, LOGGER);
+        return stateMachineFactory.createTrainingState();
+    }
 
+    public static void showLeagueStatistics(ILeague league, IAppOutput appOutput, Logger logger) {
         float goalsAverage, penaltiesAverage, shotsAverage, savesAverage;
         int totalGoals = league.getGameSimulationSystem().getTotalGoals();
         int totalPenalties = league.getGameSimulationSystem().getTotalPenalties();
@@ -41,9 +45,8 @@ public class GeneratePlayoffScheduleState extends AbstractState {
         appOutput.display("Shots: " + shotsAverage);
         appOutput.display("Saves: " + savesAverage);
         appOutput.display(LEAGUE_AVERAGES_END);
-        LOGGER.info("League average after regular season");
-        LOGGER.info("Goals:" + goalsAverage + " Penalties:" + penaltiesAverage + " Shots:" + shotsAverage + " Saves:" + savesAverage);
-
-        return stateMachineFactory.createTrainingState();
+        logger.info("League average after regular season");
+        logger.info("Goals:" + goalsAverage + " Penalties:" + penaltiesAverage + " Shots:" + shotsAverage + " Saves:" + savesAverage);
     }
+
 }

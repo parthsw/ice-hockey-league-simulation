@@ -19,8 +19,6 @@ public class AdvanceToNextSeasonState extends AbstractState {
     private static final String RETIRED_PLAYERS_END = "--------------- Retired Players end -------------";
     private static final String STANLEY_CUP_WINNER_START = "********** STANLEY CUP WINNER ************";
     private static final String STANLEY_CUP_WINNER_END = "******************************************";
-    private static final String LEAGUE_AVERAGES_START = "----------- League averages per game after playoff -----------";
-    private static final String LEAGUE_AVERAGES_END = "--------------------- League averages end --------------------";
     private static final Logger LOGGER = LogManager.getLogger(AdvanceToNextSeasonState.class);
 
     private final IAppOutput appOutput;
@@ -79,25 +77,7 @@ public class AdvanceToNextSeasonState extends AbstractState {
         appOutput.display(stanleyCupWinner);
         appOutput.display(STANLEY_CUP_WINNER_END);
 
-        float goalsAverage, penaltiesAverage, shotsAverage, savesAverage;
-        int totalGoals = league.getGameSimulationSystem().getTotalGoals();
-        int totalPenalties = league.getGameSimulationSystem().getTotalPenalties();
-        int totalShots = league.getGameSimulationSystem().getTotalShots();
-        int totalSaves = league.getGameSimulationSystem().getTotalSaves();
-        int totalGames = league.getGameSimulationSystem().getNumberOfGamesPlayed();
-        goalsAverage = (float) totalGoals / totalGames;
-        penaltiesAverage = (float) totalPenalties / totalGames;
-        shotsAverage = (float) totalShots / totalGames;
-        savesAverage = (float) totalSaves / totalGames;
-
-        appOutput.display(LEAGUE_AVERAGES_START);
-        appOutput.display("Goals: " + goalsAverage);
-        appOutput.display("Penalties: " + penaltiesAverage);
-        appOutput.display("Shots: " + shotsAverage);
-        appOutput.display("Saves: " + savesAverage);
-        appOutput.display(LEAGUE_AVERAGES_END);
-        LOGGER.info("League average after regular season");
-        LOGGER.info("Goals:" + goalsAverage + " Penalties:" + penaltiesAverage + " Shots:" + shotsAverage + " Saves:" + savesAverage);
+        GeneratePlayoffScheduleState.showLeagueStatistics(league, appOutput, LOGGER);
 
         return stateMachineFactory.createPersistState();
     }
