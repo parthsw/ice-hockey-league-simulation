@@ -12,7 +12,7 @@ public class PerformanceParameter implements IPerformanceParameter {
 
     @Override
     public String getPerformerName() {
-        return null;
+        return performerName;
     }
 
     @Override

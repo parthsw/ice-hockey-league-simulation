@@ -5,6 +5,7 @@ import com.AppFactoryTest;
 import com.IceHockeyLeague.LeagueManager.GameSimulator.IGameSimulationSystem;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.TrophySystem.ITrophySystemFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -18,6 +19,7 @@ public class GameSimulationSystemTest {
         AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
         AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
     }
 
     @Test

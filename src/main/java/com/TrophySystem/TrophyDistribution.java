@@ -5,6 +5,7 @@ import com.IceHockeyLeague.LeagueManager.Draft.DraftManager;
 import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -22,51 +23,45 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
     int bestPlayerPoints = 0;
     int bestGoalScorerPoints = 0;
     int bestDefenceManPoints = 0;
-    List<IPerformanceParameter> bestGoalies;
-    List<IPerformanceParameter> bestPlayers;
-    List<IPerformanceParameter> bestGoalScorers;
-    List<IPerformanceParameter> bestDefenceMen;
+    List<IPerformanceParameter> bestGoalies = new ArrayList<>();
+    List<IPerformanceParameter> bestPlayers = new ArrayList<>();
+    List<IPerformanceParameter> bestGoalScorers = new ArrayList<>();
+    List<IPerformanceParameter> bestDefenceMen = new ArrayList<>();
 
-    public TrophyDistribution() {
-        bestGoalies = new ArrayList<>();
-        bestPlayers = new ArrayList<>();
-        bestGoalScorers = new ArrayList<>();
-        bestDefenceMen = new ArrayList<>();
-    }
 
     @Override
     public String getHighestPointsTeam() {
-        LOGGER.info("The team with the highest points is "+highestPointsTeamName);
+        LOGGER.info("The team with the highest points is " + highestPointsTeamName);
         return highestPointsTeamName;
     }
 
     @Override
     public String getBestPlayer() {
-        LOGGER.info("The best player after from first year is "+bestPlayerName);
+        LOGGER.info("The best player after from first year is " + bestPlayerName);
         return bestPlayerName;
     }
 
     @Override
     public String getBestGoalie() {
-        LOGGER.info("The best goalie is "+bestGoalieName);
+        LOGGER.info("The best goalie is " + bestGoalieName);
         return bestGoalieName;
     }
 
     @Override
     public String getLowestPointsTeam() {
-        LOGGER.info("The team with the lowest points is "+lowestPointsTeamName);
+        LOGGER.info("The team with the lowest points is " + lowestPointsTeamName);
         return lowestPointsTeamName;
     }
 
     @Override
     public String getTopGoalScorer() {
-        LOGGER.info("The top goal scorer is "+bestGoalieName);
+        LOGGER.info("The top goal scorer is " + bestGoalieName);
         return topGoalScorerName;
     }
 
     @Override
     public String getBestDefenceMen() {
-        LOGGER.info("The best defence man is "+bestDefenceManName);
+        LOGGER.info("The best defence man is " + bestDefenceManName);
         return bestDefenceManName;
     }
 
