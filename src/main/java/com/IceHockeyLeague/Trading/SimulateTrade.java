@@ -7,6 +7,8 @@ import com.IO.IIOFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,6 @@ import java.util.List;
 public class SimulateTrade implements ISimulateTrade {
     private final ITradingFactory tradingFactory;
     private final IIOFactory ioFactory;
-
     private IGetAllTeamsFromLeague getAllTeamsObject;
     private IGetTradableTeams getTradableTeamsObject;
     private IGetWorsePlayersToTradeFromTeam selectPlayersToTrade;
@@ -25,9 +26,9 @@ public class SimulateTrade implements ISimulateTrade {
     private ILeague league;
     private IAppInput appInput;
     private IAppOutput appOutput;
-
     private String divider = "------------------------------------------------------------------------------------------------------------------";
     private String newTradeOffer = "                                          You have a new Trade offer";
+    private final Logger LOGGER = LogManager.getLogger(SimulateTrade.class);
 
     public SimulateTrade() {
         tradingFactory = AbstractAppFactory.getTradingFactory();
@@ -61,6 +62,7 @@ public class SimulateTrade implements ISimulateTrade {
                     this.tradeResolution(generateTrade, this.randomAcceptChance);
                     Trade trade = generateTrade.getGeneratedTrade();
                     trade.getSendingTeam().setLossPointValue(0);
+                    LOGGER.info("One Trade Completed");
                 }
             }
         }

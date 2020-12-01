@@ -3,6 +3,8 @@ package com.IceHockeyLeague.Trading;
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -13,6 +15,7 @@ public class GenerateTrade implements IGenerateTrade {
     private List<ITeam> resultTeams = new ArrayList<>();
     private boolean tradeResult;
     private Trade trade;
+    private final Logger LOGGER = LogManager.getLogger(GenerateTrade.class);
 
     public GenerateTrade() {
         tradingFactory = AbstractAppFactory.getTradingFactory();
@@ -50,8 +53,12 @@ public class GenerateTrade implements IGenerateTrade {
         randomAcceptChance = this.updateRandomChance(randomAcceptChance);
         boolean result = trade.tradeDecision(randomAcceptChance);
         this.tradeResult = result;
+
         if (result) {
+            LOGGER.info("Trade accepted");
             this.resultTeams = trade.acceptTrade();
+        } else {
+            LOGGER.info("Trade rejected");
         }
     }
 

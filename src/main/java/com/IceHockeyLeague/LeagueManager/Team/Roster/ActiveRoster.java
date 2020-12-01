@@ -1,12 +1,15 @@
 package com.IceHockeyLeague.LeagueManager.Team.Roster;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveRoster implements IActiveRoster {
     private List<ITeamPlayer> activePlayers;
+    private final Logger LOGGER = LogManager.getLogger(ActiveRoster.class);
 
     public List<ITeamPlayer> getActivePlayers() {
         return activePlayers;

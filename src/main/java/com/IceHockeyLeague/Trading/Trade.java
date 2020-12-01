@@ -5,6 +5,8 @@ import com.IO.IAppOutput;
 import com.IO.IIOFactory;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ public class Trade implements ITrade {
     private int maxPlayersPerTrade;
     private final IIOFactory ioFactory;
     private IAppOutput appOutput;
+    private final Logger LOGGER = LogManager.getLogger(Trade.class);
 
     public Trade(int maxPlayersPerTrade) {
         this.maxPlayersPerTrade = maxPlayersPerTrade;
@@ -70,6 +73,7 @@ public class Trade implements ITrade {
     }
 
     public List<ITeam> acceptTrade() {
+        LOGGER.info("Entered trade accept");
         List<ITeamPlayer> team1Players = new ArrayList<>();
         team1Players.addAll(this.sendingTeam.getPlayers());
         List<ITeamPlayer> team2Players = new ArrayList<>();
@@ -101,6 +105,7 @@ public class Trade implements ITrade {
     }
 
     public boolean tradeDecision(float randomAcceptChance) {
+        LOGGER.info("Entered trade Decision");
         Random rand = new Random();
         float sumOffered = 0;
         float sumRequested = 0;

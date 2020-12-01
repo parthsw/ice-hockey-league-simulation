@@ -2,12 +2,16 @@ package com.IceHockeyLeague.Trading;
 
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class GetWorsePlayersToTradeFromTeam implements IGetWorsePlayersToTradeFromTeam {
+    private final Logger LOGGER = LogManager.getLogger(GetWorsePlayersToTradeFromTeam.class);
+
     public List<ITeamPlayer> getPlayersToTrade(int maxTradablePlayers, ITeam team) {
         List<ITeamPlayer> playerList = new ArrayList<>();
         List<ITeamPlayer> tempList = new ArrayList<>();
