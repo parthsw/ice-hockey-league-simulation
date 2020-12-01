@@ -86,33 +86,6 @@ public class GamePlayConfigTest {
     }
 
     @Test
-    public void setGameResolverConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        IGameResolverConfig actualGameResolverConfig;
-        gamePlayConfig.setGameResolverConfig(createGameResolverConfig());
-
-        actualGameResolverConfig = gamePlayConfig.getGameResolverConfig();
-        Assert.assertEquals(0.03f, actualGameResolverConfig.getRandomWinChance(), 0.0);
-    }
-
-    @Test
-    public void setGameResolverConfigInvalidTest() {
-        thrown.expect(IllegalArgumentException.class);
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        gamePlayConfig.setGameResolverConfig(null);
-    }
-
-    @Test
-    public void getGameResolverConfigTest() {
-        IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
-        IGameResolverConfig actualGameResolverConfig;
-        gamePlayConfig.setGameResolverConfig(createGameResolverConfig());
-
-        actualGameResolverConfig = gamePlayConfig.getGameResolverConfig();
-        Assert.assertEquals(0.03f, actualGameResolverConfig.getRandomWinChance(), 0.0);
-    }
-
-    @Test
     public void setInjuryConfigTest() {
         IGamePlayConfig gamePlayConfig = leagueManagerFactory.createGamePlayConfig();
         IInjuryConfig actualInjuryConfig;
@@ -199,12 +172,6 @@ public class GamePlayConfigTest {
         agingConfig.setAverageRetirementAge(35);
         agingConfig.setStatDecayChance(0.05f);
         return agingConfig;
-    }
-
-    private IGameResolverConfig createGameResolverConfig() {
-        IGameResolverConfig resolverConfig = leagueManagerFactory.createGameResolverConfig();
-        resolverConfig.setRandomWinChance(0.03f);
-        return resolverConfig;
     }
 
     private IInjuryConfig createInjuryConfig() {

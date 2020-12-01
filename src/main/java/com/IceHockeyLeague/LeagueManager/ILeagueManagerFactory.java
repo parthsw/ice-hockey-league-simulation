@@ -66,8 +66,6 @@ public interface ILeagueManagerFactory {
 
     IAgingConfig createAgingConfig();
 
-    IGameResolverConfig createGameResolverConfig();
-
     IInjuryConfig createInjuryConfig();
 
     ITrainingConfig createTrainingConfig();

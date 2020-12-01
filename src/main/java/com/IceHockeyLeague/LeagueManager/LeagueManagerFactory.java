@@ -135,11 +135,6 @@ public class LeagueManagerFactory implements ILeagueManagerFactory {
     }
 
     @Override
-    public IGameResolverConfig createGameResolverConfig() {
-        return new GameResolverConfig();
-    }
-
-    @Override
     public IInjuryConfig createInjuryConfig() {
         return new InjuryConfig();
     }
