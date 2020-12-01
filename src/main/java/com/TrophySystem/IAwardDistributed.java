@@ -7,8 +7,6 @@ public interface IAwardDistributed {
 
     void vezinaTrophy(String bestGoalie);
 
-    void jackAdamsAward(String bestCoach);
-
     void mauriceRichardTrophy(String topGoalScorer);
 
     void robHawkeyMemorialCup(String bestDefenseMen);

@@ -33,6 +33,7 @@ public class MockTeamGenerator {
             playerStats.setSkating(randomChance.getRandomIntegerNumber(1,20));
             playerStats.setShooting(randomChance.getRandomIntegerNumber(1,20));
             teamPlayer.setPlayerStats(playerStats);
+            teamPlayer.setPlayerName("abc");
             team.addPlayer(teamPlayer);
         }
 
@@ -60,6 +61,7 @@ public class MockTeamGenerator {
             playerStats.setSkating(1);
             playerStats.setShooting(1);
             teamPlayer.setPlayerStats(playerStats);
+            teamPlayer.setPlayerName("abc");
             team.addPlayer(teamPlayer);
         }
 
@@ -87,6 +89,7 @@ public class MockTeamGenerator {
             playerStats.setSkating(20);
             playerStats.setShooting(20);
             teamPlayer.setPlayerStats(playerStats);
+            teamPlayer.setPlayerName("abc");
             team.addPlayer(teamPlayer);
         }
 

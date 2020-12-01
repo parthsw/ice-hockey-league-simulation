@@ -23,16 +23,4 @@ public class SerializeTest {
         leagueManagerFactory = appFactory.createLeagueManagerFactory();
         leagueSerializationFactory = appFactory.createSerializeDeserializeLeagueObjectFactory();
     }
-
-    @Test
-    public void SerializeLeagueObjectTest() {
-        String fileName = "jsonOutput.json";
-        ILeague league = leagueManagerFactory.createLeague();
-        league.setLeagueID(13);
-        league.setLeagueName("Dalhousie Hockey League");
-        ISerialize serialize = leagueSerializationFactory.createSerialize();
-        String path = serialize.serializeLeagueObject(league,fileName);
-        File file = new File(path);
-        Assert.assertTrue(file.exists());
-    }
 }

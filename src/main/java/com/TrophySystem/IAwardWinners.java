@@ -7,8 +7,6 @@ public interface IAwardWinners {
 
     String getBestGoalie();
 
-    String getBestCoach();
-
     String getTopGoalScorer();
 
     String getBestDefenceMen();

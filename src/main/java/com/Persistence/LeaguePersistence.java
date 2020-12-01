@@ -3,13 +3,17 @@ package com.Persistence;
 import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Conference.IConference;
 import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftManager;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class LeaguePersistence implements ILeaguePersistence {
+    private final Logger LOGGER = LogManager.getLogger(LeaguePersistence.class);
     public boolean saveLeague(ILeague league){
         ISerializeDeserializeLeagueObjectFactory serializeDeserializeLeagueObjectFactory = AbstractAppFactory.getSerializeDeserializeLeagueObjectFactory();
         ISerialize s = serializeDeserializeLeagueObjectFactory.createSerialize();
@@ -30,6 +34,7 @@ public class LeaguePersistence implements ILeaguePersistence {
                 }
             }
         }
+        LOGGER.info("The new team name that has been added as a serialized json file is "+teamName);
         s.serializeLeagueObject(league,teamName);
         return true;
     }
@@ -37,6 +42,7 @@ public class LeaguePersistence implements ILeaguePersistence {
         ISerializeDeserializeLeagueObjectFactory serializeDeserializeLeagueObjectFactory = AbstractAppFactory.getSerializeDeserializeLeagueObjectFactory();
         IDeserialize d = serializeDeserializeLeagueObjectFactory.createDeserialize();
         ILeague league = d.deserializeLeagueObject(filePath);
+        LOGGER.info("The league has been loaded with filepath "+filePath);
         return league;
     }
 }

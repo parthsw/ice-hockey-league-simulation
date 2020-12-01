@@ -15,7 +15,7 @@ import com.TrophySystem.*;
 import java.util.List;
 import java.util.Random;
 
-public class TeamTraining extends BestPerformanceSubject implements ITeamTraining {
+public class TeamTraining implements ITeamTraining {
     private final IAppOutput appOutput = AppFactory.getIOFactory().createCommandLineOutput();
 
     @Override

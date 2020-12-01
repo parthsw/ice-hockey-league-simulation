@@ -11,20 +11,20 @@ public abstract class SeasonSubject {
 
     protected List<IStanding> standingList;
 
-    public SeasonSubject(){
+    public SeasonSubject() {
         observers = new ArrayList<>();
     }
 
-    public void attachObserver(ITeamObserver observer){
+    public void attachObserver(ITeamObserver observer) {
         this.observers.add(observer);
     }
 
-    public void detachObserver(ITeamObserver observer){
+    public void detachObserver(ITeamObserver observer) {
         this.observers.remove(observer);
     }
 
-    public void notifyObserver(){
-        for(ITeamObserver observer : observers){
+    public void notifyObserver() {
+        for (ITeamObserver observer : observers) {
             observer.update(standingList);
         }
     }

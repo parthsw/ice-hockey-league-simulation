@@ -6,13 +6,17 @@ import com.IceHockeyLeague.LeagueManager.Player.IRandomChance;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.PlayerPosition;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
+import com.TrophySystem.BestPerformanceSubject;
+import com.TrophySystem.IPerformanceObserver;
+import com.TrophySystem.ITrophySystemFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.beans.beancontext.BeanContextChildSupport;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GameSimulation implements IGameSimulation {
+public class GameSimulation extends BestPerformanceSubject implements IGameSimulation {
     private static final Logger LOGGER = LogManager.getLogger(GameSimulation.class);
     private ILeagueManagerFactory leagueManagerFactory;
     private IGameStats gameStats;
@@ -27,14 +31,24 @@ public class GameSimulation implements IGameSimulation {
     private List<ITeamPlayer> team2Defensemen;
     private List<ITeamPlayer> team2Goalies;
     private final IGameSimulationConfig gameSimulationConfig;
+    private final ITrophySystemFactory trophySystemFactory;
+    private IPerformanceObserver goalScorerObserver;
+    private IPerformanceObserver goalieObserver;
+    private IPerformanceObserver defenceMenObserver;
+    private IPerformanceObserver playerObserver;
 
     public GameSimulation(ITeam teamA, ITeam teamB, IGameSimulationConfig config) {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        trophySystemFactory =AbstractAppFactory.getTrophySystemFactory();
         team1 = teamA;
         team2 = teamB;
         gameSimulationConfig = config;
         gameStats = leagueManagerFactory.createGameStats();
         initialize();
+        goalScorerObserver = trophySystemFactory.goalScorerObserver();
+        goalieObserver = trophySystemFactory.goalieObserver();
+        defenceMenObserver = trophySystemFactory.defenceMenObserver();
+        playerObserver = trophySystemFactory.playerObserver();
     }
 
     @Override
@@ -209,28 +223,52 @@ public class GameSimulation implements IGameSimulation {
 
         for (int i = 0; i < gameStats.getTeam1Goals(); i++) {
             int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam1Forwards - 1);
+            this.attachObserver(goalScorerObserver);
+            this.score = 1;
+            this.performerName = team1Forwards.get(playerIndex).getPlayerName();
+            this.notifyObserver();
             LOGGER.info("Goal scored by " + team1Forwards.get(playerIndex).getPlayerName() + " of " + team1.getTeamName());
         }
         for (int i = 0; i < gameStats.getTeam2Goals(); i++) {
             int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam2Forwards - 1);
+            this.attachObserver(goalScorerObserver);
+            this.score = 1;
+            this.performerName = team1Forwards.get(playerIndex).getPlayerName();
+            this.notifyObserver();
             LOGGER.info("Goal scored by " + team2Forwards.get(playerIndex).getPlayerName() + " of " + team2.getTeamName());
         }
 
         for (int i = 0; i < gameStats.getTeam1Penalties(); i++) {
             int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam1Defensemen - 1);
+            this.attachObserver(defenceMenObserver);
+            this.score = 1;
+            this.performerName = team1Defensemen.get(playerIndex).getPlayerName();
+            this.notifyObserver();
             LOGGER.info("Penalty awarded to " + team1Defensemen.get(playerIndex).getPlayerName() + " of " + team1.getTeamName());
         }
         for (int i = 0; i < gameStats.getTeam2Penalties(); i++) {
             int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam2Defensemen - 1);
+            this.attachObserver(defenceMenObserver);
+            this.score = 1;
+            this.performerName = team1Defensemen.get(playerIndex).getPlayerName();
+            this.notifyObserver();
             LOGGER.info("Penalty awarded to " + team2Defensemen.get(playerIndex).getPlayerName() + " of " + team2.getTeamName());
         }
 
         for (int i = 0; i < gameStats.getTeam1Saves(); i++) {
             int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam1Goalies - 1);
+            this.attachObserver(goalieObserver);
+            this.score = 1;
+            this.performerName = team1Goalies.get(playerIndex).getPlayerName();
+            this.notifyObserver();
             LOGGER.info("Goal saved by " + team1Goalies.get(playerIndex).getPlayerName() + " of " + team1.getTeamName());
         }
         for (int i = 0; i < gameStats.getTeam2Saves(); i++) {
-            int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam2Goalies - 1);
+            int playerIndex = randomChance.getRandomIntegerNumber(0, numberOfTeam1Goalies - 1);
+            this.attachObserver(goalieObserver);
+            this.score = 1;
+            this.performerName = team1Goalies.get(playerIndex).getPlayerName();
+            this.notifyObserver();
             LOGGER.info("Goal saved by " + team2Goalies.get(playerIndex).getPlayerName() + " of " + team2.getTeamName());
         }
     }
