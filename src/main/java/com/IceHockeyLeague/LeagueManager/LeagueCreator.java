@@ -76,19 +76,21 @@ public class LeagueCreator implements ILeagueCreator {
 
     @Override
     public ILeague createLeague(JSONObject leagueJson) throws JSONException {
-        LOGGER.info("Creating the league model from league JSON object...");
+        LOGGER.info("Creating the league model from league JSON object for league - " + leagueJson.getString(LEAGUE_NAME));
         ILeague league = leagueManagerFactory.createLeague();
         league.setLeagueName(leagueJson.getString(LEAGUE_NAME));
+        LOGGER.info("Creating the GamePlayConfiguration model from league JSON object for league - " + leagueJson.getString(LEAGUE_NAME));
         league.setGamePlayConfig(createGamePlayConfig(leagueJson.getJSONObject(GAME_PLAY_CONFIG)));
         league.setConferences(createConferenceList(leagueJson.getJSONArray(CONFERENCES)));
         league.setFreeAgents(createFreeAgentList(leagueJson.getJSONArray(FREE_AGENTS)));
         league.setCoaches(createCoachList(leagueJson.getJSONArray(COACHES)));
         league.setManagers(createManagerList(leagueJson.getJSONArray(GENERAL_MANAGERS)));
-        LOGGER.info("Successfully created league model for league " + league.getLeagueName());
+        LOGGER.info("Successfully created league model for league - " + league.getLeagueName());
         return league;
     }
 
     private IConference createConference(Object conferenceJson) throws JSONException {
+        LOGGER.info("Creating the conference model from league JSON object named - " + ((JSONObject) conferenceJson).getString(CONFERENCE_NAME));
         IConference conference = leagueManagerFactory.createConference();
         conference.setConferenceName(((JSONObject) conferenceJson).getString(CONFERENCE_NAME));
         conference.setDivisions(createDivisionList(((JSONObject) conferenceJson).getJSONArray(DIVISIONS)));
@@ -104,6 +106,7 @@ public class LeagueCreator implements ILeagueCreator {
     }
 
     private IDivision createDivision(Object divisionJson) throws JSONException {
+        LOGGER.info("Creating the division model from league JSON object named - " + ((JSONObject) divisionJson).getString(DIVISION_NAME));
         IDivision division = leagueManagerFactory.createDivision();
         division.setDivisionName(((JSONObject) divisionJson).getString(DIVISION_NAME));
         division.setTeams(createTeamList(((JSONObject) divisionJson).getJSONArray(TEAMS)));
@@ -119,6 +122,7 @@ public class LeagueCreator implements ILeagueCreator {
     }
 
     private ITeam createTeam(Object teamJson) throws JSONException {
+        LOGGER.info("Creating the team model from league JSON object named - " + ((JSONObject) teamJson).getString(TEAM_NAME));
         ITeam team = leagueManagerFactory.createTeam();
         team.setTeamName(((JSONObject) teamJson).getString(TEAM_NAME));
         team.setManager(createManager(((JSONObject) teamJson).getString(GENERAL_MANAGER)));
@@ -138,6 +142,7 @@ public class LeagueCreator implements ILeagueCreator {
     }
 
     private IPlayer createPlayer(Object playerJson) throws JSONException {
+        LOGGER.info("Creating the player model from league JSON object named - " + ((JSONObject) playerJson).getString(PLAYER_NAME));
         IPlayer player = leagueManagerFactory.createPlayer();
         IPlayerStats playerStats = leagueManagerFactory.createPlayerStats();
         IPlayerAgeInfo playerAgeInfo = leagueManagerFactory.createPlayerAgeInfo();
@@ -203,6 +208,7 @@ public class LeagueCreator implements ILeagueCreator {
     }
 
     private IManager createManager(String generalManager) throws JSONException {
+        LOGGER.info("Creating the manager model from league JSON object named - " + generalManager);
         IManager manager = leagueManagerFactory.createManager();
         manager.setManagerName(generalManager);
         return manager;
@@ -217,6 +223,7 @@ public class LeagueCreator implements ILeagueCreator {
     }
 
     private ICoach createCoach(Object coachJson) throws JSONException {
+        LOGGER.info("Creating the coach model from league JSON object named - " + ((JSONObject) coachJson).getString(COACH_NAME));
         ICoach coach = leagueManagerFactory.createCoach();
         coach.setCoachName(((JSONObject) coachJson).getString(COACH_NAME));
         coach.setCoachStats(createCoachStats(coachJson));
