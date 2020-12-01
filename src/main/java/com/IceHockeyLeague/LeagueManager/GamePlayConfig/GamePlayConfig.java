@@ -1,41 +1,43 @@
 package com.IceHockeyLeague.LeagueManager.GamePlayConfig;
 
 public class GamePlayConfig implements IGamePlayConfig {
-    private int gamePlayConfigID;
-    private int leagueID;
+    private int gamePlayConfigId;
+    private int leagueId;
     private IAgingConfig agingConfig;
-    private IGameResolverConfig gameResolverConfig;
     private ITradingConfig tradingConfig;
     private ITrainingConfig trainingConfig;
     private IInjuryConfig injuryConfig;
 
     public GamePlayConfig() {
-        gamePlayConfigID = -1;
-        leagueID = -1;
+        gamePlayConfigId = -1;
+        leagueId = -1;
     }
 
     @Override
-    public int getGamePlayConfigID() {
-        return gamePlayConfigID;
+    public int getGamePlayConfigId() {
+        return gamePlayConfigId;
     }
 
     @Override
-    public void setGamePlayConfigID(int id) {
-        gamePlayConfigID = id;
+    public void setGamePlayConfigId(int gamePlayConfigId) {
+        this.gamePlayConfigId = gamePlayConfigId;
     }
 
     @Override
-    public int getLeagueID() {
-        return leagueID;
+    public int getLeagueId() {
+        return leagueId;
     }
 
     @Override
-    public void setLeagueID(int id) {
-        leagueID = id;
+    public void setLeagueId(int leagueId) {
+        this.leagueId = leagueId;
     }
 
     @Override
     public void setAgingConfig(IAgingConfig agingConfig) {
+        if (agingConfig == null) {
+            throw new IllegalArgumentException("Please provide a valid concrete implementation of IAgingConfig");
+        }
         this.agingConfig = agingConfig;
     }
 
@@ -45,17 +47,10 @@ public class GamePlayConfig implements IGamePlayConfig {
     }
 
     @Override
-    public void setGameResolverConfig(IGameResolverConfig gameResolverConfig) {
-        this.gameResolverConfig = gameResolverConfig;
-    }
-
-    @Override
-    public IGameResolverConfig getGameResolverConfig() {
-        return gameResolverConfig;
-    }
-
-    @Override
     public void setInjuryConfig(IInjuryConfig injuryConfig) {
+        if (injuryConfig == null) {
+            throw new IllegalArgumentException("Please provide a valid concrete implementation of IInjuryConfig");
+        }
         this.injuryConfig = injuryConfig;
     }
 
@@ -66,6 +61,9 @@ public class GamePlayConfig implements IGamePlayConfig {
 
     @Override
     public void setTrainingConfig(ITrainingConfig trainingConfig) {
+        if (trainingConfig == null) {
+            throw new IllegalArgumentException("Please provide a valid concrete implementation of ITrainingConfig");
+        }
         this.trainingConfig = trainingConfig;
     }
 
@@ -76,6 +74,9 @@ public class GamePlayConfig implements IGamePlayConfig {
 
     @Override
     public void setTradingConfig(ITradingConfig tradingConfig) {
+        if (tradingConfig == null) {
+            throw new IllegalArgumentException("Please provide a valid concrete implementation of ITradingConfig");
+        }
         this.tradingConfig = tradingConfig;
     }
 
@@ -84,13 +85,4 @@ public class GamePlayConfig implements IGamePlayConfig {
         return tradingConfig;
     }
 
-    @Override
-    public boolean saveGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDB) {
-        return gamePlayConfigDB.saveGamePlayConfig(this);
-    }
-
-    @Override
-    public boolean loadGamePlayConfig(IGamePlayConfigPersistence gamePlayConfigDB, IGamePlayConfig gamePlayConfig) {
-        return gamePlayConfigDB.loadGamePlayConfig(leagueID, gamePlayConfig);
-    }
 }

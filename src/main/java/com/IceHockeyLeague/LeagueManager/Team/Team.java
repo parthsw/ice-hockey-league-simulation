@@ -1,11 +1,13 @@
 package com.IceHockeyLeague.LeagueManager.Team;
 
+import com.AbstractAppFactory;
 import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-import com.IceHockeyLeague.LeagueManager.League.ILeague;
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Manager.IManager;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayer;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
-import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayerPersistence;
+import com.IceHockeyLeague.LeagueManager.Team.Roster.ITeamRoster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,18 +22,44 @@ public class Team implements ITeam {
     private IManager manager;
     private ICoach coach;
     private int lossPoint;
+    private ITeamRoster teamRoster;
+    private ILeagueManagerFactory leagueManagerFactory;
 
     public Team() {
         setDefaults();
     }
 
+    private static final String positionToCheck = "goalie";
+
     private void setDefaults() {
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
         teamID = -1;
         divisionID = -1;
         teamStrength = 0f;
         isUserCreated = false;
         players = new ArrayList<>();
         lossPoint = 0;
+        teamRoster = leagueManagerFactory.createTeamRoster();
+    }
+
+    @Override
+    public List<ITeamPlayer> getActiveRoster() {
+        return teamRoster.getActiveRoster();
+    }
+
+    @Override
+    public List<ITeamPlayer> getInactiveRoster() {
+        return teamRoster.getInactiveRoster();
+    }
+
+    @Override
+    public void validateRoster(List<IFreeAgent> agents) {
+        teamRoster.validateRoster(agents);
+    }
+
+    @Override
+    public void setTeamRoster(ITeamRoster teamRoster) {
+        this.teamRoster = teamRoster;
     }
 
     @Override
@@ -138,7 +166,7 @@ public class Team implements ITeam {
         int goalieCounter = 0;
         boolean listIsPerfect = false;
         for(ITeamPlayer p : players){
-            if(p.getPlayerStats().getPosition().equalsIgnoreCase("goalie")){
+            if(p.getPlayerStats().getPosition().equalsIgnoreCase(positionToCheck)){
                 goalieCounter++;
             }
             else{
@@ -149,18 +177,6 @@ public class Team implements ITeam {
             listIsPerfect = true;
         }
         return listIsPerfect;
-    }
-
-
-
-    @Override
-    public boolean saveTeam(ITeamPersistence teamDB) {
-        return teamDB.saveTeam(this);
-    }
-
-    @Override
-    public boolean loadPlayers(ITeamPlayerPersistence teamPlayerDB, List<ITeamPlayer> teamPlayers) {
-        return teamPlayerDB.loadTeamPlayers(teamID, teamPlayers);
     }
 
     @Override
@@ -186,17 +202,8 @@ public class Team implements ITeam {
     }
 
     @Override
-    public boolean checkIfTeamNameExists(ITeamPersistence teamDB, String teamName, List<ILeague> leagues) {
-        return teamDB.checkIfTeamNameExists(teamName, leagues);
-    }
-
-    @Override
     public boolean isNullOrEmpty(String teamName) {
-        if(teamName == null || teamName.equals("")) {
-            return true;
-        } else {
-            return false;
-        }
+        return (teamName == null || teamName.equals(""));
     }
 
     @Override

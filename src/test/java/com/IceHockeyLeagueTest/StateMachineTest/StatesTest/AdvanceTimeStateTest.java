@@ -1,18 +1,12 @@
 package com.IceHockeyLeagueTest.StateMachineTest.StatesTest;
 
-import com.IO.AbstractIOFactory;
-import com.IO.IOFactory;
-import com.IOTest.IOMock;
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
-import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
 import com.IceHockeyLeague.StateMachine.States.TrainingState;
-import com.IceHockeyLeagueTest.LeagueManagerTest.TestLeagueManagerFactory;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,29 +14,29 @@ import org.junit.Test;
 import java.time.LocalDate;
 
 public class AdvanceTimeStateTest {
+    private static IStateMachineFactory stateMachineFactory;
+    private static ILeagueManagerFactory leagueManagerFactory;
 
     @BeforeClass
     public static void setup() {
-        AbstractIOFactory.setFactory(new IOFactory());
-        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
-        AbstractStateMachineFactory.setFactory(
-                new StateMachineFactory(
-                        AbstractIOFactory.getFactory().getCommandLineInput(),
-                        AbstractIOFactory.getFactory().getCommandLineOutput(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileReader(),
-                        LeagueFileHandlerFactory.getFactory().getJsonParser(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
-                )
-        );
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Test
     public void onRunTest() {
-        ILeague league = new League();
+        ILeague league = leagueManagerFactory.createLeague();
+      //  ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
+       // leagueDB.loadLeague(1, league);
+
         league.setLeagueDate(LocalDate.now());
         league.getScheduleSystem().setRegularSeasonEndDate(LocalDate.now().plusDays(2));
 
-        AbstractState advanceTimeState = AbstractStateMachineFactory.getFactory().getAdvanceTimeState();
+        AbstractState advanceTimeState = stateMachineFactory.createAdvanceTimeState();
         advanceTimeState.setLeague(league);
 
         Assert.assertTrue(advanceTimeState.onRun() instanceof TrainingState);

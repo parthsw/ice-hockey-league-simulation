@@ -1,16 +1,14 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
-import com.IceHockeyLeague.LeagueManager.Team.ITeamPersistence;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 public class LoadTeamState extends AbstractState {
     private static final String LOAD_STATE = "*****Load Team State*****";
@@ -19,12 +17,16 @@ public class LoadTeamState extends AbstractState {
     private static final String TEAM_NOT_EXIST = "The provided team name is not available in any persisted leagues.";
     private static final String LEAGUE_SELECTION_PROMPT = "Please enter the ID of a league that you want to load";
 
+    private final ILeagueManagerFactory leagueManagerFactory;
+    private final IStateMachineFactory stateMachineFactory;
     private final IAppInput appInput;
     private final IAppOutput appOutput;
 
     public LoadTeamState(IAppInput appInput, IAppOutput appOutput) {
         this.appInput = appInput;
         this.appOutput = appOutput;
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override
@@ -40,41 +42,37 @@ public class LoadTeamState extends AbstractState {
 
     private AbstractState processLeagueLoad() {
         String teamName;
-        ITeam team = LeagueManagerFactory.getFactory().getTeam();
-
-        while(true) {
+        ITeam team = leagueManagerFactory.createTeam();
+        ILeague league = getLeague();
+        while (true) {
             teamName = appInput.getInput();
             team.setTeamName(teamName);
-            if(team.isNullOrEmpty(teamName)) {
+            if (team.isNullOrEmpty(teamName)) {
                 appOutput.displayError(TEAM_NAME_EMPTY);
                 continue;
             }
-            ITeamPersistence teamDB = AbstractLeagueManagerFactory.getFactory().getTeamDB();
-            List<ILeague> leagueList = new ArrayList<>();
-            if(team.checkIfTeamNameExists(teamDB, teamName, leagueList)) {
-                if(leagueList.size() == 0) {
-                    appOutput.displayError(TEAM_NOT_EXIST);
-                    return null;
+            boolean flag = true;
+            String fileToLoad = teamName + ".json";
+            String pathToFile = "";
+            File path = new File("serialization_input_output\\");  // C://tejasvi
+            File[] files = path.listFiles();
+            for (File file: files) {
+                if (file.getName().equals(fileToLoad)) {
+                    pathToFile = file.getAbsolutePath();
+                    league = league.loadCompleteLeague(pathToFile);
+                    break;
+                } else {
+                    flag = false;
                 }
-                if(leagueList.size() == 1) {
-                    ILeague leagueToLoad = leagueList.get(0);
-                    leagueToLoad.loadCompleteLeague(leagueToLoad.getLeagueID());
-                    this.setLeague(leagueToLoad);
-                }
-                else {
-                    appOutput.display(LEAGUE_SELECTION_PROMPT);
-                    for(ILeague league: leagueList) {
-                        appOutput.display("League ID: " + league.getLeagueID() + "& League Name: " + league.getLeagueName());
-                    }
-                    int leagueId = Integer.parseInt(appInput.getInput());
-                    ILeague leagueToLoad = AbstractLeagueManagerFactory.getFactory().getLeague();
-                    leagueToLoad.loadCompleteLeague(leagueId);
-                    this.setLeague(leagueToLoad);
-                }
-                break;
             }
+            if(flag){
+            }
+            else{
+                appOutput.displayError(TEAM_NOT_EXIST);
+                return null;
+            }
+            this.setLeague(league);
+            return stateMachineFactory.createPlayerChoiceState();
         }
-
-        return AbstractStateMachineFactory.getFactory().getPlayerChoiceState();
     }
 }

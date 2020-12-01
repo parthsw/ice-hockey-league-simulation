@@ -6,14 +6,14 @@ import java.io.InputStream;
 import java.io.PrintStream;
 
 public class IOMock {
-    private final InputStream systemIn = System.in;
-    private final PrintStream systemOut = System.out;
+    private final InputStream SYSTEM_IN = System.in;
+    private final PrintStream SYSTEM_OUT = System.out;
 
     private static IOMock ioMockInstance = null;
     private ByteArrayOutputStream testOutput;
 
     public static IOMock instance() {
-        if(ioMockInstance == null) {
+        if (ioMockInstance == null) {
             return new IOMock();
         }
         return ioMockInstance;
@@ -29,7 +29,7 @@ public class IOMock {
     }
 
     public void resetSystemOutput() {
-        System.setOut(systemOut);
+        System.setOut(SYSTEM_OUT);
     }
 
     public void commandLineInput(String data) {
@@ -38,6 +38,7 @@ public class IOMock {
     }
 
     public void resetSystemInput() {
-        System.setIn(systemIn);
+        System.setIn(SYSTEM_IN);
     }
+
 }

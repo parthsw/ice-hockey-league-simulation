@@ -6,6 +6,8 @@ import java.io.InputStream;
 
 public interface ILeagueFileReader {
     boolean isFileExist(File file);
+
     InputStream readSystemFile(String filePath) throws FileNotFoundException;
-    InputStream readAppResourceFile(String resourceFileName);
+
+    InputStream readAppResourceFile(String resourceFileName) throws NullPointerException;
 }

@@ -1,17 +1,25 @@
 package com;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
+import com.IOTest.IOMock;
+import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.sql.SQLException;
-
-import static org.junit.Assert.assertThat;
-
 public class HockeyLeagueSimulationAppTest {
+    private static final String EXPECTED_FACTORY = "AppFactory";
+    private static IOMock ioMockInstance = null;
+
+    @BeforeClass
+    public static void setup() {
+        ioMockInstance = IOMock.instance();
+    }
+
+    @Test
+    public void mainFactoriesTest() {
+        ioMockInstance.commandLineInput("file.json");
+        HockeyLeagueSimulationApp.main(null);
+        String actualFactory = AbstractAppFactory.getAppFactory().getClass().getSimpleName();
+        Assert.assertEquals(EXPECTED_FACTORY, actualFactory);
+    }
 
 }
-

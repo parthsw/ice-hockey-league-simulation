@@ -1,24 +1,30 @@
 package com.IceHockeyLeague.SerializeDeserializeLeagueObject;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.League.League;
 import com.google.gson.Gson;
-import org.junit.Assert;
 
-import java.io.*;
+import java.io.File;
 import java.util.Scanner;
 
 public class Deserialize implements IDeserialize {
+    private final ILeagueManagerFactory leagueManagerFactory;
+
+    public Deserialize() {
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+    }
 
     public ILeague deserializeLeagueObject(String path){
+        ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
         Gson gson = new Gson();
         String jsonData = "";
-        ILeague league = new League();
-        String leagueName = "";
+        ILeague league = leagueManagerFactory.createLeague();
         Scanner myReader = null;
         try {
-            File obj = new File("jsonInput");
+            File obj = new File(path);
             myReader = new Scanner(obj);
             while(myReader.hasNextLine()) {
                 jsonData = myReader.nextLine();

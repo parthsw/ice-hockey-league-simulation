@@ -1,21 +1,27 @@
 package com.IceHockeyLeague.LeagueManager.Player;
 
+import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
 import com.IceHockeyLeague.LeagueManager.Team.ITeam;
 
 public interface ITeamPlayer extends IPlayer {
-    int getTeamPlayerID();
-    void setTeamPlayerID(int teamPlayerID);
+    int getTeamPlayerId();
+
+    void setTeamPlayerId(int teamPlayerId);
 
     boolean isCaptain();
+
     void setIsCaptain(boolean captain);
 
-    int getTeamID();
-    void setTeamID(int teamID);
+    int getTeamId();
+
+    void setTeamId(int teamId);
 
     IFreeAgent convertToFreeAgent(IFreeAgent freeAgent);
 
-    boolean saveTeamPlayer(ITeamPlayerPersistence teamPlayerDB);
+    void generateTeamPlayer(IPlayer player);
+
+    void generatePlayer(IPlayer player);
 
     boolean handleTeamPlayerRetirement(IPlayerCareerProgression playerCareerProgression, ITeam team, ILeague league);
 }

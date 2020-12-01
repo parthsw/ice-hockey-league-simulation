@@ -1,31 +1,37 @@
 package com.IceHockeyLeagueTest.SerializeDeserializeLeagueObjectTest;
 
-import com.IceHockeyLeague.LeagueManager.Coach.ICoach;
-import com.IceHockeyLeague.LeagueManager.Conference.Conference;
-import com.IceHockeyLeague.LeagueManager.Conference.IConference;
-import com.IceHockeyLeague.LeagueManager.Division.Division;
-import com.IceHockeyLeague.LeagueManager.Division.IDivision;
+import com.AbstractAppFactory;
+import com.AppFactoryTest;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.LeagueManager.League.League;
-import com.IceHockeyLeague.LeagueManager.Player.FreeAgent;
-import com.IceHockeyLeague.LeagueManager.Player.IFreeAgent;
 import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerialize;
-import com.IceHockeyLeague.SerializeDeserializeLeagueObject.Serialize;
+import com.IceHockeyLeague.SerializeDeserializeLeagueObject.ISerializeDeserializeLeagueObjectFactory;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.io.File;
 
 public class SerializeTest {
+    private static ILeagueManagerFactory leagueManagerFactory;
+    private static ISerializeDeserializeLeagueObjectFactory leagueSerializationFactory;
+
+    @BeforeClass
+    public static void setup() {
+        AbstractAppFactory.setAppFactory(AppFactoryTest.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        leagueManagerFactory = appFactory.createLeagueManagerFactory();
+        leagueSerializationFactory = appFactory.createSerializeDeserializeLeagueObjectFactory();
+    }
 
     @Test
     public void SerializeLeagueObjectTest() {
-        ILeague league = new League();
+        String fileName = "jsonOutput.json";
+        ILeague league = leagueManagerFactory.createLeague();
         league.setLeagueID(13);
         league.setLeagueName("Dalhousie Hockey League");
-        ISerialize serialize = new Serialize();
-        String path = serialize.serializeLeagueObject(league);
+        ISerialize serialize = leagueSerializationFactory.createSerialize();
+        String path = serialize.serializeLeagueObject(league,fileName);
         File file = new File(path);
         Assert.assertTrue(file.exists());
     }

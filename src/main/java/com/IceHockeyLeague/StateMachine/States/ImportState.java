@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.StateMachine.States;
 
+import com.AbstractAppFactory;
 import com.IO.IAppInput;
 import com.IO.IAppOutput;
 
@@ -7,19 +8,20 @@ import com.IceHockeyLeague.LeagueFileHandler.IJsonParser;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileReader;
 import com.IceHockeyLeague.LeagueFileHandler.ILeagueFileValidator;
 
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.ILeagueCreator;
 import com.IceHockeyLeague.LeagueManager.League.ILeague;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 public class ImportState extends AbstractState {
-
     private static final String IMPORT_STATE = "*****Import State*****";
+    private static final String LOAD = "load";
     private static final String FILEPATH = "Please provide full filepath to the league JSON file:";
     private static final String FILEPATH_ERROR = "The provided filepath is incorrect.";
     private static final String LEAGUE_SCHEMA = "LeagueSchema.json";
@@ -27,6 +29,9 @@ public class ImportState extends AbstractState {
     private static final String LEAGUE_SCHEMA_ERROR = "The provided json file violates below constraint(s):";
     private static final String TRANSITION_LOAD_TEAM = "Transitioning to Load Team State...";
 
+    private final Logger LOGGER = LogManager.getLogger(ImportState.class);
+    private final ILeagueManagerFactory leagueManagerFactory;
+    private final IStateMachineFactory stateMachineFactory;
     private final IAppInput appInput;
     private final IAppOutput appOutput;
     private final ILeagueFileReader leagueFileReader;
@@ -44,13 +49,17 @@ public class ImportState extends AbstractState {
         this.leagueFileReader = leagueFileReader;
         this.jsonParser = jsonParser;
         this.leagueFileValidator = leagueFileValidator;
+        leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
+        stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
     }
 
     @Override
     public AbstractState onRun() {
+        LOGGER.info("User enters into ImportState to process league JSON file...");
         welcomeMessage();
         appOutput.display(FILEPATH);
         String filePath = appInput.getInput();
+        LOGGER.info("The league JSON file to process can be found at: " + filePath);
         return processLeagueJsonFile(filePath);
     }
 
@@ -59,34 +68,52 @@ public class ImportState extends AbstractState {
     }
 
     private AbstractState processLeagueJsonFile(String filePath) {
-        try {
-            InputStream leagueJsonStream = leagueFileReader.readSystemFile(filePath);
-            JSONObject leagueJson = jsonParser.parse(leagueJsonStream);
+        InputStream leagueJsonStream, leagueSchemaStream;
+        JSONObject leagueJson, leagueSchema;
 
-            InputStream leagueSchemaStream = leagueFileReader.readAppResourceFile(LEAGUE_SCHEMA);
-            JSONObject leagueSchema = jsonParser.parse(leagueSchemaStream);
-
-            boolean isValidStructure = isStructureValid(leagueJson, leagueSchema);
-            if(isValidStructure) {
-                ILeagueCreator leagueCreator = AbstractLeagueManagerFactory.getFactory().getLeagueCreator();
-                ILeague league = leagueCreator.createLeague(leagueJson);
-
-                this.setLeague(league);
-                return AbstractStateMachineFactory.getFactory().getCreateTeamState();
-            } else {
-                return null;
-            }
-
-        } catch (FileNotFoundException fileNotFoundException) {
+        if (filePath.equalsIgnoreCase(LOAD)) {
             appOutput.displayError(FILEPATH_ERROR);
             appOutput.display(TRANSITION_LOAD_TEAM);
-            return AbstractStateMachineFactory.getFactory().getLoadTeamState();
+            LOGGER.info("User decides to load an existing team, therefore, transitioning to LoadTeamState...");
+            return stateMachineFactory.createLoadTeamState();
+        }
+
+        try {
+            leagueJsonStream = leagueFileReader.readSystemFile(filePath);
+        } catch (FileNotFoundException fileNotFoundException) {
+            LOGGER.error("The provided filepath " + filePath + " does not exist");
+            LOGGER.error("Assigning smaller league json to InputStream...");
+            leagueJsonStream = new ByteArrayInputStream("{\"leagueName\": \"DHL\"}".getBytes());
+        }
+
+        LOGGER.info("Parsing the league JSON available at " + filePath);
+        leagueJson = jsonParser.parse(leagueJsonStream);
+
+        leagueSchemaStream = leagueFileReader.readAppResourceFile(LEAGUE_SCHEMA);
+
+        LOGGER.info("Parsing the league schema available at " + LEAGUE_SCHEMA);
+        leagueSchema = jsonParser.parse(leagueSchemaStream);
+
+        boolean isValidStructure = isStructureValid(leagueJson, leagueSchema);
+        if (isValidStructure) {
+            ILeagueCreator leagueCreator = leagueManagerFactory.createLeagueCreator();
+
+            LOGGER.info("Constructing league business class from parsed JSON file " + filePath);
+            ILeague league = leagueCreator.createLeague(leagueJson);
+            this.setLeague(league);
+
+            LOGGER.info("League " + league.getLeagueName() + " has successfully been parsed, therefore, Transitioning to CreateTeamState...");
+            return stateMachineFactory.createCreateTeamState();
+        } else {
+            LOGGER.error("Terminating the app as provided league JSON has schema issues as above...");
+            return null;
         }
     }
 
     private void displaySchemaValidationErrors(List<String> errors) {
         appOutput.displayError(LEAGUE_SCHEMA_ERROR);
         for (String error : errors) {
+            LOGGER.error(error);
             appOutput.displayError(error);
         }
     }
@@ -94,7 +121,7 @@ public class ImportState extends AbstractState {
     private boolean isStructureValid(JSONObject json, JSONObject schema) {
         List<String> validationResults = leagueFileValidator.validateJsonSchema(json, schema);
 
-        if(validationResults == null) {
+        if (validationResults == null) {
             appOutput.display(LEAGUE_SCHEMA_SUCCESS);
             return true;
         } else {
@@ -102,4 +129,5 @@ public class ImportState extends AbstractState {
             return false;
         }
     }
+
 }

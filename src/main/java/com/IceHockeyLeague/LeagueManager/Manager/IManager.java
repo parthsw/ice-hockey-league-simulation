@@ -1,5 +1,6 @@
 package com.IceHockeyLeague.LeagueManager.Manager;
 
+import java.util.Hashtable;
 import java.util.List;
 
 public interface IManager {
@@ -13,12 +14,14 @@ public interface IManager {
     void setTeamID(int id);
 
     int getLeagueID();
+
     void setLeagueID(int id);
 
-    boolean saveTeamManager(IManagerPersistence managerDB);
-    boolean saveLeagueManager(IManagerPersistence managerDB);
-    boolean loadTeamManager(IManagerPersistence managerDB, IManager manager);
-
     boolean isNullOrEmpty(String managerName);
+
     boolean isManagerNameExist(List<IManager> managers, String managerName);
+
+    Hashtable<String, Float> getManagerPersonality();
+
+    void setManagerPersonality(Hashtable<String, Float> personality);
 }

@@ -1,42 +1,47 @@
 package com;
 
-import com.Database.AbstractDatabaseFactory;
-import com.Database.DatabaseFactory;
-import com.IO.AbstractIOFactory;
-import com.IO.IOFactory;
-import com.IceHockeyLeague.LeagueFileHandler.AbstractLeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueFileHandler.LeagueFileHandlerFactory;
-import com.IceHockeyLeague.LeagueManager.AbstractLeagueManagerFactory;
-import com.IceHockeyLeague.LeagueManager.LeagueManagerFactory;
-import com.IceHockeyLeague.StateMachine.AbstractStateMachineFactory;
-import com.IceHockeyLeague.StateMachine.StateMachineFactory;
+import com.IceHockeyLeague.StateMachine.IStateMachine;
+import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.IceHockeyLeague.StateMachine.States.AbstractState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class HockeyLeagueSimulationApp {
+    private static final Logger LOGGER = LogManager.getLogger(HockeyLeagueSimulationApp.class);
+
     public static void main(String[] args) {
+        GlobalHandler handler = new GlobalHandler();
+        Thread.setDefaultUncaughtExceptionHandler(handler);
+
+        LOGGER.info("Starting the Ice Hockey League simulation app...");
+
         initializeFactories();
         runApp();
     }
 
     private static void initializeFactories() {
-        AbstractLeagueFileHandlerFactory.setFactory(new LeagueFileHandlerFactory());
-        AbstractIOFactory.setFactory(new IOFactory());
-        AbstractLeagueManagerFactory.setFactory(new LeagueManagerFactory());
-
-        AbstractStateMachineFactory.setFactory(
-                new StateMachineFactory(
-                        AbstractIOFactory.getFactory().getCommandLineInput(),
-                        AbstractIOFactory.getFactory().getCommandLineOutput(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileReader(),
-                        LeagueFileHandlerFactory.getFactory().getJsonParser(),
-                        LeagueFileHandlerFactory.getFactory().getLeagueFileValidator()
-                )
-        );
-        AbstractDatabaseFactory.setFactory(new DatabaseFactory());
+        LOGGER.info("Assigning the package level factories...");
+        AbstractAppFactory.setAppFactory(AppFactory.createAppFactory());
+        AbstractAppFactory appFactory = AbstractAppFactory.getAppFactory();
+        AbstractAppFactory.setLeagueFileHandlerFactory(appFactory.createLeagueFileHandlerFactory());
+        AbstractAppFactory.setIOFactory(appFactory.createIOFactory());
+        AbstractAppFactory.setLeagueManagerFactory(appFactory.createLeagueManagerFactory());
+        AbstractAppFactory.setStateMachineFactory(appFactory.createStateMachineFactory());
+        AbstractAppFactory.setTradingFactory(appFactory.createTradingFactory());
+        AbstractAppFactory.setTrophySystemFactory(appFactory.createTrophySystemFactory());
+        AbstractAppFactory.setSerializeDeserializeLeagueObjectFactory(appFactory.createSerializeDeserializeLeagueObjectFactory());
+        AbstractAppFactory.setPersistenceFactory(appFactory.createPersistenceFactory());
+        LOGGER.info("Successfully assigned the package level factories.");
     }
 
     private static void runApp() {
-        AbstractState importState = AbstractStateMachineFactory.getFactory().getImportState();
-        AbstractStateMachineFactory.getFactory().getStateMachine(importState).onExecution();
+        IStateMachineFactory stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
+        AbstractState importState = stateMachineFactory.createImportState();
+
+        LOGGER.info("Creating the state-machine with starting state as " + importState.getClass().getSimpleName() + "...");
+        IStateMachine stateMachine = stateMachineFactory.createStateMachine(importState);
+        LOGGER.info("Executing the outer state-machine...");
+        stateMachine.onExecution();
     }
+
 }
