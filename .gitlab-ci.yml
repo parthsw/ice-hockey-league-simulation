@@ -57,7 +57,7 @@ test:
   tags:
     - ugrad
   only:
-    - develop
+    - release
 
 deploy:
   stage: deploy
