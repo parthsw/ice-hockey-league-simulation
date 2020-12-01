@@ -1,6 +1,15 @@
 package com.TrophySystem;
 
+import com.IO.IAppInput;
+import com.IO.IAppOutput;
+
 public class DisplayAwards implements IAwardDistributed {
+
+    private final IAppOutput appOutput;
+
+    public DisplayAwards(IAppOutput appOutput) {
+        this.appOutput = appOutput;
+    }
 
     public void presidentTrophy(String highestPointsTeam) {
         System.out.println(highestPointsTeam);

@@ -14,12 +14,14 @@ public class TrophyState extends AbstractState {
     private IAwardDistributed awardDisplay;
     private IAwardWinners awardWinner;
     List<String> awardsWinnerList;
+    ITrophySystemFactory trophySystemFactory;
 
     public TrophyState(){
         ILeague league = getLeague();
         stateMachineFactory = AbstractAppFactory.getStateMachineFactory();
-        awardDisplay = new DisplayAwards();
-        awardWinner = new TrophyDistribution();
+        trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
+        awardDisplay = trophySystemFactory.displayAwards();
+        awardWinner = trophySystemFactory.trophyDistribution();
     }
 
     @Override

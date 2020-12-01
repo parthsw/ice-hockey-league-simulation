@@ -1,13 +1,16 @@
 package com.TrophySystem;
 
 import com.AbstractAppFactory;
+import com.IceHockeyLeague.LeagueManager.Draft.DraftManager;
 import com.IceHockeyLeague.LeagueManager.Standings.IStanding;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
+    private final Logger LOGGER = LogManager.getLogger(TrophyDistribution.class);
     ITrophySystemFactory trophySystemFactory = AbstractAppFactory.getTrophySystemFactory();
     String highestPointsTeamName;
     String bestPlayerName;
@@ -19,10 +22,10 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
     int bestPlayerPoints = 0;
     int bestGoalScorerPoints = 0;
     int bestDefenceManPoints = 0;
-    List<PerformanceParameter> bestGoalies;
-    List<PerformanceParameter> bestPlayers;
-    List<PerformanceParameter> bestGoalScorers;
-    List<PerformanceParameter> bestDefenceMen;
+    List<IPerformanceParameter> bestGoalies;
+    List<IPerformanceParameter> bestPlayers;
+    List<IPerformanceParameter> bestGoalScorers;
+    List<IPerformanceParameter> bestDefenceMen;
 
     public TrophyDistribution() {
         bestGoalies = new ArrayList<>();
@@ -33,31 +36,37 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
 
     @Override
     public String getHighestPointsTeam() {
+        LOGGER.info("The team with the highest points is "+highestPointsTeamName);
         return highestPointsTeamName;
     }
 
     @Override
     public String getBestPlayer() {
+        LOGGER.info("The best player after from first year is "+bestPlayerName);
         return bestPlayerName;
     }
 
     @Override
     public String getBestGoalie() {
+        LOGGER.info("The best goalie is "+bestGoalieName);
         return bestGoalieName;
     }
 
     @Override
     public String getLowestPointsTeam() {
+        LOGGER.info("The team with the lowest points is "+lowestPointsTeamName);
         return lowestPointsTeamName;
     }
 
     @Override
     public String getTopGoalScorer() {
+        LOGGER.info("The top goal scorer is "+bestGoalieName);
         return topGoalScorerName;
     }
 
     @Override
     public String getBestDefenceMen() {
+        LOGGER.info("The best defence man is "+bestDefenceManName);
         return bestDefenceManName;
     }
 
@@ -82,8 +91,9 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
             IPerformanceParameter newPerformer = trophySystemFactory.performanceParameter();
             newPerformer.setPerformerName(playerName);
             newPerformer.setPerformerPoints(playerPoints);
+            bestPlayers.add(newPerformer);
         }
-        bestPlayers.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
+        bestPlayers.sort(Comparator.comparing(IPerformanceParameter::getPerformerPoints));
         playerName = bestPlayers.get(bestPlayers.size() - 1).getPerformerName();
         playerPoints = bestPlayers.get(bestPlayers.size() - 1).getPerformerPoints();
         if (bestPlayerPoints < playerPoints) {
@@ -107,8 +117,9 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
             IPerformanceParameter newPerformer = trophySystemFactory.performanceParameter();
             newPerformer.setPerformerName(defenceMenName);
             newPerformer.setPerformerPoints(defenceMenPoints);
+            bestDefenceMen.add(newPerformer);
         }
-        bestDefenceMen.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
+        bestDefenceMen.sort(Comparator.comparing(IPerformanceParameter::getPerformerPoints));
         defenceMenName = bestDefenceMen.get(bestDefenceMen.size() - 1).getPerformerName();
         defenceMenPoints = bestDefenceMen.get(bestDefenceMen.size() - 1).getPerformerPoints();
         if (bestDefenceManPoints < defenceMenPoints) {
@@ -132,8 +143,9 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
             IPerformanceParameter newPerformer = trophySystemFactory.performanceParameter();
             newPerformer.setPerformerName(goalieName);
             newPerformer.setPerformerPoints(goaliePoints);
+            bestGoalies.add(newPerformer);
         }
-        bestGoalies.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
+        bestGoalies.sort(Comparator.comparing(IPerformanceParameter::getPerformerPoints));
         goalieName = bestGoalies.get(bestGoalies.size() - 1).getPerformerName();
         goaliePoints = bestGoalies.get(bestGoalies.size() - 1).getPerformerPoints();
         if (bestGoaliePoints < goaliePoints) {
@@ -157,8 +169,9 @@ public class TrophyDistribution implements ITrophyContenders, IAwardWinners {
             IPerformanceParameter newPerformer = trophySystemFactory.performanceParameter();
             newPerformer.setPerformerName(goalScorerName);
             newPerformer.setPerformerPoints(goalScorerPoints);
+            bestGoalScorers.add(newPerformer);
         }
-        bestGoalScorers.sort(Comparator.comparing(PerformanceParameter::getPerformerPoints));
+        bestGoalScorers.sort(Comparator.comparing(IPerformanceParameter::getPerformerPoints));
         goalScorerName = bestGoalScorers.get(bestGoalScorers.size() - 1).getPerformerName();
         goalScorerPoints = bestGoalScorers.get(bestGoalScorers.size() - 1).getPerformerPoints();
         if (bestGoalScorerPoints < goalScorerPoints) {

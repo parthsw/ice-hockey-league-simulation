@@ -30,8 +30,6 @@ public class AdvanceTimeStateTest {
     @Test
     public void onRunTest() {
         ILeague league = leagueManagerFactory.createLeague();
-      //  ILeaguePersistence leagueDB = databaseFactory.createLeaguePersistence();
-       // leagueDB.loadLeague(1, league);
 
         league.setLeagueDate(LocalDate.now());
         league.getScheduleSystem().setRegularSeasonEndDate(LocalDate.now().plusDays(2));
