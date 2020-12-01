@@ -53,6 +53,7 @@ public class LeagueCreator implements ILeagueCreator {
     private static final String BIRTH_MONTH = "birthMonth";
     private static final String BIRTH_YEAR = "birthYear";
     private static final String CAPTAIN = "captain";
+    private static final String MANAGER_NAME = "name";
 
     private static final String GAME_PLAY_CONFIG = "gameplayConfig";
     private static final String AGING = "aging";
@@ -125,7 +126,7 @@ public class LeagueCreator implements ILeagueCreator {
         LOGGER.info("Creating the team model from league JSON object named - " + ((JSONObject) teamJson).getString(TEAM_NAME));
         ITeam team = leagueManagerFactory.createTeam();
         team.setTeamName(((JSONObject) teamJson).getString(TEAM_NAME));
-        team.setManager(createManager(((JSONObject) teamJson).getString(GENERAL_MANAGER)));
+        team.setManager(createManager(((JSONObject) teamJson).getJSONObject(GENERAL_MANAGER)));
         team.setCoach(createCoach(((JSONObject) teamJson).getJSONObject(HEAD_COACH)));
         team.setPlayers(createTeamPlayerList(((JSONObject) teamJson).getJSONArray(PLAYERS)));
         ITeamStrengthCalculator teamStrengthCalculator = leagueManagerFactory.createTeamStrengthCalculator();
@@ -207,17 +208,16 @@ public class LeagueCreator implements ILeagueCreator {
         return freeAgents;
     }
 
-    private IManager createManager(String generalManager) throws JSONException {
-        LOGGER.info("Creating the manager model from league JSON object named - " + generalManager);
+    private IManager createManager(JSONObject generalManager) throws JSONException {
         IManager manager = leagueManagerFactory.createManager();
-        manager.setManagerName(generalManager);
+        manager.setManagerName(generalManager.getString(MANAGER_NAME));
         return manager;
     }
 
     private List<IManager> createManagerList(JSONArray managersJson) {
         List<IManager> managers = new ArrayList<>();
         for (Object manager : managersJson) {
-            managers.add(createManager(manager.toString()));
+            managers.add(createManager((JSONObject) manager));
         }
         return managers;
     }

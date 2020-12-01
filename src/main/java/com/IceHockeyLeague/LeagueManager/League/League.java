@@ -13,7 +13,7 @@ import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
 import com.IceHockeyLeague.LeagueManager.Scheduler.IScheduleSystem;
 import com.IceHockeyLeague.LeagueManager.Standings.IStandingSystem;
 import com.Persistence.ILeaguePersistence;
-import com.Persistence.PersistenceFactory;
+import com.Persistence.IPersistenceFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class League implements ILeague {
     private List<IFreeAgent> retiredFreeAgents;
     private IScheduleSystem scheduleSystem;
     private IStandingSystem standingSystem;
-    private static PersistenceFactory persistenceFactory;
+    private IPersistenceFactory persistenceFactory;
     private List<IDraftPick> draftPicks;
     private IGameSimulationSystem gameSimulationSystem;
 
@@ -55,6 +55,7 @@ public class League implements ILeague {
         this.scheduleSystem = leagueManagerFactory.createScheduleSystem();
         this.standingSystem = leagueManagerFactory.createStandingSystem();
         this.gameSimulationSystem = leagueManagerFactory.createGameSimulationSystem();
+        persistenceFactory = AbstractAppFactory.getPersistenceFactory();
     }
 
     @Override

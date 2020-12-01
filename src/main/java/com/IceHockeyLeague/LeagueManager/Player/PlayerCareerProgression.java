@@ -42,7 +42,7 @@ public class PlayerCareerProgression implements IPlayerCareerProgression {
             float roundedInjuryLikelihood = randomChanceGenerator.roundFloatNumber(injuryLikelihood, injuryLikelihoodDecimal);
             if (roundedInjuryLikelihood < randomInjuryChance) {
                 int daysInjured = randomChanceGenerator.getRandomIntegerNumber(minInjuryDays, maxInjuryDays);
-                player.setInjuredStatus(true);
+                player.setInjuredStatus(false);
                 player.setInjuryDate(currentDate);
                 player.setDaysInjured(daysInjured);
                 return true;

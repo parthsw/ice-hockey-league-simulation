@@ -38,7 +38,7 @@
     "generalManagers": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/nonEmptyString"
+        "$ref": "#/definitions/generalManager"
       }
     }
   },
@@ -195,7 +195,7 @@
           "$ref": "#/definitions/nonEmptyString"
         },
         "generalManager": {
-          "$ref": "#/definitions/nonEmptyString"
+          "$ref": "#/definitions/generalManager"
         },
         "headCoach": {
           "$ref": "#/definitions/coach"
@@ -367,6 +367,27 @@
           "type": "number",
           "minimum": 0.0,
           "maximum": 1.0
+        }
+      }
+    },
+    "generalManager": {
+      "type": "object",
+      "description": "Representation of a general manager in Ice Hockey League",
+      "required": [
+        "name",
+        "personality"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/nonEmptyString"
+        },
+        "personality": {
+          "type": "string",
+          "enum": [
+            "shrewd",
+            "normal",
+            "gambler"
+          ]
         }
       }
     }

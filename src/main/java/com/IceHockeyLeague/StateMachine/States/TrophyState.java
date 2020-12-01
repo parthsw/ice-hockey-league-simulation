@@ -6,6 +6,7 @@ import com.IceHockeyLeague.StateMachine.IStateMachineFactory;
 import com.TrophySystem.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrophyState extends AbstractState {
@@ -13,7 +14,7 @@ public class TrophyState extends AbstractState {
     private final IStateMachineFactory stateMachineFactory;
     private IAwardDistributed awardDisplay;
     private IAwardWinners awardWinner;
-    List<String> awardsWinnerList;
+    List<String> awardsWinnerList = new ArrayList<>();
 
     public TrophyState(){
         ILeague league = getLeague();
@@ -25,8 +26,8 @@ public class TrophyState extends AbstractState {
     @Override
     public AbstractState onRun() {
         AbstractState nextState;
-        startAwards();
-        awardDistributionInProcess();
+        // startAwards();
+        // awardDistributionInProcess();
         nextState = stateMachineFactory.createAdvanceToNextSeasonState();
         return nextState;
     }

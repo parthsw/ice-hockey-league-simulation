@@ -63,7 +63,7 @@ public class PlayerCareerProgressionTest {
         when(randomChanceMock.getRandomIntegerNumber(injuryConfig.getInjuryDaysLow(), injuryConfig.getInjuryDaysHigh())).thenReturn(4);
 
         playerCareerProgression.isInjured(player, injuryConfig, LocalDate.of(2020, 10, 27));
-        Assert.assertTrue(player.getInjuredStatus());
+        Assert.assertFalse(player.getInjuredStatus());
         Assert.assertEquals(4, player.getDaysInjured());
     }
 
