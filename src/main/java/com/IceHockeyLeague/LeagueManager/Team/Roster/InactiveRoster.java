@@ -5,10 +5,13 @@ import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
 import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.IPlayerStats;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class InactiveRoster implements IInactiveRoster {
+    private final Logger LOGGER = LogManager.getLogger(InactiveRoster.class);
     private ILeagueManagerFactory leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     private List<ITeamPlayer> inactivePlayers;
     private List<IFreeAgent> agents;

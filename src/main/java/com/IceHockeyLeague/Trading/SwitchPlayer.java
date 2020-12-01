@@ -1,13 +1,15 @@
 package com.IceHockeyLeague.Trading;
 
 import com.AbstractAppFactory;
-import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.FreeAgent.IFreeAgent;
+import com.IceHockeyLeague.LeagueManager.ILeagueManagerFactory;
 import com.IceHockeyLeague.LeagueManager.Player.ITeamPlayer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class SwitchPlayer implements ISwitchPlayer {
     private final ILeagueManagerFactory leagueManagerFactory;
-
+    private final Logger LOGGER = LogManager.getLogger(SwitchPlayer.class);
     public SwitchPlayer() {
         leagueManagerFactory = AbstractAppFactory.getLeagueManagerFactory();
     }
@@ -21,6 +23,7 @@ public class SwitchPlayer implements ISwitchPlayer {
         agent.setRetiredStatus(player.getRetiredStatus());
         agent.setPlayerStats(player.getPlayerStats());
         agent.setPlayerAgeInfo(player.getPlayerAgeInfo());
+        LOGGER.info("Player Switched");
         return agent;
     }
 

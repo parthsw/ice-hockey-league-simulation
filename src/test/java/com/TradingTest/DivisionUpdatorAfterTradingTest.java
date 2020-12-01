@@ -38,8 +38,8 @@ public class DivisionUpdatorAfterTradingTest {
         ITeam team1 = leagueManagerFactory.createTeam();
         ITeam team2 = leagueManagerFactory.createTeam();
 
-        ITeam newteam1 = leagueManagerFactory.createTeam();
-        ITeam newteam2 = leagueManagerFactory.createTeam();
+        ITeam newTeam1 = leagueManagerFactory.createTeam();
+        ITeam newTeam2 = leagueManagerFactory.createTeam();
 
         Random random = new Random();
         String[] positions = new String[]{"Forward", "Defence", "Goalie"};
@@ -74,7 +74,7 @@ public class DivisionUpdatorAfterTradingTest {
             String temp = positions[random.nextInt(positions.length)];
             stats.setPosition(temp);
             player.setPlayerStats(stats);
-            newteam1.addPlayer(player);
+            newTeam1.addPlayer(player);
         }
 
         for (int i = 0; i < 10; i++) {
@@ -84,11 +84,11 @@ public class DivisionUpdatorAfterTradingTest {
             String temp = positions[random.nextInt(positions.length)];
             stats.setPosition(temp);
             player.setPlayerStats(stats);
-            newteam2.addPlayer(player);
+            newTeam2.addPlayer(player);
         }
 
         IDivisionUpdatorAfterTrading divisionUpdaterObject = tradingFactory.createDivisionUpdatorAfterTrading();
-        divisionUpdaterObject.divisionUpdatorAfterTradingFunction(league, team1, newteam1, team2, newteam2);
+        divisionUpdaterObject.divisionUpdatorAfterTradingFunction(league, team1, newTeam1, team2, newTeam2);
         for (ITeam team : division.getTeams()) {
             Assert.assertEquals(10, team.getPlayers().size());
         }
